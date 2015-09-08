@@ -38,8 +38,8 @@ if (error) {
  }
  });
 });
-app.get('/signup', function(req, res) {
-fs.readFile('./signup.html', function(error, content) {
+app.get('/register', function(req, res) {
+fs.readFile('./register.html', function(error, content) {
 if (error) {
  res.writeHead(500);
  res.end();
