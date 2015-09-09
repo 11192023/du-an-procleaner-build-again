@@ -50,6 +50,18 @@ if (error) {
  }
  });
 });
+app.get('/timkiem', function(req, res) {
+fs.readFile('./search.html', function(error, content) {
+if (error) {
+ res.writeHead(500);
+ res.end();
+ }
+ else {
+ res.writeHead(200, { 'Content-Type': 'text/html' });
+ res.end(content, 'utf-8');
+ }
+ });
+});
 app.get('/users/:uid', function(req, res){
   var pas = User.findUser(req.params.uid, function(err){
     if(err) throw err;

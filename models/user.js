@@ -3,7 +3,7 @@ var UserSchema = new db.Schema({
    username : {type: String, unique: true}
  , password : String
 })
-var MyUser = db.mongoose.model('nhanvien', UserSchema);
+var MyUser = db.mongoose.model('user', UserSchema);
 // Exports
 module.exports.addUser = addUser;
 module.exports.newUser = MyUser;
