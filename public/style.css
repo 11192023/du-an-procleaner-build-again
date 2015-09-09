@@ -167,7 +167,8 @@ background-color: #00aeef;
   font-style: italic;
   height: 40px;
   margin-right: 10px;
-  width: 195px;
+  width: 145px;
+  display: inline-block;
 }
 .form-inline input[type=submit]{
 	background: #00AEEF;
@@ -176,7 +177,21 @@ background-color: #00aeef;
 	width: 90px;
 	border-radius: 1px;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 15px;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+.btn-searchbar{
+	background: #00AEEF;
+	color: #fff;
+	height: 40px;
+	width: 150px;
+	border-radius: 1px;
+	font-weight: bold;
+	font-size: 15px;
+	margin-bottom: 20px;
   -webkit-transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   -ms-transition: all 0.4s ease;
