@@ -1,8 +1,7 @@
 var db = require('../lib/db');
 var KhachhangSchema = new db.Schema({
     _id : {type: Number, unique: true},
-    ho : String,
-    ten : String,
+    hoten : String,
     sodt : Number,
     matkhau : String,
     diachi : String
