@@ -1,9 +1,10 @@
 var db = require('../lib/db');
+//tính theo ngày, với ngày x giờ a -> b thì người giúp việc g làm cho khách hàng h
 var LichLVSchema = new db.Schema({
-	_nguoigiupviec : { type: Number, ref : 'nguoigiupviec' },
-  	lichlamviec : [{
-  		[ {ngaylam : Date} ],
-  		_khachhang : { type: Number, ref : 'khachhang' },
-  	}]
+	 nguoigiupviec : { type: Number, ref : 'nguoigiupviec' },
+	 ngaylam : Date,
+	 giobatdau : Date,
+	 gioketthuc : Date,
+	 khachhang : { type: Number, ref : 'khachhang' },
 })
-var MyUser = db.mongoose.model('lichlamviec', LichLVSchema);
+var LichlvDB = db.mongoose.model('lichlamviec', LichLVSchema);

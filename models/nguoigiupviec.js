@@ -1,14 +1,26 @@
 var db = require('../lib/db');
 var NgvSchema = new db.Schema({
-    _id : {type: Number, unique: true},
     cmnd : {type: Number, unique: true},
     hoten : String,
-    kinhnghiem : Number,
+    sonamkinhnghiem : Number,
+    motakinhnghiem : String,
     hinhanh : [ {url : String} ],
     giaykhamsuckhoe : [ {url : String} ],
+    sodt : Number,
     trangthai : Boolean,
     quequan : String,
-    mucluong : Number,
-    diachi : String
+    luongcodinh : Number,
+    luongbanthoigian : Number,
+    diachi : String,
+    //mỗi người giúp việc thuộc 1 quận
+    quan : {type: String, ref : "quan"}
+    //ngày bận là mảng những ngày bận, 1 ngày có nhiều khung giờ bận
+    ngayban : [{
+        ngay : Date,
+        khunggio : [{
+            giobatdau : Date,
+            Giokethuc : Date
+        }]
+    }]
 });
-var MyUser = db.mongoose.model('nguoigiupviec', NgvSchema); 
+var NgvDB = db.mongoose.model('nguoigiupviec', NgvSchema); 

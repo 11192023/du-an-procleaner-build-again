@@ -1,0 +1,126 @@
+doctype html
+html(lang='en')
+block search
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    meta(name='description', content='...')
+    meta(name='keywords', content='...')
+    meta(name='author', content='...')
+    link(href='css/bootstrap.css', rel='stylesheet', media='screen')
+    link(href='css/czsale.css', rel='stylesheet', media='screen')
+    link(href='css/czsale-responsive.css', rel='stylesheet', media='screen')
+    // Plugin CSS
+    link(rel='stylesheet', href='css/animate.min.css', type='text/css')
+    // Custom CSS
+    link(rel='stylesheet', href='css/creative.css', type='text/css')
+    title CZSale - Classified Ads Website
+  body
+    .container.wrapper
+      // Content
+      .row.content
+        .col-lg-3.content-left
+          h4 Search
+          .well.well-sm
+            form
+              fieldset
+                input.form-control(type='text' value='#{locals.thanhpho}' placeholder='Chọn thành phố')
+                input.form-control(type='text' value='#{locals.ngay}' placeholder='Chọn ngày')
+                input.form-control(type='text' value='#{locals.tgbd}' placeholder='Thời gian bắt đầu')
+                input.form-control(type='text' value='#{locals.tgkt}' placeholder='Thời gian kết thúc')
+                small
+                  a.btn-advanced-search(href='#') Advanced
+                input.btn.btn-danger.btn-sm.btn-search(type='submit', value='Search')
+        .col-lg-9.content-right
+          h4 Recommended
+          .row.selected-classifieds
+            .col-md-5
+              a(href='#')
+                img.img-responsive(src='http://placehold.it/700x300', alt='')
+            .col-md-7
+              h3 Project One
+              h4 Subheading
+              p
+                | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
+              a.btn.btn-primary.pull-right(href='#')
+                | View Project 
+                span.glyphicon.glyphicon-chevron-right
+          .row.selected-classifieds
+            .col-md-5
+              a(href='#')
+                img.img-responsive(src='http://placehold.it/700x300', alt='')
+            .col-md-7
+              h3 Project One
+              h4 Subheading
+              p
+                | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
+              a.btn.btn-primary.pull-right(href='#')
+                | View Project 
+                span.glyphicon.glyphicon-chevron-right
+          .row.selected-classifieds
+            .col-md-5
+              a(href='#')
+                img.img-responsive(src='http://placehold.it/700x300', alt='')
+            .col-md-7
+              h3 Project One
+              h4 Subheading
+              p
+                | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
+              a.btn.btn-primary.pull-right(href='#')
+                | View Project 
+                span.glyphicon.glyphicon-chevron-right
+      // /Content
+      .footer
+        .well.well-sm
+          .pull-left
+            ul.nav.nav-pills
+              li
+                a(href='addClassified.html')
+                  span.glyphicon.glyphicon-plus
+                  |  Add classified
+          .pull-right
+            ul.nav.nav-pills
+              li
+                a(href='help.html') Help
+              li
+                a(href='contact.html') Contact
+              li
+                a(href='conditions.html') Rules & conditions
+          .clearfix  
+        .pull-right
+          p.text-muted
+            small Copyright © 2013-2014, SenseMedia.cz - All Rights Reserved.
+    // JS
+    script(src='js/jquery-1.10.2.min.js')
+    script(src='js/bootstrap.min.js')
+    script(src='js/respond.min.js')
+    script(src='js/jquery.slides.min.js')
+    // Plugin JavaScript
+    script(src='js/jquery.easing.min.js')
+    script(src='js/jquery.fittext.js')
+    script(src='js/wow.min.js')
+    // Custom Theme JavaScript
+    script(src='js/creative.js')
+    script.
+      $( document ).ready(function() {
+      // Drop down menu handler
+      $('.dropdown-menu').find('form').click(function (e) {
+      e.stopPropagation();
+      });
+      // Slider
+      $("#slides").slidesjs({
+      width: 900,
+      height: 300,
+      navigation: false,
+      play: {
+      active: false,
+      effect: "slide",
+      interval: 4000,
+      auto: true,
+      swap: false,
+      pauseOnHover: true,
+      restartDelay: 2500
+      }
+      });
+      });
+    // /JS

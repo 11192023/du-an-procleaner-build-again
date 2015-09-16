@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var search = require('./routes/search');
 var app = express();
 var fs = require('fs');
 var User = require('./models/user.js');
@@ -24,58 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/search', search);
 
-//test
-app.get('/form', function(req, res) {
-fs.readFile('./form.html', function(error, content) {
-if (error) {
- res.writeHead(500);
- res.end();
- }
- else {
- res.writeHead(200, { 'Content-Type': 'text/html' });
- res.end(content, 'utf-8');
- }
- });
-});
-app.get('/register', function(req, res) {
-fs.readFile('./register.html', function(error, content) {
-if (error) {
- res.writeHead(500);
- res.end();
- }
- else {
- res.writeHead(200, { 'Content-Type': 'text/html' });
- res.end(content, 'utf-8');
- }
- });
-});
-app.get('/timkiem', function(req, res) {
-fs.readFile('./search.html', function(error, content) {
-if (error) {
- res.writeHead(500);
- res.end();
- }
- else {
- res.writeHead(200, { 'Content-Type': 'text/html' });
- res.end(content, 'utf-8');
- }
- });
-});
-app.get('/users/:uid', function(req, res){
-  var pas = User.findUser(req.params.uid, function(err){
-    if(err) throw err;
-  });
-});
-app.post('/signup', function(req, res) {
-  var newuser = new User.newUser();
- newuser.username = req.body.username;
- newuser.password = req.body.password;
- User.addUser(newuser, function(err, user) {
-  if (err) throw err;
- res.redirect('/form');
- });
-});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
