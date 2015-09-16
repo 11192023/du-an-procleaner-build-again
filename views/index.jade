@@ -1,7 +1,5 @@
-extends layout
 doctype html
 html(lang='en')
-block index
   head
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
@@ -24,6 +22,27 @@ block index
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
   body#page-top
+    nav#mainNav.navbar.navbar-default.navbar-fixed-top
+      .container-fluid
+        // Brand and toggle get grouped for better mobile display
+        .navbar-header
+          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+            span.sr-only Toggle navigation
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+          a.navbar-brand.page-scroll(href='#page-top') Start Bootstrap
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav.navbar-right
+            li
+              a.page-scroll(href='#about') About
+            li
+              a.page-scroll(href='#services') Services
+            li
+              a.page-scroll(href='#portfolio') Portfolio
+            li
+              a.page-scroll(href='#contact') Contact
     header
       .header-content
         .header-content-inner

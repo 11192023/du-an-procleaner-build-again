@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var search = require('./routes/search');
+var ngv_chitiet = require('./routes/ngv_chitiet');
 var app = express();
 var fs = require('fs');
 var User = require('./models/user.js');
@@ -23,9 +24,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.all(/^\/ngv_chitiet$/, function(req, res) { res.redirect('/ngv_chitiet/'); });
+app.use('/ngv_chitiet/',express.static(__dirname+'/public'));
+
 app.use('/', routes);
 app.use('/users', users);
 app.use('/search', search);
+app.use('/ngv_chitiet', ngv_chitiet);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

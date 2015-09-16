@@ -6,7 +6,7 @@ router.post('/', function(req, res, next) {
   var ngay = req.body.ngay;
   var tgbd = req.body.tgbd;
   var tgkt = req.body.tgkt;
-  res.writehead('/search' + '?thanhpho=' 
+  res.redirect('/search' + '?thanhpho=' 
   	+ thanhpho + '&ngay=' 
   	+ ngay + '&tgbd=' 
   	+ tgbd + '&tgkt=' 

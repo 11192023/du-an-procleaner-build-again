@@ -1,0 +1,108 @@
+extends layout
+block chitiet
+  .col-lg-9.content-right
+    h4 Samsung Galaxy S4
+    .row
+      .col-md-8
+        .row
+          #slider.col-md-12
+            #carousel-bounding-box.col-md-12(style='padding: 0;')
+              #detailCarousel.carousel.slide
+                .carousel-inner
+                  .active.item(data-slide-number='0')
+                    img.img-responsive(src='img/classifieds/galaxy-s4.jpg')
+                  .item(data-slide-number='1')
+                    img.img-responsive(src='img/1024x768/img2.gif')
+                  .item(data-slide-number='2')
+                    img.img-responsive(src='img/1024x768/img3.gif')
+                  .item(data-slide-number='3')
+                    img.img-responsive(src='img/1024x768/img4.gif')
+                  .item(data-slide-number='4')
+                    img.img-responsive(src='img/1024x768/img5.gif')
+                a.carousel-control.left(href='#detailCarousel', data-slide='prev')
+                  span.glyphicon.glyphicon-chevron-left
+                a.carousel-control.right(href='#detailCarousel', data-slide='next')
+                  span.glyphicon.glyphicon-chevron-right
+        .row
+          #slider-thumbs.col-md-12.hidden-sm.hidden-xs
+            ul.list-inline
+              li
+                a#carousel-selector-0.selected
+                  img.img-responsive(src='img/classifieds/galaxy-s4.jpg')
+              li
+                a#carousel-selector-1
+                  img.img-responsive(src='http://placehold.it/1024x768/e0e0e0/&text=Image+2')
+              li
+                a#carousel-selector-2
+                  img.img-responsive(src='http://placehold.it/1024x768/e0e0e0/&text=Image+3')
+              li
+                a#carousel-selector-3
+                  img.img-responsive(src='http://placehold.it/1024x768/e0e0e0/&text=Image+4')
+              li
+                a#carousel-selector-4
+                  img.img-responsive(src='http://placehold.it/1024x768/e0e0e0/&text=Image+5')
+      .col-md-4
+        table.table.table-condensed.table-hover
+          thead
+            th(colspan='2') Details:
+          tbody(style='font-size: 12px;')
+            tr
+              td Classified ID
+              td 012345
+            tr
+              td Price
+              td 550 EUR
+            tr
+              td Status
+              td New
+            tr
+              td Brand
+              td Samsung
+            tr
+              td Type
+              td Cell Phone
+            tr
+              td Shipping
+              td US, UK, CZ
+            tr
+              td Returns
+              td 14 days money back
+            tr
+              td Payments
+              td PayPal, Credit Card
+        .row
+          .col-md-12
+            span(style='padding-left: 5px;')
+              strong Seller:
+            .well
+              .row
+                .col-sm-12
+                  h4
+                    a(href='#') Novak Jan
+                  small
+                    | Rating: 
+                    span.glyphicon.glyphicon-star
+                    span.glyphicon.glyphicon-star
+                    span.glyphicon.glyphicon-star
+                    span.glyphicon.glyphicon-star
+                    span.glyphicon.glyphicon-star-empty
+                  br
+                  small
+                    | Location: 
+                    cite(title='Prague, Czech Republic')
+                      | Prague, Czech Republic 
+                      span.glyphicon.glyphicon-map-marker
+                  br
+                  span.glyphicon.glyphicon-envelope
+                  |  email@example.com
+                  br
+                  span.glyphicon.glyphicon-phone-alt
+                  |  +420 123 456 789
+                  br
+    .row
+      .col-md-12
+        h4 Description
+        p(style='text-align: justify;')
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at nisl sed nibh ornare pretium. Maecenas tincidunt elementum massa, vitae ultrices ligula viverra et. Phasellus cursus diam non semper iaculis. Maecenas cursus commodo augue id dignissim. Etiam eget ante odio. Suspendisse imperdiet purus purus, ut pellentesque lorem pharetra vitae. Cras sed tortor id tellus rutrum dictum. Morbi viverra urna nec metus pretium, sed ultrices lorem dictum. Nullam mattis turpis dapibus massa molestie.
+    hr
+// /Content
