@@ -443,7 +443,18 @@ fieldset[disabled] .btn-primary.active {
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
     font-weight: 700;
 }
+.btn-danger { 
+  border-color: rgba(34,34,34,.05); background-color: #8CC13D;
+}
 
+.btn-danger:hover { 
+  border-color: #8CC13D; background-color: #02571C; 
+  -webkit-transition: background-color 0.8s;
+    -moz-transition:    background-color 0.8s;
+    -ms-transition:     background-color 0.8s;
+    -o-transition:      background-color 0.8s;
+    transition:         background-color 0.8s;
+}
 .btn-xl {
     padding: 15px 30px;
 }
