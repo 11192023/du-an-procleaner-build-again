@@ -12,7 +12,6 @@ html
     link(href='css/czsale-carousel.css', rel='stylesheet', media='screen')
     link(rel='stylesheet', href='css/animate.min.css', type='text/css')
     link(rel='stylesheet', type='text/css', href='css/normalize.css')
-    link(rel='stylesheet', type='text/css', href='css/demo.css')
     link(rel='stylesheet', type='text/css', href='css/component.css')
   body
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
@@ -36,9 +35,16 @@ html
   .container.wrapper
     .row.content
       .col-lg-3.content-left
-        h4 Khung giờ
-
-        h4 Chuyên môn
+        div.form-inline
+          div.form-group.padright
+            span.glyphicon.glyphicon-time.xanhnhat(aria-hidden="true")
+          div.form-group
+            h4.xanhnhat Khung giờ
+        div.form-inline
+          div.form-group.padright
+            span.glyphicon.glyphicon-tag.xanhnhat(aria-hidden="true")
+          div.form-group
+            h4.xanhnhat Chuyên môn
         form.ac-custom.ac-checkbox.ac-checkmark(autocomplete='off')
           ul
             li
@@ -62,7 +68,11 @@ html
             li
               input#cb12(name='cb12', type='checkbox')
               label(for='cb12') Dọn vệ sinh
-        h4 Quận
+        div.form-inline
+          div.form-group.padright
+            span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
+          div.form-group
+            h4.xanhnhat Quận
         form.ac-custom.ac-checkbox.ac-checkmark(autocomplete='off')
           ul
             li
