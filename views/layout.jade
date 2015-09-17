@@ -11,7 +11,9 @@ html
     link(href='css/czsale-responsive.css', rel='stylesheet', media='screen')
     link(href='css/czsale-carousel.css', rel='stylesheet', media='screen')
     link(rel='stylesheet', href='css/animate.min.css', type='text/css')
-
+    link(rel='stylesheet', type='text/css', href='css/normalize.css')
+    link(rel='stylesheet', type='text/css', href='css/demo.css')
+    link(rel='stylesheet', type='text/css', href='css/component.css')
   body
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
       .container
@@ -36,15 +38,29 @@ html
       .col-lg-3.content-left
         h4 Search
         .well.well-sm
-          form
-            fieldset
-              input.form-control(type='text' value='#{locals.thanhpho}' placeholder='Chọn Quận')
-              input.form-control(type='text' value='#{locals.ngay}' placeholder='Chọn ngày')
-              input.form-control(type='text' value='#{locals.tgbd}' placeholder='Thời gian bắt đầu')
-              input.form-control(type='text' value='#{locals.tgkt}' placeholder='Thời gian kết thúc')
-              small
-                a.btn-advanced-search(href='#') Advanced
-              input.btn.btn-danger.btn-sm.btn-search(type='submit', value='Search')
+          form.ac-custom.ac-checkbox.ac-checkmark(autocomplete='off')
+            ul
+              li
+                input#cb6(name='cb6', type='checkbox')
+                label(for='cb6') Tất cả
+              li
+                input#cb7(name='cb7', type='checkbox')
+                label(for='cb7') Coi trẻ
+              li
+                input#cb8(name='cb8', type='checkbox')
+                label(for='cb8') Trông người già
+              li
+                input#cb9(name='cb9', type='checkbox')
+                label(for='cb9') Nuôi bệnh
+              li
+                input#cb10(name='cb10', type='checkbox')
+                label(for='cb10') Đưa đón bé đi học
+              li
+                input#cb11(name='cb11', type='checkbox')
+                label(for='cb11') Nấu ăn
+              li
+                input#cb12(name='cb12', type='checkbox')
+                label(for='cb12') Dọn vệ sinh
       block search
       block chitiet
     block content
@@ -74,7 +90,8 @@ html
     script(src='js/bootstrap.min.js')
     script(src='js/respond.min.js')
     script(src='js/jquery.slides.min.js')
-    
+    script(src='js/svgcheckbx.js')
+
     // Custom Theme JavaScript
     script(src='js/creative.js')
     script.
