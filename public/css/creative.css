@@ -123,7 +123,7 @@ aside {
 
 @media(min-width:768px) {
     .navbar-default {
-        border-color: #02571C;
+        border-color: transparent;
         background-color: transparent;
     }
 
