@@ -2,18 +2,21 @@ var db = require('../lib/db');
 var NgvSchema = new db.Schema({
     cmnd : {type: Number, unique: true},
     hoten : String,
+    ngaysinh : Date,
+    sodt : Number,
+    quequan : String,
+    diachi : {
+        phuong : String,
+        quan : String
+    },
+    sotruong :[{ tensotruong : String}],
     sonamkinhnghiem : Number,
     motakinhnghiem : String,
-    hinhanh : [ {url : String} ],
+    hinhanh : String,
     giaykhamsuckhoe : [ {url : String} ],
-    sodt : Number,
-    trangthai : Boolean,
-    quequan : String,
+    //trangthai : Boolean,
     luongcodinh : Number,
-    luongbanthoigian : Number,
-    diachi : String,
-    //mỗi người giúp việc thuộc 1 quận
-    quan : {type: String, ref : "quan"}
+    mucluongtheogio : Number,
     //ngày bận là mảng những ngày bận, 1 ngày có nhiều khung giờ bận
     ngayban : [{
         ngay : Date,

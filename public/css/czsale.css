@@ -81,24 +81,41 @@ a.list-subgroup-item:hover, a.list-subgroup-item.active, a.list-subgroup-item.ac
 
 /* navbar */
 .navbar-default {
-    background-color: #8CC13D;
-    border-color: #02571C;
+    border-color: rgba(34,34,34,.05);
+    font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+    background-color: rgba(140,193,61,0.8);
+    -webkit-transition: all .35s;
+    -moz-transition: all .35s;
+    transition: all .35s;
 }
-/* title */
-.navbar-default .navbar-brand {
-    color: #02571C;
+.navbar-default .navbar-header .navbar-brand {
+    text-transform: uppercase;
+    font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+    font-weight: 700;
+    color: #fff;
 }
+
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
     color: #02571C;
+    -webkit-transition: color 0.8s;
+    -moz-transition:    color 0.8s;
+    -ms-transition:     color 0.8s;
+    -o-transition:      color 0.8s;
+    transition:         color 0.8s;
 }
 /* link */
 .navbar-default .navbar-nav > li > a {
-    color: #02571C;
+    color: #fff;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
     color: #02571C;
+    -webkit-transition: color 0.8s;
+    -moz-transition:    color 0.8s;
+    -ms-transition:     color 0.8s;
+    -o-transition:      color 0.8s;
+    transition:         color 0.8s;
 }
 .navbar-default .navbar-nav > .active > a, 
 .navbar-default .navbar-nav > .active > a:hover, 
@@ -128,6 +145,7 @@ a.list-subgroup-item:hover, a.list-subgroup-item.active, a.list-subgroup-item.ac
     border-top-color: #02571C;
     border-bottom-color: #02571C;
 }
+
 /* mobile version */
 .navbar-default .navbar-toggle {
     border-color: #02571C;
@@ -156,11 +174,16 @@ a.list-subgroup-item:hover, a.list-subgroup-item.active, a.list-subgroup-item.ac
 /* button color */
 
 .btn-danger { 
-  border-color: #8CC13D; background-color: #02571C;
+  border-color: rgba(34,34,34,.05); background-color: #8CC13D;
 }
 
 .btn-danger:hover { 
-  border-color: #02571C; background-color: #8CC13D; 
+  border-color: #8CC13D; background-color: #02571C; 
+  -webkit-transition: background-color 0.8s;
+    -moz-transition:    background-color 0.8s;
+    -ms-transition:     background-color 0.8s;
+    -o-transition:      background-color 0.8s;
+    transition:         background-color 0.8s;
 }
 
 
