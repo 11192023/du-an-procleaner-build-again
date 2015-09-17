@@ -5,7 +5,9 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-
+.form {
+	border-style: solid;
+}
 .ac-custom {
 	padding: 0 3em;
 	max-width: 900px;
