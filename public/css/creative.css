@@ -17,7 +17,9 @@ body {
 body {
     font-family: Merriweather,'Helvetica Neue',Arial,sans-serif;
 }
-
+.marginbtm{
+    margin-bottom: 30px;
+}
 hr {
     max-width: 50px;
     border-color: #02571C;
@@ -76,7 +78,8 @@ p {
 }
 
 section {
-    padding: 100px 0;
+    padding-top: 30px;
+    padding-bottom: 70px;
 }
 
 aside {
@@ -258,7 +261,7 @@ header .header-content .header-content-inner p {
 }
 
 .section-heading {
-    margin-top: 0;
+    margin-bottom: 10px;
 }
 
 .service-box {
