@@ -1,108 +1,114 @@
 extends layout
 block chitiet
-  .col-lg-9.content-right
-    h4 Samsung Galaxy S4
-    .row
-      .col-md-8
+  .container.wrapper
+    .row.content
+      .col-lg-3.content-left
         .row
-          #slider.col-md-12
-            #carousel-bounding-box.col-md-12(style='padding: 0;')
-              #detailCarousel.carousel.slide
-                .carousel-inner
-                  .active.item(data-slide-number='0')
-                    img.img-responsive(src='img/classifieds/galaxy-s4.jpg')
-                  .item(data-slide-number='1')
-                    img.img-responsive(src='img/1024x768/img2.gif')
-                  .item(data-slide-number='2')
-                    img.img-responsive(src='img/1024x768/img3.gif')
-                  .item(data-slide-number='3')
-                    img.img-responsive(src='img/1024x768/img4.gif')
-                  .item(data-slide-number='4')
-                    img.img-responsive(src='img/1024x768/img5.gif')
-                a.carousel-control.left(href='#detailCarousel', data-slide='prev')
-                  span.glyphicon.glyphicon-chevron-left
-                a.carousel-control.right(href='#detailCarousel', data-slide='next')
-                  span.glyphicon.glyphicon-chevron-right
+      .col-lg-9.content-right
+        h4 Thông tin chi tiết
         .row
-          #slider-thumbs.col-md-12.hidden-sm.hidden-xs
-            ul.list-inline
-              li
-                a#carousel-selector-0.selected
-                  img.img-responsive(src='img/classifieds/galaxy-s4.jpg')
-              li
-                a#carousel-selector-1
-                  img.img-responsive(src='http://placehold.it/1024x768/e0e0e0/&text=Image+2')
-              li
-                a#carousel-selector-2
-                  img.img-responsive(src='http://placehold.it/1024x768/e0e0e0/&text=Image+3')
-              li
-                a#carousel-selector-3
-                  img.img-responsive(src='http://placehold.it/1024x768/e0e0e0/&text=Image+4')
-              li
-                a#carousel-selector-4
-                  img.img-responsive(src='http://placehold.it/1024x768/e0e0e0/&text=Image+5')
-      .col-md-4
-        table.table.table-condensed.table-hover
-          thead
-            th(colspan='2') Details:
-          tbody(style='font-size: 12px;')
-            tr
-              td Classified ID
-              td 012345
-            tr
-              td Price
-              td 550 EUR
-            tr
-              td Status
-              td New
-            tr
-              td Brand
-              td Samsung
-            tr
-              td Type
-              td Cell Phone
-            tr
-              td Shipping
-              td US, UK, CZ
-            tr
-              td Returns
-              td 14 days money back
-            tr
-              td Payments
-              td PayPal, Credit Card
+          .col-md-4
+            a(href='#')
+              img.img-responsive(src='img/placeholder_user.png', alt='')
+          .col-md-8
+            table.table.table-condensed.table-hover
+              thead
+                th(colspan='2') Thông tin:
+              tbody(style='font-size: 12px;')
+                tr
+                  td(width="20%")
+                    div.form-inline
+                      div.form-group.padright
+                        i.fa.fa-2x.fa-user.xanhnhat
+                      div.form-group
+                        h5.xanhdam Họ tên
+                  td(width="25%")
+                    div.form-inline
+                      div.form-group.padright
+                      div.form-group
+                        h5.xanhdam Mr. A
+                  td(width="25%")
+                    div.form-inline
+                      div.form-group.padright
+                        i.fa.fa-2x.fa-venus-mars.xanhnhat
+                      div.form-group
+                        h5.xanhdam Giới tính
+                  td(width="30%")
+                    div.form-inline
+                      div.form-group.padright
+                      div.form-group
+                        h5.xanhdam Nam
+                tr
+                  td 
+                    div.form-inline
+                      div.form-group.padright
+                        i.fa.fa-2x.fa-clock-o.xanhnhat
+                      div.form-group
+                        h5.xanhdam Tuổi
+                  td 
+                    div.form-inline
+                      div.form-group.padright
+                      div.form-group
+                        h5.xanhdam 30
+                  td 
+                    div.form-inline
+                      div.form-group.padright
+                        i.fa.fa-2x.fa-check-circle-o.xanhnhat
+                      div.form-group
+                        h5.xanhdam Kinh nghiệm
+                  td 
+                    div.form-inline
+                      div.form-group.padright
+                      div.form-group
+                        h5.xanhdam 5 năm
+                        
+            hr
+            div.form-inline
+              div.form-group.padright
+                i.fa.fa-2x.fa-tags.xanhnhat
+              div.form-group.padright
+                h6.xanhdam Sở trường
+              div.form-group
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Coi trẻ')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Trông người già')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Nuôi bệnh')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Đưa đón bé đi học')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Nấu ăn')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Dọn vệ sinh')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Coi trẻ')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Trông người già')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Nuôi bệnh')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Đưa đón bé đi học')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Nấu ăn')
+                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Dọn vệ sinh')
+            hr
+
+            button.btn.btn-danger.pull-right(type='button')
+              i.fa.fa-2x.fa-suitcase
+              |  Thuê người này
         .row
           .col-md-12
-            span(style='padding-left: 5px;')
-              strong Seller:
-            .well
-              .row
-                .col-sm-12
-                  h4
-                    a(href='#') Novak Jan
-                  small
-                    | Rating: 
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star
-                    span.glyphicon.glyphicon-star-empty
-                  br
-                  small
-                    | Location: 
-                    cite(title='Prague, Czech Republic')
-                      | Prague, Czech Republic 
-                      span.glyphicon.glyphicon-map-marker
-                  br
-                  span.glyphicon.glyphicon-envelope
-                  |  email@example.com
-                  br
-                  span.glyphicon.glyphicon-phone-alt
-                  |  +420 123 456 789
-                  br
-    .row
-      .col-md-12
-        h4 Description
-        p(style='text-align: justify;')
-          | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean at nisl sed nibh ornare pretium. Maecenas tincidunt elementum massa, vitae ultrices ligula viverra et. Phasellus cursus diam non semper iaculis. Maecenas cursus commodo augue id dignissim. Etiam eget ante odio. Suspendisse imperdiet purus purus, ut pellentesque lorem pharetra vitae. Cras sed tortor id tellus rutrum dictum. Morbi viverra urna nec metus pretium, sed ultrices lorem dictum. Nullam mattis turpis dapibus massa molestie.
-    hr
-// /Content
+            .card
+              ul.nav.nav-tabs(role='tablist')
+                li.active(role='presentation')
+                  a(href='#home', aria-controls='home', role='tab', data-toggle='tab') Home
+                li(role='presentation')
+                  a(href='#profile', aria-controls='profile', role='tab', data-toggle='tab') Profile
+                li(role='presentation')
+                  a(href='#messages', aria-controls='messages', role='tab', data-toggle='tab') Messages
+                li(role='presentation')
+                  a(href='#settings', aria-controls='settings', role='tab', data-toggle='tab') Settings
+              // Tab panes
+              .tab-content
+                #home.tab-pane.active(role='tabpanel')
+                  | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                #profile.tab-pane(role='tabpanel')
+                  | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                #messages.tab-pane(role='tabpanel')
+                  | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                #settings.tab-pane(role='tabpanel')
+                  | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passage..
+
+
+        hr
+    // /Content

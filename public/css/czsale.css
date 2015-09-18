@@ -1,11 +1,10 @@
 body {
   padding: 10px 20px 10px 20px;
 }
-
 a {
   color: #777777;
 }
-
+table 
 a:hover {
   color: #000;
 }
@@ -18,6 +17,10 @@ a:hover {
 }
 .padright{
   padding-right: 4px;
+}
+.tagmargin{
+  margin-right: 4px;
+  margin-top: 4px;
 }
 .wrapper {
   position: relative;
