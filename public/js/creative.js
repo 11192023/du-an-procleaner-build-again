@@ -5,8 +5,19 @@
  */
 
 (function($) {
+    $(document).ready(function(){
+      $('.slicktest').slick({
+        dots: false,
+        /* Just changed this to get the bottom dots navigation */
+        infinite: true,
+        speed: 300,
+        slidesToShow: 4,
+        slidesToScroll: 1,
+        rows: 2,
+        arrows: true
+      });
+    });
     "use strict"; // Start of use strict
-
     // jQuery for page scrolling feature - requires jQuery Easing plugin
     $('a.page-scroll').bind('click', function(event) {
         var $anchor = $(this);

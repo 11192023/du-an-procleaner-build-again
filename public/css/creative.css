@@ -4,10 +4,20 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+.padtop{
+    padding-top: 10px;
+}
+.slick-prev:before, .slick-next:before{
+    color: #02571C;
+}
+
 p{
     color: #fff;
 }
-
+.slicktest{
+    margin: 60px auto;
+    width: 95%;
+}
 html,
 body {
     width: 100%;
