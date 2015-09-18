@@ -4,6 +4,10 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+p{
+    color: #02571C;
+}
+
 html,
 body {
     width: 100%;
@@ -62,7 +66,7 @@ p {
 }
 
 .text-faded {
-    color: rgba(255,255,255,.7);
+    color: rgba(2,87,28,.7);
 }
 
 section {
@@ -264,6 +268,7 @@ header .header-content .header-content-inner p {
 
 .service-box p {
     margin-bottom: 0;
+    color: #02571C;
 }
 
 .portfolio-box {
@@ -452,7 +457,7 @@ fieldset[disabled] .btn-primary.active {
     font-weight: 700;
 }
 .btn-danger { 
-  border-color: rgba(34,34,34,.05); background-color: #8CC13D;
+  border-color: rgba(34,34,34,.05); background-color: rgba(2,87,28,.5);
 }
 
 .btn-danger:hover { 
