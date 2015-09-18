@@ -11,7 +11,7 @@
         /* Just changed this to get the bottom dots navigation */
         infinite: true,
         speed: 300,
-        slidesToShow: 4,
+        slidesToShow: 5,
         slidesToScroll: 1,
         rows: 2,
         arrows: true,
