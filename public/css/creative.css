@@ -5,7 +5,7 @@
  */
 
 p{
-    color: #02571C;
+    color: #fff;
 }
 
 html,
@@ -66,7 +66,7 @@ p {
 }
 
 .text-faded {
-    color: rgba(2,87,28,.7);
+    color: rgb(255,255,255);
 }
 
 section {
