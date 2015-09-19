@@ -40,11 +40,11 @@
             slidesToScroll: 1,
             arrows: false
           }
-    }
-    // You can unslick at a given breakpoint now by adding:
-    // settings: "unslick"
-    // instead of a settings object
-  ]
+        }
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ]
       });
     });
     "use strict"; // Start of use strict

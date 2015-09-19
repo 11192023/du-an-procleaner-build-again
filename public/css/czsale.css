@@ -1,3 +1,4 @@
+
 body {
   padding: 10px 20px 10px 20px;
 }
@@ -95,7 +96,7 @@ a.list-subgroup-item:hover, a.list-subgroup-item.active, a.list-subgroup-item.ac
 .navbar-default {
     border-color: rgba(34,34,34,.05);
     font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
-    background-color: rgba(140,193,61,0.8);
+    background-color: #fff;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -118,11 +119,11 @@ a.list-subgroup-item:hover, a.list-subgroup-item.active, a.list-subgroup-item.ac
 }
 /* link */
 .navbar-default .navbar-nav > li > a {
-    color: #fff;
+    color: #02571C;
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-    color: #02571C;
+    color: #8CC13D;
     -webkit-transition: color 0.8s;
     -moz-transition:    color 0.8s;
     -ms-transition:     color 0.8s;

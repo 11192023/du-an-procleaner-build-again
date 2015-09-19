@@ -35,7 +35,7 @@ html(lang='en')
             span.icon-bar
             span.icon-bar
           a(href='#')
-            img(src='img/logo.jpg', alt='')
+            img(src='img/logo.gif', alt='')
         // Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav.navbar-right
@@ -46,9 +46,11 @@ html(lang='en')
             li
               a.page-scroll(href='#portfolio') Người giúp việc
             li
-              a.page-scroll(href='#contact') Bảng giá
+              a.page-scroll(href='#', data-toggle='modal', data-target='#banggia') Bảng giá
             li
-              a.page-scroll(href='#contact') hỏi đáp
+              a.page-scroll(href='#', data-toggle='modal', data-target='#hoidap') Hỏi đáp
+            li
+              a.page-scroll(href='#', data-toggle='modal', data-target='#chinhsach') Chính sách
             li
               a.page-scroll(href='#contact') Liên hệ
     header
@@ -265,21 +267,118 @@ html(lang='en')
               h5.text-center Name : Lê Văn A
               h5.text-center Tuổi : 30
               h5.text-center Kinh Nghiệm : 4 năm
-    section#contact
+    section#contact.contactbg
       .container
         .row
-          .col-lg-8.col-lg-offset-2.text-center
-            h2.section-heading Let's Get In Touch!
-            hr.primary
-            p
-              | Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!
-          .col-lg-4.col-lg-offset-2.text-center
-            i.fa.fa-phone.fa-3x.wow.bounceIn
-            p 123-456-6789
-          .col-lg-4.text-center
-            i.fa.fa-envelope-o.fa-3x.wow.bounceIn(data-wow-delay='.1s')
-            p
-              a(href='mailto:your-email@your-domain.com') feedback@startbootstrap.com
+          .col-lg-12.center
+            h2.section-heading.chutrang Contact Us
+            br
+        .row
+          div.divform
+            form#contactForm.center(name='sentMessage', novalidate='')
+              .row
+                .col-xs-6
+                  div.form-group.padright
+                    input#name.form-control(type='text', placeholder='Your Name *', required='', data-validation-required-message='Please enter your name.')
+                    p.help-block.text-danger
+                .col-xs-6
+                  div.form-group
+                    input#phone.form-control(type='tel', placeholder='Your Phone *', required='', data-validation-required-message='Please enter your phone number.')
+                    p.help-block.text-danger
+              br
+              .row
+                .col-xs-12
+                  .form-group
+                    input#email.form-control(type='email', placeholder='Your Email *', required='', data-validation-required-message='Please enter your email address.')
+                    p.help-block.text-danger
+              br
+              .row
+                .col-xs-12
+                  .form-group
+                    textarea#message.form-control(placeholder='Your Message *', required='', data-validation-required-message='Please enter a message.')
+                    p.help-block.text-danger
+                .clearfix
+              .row
+                #success
+                button.btn.btn-danger.btn-xl(type='submit') Send Message
+    section#footer.bg-dark
+      .container
+        .col-lg-3
+          h1.chutrang.logofont ProCleaner
+          div.form-inline
+            div.form-group.padright
+              i.fa.fa-phone
+            div.form-group
+              h5.chutrang 123-456-6789
+          div.form-inline
+            div.form-group.padright
+              i.fa.fa-envelope
+            div.form-group
+              h5.chutrang procleaner@gmail.com.vn
+        .col-xs-3.marbtm.pull-right
+          h3.chutrang.padtop Kết nối với ProCleaner
+          div.form-inline.text-center.padtop
+            div.form-group.padrightico
+              a.btn.btn-circle-sm.btn-default(href='#')
+                i.fa.fa-facebook
+            div.form-group.padrightico
+              a.btn.btn-circle-sm.btn-default(href='#')
+                i.fa.fa-twitter
+            div.form-group.padrightico
+              a.btn.btn-circle-sm.btn-default(href='#')
+                i.fa.fa-google-plus
+            div.form-group.padrightico
+              a.btn.btn-circle-sm.btn-default(href='#')
+                i.fa.fa-linkedin
+      .container
+        .col-lg-3.marbtm
+          .div.form-inline
+            .div.form-group.padright
+              i.fa.fa-copyright
+            .div.form-group
+              h5.chutrang Copyright by ProCleaner
+#banggia.modal.fade(role='dialog')
+  .modal-dialog
+    // Modal content
+    .modal-content
+      .modal-header.bgxanhdam
+        button.close(type='button', data-dismiss='modal') ×
+        h4.biggerfont.modal-title Bảng giá
+      .modal-body
+        table.table.table-bordered
+          thead
+            tr
+              th Firstname
+              th Lastname
+              th Email
+          tbody
+            tr
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td Mary
+              td Moe
+              td mary@example.com
+            tr
+              td July
+              td Dooley
+              td july@example.com
+      .modal-footer
+        button.btn.btn-default(type='button', data-dismiss='modal') Close
+.div#hoidap.modal.fade(role='dialog')
+  div.modal-dialog.modal-lg
+    div.modal-content
+      div.modal-header
+      div.modal-body
+      div.modal-footer
+.div#chinhsach.modal.fade(role='dialog')
+  div.modal-dialog
+    div.modal-content
+      div.modal-header
+      div.modal-body
+      div.modal-footer
+
     // jQuery
     script(src='js/jquery.js')
     // Bootstrap Core JavaScript

@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var search = require('./routes/search');
+var search_daihan = require('./routes/search_daihan');
 var ngv_chitiet = require('./routes/ngv_chitiet');
 var app = express();
 var fs = require('fs');
@@ -31,6 +32,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/search', search);
 app.use('/ngv_chitiet', ngv_chitiet);
+app.use('/search_daihan', search_daihan);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

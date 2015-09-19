@@ -4,6 +4,88 @@
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
 
+.center{
+    text-align: center;
+}
+.center form{
+    display: inline-block;
+}
+.divform{
+    padding-left: 250px;
+    padding-right: 250px;
+}
+.btn-circle {
+  width: 49px;
+  height: 49px;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 20px;
+  line-height: 2.00;
+  border-radius: 30px;
+}
+
+.btn-circle-micro {
+  width: 19px;
+  height: 19px;
+  text-align: center;
+  padding: 1px 0;
+  font-size: 13px;
+  line-height: 0.1;
+  border-radius: 30px;
+}
+body.modal-open {
+    overflow: auto;
+}
+body.modal-open[style] {
+    padding-right: 0px !important;
+}
+
+.btn-circle-sm {
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  padding: 2px 0;
+  font-size: 20px;
+  line-height: 1.65;
+  border-radius: 30px;
+}
+.contactbg{
+    background-image: url(../img/map-image.png);
+    background-color: rgba(2,87,28,0.8);
+    position: relative;
+    width: 100%;
+    min-height: auto;
+    text-align: center;
+    color: #fff;
+    background-position: top;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+.btn-circle-lg {
+  width: 79px;
+  height: 79px;
+  text-align: center;
+  padding: 13px 0;
+  font-size: 30px;
+  line-height: 2.00;
+  border-radius: 70px;
+}
+.chutrang {
+    color: white!important;
+}
+.logofont{
+    font-size: 40px!important;
+}
+.bgxanhdam{
+    background-color: #02571C
+}
+
+.bgxanhnhat{
+    background-color: #8CC13D
+}
+
 .h5.whitecolor{
     color: white;
 }
@@ -13,6 +95,12 @@
 }
 .padtop{
     padding-top: 10px;
+}
+.padright{
+    padding-right: 5px;
+}
+.padrightico{
+    padding-right: 10px;
 }
 .slick-prev:before, .slick-next:before{
     color: #02571C;
@@ -48,7 +136,7 @@ hr.light {
 }
 
 a {
-    color: #f05f40;
+    color: #8CC13D;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -86,8 +174,8 @@ p {
     color: #8CC13D;
 }
 .bg-dark {
-    color: #02571C;
-    background-color: #8CC13D;
+    color: white;
+    background-color: #02571C;
 }
 
 .text-faded {

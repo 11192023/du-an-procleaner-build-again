@@ -1,0 +1,75 @@
+extends layout
+
+block search
+  .container.wrapper
+    .row.content
+      .col-lg-3.content-left
+        div.form-inline
+          div.form-group.padright
+            span.glyphicon.glyphicon-time.xanhnhat(aria-hidden="true")
+          div.form-group
+            h4.xanhnhat Khung giờ
+        div.form-inline
+          div.form-group.padright
+            span.glyphicon.glyphicon-calendar.xanhnhat(aria-hidden="true")
+          div.form-group
+            h4.xanhnhat Ngày
+        div.form-inline
+          div.form-group.padright
+            span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
+          div.form-group
+            h4.xanhnhat Chuyên môn
+        form.ac-custom.ac-checkbox.ac-checkmark(autocomplete='off')
+          ul
+            li
+              input#cb6(name='cb6', type='checkbox')
+              label(for='cb6') Tất cả
+            li
+              input#cb7(name='cb7', type='checkbox')
+              label(for='cb7') Coi trẻ
+            li
+              input#cb8(name='cb8', type='checkbox')
+              label(for='cb8') Trông người già
+            li
+              input#cb9(name='cb9', type='checkbox')
+              label(for='cb9') Nuôi bệnh
+            li
+              input#cb10(name='cb10', type='checkbox')
+              label(for='cb10') Đưa đón bé đi học
+            li
+              input#cb11(name='cb11', type='checkbox')
+              label(for='cb11') Nấu ăn
+            li
+              input#cb12(name='cb12', type='checkbox')
+              label(for='cb12') Dọn vệ sinh
+        div.form-inline
+          div.form-group.padright
+            span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
+          div.form-group
+            h4.xanhnhat Quận
+        form.ac-custom.ac-checkbox.ac-checkmark(autocomplete='off')
+          ul
+            li
+              input#cb13(name='cb13', type='checkbox')
+              label(for='cb13') Quận 1
+            li
+              input#cb14(name='cb14', type='checkbox')
+              label(for='cb14') Quận 2
+            li
+              input#cb15(name='cb15', type='checkbox')
+              label(for='cb15') Quận 3
+            li
+              input#cb16(name='cb16', type='checkbox')
+              label(for='cb16') Quận 4
+            li
+              input#cb17(name='cb17', type='checkbox')
+              label(for='cb17') Quận 5
+            li
+              input#cb18(name='cb18', type='checkbox')
+              label(for='cb18') Quận 6
+            li
+              input#cb19(name='cb19', type='checkbox')
+              label(for='cb19') Quận 7
+      .col-lg-9.content-right
+        .div#calendar
+    // /Content

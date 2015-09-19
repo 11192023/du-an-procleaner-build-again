@@ -7,6 +7,7 @@ html
     meta(name='keywords', content='...')
     meta(name='author', content='...')
     link(href='css/bootstrap.css', rel='stylesheet', media='screen')
+    link(href='fullcalendar/fullcalendar.css', rel='stylesheet', media='screen')
     link(href='css/czsale.css', rel='stylesheet', media='screen')
     link(href='css/czsale-responsive.css', rel='stylesheet', media='screen')
     link(href='css/czsale-carousel.css', rel='stylesheet', media='screen')
@@ -23,7 +24,8 @@ html
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a.navbar-brand(href='#') Project name
+          a(href='#')
+            img(src='img/logo.gif', alt='')
         #navbar.navbar-collapse.collapse
           ul.nav.navbar-nav.navbar-right
             li
@@ -60,11 +62,13 @@ html
         small Copyright © 2013-2014, SenseMedia.cz - All Rights Reserved.
     // JS
     script(src='js/jquery-1.10.2.min.js')
+    script(src='fullcalendar/lib/moment.min.js')
+    script(src='fullcalendar/fullcalendar.js')
     script(src='js/bootstrap.min.js')
     script(src='js/respond.min.js')
     script(src='js/jquery.slides.min.js')
     script(src='js/svgcheckbx.js')
-
+    script(src='js/my_calendar.js')
     // Custom Theme JavaScript
     script.
       $( document ).ready(function() {
