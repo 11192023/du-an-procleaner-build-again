@@ -3,6 +3,14 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
+input[type=text] {
+    height: 50px;
+    border-radius: 0px!important;
+}
+input[type=submit] {
+    height: 50px;
+    border-radius: 0px!important;
+}
  /* responsive search bar */
 @media
     only screen and (max-width: 1024px),
