@@ -136,8 +136,8 @@
 			.primaryPalette('green');
 	});
 
-	indexModule.controller('indexController', function($scope, $http){
-
+	indexModule.controller('searchbarController', function($scope, $http){
+		$scope.formData = {};
 	});
 
 })();

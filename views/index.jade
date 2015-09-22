@@ -26,7 +26,7 @@ html(lang='en')
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-  body#page-top
+  body#page-top(ng-app='IndexModule')
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
         // Brand and toggle get grouped for better mobile display
@@ -60,13 +60,14 @@ html(lang='en')
         .header-content-inner
           h1.smallerh1 GIÚP VIỆC CHUYÊN NGHIỆP
           h2 Tìm người giúp việc trong TP.HCM
-          form.form-inline(action='/search')
-            .form-group(style='margin-top:7px')
-              input.form-control(type='text', name='thanhpho', placeholder='Chọn Quận')
-              input.form-control(type='text', name='ngay', placeholder='Chọn ngày')
-              input.form-control(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
-              input.form-control(type='text', name='tgkt', placeholder='Thời gian kết thúc')
-              input.btn.btn-danger(type='submit', value='Tìm kiếm')
+          div(ng-controller='searchbarController')
+            form.form-inline(action='/search')
+              .form-group(style='margin-top:7px')
+                input.form-control(type='text', name='thanhpho', placeholder='Chọn Quận')
+                input.form-control(type='text', name='ngay', placeholder='Chọn ngày')
+                input.form-control(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
+                input.form-control(type='text', name='tgkt', placeholder='Thời gian kết thúc')
+                input.btn.btn-danger(type='submit', value='Tìm kiếm')
     section#about.bg-primary
       .container
         .row

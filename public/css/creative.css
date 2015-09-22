@@ -3,6 +3,9 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
+ /* responsive search bar */
+
+
  /* table responsive */
 table { 
     width: 100%; 
@@ -25,7 +28,9 @@ td, th {
 @media
     only screen and (max-width: 1024px),
     (min-device-width: 1024px) and (max-device-width: 1280px)  {
-
+        .btn{
+            width: 100%;
+        }
         /* Force table to not be like tables anymore */
         table, thead, tbody, th, td, tr {
             display: block;
