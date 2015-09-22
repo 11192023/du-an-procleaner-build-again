@@ -3,6 +3,20 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
+.panel.panel-default{
+    margin-bottom: 0px!important;
+    border-radius: 0px!important;
+    border-color: #8CC13D!important;
+}
+.panel-heading{
+    background-color: #8CC13D!important;
+    cursor: pointer!important;
+}
+.active-panel {
+    background-color: #02571C!important;
+    color: white!important;
+}
+
 input[type=text] {
     height: 50px;
     border-radius: 0px!important;
@@ -84,12 +98,15 @@ td, th {
         /*
         Label the data
         */
-        td:nth-of-type(1):before { content: "FirstName"; }
-        td:nth-of-type(2):before { content: "LastName"; }
-        td:nth-of-type(3):before { content: "Email"; }
-        td:nth-of-type(4):before { content: "Giá tiền"; }
-        td:nth-of-type(5):before { content: "Loại hình"; }
-        td:nth-of-type(6):before { content: "Mệnh giá"; }
+        td:nth-of-type(1):before { content: "Ngày/tháng"; }
+        td:nth-of-type(2):before { content: "Ngày/tuần"; }
+        td:nth-of-type(3):before { content: "2 giờ/ngày"; }
+        td:nth-of-type(4):before { content: "3 giờ/ngày"; }
+        td:nth-of-type(5):before { content: "4 giờ/ngày"; }
+        td:nth-of-type(6):before { content: "5 giờ/ngày"; }
+        td:nth-of-type(7):before { content: "6 giờ/ngày"; }
+        td:nth-of-type(8):before { content: "7 giờ/ngày"; }
+        td:nth-of-type(9):before { content: "8 giờ/ngày"; }
     }
 
     /* Smartphones (portrait and landscape) ----------- */
@@ -204,6 +221,9 @@ body.modal-open[style] {
 }
 .padright{
     padding-right: 5px;
+}
+.padleft{
+    padding-left: 25px;
 }
 .padrightico{
     padding-right: 10px;

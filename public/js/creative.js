@@ -6,6 +6,12 @@
 
 (function($) {
     $(document).ready(function(){
+        $('#mypanel > .panel').on('show.bs.collapse', function (e) {
+            $(this).find('.panel-heading').addClass("active-panel");
+        });
+        $('#mypanel > .panel').on('hide.bs.collapse', function (e) {
+            $(this).find('.panel-heading').removeClass("active-panel");
+        });
       $('.slicktest').slick({
         dots: false,
         /* Just changed this to get the bottom dots navigation */

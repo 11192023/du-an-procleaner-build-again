@@ -198,14 +198,14 @@
 	searchModule.controller('timeController', function($scope){
 	  	$scope.myDatetimeRange = {
 		    "time": {
-		    "from": 390,
-		    "to": 1020,
-		    "dFrom": 0,
-		    "dTo": 1440,
-		    "step": 15,
-		    "minRange": 15,
-		    "hours24": false
-		  },
+			    "from": 390,
+			    "to": 1020,
+			    "dFrom": 0,
+			    "dTo": 1440,
+			    "step": 15,
+			    "minRange": 15,
+			    "hours24": true
+		  	},
 		  "hasDatePickers": false,
 		  "hasTimeSliders": true
 		}

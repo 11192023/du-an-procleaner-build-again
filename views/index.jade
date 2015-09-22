@@ -9,6 +9,8 @@ html(lang='en')
     title Creative - Start Bootstrap Theme
     // Angular-material
     link(rel='stylesheet', href='https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css')
+    //materialize
+    
     // Bootstrap Core CSS
     link(rel='stylesheet', href='css/bootstrap.min.css', type='text/css')
     // Custom Fonts
@@ -17,7 +19,6 @@ html(lang='en')
     // Plugin CSS
     link(rel='stylesheet', href='css/animate.min.css', type='text/css')
     // Custom CSS
-    
     link(rel='stylesheet', href='slick/slick.css', type='text/css')
     link(rel='stylesheet', href='slick/slick-theme.css', type='text/css')
     link(rel='stylesheet', href='css/creative.css', type='text/css')
@@ -26,7 +27,7 @@ html(lang='en')
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-  body#page-top(ng-app='IndexModule')
+  body#page-top
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
         // Brand and toggle get grouped for better mobile display
@@ -60,7 +61,7 @@ html(lang='en')
         .header-content-inner
           h1.smallerh1 GIÚP VIỆC CHUYÊN NGHIỆP
           h2 Tìm người giúp việc trong TP.HCM
-          div(ng-controller='searchbarController')
+          div
             form.form-inline(action='/search')
               .form-group(style='margin-top:7px')
                 input.form-control.sb(type='text', name='thanhpho', placeholder='Chọn Quận')
@@ -349,106 +350,321 @@ html(lang='en')
         h4.biggerfont.modal-title.chutrang Bảng giá
       .modal-body
         table.table-bordered
+          h4 Bảng giá của một giờ làm việc (đơn vị tính: VNĐ)
           thead
             tr
-              th Firstname
-              th Lastname
-              th Email
-              th giá tiền
-              th loại hình
-              th mệnh giá
+              th Ngày/tháng
+              th Ngày/tuần
+              th 2 giờ/ngày
+              th 3 giờ/ngày
+              th 4 giờ/ngày
+              th 5 giờ/ngày
+              th 6 giờ/ngày
+              th 7 giờ/ngày
+              th 8 giờ/ngày
           tbody
             tr
-              td John
-              td Doe
-              td john@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 4
+              td 1
+              td 65.000
+              td 62.000
+              td 59.000
+              td 56.000
+              td 53.000
+              td 50.000
+              td 48.000
             tr
-              td Mary
-              td Moe
-              td mary@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 8
+              td 2
+              td 55.000
+              td 52.000
+              td 50.000
+              td 48.000
+              td 46.000
+              td 42.000
+              td 39.000
             tr
-              td July
-              td Dooley
-              td july@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 12
+              td 3
+              td 51.000
+              td 48.000
+              td 45.000
+              td 42.000
+              td 38.000
+              td 35.000
+              td 33.000
             tr
-              td John
-              td Doe
-              td john@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 16
+              td 4
+              td 49.000
+              td 45.000
+              td 42.000
+              td 40.000
+              td 35.000
+              td 33.000
+              td 30.000
             tr
-              td Mary
-              td Moe
-              td mary@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 20
+              td 5
+              td 45.000
+              td 43.000
+              td 40.000
+              td 35.000
+              td 31.000
+              td 29.000
+              td 27.000
             tr
-              td July
-              td Dooley
-              td july@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 24
+              td 6
+              td 45.000
+              td 42.000
+              td 35.000
+              td 33.000
+              td 29.000
+              td 27.000
+              td 25.000
             tr
-              td John
-              td Doe
-              td john@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 28
+              td 7
+              td 45.000
+              td 42.000
+              td 34.000
+              td 30.000
+              td 27.000
+              td 25.000
+              td 24.000
+        br
+        table.table-bordered
+          h4 Bảng giá theo tháng (đơn vị tính: VNĐ)
+          thead
             tr
-              td Mary
-              td Moe
-              td mary@example.com
-              td John
-              td Doe
-              td john@example.com
+              th Ngày/tháng
+              th Ngày/tuần
+              th 2 giờ/ngày
+              th 3 giờ/ngày
+              th 4 giờ/ngày
+              th 5 giờ/ngày
+              th 6 giờ/ngày
+              th 7 giờ/ngày
+              th 8 giờ/ngày
+          tbody
             tr
-              td July
-              td Dooley
-              td july@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 4
+              td 1
+              td 520.000
+              td 744.000
+              td 944.000
+              td 1.120.000
+              td 1.272.000
+              td 1.400.000
+              td 1.536.000
             tr
-              td John
-              td Doe
-              td john@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 8
+              td 2
+              td 880.000
+              td 1.248.000
+              td 1.600.000
+              td 1.920.000
+              td 2.208.000
+              td 2.352.000
+              td 2.496.000
             tr
-              td Mary
-              td Moe
-              td mary@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 12
+              td 3
+              td 1.224.000
+              td 1.728.000
+              td 2.160.000
+              td 2.520.000
+              td 2.736.000
+              td 2.940.000
+              td 3.168.000
             tr
-              td July
-              td Dooley
-              td july@example.com
-              td John
-              td Doe
-              td john@example.com
+              td 16
+              td 4
+              td 1.568.000
+              td 2.160.000
+              td 2.688.000
+              td 3.200.000
+              td 3.360.000
+              td 3.696.000
+              td 3.840.000
+            tr
+              td 20
+              td 5
+              td 1.800.000
+              td 2.580.000
+              td 3.200.000
+              td 3.500.000
+              td 3.720.000
+              td 4.060.000
+              td 4.320.000
+            tr
+              td 24
+              td 6
+              td 2.160.000
+              td 3.024.000
+              td 3.360.000
+              td 3.960.000
+              td 4.176.000
+              td 4.536.000
+              td 4.800.000
+            tr
+              td 28
+              td 7
+              td 2.520.000
+              td 3.528.000
+              td 3.808.000
+              td 4.200.000
+              td 4.536.000
+              td 4.900.000
+              td 5.376.000
+        br
+        h5.padleft  • Đối với gói Chăm sóc em bé, người già, sản phụ và nuôi bệnh cộng thêm mỗi giờ làm việc 5.000 đồng.
+        h5.padleft  • Giúp việc cho người nước ngoài cộng thêm mỗi giờ làm việc 10.000 đồng.
+        h5.padleft  • Mức giá trên tính cho một người giúp việc
+
       .modal-footer
         button.btn.btn-default(type='button', data-dismiss='modal') Close
 .div#hoidap.modal.fade(role='dialog')
   div.modal-dialog.modal-lg
     div.modal-content
-      div.modal-header
-      div.modal-body
+      div.modal-header.bgxanhdam
+        button.close(type='button', data-dismiss='modal') ×
+        h4.biggerfont.modal-title.chutrang F.A.Q - Câu hỏi thường gặp
+      div#mypanel.modal-body
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau1')
+            h3.panel-title
+              | 1.   Tại sao Quý khách hàng nên chọn người giúp việc thông qua Procleaner?
+          #cau1.collapse
+            .panel-body
+              h4 Những lý do sau đây sẽ giúp cho quý khách hàng giải đáp được thắc mắc trên:
+              h4 - Người giúp việc là nhân viên của ProCleaner, chịu sự quản lý và chấp hành nội quy của Công ty nên Quý khách hàng không cần lo lắng về việc quản lý Người giúp việc.
+              h4 - Người giúp việc có lý lịch nhân thân rõ ràng, có giấy chứng nhận sức khỏe của bệnh viện.
+              h4 - Quý khách hàng sẽ luôn có Người giúp việc ổn định trong suốt thời gian hợp đồng.
+              h4 - Quý khách hàng được ProCleaner chịu trách nhiệm vật chất nếu có thất thoát xảy ra do người giúp việc.
+              h4 - ProCleaner xếp hạng nhân viên thông qua đánh giá của khách hàng nên luôn đảm bảo chất lượng Người giúp việc.
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau2')
+            h3.panel-title
+              | 2.  Liên hệ với Procleaner như thế nào?
+          #cau2.collapse
+            .panel-body
+              h4 Vui lòng gọi 19000000 hoặc gửi email đến contact@procleaner.vn
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau3')
+            h3.panel-title
+              | 3.  Ứng dụng ProCleaner đòi các quyền truy cập (permission) để làm gì?
+          #cau3.collapse
+            .panel-body
+              h4 Ứng dụng ProCleaner khi cài đặt sẽ sử dụng các quyền truy cập sau đây:
+              h4 -  Vị trí người dùng: Giúp ứng dụng tìm vị trí hiện tại của người dùng để thiết lập địa điểm phục vụ dễ dàng hơn.
+              h4 -  SMS: Giúp ứng dụng tự động điền mã kích hoạt tài khoản mà không cần phải vào ứng dụng tin nhắn.
+              h4 -  Điện thoại: Giúp khách hàng khi click vào số điện thoại thì có thể gọi ngay cho ProCleaner.
+              h4 -  Ảnh/phương tiện/tệp: ProCleaner lưu lại một số hình ảnh ít thay đổi để giúp ứng dụng chạy nhanh hơn.
+              h4 -  Lịch sử ứng dụng và thiết bị: ProCleaner sẽ tự động ghi nhận những trường hợp chạy ứng dụng bị lỗi tạo điều kiện cho nhóm phát triển nâng cao chất lượng ứng dụng.
+              h4 -  Quyền truy cập mạng: ProCleaner là ứng dụng cần kết nối mạng để có thể hoạt động.
+              h4 -  Nhận dạng: ProCleaner sử dụng nhận dạng để gửi thông tin trạng thái Yêu cầu cho người dùng thông qua trung tâm thông báo của điện thoại.
+              h4 -  Các quyền truy cập còn lại ProCleaner dùng để ghi nhận thói quen sử dụng của người dùng nhằm giúp nhóm phát triển liên tục cải tiến ứng dụng để phục vụ người sử dụng tốt hơn.
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau4')
+            h3.panel-title
+              | 4.  Tại sao phải đánh giá người giúp việc?
+          #cau4.collapse
+            .panel-body
+              h4 .....
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau5')
+            h3.panel-title
+              | 5.  Làm thế nào để sử dụng dịch vụ của Procleaner?
+          #cau5.collapse
+            .panel-body
+              h4 •  Đặt yêu cầu trực tiếp hoặc bằng ứng dụng ProCleaner trên smartphone hoặc thông qua website ProCleaner.vn.
+              h4 •  Liên hệ với chúng tôi:
+              h5.padleft    Hotline: 190000000000000
+              h5.padleft    Email: sales@procleaner.vn
+              h5.padleft    Đến Trụ sở: ………………………….., Quận 7, Tp.HCM
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau6')
+            h3.panel-title
+              | 6.  Hình thức thanh toán như thế nào? Theo từng sự vụ thì sao, dài hạn thì sao? Thời điểm thu như thế nào? Ai thu? Mẫu phiếu thu?
+          #cau6.collapse
+            .panel-body
+              h4 Quý khách hàng có thể lựa chọn một trong các phương cách sau:
+              h5.padleft    - Chuyển khoản qua ATM
+              h5.padleft    - Thanh toán trực tiếp tại Trụ sở Công ty
+              h5.padleft    - Nhân viên của Chúng tôi đến thu tận nhà 
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau7')
+            h3.panel-title
+              | 7.  Hợp đồng giúp việc sẽ như thế nào? Mẫu hợp đồng – đặt yêu cầu qua ứng dụng (hoặc web) thì có cần hợp đồng không? Tổng quát hơn thì trường hợp nào thì cần có hợp đồng và trường hợp nào thì không. Cách thức ký hợp đồng thế nào? Có tạm ứng không?
+          #cau7.collapse
+            .panel-body
+              h4 Công ty chúng tôi thu phí đặt cọc là 50% của tháng hợp đồng đầu tiên. Sự "ràng buộc" này nhằm đảm bảo rằng chúng tôi luôn cố gắng đảm bảo quyền lợi của khách hàng khi thực hiện theo đúng những điều khoản trong hợp đồng. Quý khách hàng sẽ được an tâm và tin tưởng trong quá trình sử dụng dịch vụ của chúng tôi
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau8')
+            h3.panel-title
+              | 8.  Nếu muốn chấm dứt hợp đồng phải làm thế nào?
+          #cau8.collapse
+            .panel-body
+              h4 Nếu Quý khách hàng muốn chấm dứt hợp đồng trước thời hạn thì cần thông báo trước cho chúng tôi 15 ngày, khi đó Công ty chúng tôi sẽ hoàn trả 50% tiền đặt cọc cho khách hàng.
+              h4 Trường hợp đơn phương chấm dứt hợp đồng trước thời hạn và không thông báo trước thì sẽ không được hoàn tiền cọc và thanh toán số tiền  =  Tổng số giờ làm việc tháng đó  x Đơn giá
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau9')
+            h3.panel-title
+              | 9.  Có được đổi người giúp việc không?
+          #cau9.collapse
+            .panel-body
+              h4 .......
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau10')
+            h3.panel-title
+              | 10. Người giúp việc có thu tiền mặt của khách hàng không?
+          #cau10.collapse
+            .panel-body
+              h4 .......
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau11')
+            h3.panel-title
+              | 11. Thời gian từ lúc đặt yêu cầu đến lúc có người giúp việc tối thiểu là bao lâu?
+          #cau11.collapse
+            .panel-body
+              h4 .......
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau12')
+            h3.panel-title
+              | 12. Thời gian phục vụ của người giúp việc bắt đầu và kết thúc khi nào?
+          #cau12.collapse
+            .panel-body
+              h4 .......
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau13')
+            h3.panel-title
+              | 13. Giá dịch vụ có tăng trong thời điểm Tết hay không?
+          #cau13.collapse
+            .panel-body
+              h4 Đối với những ngày thường hay ngày Tết lượng Khách hàng đăng ký sử dụng dịch vụ đang tăng lên rất nhanh nhưng với phương châm phục vụ Khách hàng đặt chất lượng lên hàng đầu, trở thành Khách hàng thường xuyên và gắn bó với Công ty thì ProCleaner vẫn giữ giá dịch vụ như cũ đối với tất cả các dịch vụ. Trừ những Khách hàng có nhu cầu sử dụng trong khoảng thời gian Công ty nghỉ Tết Nguyên Đán bắt đâu từ 30 Tết – hết mùng 4 Tết thì giá dịch vụ sẽ tính 300% so với ngày thường theo quy định Luật lao động của Việt Nam.
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau14')
+            h3.panel-title
+              | 14. ProCleaner cung cấp dịch vụ ở những nơi nào?
+          #cau14.collapse
+            .panel-body
+              h4 .......
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau15')
+            h3.panel-title
+              | 15. Chất lượng người giúp việc của ProCleaner được đảm bảo như thế nào?
+          #cau15.collapse
+            .panel-body
+              h4 .......
+        .panel.panel-default
+          .panel-heading(data-toggle='collapse', data-target='#cau16')
+            h3.panel-title
+              | 16. Mã giới thiệu để làm gì và được lợi ích như thế nào?
+          #cau16.collapse
+            .panel-body
+              h4 .......
       div.modal-footer
 .div#chinhsach.modal.fade(role='dialog')
   div.modal-dialog
