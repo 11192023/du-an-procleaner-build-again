@@ -7,6 +7,8 @@ html(lang='en')
     meta(name='description', content='')
     meta(name='author', content='')
     title Creative - Start Bootstrap Theme
+    // Angular-material
+    link(rel='stylesheet', href='https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css')
     // Bootstrap Core CSS
     link(rel='stylesheet', href='css/bootstrap.min.css', type='text/css')
     // Custom Fonts
@@ -338,21 +340,27 @@ html(lang='en')
             .div.form-group
               h5.chutrang Copyright by ProCleaner
 #banggia.modal.fade(role='dialog')
-  .modal-dialog
+  .modal-dialog.modal-lg
     // Modal content
     .modal-content
       .modal-header.bgxanhdam
         button.close(type='button', data-dismiss='modal') ×
-        h4.biggerfont.modal-title Bảng giá
+        h4.biggerfont.modal-title.chutrang Bảng giá
       .modal-body
-        table.table.table-bordered
+        table.table-bordered
           thead
             tr
               th Firstname
               th Lastname
               th Email
+              th giá tiền
+              th loại hình
+              th mệnh giá
           tbody
             tr
+              td John
+              td Doe
+              td john@example.com
               td John
               td Doe
               td john@example.com
@@ -360,10 +368,79 @@ html(lang='en')
               td Mary
               td Moe
               td mary@example.com
+              td John
+              td Doe
+              td john@example.com
             tr
               td July
               td Dooley
               td july@example.com
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td John
+              td Doe
+              td john@example.com
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td Mary
+              td Moe
+              td mary@example.com
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td July
+              td Dooley
+              td july@example.com
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td John
+              td Doe
+              td john@example.com
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td Mary
+              td Moe
+              td mary@example.com
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td July
+              td Dooley
+              td july@example.com
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td John
+              td Doe
+              td john@example.com
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td Mary
+              td Moe
+              td mary@example.com
+              td John
+              td Doe
+              td john@example.com
+            tr
+              td July
+              td Dooley
+              td july@example.com
+              td John
+              td Doe
+              td john@example.com
       .modal-footer
         button.btn.btn-default(type='button', data-dismiss='modal') Close
 .div#hoidap.modal.fade(role='dialog')
@@ -390,4 +467,10 @@ html(lang='en')
     // Custom Theme JavaScript
     script(src='slick/slick.min.js')
     script(src='js/creative.js')
+    //angular
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js')
+    script(src='angular/core.js')
     

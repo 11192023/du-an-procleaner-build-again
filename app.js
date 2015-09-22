@@ -12,6 +12,7 @@ var ngv_chitiet = require('./routes/ngv_chitiet');
 var app = express();
 var fs = require('fs');
 var User = require('./models/user.js');
+var methodOverride = require('method-override');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,7 +22,10 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());                                     // parse application/json
+app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
+app.use(methodOverride());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -33,6 +37,19 @@ app.use('/users', users);
 app.use('/search', search);
 app.use('/ngv_chitiet', ngv_chitiet);
 app.use('/search_daihan', search_daihan);
+
+/* api */
+var api_tieuchi = require('./api/tieuchi')
+var api_nguoigiupviec = require('./api/nguoigiupviec')
+var api_quan = require('./api/quan')
+var api_khachhang = require('./api/khachhang')
+var api_yeucau = require('./api/yeucau')
+
+app.use('/api/tieuchis',api_tieuchi);
+app.use('/api/nguoigiupviecs',api_nguoigiupviec);
+app.use('/api/quans',api_quan);
+app.use('/api/khachhangs',api_khachhang);
+app.use('/api/yeucaus',api_yeucau);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
