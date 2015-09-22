@@ -2,34 +2,42 @@ extends layout
 
 block search
   .container.wrapper(ng-app='SearchModule')
-    .row.content(ng-controller='searchController')
+    .row.content
       .col-lg-3.content-left
-        div.form-inline
-          div.form-group.padright
-            span.glyphicon.glyphicon-time.xanhnhat(aria-hidden="true")
-          div.form-group
-            h4.xanhnhat Khung giờ
-        div.form-inline
-          div.form-group.padright
-            span.glyphicon.glyphicon-calendar.xanhnhat(aria-hidden="true")
-          div.form-group
-            h4.xanhnhat Ngày
+        h4 Tìm kiếm
+        div(ng-controller='dateController')
+          div.form-inline
+            div.form-group.padright
+              span.glyphicon.glyphicon-calendar.xanhnhat(aria-hidden="true")
+            div.form-group
+              h4.xanhnhat Ngày
+            div
+              p.input-group
+              input.form-control(type='text', datepicker-popup='{{format}}', ng-model='dt', is-open='status.opened', min-date='minDate', max-date='maxDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close', ng-click='open($event)')
+        div(ng-controller='timeController')
+          div.form-inline
+            div.form-group.padright
+              span.glyphicon.glyphicon-time.xanhnhat(aria-hidden="true")
+            div.form-group
+              h4.xanhnhat Khung giờ
+          div(rg-range-picker='myDatetimeRange', labels='myDatetimeLabels')
         div.form-inline
           div.form-group.padright
             span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
           div.form-group
             h4.xanhnhat Chuyên môn
-        div(ng-repeat='tieuchi in tieuchis')
-          md-checkbox.md-primary.md-align-top-left(ng-model='tieuchi.id', aria-label='kh.hoten', ng-true-value="'yup'", ng-false-value="'nope'")
-            | {{tieuchi.ten}}
-        div.form-inline
-          div.form-group.padright
-            span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
-          div.form-group
-            h4.xanhnhat Quận
-        div(ng-repeat='quan in quans')
-          md-checkbox.md-primary.md-align-top-left(ng-model='quan.id', aria-label='quan.ten', ng-true-value="'yup'", ng-false-value="'nope'")
-            | {{quan.ten}}
+        div(ng-controller='searchController')
+          div(ng-repeat='tieuchi in tieuchis')
+            md-checkbox.md-primary.md-align-top-left(ng-model='tieuchi.id', aria-label='kh.hoten', ng-true-value="'yup'", ng-false-value="'nope'")
+              | {{tieuchi.ten}}
+          div.form-inline
+            div.form-group.padright
+              span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
+            div.form-group
+              h4.xanhnhat Quận
+          div(ng-repeat='quan in quans')
+            md-checkbox.md-primary.md-align-top-left(ng-model='quan.id', aria-label='quan.ten', ng-true-value="'yup'", ng-false-value="'nope'")
+              | {{quan.ten}}
       .col-lg-9.content-right
         h4 Recommended
         .row.selected-classifieds

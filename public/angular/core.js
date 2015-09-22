@@ -1,6 +1,6 @@
 (function(){
 	//search module
-	var searchModule = angular.module('SearchModule', ['ngMaterial']);
+	var searchModule = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','rgkevin.datetimeRangePicker']);
 
 	searchModule.config(function($mdThemingProvider){
 		$mdThemingProvider.theme('default')
@@ -126,6 +126,96 @@
 	            console.log('Error: ' + data);
 	        });
 	});
+	searchModule.controller('dateController', function($scope){
+	  	$scope.today = function() {
+			$scope.dt = new Date();
+		};
+		$scope.today();
+
+		$scope.clear = function () {
+			$scope.dt = null;
+		};
+
+		// Disable weekend selection
+		$scope.disabled = function(date, mode) {
+			return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+		};
+
+		$scope.toggleMin = function() {
+			$scope.minDate = $scope.minDate ? null : new Date();
+		};
+		$scope.toggleMin();
+		$scope.maxDate = new Date(2020, 5, 22);
+
+		$scope.open = function($event) {
+			$scope.status.opened = true;
+		};
+
+		$scope.dateOptions = {
+			formatYear: 'yy',
+			startingDay: 1
+		};
+
+		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+		$scope.format = $scope.formats[0];
+
+		$scope.status = {
+			opened: false
+		};
+
+		var tomorrow = new Date();
+		tomorrow.setDate(tomorrow.getDate() + 1);
+		var afterTomorrow = new Date();
+		afterTomorrow.setDate(tomorrow.getDate() + 2);
+		$scope.events =
+		[
+		  {
+		    date: tomorrow,
+		    status: 'full'
+		  },
+		  {
+		    date: afterTomorrow,
+		    status: 'partially'
+		  }
+		];
+
+		$scope.getDayClass = function(date, mode) {
+		if (mode === 'day') {
+		  var dayToCheck = new Date(date).setHours(0,0,0,0);
+
+		  for (var i=0;i<$scope.events.length;i++){
+		    var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+
+		    if (dayToCheck === currentDay) {
+		      return $scope.events[i].status;
+		    }
+		  }
+		}
+
+		return '';
+		};
+	});
+	searchModule.controller('timeController', function($scope){
+	  	$scope.myDatetimeRange = {
+		    "time": {
+		    "from": 390,
+		    "to": 1020,
+		    "dFrom": 0,
+		    "dTo": 1440,
+		    "step": 15,
+		    "minRange": 15,
+		    "hours24": false
+		  },
+		  "hasDatePickers": false,
+		  "hasTimeSliders": true
+		}
+		$scope.myDatetimeLabels = {
+		    date: {
+		        from: 'Start date',
+		        to: 'End date'
+		    }
+		}
+	});
 //----------------------------------------------------------------------------------------------------
 	
 	//index module
@@ -139,5 +229,4 @@
 	indexModule.controller('searchbarController', function($scope, $http){
 		$scope.formData = {};
 	});
-
 })();
