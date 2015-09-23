@@ -33,23 +33,6 @@
 .fancy-collapse-panel .panel-heading a.collapsed:after {
 content: "\f196";
 }
-/*
-.panel.panel-default{
-    margin-bottom: 0px!important;
-    border-radius: 0px!important;
-    border-color: #8CC13D!important;
-}
-.panel-heading{
-    margin-bottom: 1px!important;
-    border-radius: 0px!important;
-    border-color: #8CC13D!important;
-    background-color: #8CC13D!important;
-    cursor: pointer!important;
-}
-.active-panel {
-    background-color: #02571C!important;
-    color: white!important;
-}
 */
 input[type=text] {
     height: 50px;
@@ -81,7 +64,7 @@ table {
 }
 /* Zebra striping */
 tr:nth-of-type(odd) { 
-    background: #fff; 
+    background: #8CC13D; 
 }
 th { 
     background: #02571C; 
@@ -132,7 +115,7 @@ td, th {
         /*
         Label the data
         */
-        td:nth-of-type(1):before { content: "Ngày/tháng"; }
+        td:nth-of-type(1):before { content: "Ngày/tháng";  }
         td:nth-of-type(2):before { content: "Ngày/tuần"; }
         td:nth-of-type(3):before { content: "2 giờ/ngày"; }
         td:nth-of-type(4):before { content: "3 giờ/ngày"; }
