@@ -33,7 +33,7 @@
 .fancy-collapse-panel .panel-heading a.collapsed:after {
 content: "\f196";
 }
-*/
+
 input[type=text] {
     height: 50px;
     border-radius: 0px!important;
