@@ -114,7 +114,7 @@ html(lang='en')
               p.text-muted Quét dọn nhà cửa, sân vườn, vệ sinh toilet, cầu thang, tưới cây, giặt phơi quần áo, nấu ăn, rửa chén bát, pha trà ...
           .col-lg-4.col-md-6.text-center
             .service-box
-              i.fa.fa-4x.fa-home.wow.bounceIn.text-primary(data-wow-delay='.3s')
+              i.fa.fa-4x.fa-bus.wow.bounceIn.text-primary(data-wow-delay='.3s')
               h3 Đưa đón bé đi học
               p.text-muted Đưa bé đến trường, trao đổi với giao viên về tình hình học tập của bé, đưa đón bé về nhà, truyền tải thông điệp của giáo viên đến phụ huynh ...
           .col-lg-4.col-md-6.text-center
@@ -635,25 +635,24 @@ html(lang='en')
                         | 40 tuổi
     section#contact.contactbg
       .container
-        .row
-          .col-lg-3.pull-left
+        .col-md-6.pull-left
+          .row
             h2.section-heading.chutrang.pull-left ProCleaner
-          .col-lg-6.pull-right
+          br
+          .row
+            .left
+              h5.i.fa.fa-phone.marbtm.padright.chutrang
+              | 123-456-6789
+          br
+          .row
+            .left
+              h5.i.fa.fa-envelope.marbtm.padright.chutrang
+              | procleaner@gmail.com.vn
+        .col-md-6
+          .row.center-block
             h2.section-heading.chutrang Contact Us
-            br
-        .row
-          .col-lg-3.pull-left
-            div.form-inline.pull-left
-              div.form-group.padright
-                i.fa.fa-phone
-              div.form-group
-                h5.chutrang 123-456-6789
-            div.form-inline.pull-left
-              div.form-group.padright
-                i.fa.fa-envelope
-              div.form-group
-                h5.chutrang procleaner@gmail.com.vn
-          .col-lg-6.pull-right
+          br
+          .row
             div
               form#contactForm(name='sentMessage', novalidate='')
                 .row
@@ -683,26 +682,21 @@ html(lang='en')
                   button.btn.btn-danger.btn-xl(type='submit') Send Message
     section#footer.bg-dark
       .container
-        .col-lg-3
-          .div.form-inline
-            .div.form-group.padright
-              i.fa.fa-copyright
-            .div.form-group
-              h5.chutrang Copyright by ProCleaner
-        .col-xs-3.pull-right
-          div.form-inline.text-center
-            div.form-group.padrightico
-              a.btn.btn-circle-sm.btn-default(href='#')
-                i.fa.fa-facebook
-            div.form-group.padrightico
-              a.btn.btn-circle-sm.btn-default(href='#')
-                i.fa.fa-twitter
-            div.form-group.padrightico
-              a.btn.btn-circle-sm.btn-default(href='#')
-                i.fa.fa-google-plus
-            div.form-group.padrightico
-              a.btn.btn-circle-sm.btn-default(href='#')
-                i.fa.fa-linkedin
+        .row
+          .left
+            h5.i.fa.fa-copyright.marbtm.padright.chutrang
+            | Copyright by ProCleaner
+          .right.pull-right
+            a.btn.btn-circle-sm.btn-default.marright(href='#')
+              i.fa.fa-facebook
+            a.btn.btn-circle-sm.btn-default.marright(href='#')
+              i.fa.fa-twitter
+            a.btn.btn-circle-sm.btn-default.marright(href='#')
+              i.fa.fa-google-plus
+            a.btn.btn-circle-sm.btn-default.marright(href='#')
+              i.fa.fa-linkedin
+            
+// modal
 #banggia.modal.fade(role='dialog')
   .modal-dialog.modal-lg
     // Modal content
@@ -887,7 +881,7 @@ html(lang='en')
 
       .modal-footer
         button.btn.btn-default(type='button', data-dismiss='modal') Close
-.div#hoidap.modal.fade(role='dialog')
+#hoidap.modal.fade(role='dialog')
   div.modal-dialog.modal-lg
     div.modal-content
       div.modal-header.bgxanhdam
@@ -1046,7 +1040,7 @@ html(lang='en')
                 .panel-body
                   h4 .......
       div.modal-footer
-.div#chinhsach.modal.fade(role='dialog')
+#chinhsach.modal.fade(role='dialog')
   div.modal-dialog
     div.modal-content
       div.modal-header

@@ -289,6 +289,9 @@ body {
 body {
     font-family: Merriweather,'Helvetica Neue',Arial,sans-serif;
 }
+.marright{
+    margin-right: 10px;
+}
 .marginbtm{
     margin-bottom: 30px;
 }
