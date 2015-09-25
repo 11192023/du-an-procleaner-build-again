@@ -18,7 +18,7 @@
         infinite: true,
         speed: 300,
         slidesToShow: 4,
-        slidesToScroll: 1,
+        slidesToScroll: 4,
         rows: 2,
         arrows: true,
         responsive: [
