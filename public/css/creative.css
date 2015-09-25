@@ -254,6 +254,9 @@ body.modal-open[style] {
 .padleft{
     padding-left: 25px;
 }
+.padleftdk{
+    padding-left: 10px;
+}
 .padleftngv{
     padding-left: 10px;
 }

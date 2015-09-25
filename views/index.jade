@@ -702,7 +702,7 @@ html(lang='en')
     // Modal content
     .modal-content
       .modal-header.bgxanhdam
-        button.close(type='button', data-dismiss='modal') ×
+        button.chutrang.close(type='button', data-dismiss='modal') ×
         h4.biggerfont.modal-title.chutrang Bảng giá
       .modal-body
         table.table-bordered
@@ -880,12 +880,11 @@ html(lang='en')
         h5.padleft  • Mức giá trên tính cho một người giúp việc.
 
       .modal-footer
-        button.btn.btn-default(type='button', data-dismiss='modal') Close
 #hoidap.modal.fade(role='dialog')
   div.modal-dialog.modal-lg
     div.modal-content
       div.modal-header.bgxanhdam
-        button.close(type='button', data-dismiss='modal') ×
+        button.chutrang.close(type='button', data-dismiss='modal') ×
         h4.biggerfont.modal-title.chutrang F.A.Q - Câu hỏi thường gặp
       div#mypanel.modal-body
         div.fancy-collapse-panel
@@ -1041,10 +1040,37 @@ html(lang='en')
                   h4 .......
       div.modal-footer
 #chinhsach.modal.fade(role='dialog')
-  div.modal-dialog
+  div.modal-dialog.modal-lg
     div.modal-content
-      div.modal-header
+      div.modal-header.bgxanhdam
+        button.chutrang.close(type='button', data-dismiss='modal') ×
+        h4.biggerfont.modal-title.chutrang Chính sách
       div.modal-body
+        h3 Hai bên đồng ý cung cấp và sử dụng dịch vụ theo các điều khoản sau:
+        h3 1. Quyền và nghĩa vụ của Khách hàng
+        h4.padleftdk -  Đảm bảo môi trường làm việc tốt, an toàn và lành mạnh cho nhân viên Công ty (không có hoá chất độc hại, không bị ô nhiễm, không có các hành vi quấy rối, xâm hại đến tính mạng, danh dự, nhân phẩm, thân thể của nhân viên Công ty).
+        h4.padleftdk -  Tự bảo quản và chịu trách nhiệm trong việc quản lý tài sản của mình trong mọi trường hợp; Trường hợp Khách hàng giao chìa khóa cho nhân viên của Công ty để thực hiện công việc, Khách hàng cam kết hành vi này của Khách hàng không tạo ra quan hệ gửi giữ tài sản giữa Khách hàng và Công ty.
+        h4.padleftdk -  Hủy buổi làm việc: để đảm bảo lịch làm việc ổn định cho nhân viên Công ty, Khách hàng sẽ không được quyền hủy buổi làm việc. Trong trường hợp Khách hàng cần hủy buổi làm việc thì buổi làm việc đó sẽ được Công ty sắp xếp nhân viên làm bù buổi làm bị hủy cho Khách hàng. Buổi làm bù này sẽ được thực hiện trong thời gian tối đa là 01 (một) tuần tính từ ngày Khách hàng đăng kí dịch vụ. Sau thời gian này, nếu các bên không sắp xếp được thời gian để làm bù thì Công ty sẽ không có trách nhiệm làm bù cho Khách hàng nữa.
+        h4.padleftdk -  Trong trường hợp Khách hàng muốn thay đổi lịch làm việc, Khách hàng cần thông báo cho Công ty trước 24h của buổi làm đó, nếu Khách hàng không thông báo trước thời gian 24h, Khách hàng sẽ phải chịu 100% phí dịch vụ của buổi làm việc đó.
+        h4.padleftdk -  Không nhận nhân viên Công ty vào làm việc trực tiếp bằng bất kỳ hình thức nào trong thời gian sử dụng dịch vụ hoặc trong vòng 3 tháng kể từ ngày đăng kí ở trên; nếu vi phạm sẽ phải bồi thường chi phí tuyển dụng và đào tạo nhân viên đó cho Công ty, chi phí do Công ty xác định nhưng sẽ không thấp hơn 5.000.000 đồng (bằng chữ: năm triệu đồng) một nhân viên. Công ty có quyền công khai thông tin cá nhân của Khách hàng và nội dung các vi phạm của Khách hàng (nếu có) trên các phương tiện truyền thông của Công ty nếu Khách hàng vi phạm điều khoản này.
+        h4.padleftdk -  Có trách nhiệm theo dõi, xác nhận thời gian làm việc và các thông tin khác vào “Bảng đánh giá” của nhân viên Công ty. Giờ làm việc phát sinh ngoài thời gian đã đăng ký sẽ được tính thêm phí.
+        h4.padleftdk -  Kịp thời thông báo cho Công ty trong vòng 24 giờ nếu phát hiện những hành vi tiêu cực từ phía nhân viên Công ty để hai bên cùng phối hợp xử lý.
+        h4.padleftdk -  Trong trường hợp Khách hàng không hài lòng với chất lượng công việc hoặc phát hiện mất, hoặc hư hỏng tài sản trong thời gian nhân viên Công ty đang làm việc cho Khách hàng thì Khách hàng phải ghi nhận vào "Bảng đánh giá”, thông báo ngay cho đại diện của Công ty, giữ chân Nhân viên của Công ty đến khi đại diện của Công ty có mặt.
+        h4.padleftdk -  Trong trường hợp nghi ngờ nhân viên Công ty có hành vi trộm cắp tài sản hoặc làm hư hỏng tài sản của Khách hàng nhưng chưa có kết luận của cơ quan điều tra, Khách hàng không được cung cấp thông tin cho bất kỳ cá nhân, tổ chức nào làm ảnh hưởng đến uy tín, thương hiệu của Công ty. Nếu vi phạm, Khách hàng phải thanh toán cho Công ty một khoản tiền bồi thường, khoản tiền này sẽ do Công ty xác định.
+        h4.padleftdk -  Không tự ý thoả thuận với nhân viên Công ty để thay đổi, làm sai khác các nội dung đã thống nhất trong văn bản này.
+        h3 2. Quyền và nghĩa vụ của Công ty
+        h4.padleftdk -  Cung cấp nhân viên giúp việc cho Khách hàng đảm bảo lý lịch, nguồn gốc rõ ràng và có xác nhận của chính quyền địa phương, đã được đào tạo về nghiệp vụ giúp việc gia đình theo tiêu chuẩn của Công ty.
+        h4.padleftdk -  Thường xuyên trao đổi và tiếp nhận thông tin phản hồi từ Khách hàng về chất lượng dịch vụ; cung cấp lại dịch vụ cho phần việc xảy ra do lỗi của nhân viên Công ty làm Khách hàng chưa hài lòng, thể hiện trên “Bảng đánh giá” của nhân viên.
+        h3 3. Giải quyết tranh chấp và khiếu nại
+        h4.padleftdk Khi xảy ra mâu thuẫn, tranh chấp, hai bên sẽ ưu tiên tiến hành giải quyết công việc thông qua việc tự thương lượng, hoà giải, trên tinh thần hỗ trợ lẫn nhau. Nếu không, mọi mâu thuẫn, tranh chấp sẽ được đưa ra giải quyết tại Toà án Nhân dân có thẩm quyền.
+        h3 4. Thanh toán phí dịch vụ
+        h4.padleftdk Khách hàng có nghĩa vụ thanh toán tiền phí sử dụng dịch vụ trước ngày bắt đầu sử dụng dịch vụ, bằng hình thức:
+        h4.padleftdk a) Chuyển khoản qua tài khoản:
+        h5.padleft -  Tên tài khoản: .......
+        h5.padleft -  Số tài khoản:  .......
+        h5.padleft -  Ngân hàng:     .......
+        h4.padleftdk b) Thanh toán trực tiếp qua website của Công ty tại địa chỉ: ………………
+        h4.padleftdk c) Thanh toán bằng tiền mặt cho nhân viên do Công ty chỉ định theo giấy giới thiệu của Công ty.
       div.modal-footer
 
     // jQuery

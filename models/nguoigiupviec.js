@@ -1,6 +1,6 @@
 var db = require('../lib/db');
 var NgvSchema = new db.Schema({
-    cmnd : {type: Number, unique: true},
+    cmnd : {type: String, unique: true},
     hoten : String,
     ngaysinh : Date,
     sodt : Number,
