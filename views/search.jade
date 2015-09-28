@@ -28,6 +28,8 @@ block search
           div.form-group
             h4.xanhnhat Chuyên môn
         div(ng-controller='searchController')
+          div
+            p {{khs.content}}
           div(ng-repeat='tieuchi in tieuchis')
             md-checkbox.md-primary.md-align-top-left(ng-model='tieuchi.id', aria-label='kh.hoten', ng-true-value="'yup'", ng-false-value="'nope'")
               | {{tieuchi.ten}}

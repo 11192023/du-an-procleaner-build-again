@@ -62,13 +62,26 @@ html(lang='en')
           h1.smallerh1 GIÚP VIỆC CHUYÊN NGHIỆP
           h2 Tìm người giúp việc trong TP.HCM
           div
-            form.form-inline(action='/search')
-              .form-group(style='margin-top:7px')
-                input.form-control.sb(type='text', name='thanhpho', placeholder='Chọn Quận')
-                input.form-control.sb(type='text', name='ngay', placeholder='Chọn ngày')
-                input.form-control.sb(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
-                input.form-control.sb(type='text', name='tgkt', placeholder='Thời gian kết thúc')
-                input.btn.btn-danger(type='submit', value='Tìm kiếm')
+            div
+              input#btntheongay.btn.btn-danger.longBtn.active(type='button', value='Theo ngày')
+              input#btndaihan.btn.btn-danger.longBtn(type='button', value='Dài hạn')
+            div#theongay
+              form.form-inline(action='/search')
+                .form-group(style='margin-top:7px')
+                  div#quan
+                    input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
+                    input.form-control.sb(type='text', name='ngay', placeholder='Chọn ngày')
+                    input.form-control.sb(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
+                    input.form-control.sb(type='text', name='tgkt', placeholder='Thời gian kết thúc')
+                    input.btn.btn-danger(type='submit', value='Tìm kiếm')
+            div#daihan.hide
+              form.form-inline(action='/search')
+                .form-group(style='margin-top:7px')
+                  input.form-control.sb.quan.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
+                  input.form-control.sb(type='text', name='ngay', placeholder='Chọn ngày bắt đầu và kết thúc')
+                  input.form-control.sb(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
+                  input.form-control.sb(type='text', name='tgkt', placeholder='Thời gian kết thúc')
+                  input.btn.btn-danger(type='submit', value='Tìm kiếm')
     section#about.bg-primary
       .container
         .row
@@ -1081,6 +1094,7 @@ html(lang='en')
     script(src='js/jquery.easing.min.js')
     script(src='js/jquery.fittext.js')
     script(src='js/wow.min.js')
+    script(src='js/typeahead.bundle.js')
     // Custom Theme JavaScript
     script(src='slick/slick.min.js')
     script(src='js/creative.js')

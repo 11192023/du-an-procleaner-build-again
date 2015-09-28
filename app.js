@@ -9,6 +9,7 @@ var users = require('./routes/users');
 var search = require('./routes/search');
 var search_daihan = require('./routes/search_daihan');
 var ngv_chitiet = require('./routes/ngv_chitiet');
+var cors = require('cors');
 var app = express();
 var fs = require('fs');
 var User = require('./models/user.js');
@@ -21,6 +22,7 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(cors({credentials: true, origin: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());                                     // parse application/json

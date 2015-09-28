@@ -2,11 +2,12 @@
 	//search module
 	var searchModule = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','rgkevin.datetimeRangePicker']);
 
-	searchModule.config(function($mdThemingProvider){
-		$mdThemingProvider.theme('default')
-			.primaryPalette('green');
-	});
-
+	
+	searchModule.config(['$httpProvider', function($httpProvider) {
+  
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  	}]);
 	searchModule.controller('searchController', function($scope, $http){
 		$scope.formData = {};
 		$scope.tieuchis = [
@@ -117,7 +118,7 @@
 				id: 5
 			}
 		];
-		$http.get('/api/khachhangs')
+		$http.get('http://rest-service.guides.spring.io/greeting?callback=?')
 	        .success(function(data) {
 	            $scope.khs = data;
 	            console.log(data);

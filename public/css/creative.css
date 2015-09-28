@@ -3,14 +3,74 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
+ /* typeahead*/
+.twitter-typeahead{
+    display: inline-flex!important;
+}
+.tt-input, /* UPDATE: newer versions use tt-input instead of tt-query */
+.tt-hint {
+}
+
+.tt-input { /* UPDATE: newer versions use tt-input instead of tt-query */
+    margin-bottom: 
+}
+
+.tt-hint {
+    color: #02571C;
+}
+
+.tt-menu { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
+    width: 100%;
+    background-color: #fff;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    text-align: left;
+    max-height: 150px!important;
+    overflow-y: auto!important;
+}
+.tt-dropdown-menu {
+  height: 124px;
+  overflow-y: auto;
+}
+.tt-suggestion {
+    color: #02571C;
+}
+.tt-suggestion.tt-selectable{
+    padding-left: 10px!important;
+}
+.tt-suggestion.tt-selectable{
+    padding-left: 10px!important;
+}
+.tt-suggestion.tt-cursor { /* UPDATE: newer versions use .tt-suggestion.tt-cursor */
+    color: #02571C;
+    background-color: #0097cf;
+
+}
+.tt-suggestion:hover {
+  cursor: pointer;
+  color: #fff;
+  background-color: #02571C;
+}
+.tt-suggestion p {
+    margin: 0;
+}
+ .hide{
+    display: none;
+ }
+ .longBtn{
+    width: 150px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+ }
  /* ngv slide img size */
  @media (max-width: 1600px) {
     .thumbnail{
         max-width: 235px!important;
     }
 }
+.btn.active{
+    background-color: #02571C!important;
+}
  /* FANCY COLLAPSE PANEL STYLES */
-
 .fancy-collapse-panel .panel-default > .panel-heading {
     padding: 0;
 
@@ -51,12 +111,17 @@ input[type=email] {
     border-radius: 0px!important;
 }
 input[type=text] {
+    border-color: #fff;
     height: 50px;
     border-radius: 0px!important;
 }
 input[type=submit] {
     height: 50px;
     border-radius: 0px!important;
+}
+input[type=button] {
+    height: 50px;
+    border-radius: 2px!important;
 }
  /* responsive search bar */
 @media
@@ -755,11 +820,6 @@ fieldset[disabled] .btn-primary.active {
 
 .btn-danger:hover { 
   border-color: #8CC13D; background-color: #02571C; 
-  -webkit-transition: background-color 0.8s;
-    -moz-transition:    background-color 0.8s;
-    -ms-transition:     background-color 0.8s;
-    -o-transition:      background-color 0.8s;
-    transition:         background-color 0.8s;
 }
 .btn-xl {
     padding: 15px 30px;
