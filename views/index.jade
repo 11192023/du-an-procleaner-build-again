@@ -77,11 +77,12 @@ html(lang='en')
             div#daihan.hide
               form.form-inline(action='/search')
                 .form-group(style='margin-top:7px')
-                  input.form-control.sb.quan.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                  input.form-control.sb(type='text', name='ngay', placeholder='Chọn ngày bắt đầu và kết thúc')
-                  input.form-control.sb(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
-                  input.form-control.sb(type='text', name='tgkt', placeholder='Thời gian kết thúc')
-                  input.btn.btn-danger(type='submit', value='Tìm kiếm')
+                  div#quan
+                    input.form-control.sb.quan.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
+                    input.form-control.sb(type='text', name='ngay', placeholder='Chọn ngày bắt đầu và kết thúc')
+                    input.form-control.sb(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
+                    input.form-control.sb(type='text', name='tgkt', placeholder='Thời gian kết thúc')
+                    input.btn.btn-danger(type='submit', value='Tìm kiếm')
     section#about.bg-primary
       .container
         .row
