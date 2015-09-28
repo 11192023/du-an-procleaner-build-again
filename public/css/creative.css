@@ -3,6 +3,10 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
+ /* datepicker*/
+ .active.day{
+    background-color: #02571C!important;
+ }
  /* typeahead*/
 .twitter-typeahead{
     display: inline-flex!important;
@@ -67,6 +71,29 @@
         max-width: 235px!important;
     }
 }
+@media (max-width: 1024px) {
+    header{
+        height: 100%;
+    }
+    .twitter-typeahead{
+        display: block!important;
+    }
+    .tt-menu{
+        margin-top: 20px!important;
+    }
+}
+@media (max-width: 640px)  {
+    header{
+        height: 250%;
+    }
+    .twitter-typeahead{
+        display: block!important;
+    }
+    .tt-menu{
+        margin-top: 5px!important;
+        position: inherit!important;
+    }
+}
 .btn.active{
     background-color: #02571C!important;
 }
@@ -114,6 +141,7 @@ input[type=text] {
     border-color: #fff;
     height: 50px;
     border-radius: 0px!important;
+    background-color: #fff!important;
 }
 input[type=submit] {
     height: 50px;
@@ -123,32 +151,66 @@ input[type=button] {
     height: 50px;
     border-radius: 2px!important;
 }
+.marbtmDate{
+    margin-bottom: 2px;
+}
  /* responsive search bar */
+.btnThemKG{
+    border-color: #fff;
+    height: 50px!important;
+    border-radius: 0px!important;
+    background-color: #fff!important;
+}
 @media
     only screen and (max-width: 1024px),
     (min-device-width: 1024px) and (max-device-width: 1280px) {
+        .form-group{
+            width: 100%!important;
+        }
         .sb{
             width: 100% !important;
+        }
+        .sbhaft{
+            width: 50% !important;
+        }
+        .marbtmDate{
+            margin-bottom: 0px!important;
         }
         .btn{
             width: 100%;
         }
+        .navbar-collapse.collapse {
+        display: none !important;
+        }
+        .navbar-collapse.collapse.in {
+            display: block !important;
+        }
+        .navbar-header .collapse, .navbar-toggle {
+            display:block !important;
+        }
+        .navbar-header {
+            float:none;
+        }
+        .header{
+            height: 200%!important;
+        }
     }
  /* table responsive */
-table { 
+table.tablebg { 
     width: 100%; 
     border-collapse: collapse; 
 }
 /* Zebra striping */
-tr:nth-of-type(odd) { 
+table.tablebg tr:nth-of-type(odd) { 
     background: #8CC13D; 
 }
-th { 
+table.tablebg th { 
     background: #02571C; 
     color: white; 
     font-weight: bold; 
 }
-td, th { 
+table.tablebg td,
+table.tablebg th { 
     padding: 6px; 
     border: 1px solid #ccc; 
     text-align: left; 
@@ -157,20 +219,40 @@ td, th {
     only screen and (max-width: 1024px),
     (min-device-width: 1024px) and (max-device-width: 1280px)  {
         /* Force table to not be like tables anymore */
-        table, thead, tbody, th, td, tr {
+        table.tablebg {
+            display: block;
+        }
+        table.tablebg thead{
+            display: block;
+        }
+        table.tablebg tbody{
+            display: block;
+        }
+        table.tablebg th{
+            display: block;
+        }
+        table.tablebg td{
+            display: block;
+        }
+        table.tablebg tr {
             display: block;
         }
 
         /* Hide table headers (but not display: none;, for accessibility) */
-        thead tr {
+        table.tablebg thead{
             position: absolute;
             top: -9999px;
             left: -9999px;
         }
+        table.tablebg tr {
+            position: inherit;
+            top: -9999px;
+            left: -9999px;
+        }
 
-        tr { border: 1px solid #ccc; }
+        table.tablebg tr { border: 1px solid #ccc; }
 
-        td {
+        table.tablebg td {
             /* Behave  like a "row" */
             border: none;
             border-bottom: 1px solid #eee;
@@ -178,7 +260,7 @@ td, th {
             padding-left: 50%;
         }
 
-        td:before {
+        table.tablebg td:before {
             /* Now like a table header */
             position: absolute;
             /* Top/left values mimic padding */
@@ -192,15 +274,15 @@ td, th {
         /*
         Label the data
         */
-        td:nth-of-type(1):before { content: "Ngày/tháng";  }
-        td:nth-of-type(2):before { content: "Ngày/tuần"; }
-        td:nth-of-type(3):before { content: "2 giờ/ngày"; }
-        td:nth-of-type(4):before { content: "3 giờ/ngày"; }
-        td:nth-of-type(5):before { content: "4 giờ/ngày"; }
-        td:nth-of-type(6):before { content: "5 giờ/ngày"; }
-        td:nth-of-type(7):before { content: "6 giờ/ngày"; }
-        td:nth-of-type(8):before { content: "7 giờ/ngày"; }
-        td:nth-of-type(9):before { content: "8 giờ/ngày"; }
+        table.tablebg td:nth-of-type(1):before { content: "Ngày/tháng";  }
+        table.tablebg td:nth-of-type(2):before { content: "Ngày/tuần"; }
+        table.tablebg td:nth-of-type(3):before { content: "2 giờ/ngày"; }
+        table.tablebg td:nth-of-type(4):before { content: "3 giờ/ngày"; }
+        table.tablebg td:nth-of-type(5):before { content: "4 giờ/ngày"; }
+        table.tablebg td:nth-of-type(6):before { content: "5 giờ/ngày"; }
+        table.tablebg td:nth-of-type(7):before { content: "6 giờ/ngày"; }
+        table.tablebg td:nth-of-type(8):before { content: "7 giờ/ngày"; }
+        table.tablebg td:nth-of-type(9):before { content: "8 giờ/ngày"; }
     }
 
     /* Smartphones (portrait and landscape) ----------- */
@@ -394,11 +476,18 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+    font-family: 'Open Sans',sans-serif;
     color: #02571C;
 }
-
+.boldp{
+    font-weight: bold;
+}
+.justify{
+    text-align: justify;
+}
 p {
+    font-family: 'Open Sans',sans-serif!important;
+    color: #02571C;
     margin-bottom: 20px;
     font-size: 16px;
     line-height: 1.5;
@@ -581,6 +670,7 @@ header .header-content .header-content-inner p {
     color: #02571C;
 }
 
+
 @media(min-width:768px) {
     header {
         min-height: 100%;
@@ -608,7 +698,10 @@ header .header-content .header-content-inner p {
         font-size: 18px;
     }
 }
-
+.col-xs-6{
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+}
 .section-heading {
     margin-bottom: 10px;
 }
@@ -717,9 +810,9 @@ header .header-content .header-content-inner p {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-    border-color: #ededed;
-    color: #222;
-    background-color: #f2f2f2;
+    border-color: #02571C;
+    color: #fff;
+    background-color: #02571C;
 }
 
 .btn-default:active,
@@ -752,13 +845,13 @@ fieldset[disabled] .btn-default.active {
 
 .btn-default .badge {
     color: #fff;
-    background-color: #222;
+    background-color: #02571C;
 }
 
 .btn-primary {
     border-color: #f05f40;
     color: #fff;
-    background-color: #f05f40;
+    background-color: #02571C;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -770,9 +863,9 @@ fieldset[disabled] .btn-default.active {
 .btn-primary:active,
 .btn-primary.active,
 .open > .dropdown-toggle.btn-primary {
-    border-color: #ed431f;
+    border-color: #02571C;
     color: #fff;
-    background-color: #ee4b28;
+    background-color: #02571C;
 }
 
 .btn-primary:active,
@@ -799,12 +892,12 @@ fieldset[disabled] .btn-primary:active,
 .btn-primary.disabled.active,
 .btn-primary[disabled].active,
 fieldset[disabled] .btn-primary.active {
-    border-color: #f05f40;
-    background-color: #f05f40;
+    border-color: #02571C;
+    background-color: #02571C;
 }
 
 .btn-primary .badge {
-    color: #f05f40;
+    color: #02571C;
     background-color: #fff;
 }
 
@@ -815,11 +908,18 @@ fieldset[disabled] .btn-primary.active {
     font-weight: 700;
 }
 .btn-danger { 
-  border-color: rgba(34,34,34,.05); background-color: rgba(2,87,28,.5);
+  border-color: rgba(2,34,34,.05); background-color: rgba(2,87,28,.5);
 }
 
-.btn-danger:hover { 
-  border-color: #8CC13D; background-color: #02571C; 
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger.focus,
+.btn-danger:active,
+.btn-danger.active,
+.open > .dropdown-toggle.btn-danger {
+    border-color: #02571C;
+    color: #fff;
+    background-color: #02571C;
 }
 .btn-xl {
     padding: 15px 30px;

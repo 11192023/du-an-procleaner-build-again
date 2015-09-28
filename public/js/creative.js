@@ -6,6 +6,12 @@
 
 (function($) {
     $(document).ready(function(){
+        $('.dpindex').datepicker({
+            language: 'vi'
+        });
+        $('.input-daterange').datepicker({
+            language: 'vi'
+        });
         var quan = [
                 'Quận 1',
                 'Quận 12',
@@ -78,6 +84,10 @@
             $('#daihan').removeClass('hide');
             $('#btntheongay').removeClass('active');
             $('#theongay').addClass('hide');
+        });
+        
+        $('#addTime').click(function(){
+            
         });
         $('#mypanel > .panel').on('show.bs.collapse', function (e) {
             $(this).find('.panel-heading').addClass("active-panel");

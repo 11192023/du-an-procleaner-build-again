@@ -6,11 +6,9 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(name='description', content='')
     meta(name='author', content='')
-    title Creative - Start Bootstrap Theme
+    title ProCleaner
     // Angular-material
     link(rel='stylesheet', href='https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css')
-    //materialize
-    
     // Bootstrap Core CSS
     link(rel='stylesheet', href='css/bootstrap.min.css', type='text/css')
     // Custom Fonts
@@ -21,7 +19,9 @@ html(lang='en')
     // Custom CSS
     link(rel='stylesheet', href='slick/slick.css', type='text/css')
     link(rel='stylesheet', href='slick/slick-theme.css', type='text/css')
+    link(rel='stylesheet', href='css/bootstrap-datepicker3.standalone.min.css', type='text/css')
     link(rel='stylesheet', href='css/creative.css', type='text/css')
+    
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
     // WARNING: Respond.js doesn't work if you view the page via file://
     //if lt IE 9
@@ -62,24 +62,26 @@ html(lang='en')
           h1.smallerh1 GIÚP VIỆC CHUYÊN NGHIỆP
           h2 Tìm người giúp việc trong TP.HCM
           div
-            div
-              input#btntheongay.btn.btn-danger.longBtn.active(type='button', value='Theo ngày')
-              input#btndaihan.btn.btn-danger.longBtn(type='button', value='Dài hạn')
+            .form-group
+              input#btntheongay.btn.btn-danger.form-control.sb.longBtn.active(type='button', value='Theo ngày')
+              input#btndaihan.btn.btn-danger.form-control.sb.longBtn(type='button', value='Dài hạn')
             div#theongay
               form.form-inline(action='/search')
-                .form-group(style='margin-top:7px')
+                .form-group
                   div#quan
                     input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                    input.form-control.sb(type='text', name='ngay', placeholder='Chọn ngày')
-                    input.form-control.sb(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
-                    input.form-control.sb(type='text', name='tgkt', placeholder='Thời gian kết thúc')
-                    input.btn.btn-danger(type='submit', value='Tìm kiếm')
-            div#daihan.hide
+                    input.form-control.sb.dpindex(type='text', name='ngay', placehlder='Chọn ngày')
+                 .form-group
+                    input.form-control.sbhaft(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
+                    input.form-control.sbhaft(type='text', name='tgkt', placeholder='Thời gian kết thúc')
+                    input#addTime.form-control.sb.btn.btn-danger(type='button', value='+')
+                  input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
+            div#daihan.hide(ng-controller='')
               form.form-inline(action='/search')
-                .form-group(style='margin-top:7px')
+                .form-group
                   div#quan
                     input.form-control.sb.quan.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                    input.form-control.sb(type='text', name='ngay', placeholder='Chọn ngày bắt đầu và kết thúc')
+                    input.form-control.sb.dpindex(type='text', name='ngay', placeholder='Chọn ngày bắt đầu và kết thúc')
                     input.form-control.sb(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
                     input.form-control.sb(type='text', name='tgkt', placeholder='Thời gian kết thúc')
                     input.btn.btn-danger(type='submit', value='Tìm kiếm')
@@ -719,7 +721,7 @@ html(lang='en')
         button.chutrang.close(type='button', data-dismiss='modal') ×
         h4.biggerfont.modal-title.chutrang Bảng giá
       .modal-body
-        table.table-bordered
+        table.table-bordered.tablebg
           h4 Bảng giá của một giờ làm việc (đơn vị tính: VNĐ)
           thead
             tr
@@ -804,7 +806,7 @@ html(lang='en')
               td 25.000
               td 24.000
         br
-        table.table-bordered
+        table.table-bordered.tablebg
           h4 Bảng giá theo tháng (đơn vị tính: VNĐ)
           thead
             tr
@@ -1060,31 +1062,15 @@ html(lang='en')
         button.chutrang.close(type='button', data-dismiss='modal') ×
         h4.biggerfont.modal-title.chutrang Chính sách
       div.modal-body
-        h3 Hai bên đồng ý cung cấp và sử dụng dịch vụ theo các điều khoản sau:
-        h3 1. Quyền và nghĩa vụ của Khách hàng
-        h4.padleftdk -  Đảm bảo môi trường làm việc tốt, an toàn và lành mạnh cho nhân viên Công ty (không có hoá chất độc hại, không bị ô nhiễm, không có các hành vi quấy rối, xâm hại đến tính mạng, danh dự, nhân phẩm, thân thể của nhân viên Công ty).
-        h4.padleftdk -  Tự bảo quản và chịu trách nhiệm trong việc quản lý tài sản của mình trong mọi trường hợp; Trường hợp Khách hàng giao chìa khóa cho nhân viên của Công ty để thực hiện công việc, Khách hàng cam kết hành vi này của Khách hàng không tạo ra quan hệ gửi giữ tài sản giữa Khách hàng và Công ty.
-        h4.padleftdk -  Hủy buổi làm việc: để đảm bảo lịch làm việc ổn định cho nhân viên Công ty, Khách hàng sẽ không được quyền hủy buổi làm việc. Trong trường hợp Khách hàng cần hủy buổi làm việc thì buổi làm việc đó sẽ được Công ty sắp xếp nhân viên làm bù buổi làm bị hủy cho Khách hàng. Buổi làm bù này sẽ được thực hiện trong thời gian tối đa là 01 (một) tuần tính từ ngày Khách hàng đăng kí dịch vụ. Sau thời gian này, nếu các bên không sắp xếp được thời gian để làm bù thì Công ty sẽ không có trách nhiệm làm bù cho Khách hàng nữa.
-        h4.padleftdk -  Trong trường hợp Khách hàng muốn thay đổi lịch làm việc, Khách hàng cần thông báo cho Công ty trước 24h của buổi làm đó, nếu Khách hàng không thông báo trước thời gian 24h, Khách hàng sẽ phải chịu 100% phí dịch vụ của buổi làm việc đó.
-        h4.padleftdk -  Không nhận nhân viên Công ty vào làm việc trực tiếp bằng bất kỳ hình thức nào trong thời gian sử dụng dịch vụ hoặc trong vòng 3 tháng kể từ ngày đăng kí ở trên; nếu vi phạm sẽ phải bồi thường chi phí tuyển dụng và đào tạo nhân viên đó cho Công ty, chi phí do Công ty xác định nhưng sẽ không thấp hơn 5.000.000 đồng (bằng chữ: năm triệu đồng) một nhân viên. Công ty có quyền công khai thông tin cá nhân của Khách hàng và nội dung các vi phạm của Khách hàng (nếu có) trên các phương tiện truyền thông của Công ty nếu Khách hàng vi phạm điều khoản này.
-        h4.padleftdk -  Có trách nhiệm theo dõi, xác nhận thời gian làm việc và các thông tin khác vào “Bảng đánh giá” của nhân viên Công ty. Giờ làm việc phát sinh ngoài thời gian đã đăng ký sẽ được tính thêm phí.
-        h4.padleftdk -  Kịp thời thông báo cho Công ty trong vòng 24 giờ nếu phát hiện những hành vi tiêu cực từ phía nhân viên Công ty để hai bên cùng phối hợp xử lý.
-        h4.padleftdk -  Trong trường hợp Khách hàng không hài lòng với chất lượng công việc hoặc phát hiện mất, hoặc hư hỏng tài sản trong thời gian nhân viên Công ty đang làm việc cho Khách hàng thì Khách hàng phải ghi nhận vào "Bảng đánh giá”, thông báo ngay cho đại diện của Công ty, giữ chân Nhân viên của Công ty đến khi đại diện của Công ty có mặt.
-        h4.padleftdk -  Trong trường hợp nghi ngờ nhân viên Công ty có hành vi trộm cắp tài sản hoặc làm hư hỏng tài sản của Khách hàng nhưng chưa có kết luận của cơ quan điều tra, Khách hàng không được cung cấp thông tin cho bất kỳ cá nhân, tổ chức nào làm ảnh hưởng đến uy tín, thương hiệu của Công ty. Nếu vi phạm, Khách hàng phải thanh toán cho Công ty một khoản tiền bồi thường, khoản tiền này sẽ do Công ty xác định.
-        h4.padleftdk -  Không tự ý thoả thuận với nhân viên Công ty để thay đổi, làm sai khác các nội dung đã thống nhất trong văn bản này.
-        h3 2. Quyền và nghĩa vụ của Công ty
-        h4.padleftdk -  Cung cấp nhân viên giúp việc cho Khách hàng đảm bảo lý lịch, nguồn gốc rõ ràng và có xác nhận của chính quyền địa phương, đã được đào tạo về nghiệp vụ giúp việc gia đình theo tiêu chuẩn của Công ty.
-        h4.padleftdk -  Thường xuyên trao đổi và tiếp nhận thông tin phản hồi từ Khách hàng về chất lượng dịch vụ; cung cấp lại dịch vụ cho phần việc xảy ra do lỗi của nhân viên Công ty làm Khách hàng chưa hài lòng, thể hiện trên “Bảng đánh giá” của nhân viên.
-        h3 3. Giải quyết tranh chấp và khiếu nại
-        h4.padleftdk Khi xảy ra mâu thuẫn, tranh chấp, hai bên sẽ ưu tiên tiến hành giải quyết công việc thông qua việc tự thương lượng, hoà giải, trên tinh thần hỗ trợ lẫn nhau. Nếu không, mọi mâu thuẫn, tranh chấp sẽ được đưa ra giải quyết tại Toà án Nhân dân có thẩm quyền.
-        h3 4. Thanh toán phí dịch vụ
-        h4.padleftdk Khách hàng có nghĩa vụ thanh toán tiền phí sử dụng dịch vụ trước ngày bắt đầu sử dụng dịch vụ, bằng hình thức:
-        h4.padleftdk a) Chuyển khoản qua tài khoản:
-        h5.padleft -  Tên tài khoản: .......
-        h5.padleft -  Số tài khoản:  .......
-        h5.padleft -  Ngân hàng:     .......
-        h4.padleftdk b) Thanh toán trực tiếp qua website của Công ty tại địa chỉ: ………………
-        h4.padleftdk c) Thanh toán bằng tiền mặt cho nhân viên do Công ty chỉ định theo giấy giới thiệu của Công ty.
+        p.justify.padleftdk Khi xảy ra mâu thuẫn, tranh chấp, hai bên sẽ ưu tiên tiến hành giải quyết công việc thông qua việc tự thương lượng, hoà giải, trên tinh thần hỗ trợ lẫn nhau. Nếu không, mọi mâu thuẫn, tranh chấp sẽ được đưa ra giải quyết tại Toà án Nhân dân có thẩm quyền.
+        p.justify.boldp 4. Thanh toán phí dịch vụ
+        p.justify.padleftdk Khách hàng có nghĩa vụ thanh toán tiền phí sử dụng dịch vụ trước ngày bắt đầu sử dụng dịch vụ, bằng hình thức:
+        p.justify.padleftdk a) Chuyển khoản qua tài khoản:
+        p.justify.padleft -  Tên tài khoản: .......
+        p.justify.padleft -  Số tài khoản:  .......
+        p.justify.padleft -  Ngân hàng:     .......
+        p.justify.padleftdk b) Thanh toán trực tiếp qua website của Công ty tại địa chỉ: ………………
+        p.justify.padleftdk c) Thanh toán bằng tiền mặt cho nhân viên do Công ty chỉ định theo giấy giới thiệu của Công ty.
       div.modal-footer
 
     // jQuery
@@ -1098,11 +1084,8 @@ html(lang='en')
     script(src='js/typeahead.bundle.js')
     // Custom Theme JavaScript
     script(src='slick/slick.min.js')
+    script(src='js/bootstrap-datepicker.min.js')
+    script(src='locales/bootstrap-datepicker.vi.min.js')
     script(src='js/creative.js')
-    //angular
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js')
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js')
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js')
-    script(src='https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js')
-    script(src='angular/core.js')
+
     

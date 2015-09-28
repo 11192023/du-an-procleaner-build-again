@@ -2,12 +2,10 @@
 	//search module
 	var searchModule = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','rgkevin.datetimeRangePicker']);
 
-	
-	searchModule.config(['$httpProvider', function($httpProvider) {
-  
-        $httpProvider.defaults.useXDomain = true;
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
-  	}]);
+	searchModule.config(function($mdThemingProvider){
+		$mdThemingProvider.theme('default')
+			.primaryPalette('green');
+	});
 	searchModule.controller('searchController', function($scope, $http){
 		$scope.formData = {};
 		$scope.tieuchis = [
@@ -220,7 +218,7 @@
 //----------------------------------------------------------------------------------------------------
 	
 	//index module
-	var indexModule = angular.module('IndexModule', ['ngMaterial']);
+	var indexModule = angular.module('IndexModule', ['ngMaterial','rgkevin.datetimeRangePicker']);
 
 	indexModule.config(function($mdThemingProvider){
 		$mdThemingProvider.theme('default')
@@ -229,5 +227,26 @@
 
 	indexModule.controller('searchbarController', function($scope, $http){
 		$scope.formData = {};
+	});
+	indexModule.controller('dateController', function($scope){
+	  	$scope.myDatetimeRange = {
+		    "time": {
+			    "from": 390,
+			    "to": 1020,
+			    "dFrom": 0,
+			    "dTo": 1440,
+			    "step": 15,
+			    "minRange": 15,
+			    "hours24": true
+		  	},
+		  "hasDatePickers": false,
+		  "hasTimeSliders": true
+		}
+		$scope.myDatetimeLabels = {
+		    date: {
+		        from: 'Start date',
+		        to: 'End date'
+		    }
+		}
 	});
 })();
