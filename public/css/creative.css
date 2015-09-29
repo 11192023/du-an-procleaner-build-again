@@ -384,6 +384,7 @@ body.modal-open[style] {
 }
 .chutrang {
     color: white!important;
+    opacity: 1!important;
 }
 .logofont{
     font-size: 40px!important;
@@ -414,6 +415,7 @@ body.modal-open[style] {
 }
 .padleftdk{
     padding-left: 10px;
+    padding-right: 10px;
 }
 .padleftngv{
     padding-left: 10px;
