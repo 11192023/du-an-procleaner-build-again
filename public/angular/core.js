@@ -186,12 +186,33 @@
 		return '';
 		};
 	});
-	module.controller('timeController', function($scope){
+	module.controller('timeController', function($scope, $log){
 		$scope.dynamicPopover = {
 			content: 'Hello, World!',
 			templateUrl: 'myPopoverTemplate.html',
 			title: 'Xin chọn khung thời gian'
 	  	};
+	  	$scope.mytime = new Date();
+
+		$scope.hstep = 1;
+		$scope.mstep = 5;
+
+		$scope.ismeridian = true;
+
+		$scope.update = function() {
+			var d = new Date();
+			d.setHours( 14 );
+			d.setMinutes( 0 );
+			$scope.mytime = d;
+		};
+
+		$scope.changed = function () {
+			$log.log('Time changed to: ' + $scope.mytime);
+		};
+
+		$scope.clear = function() {
+			$scope.mytime = null;
+		};
 	  	$scope.myDatetimeRange = {
 		    "time": {
 			    "from": 390,
