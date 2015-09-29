@@ -7,10 +7,11 @@ html(lang='en')
     meta(name='description', content='')
     meta(name='author', content='')
     title ProCleaner
-    // Angular-material
-    link(rel='stylesheet', href='https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css')
+    
     // Bootstrap Core CSS
     link(rel='stylesheet', href='css/bootstrap.min.css', type='text/css')
+    // Angular-material
+    link(rel='stylesheet', href='https://gitcdn.xyz/repo/angular/bower-material/v0.11.0-rc1/angular-material.css')
     // Custom Fonts
     link(href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800 | Merriweather:400,300,300italic,400italic,700,700italic,900,900italic', rel='stylesheet', type='text/css')
     link(rel='stylesheet', href='font-awesome/css/font-awesome.min.css', type='text/css')
@@ -20,6 +21,7 @@ html(lang='en')
     link(rel='stylesheet', href='slick/slick.css', type='text/css')
     link(rel='stylesheet', href='slick/slick-theme.css', type='text/css')
     link(rel='stylesheet', href='css/bootstrap-datepicker3.standalone.min.css', type='text/css')
+    link(rel='stylesheet', href='css/range-picker.min.css', type='text/css')
     link(rel='stylesheet', href='css/creative.css', type='text/css')
     
     // HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
@@ -27,7 +29,7 @@ html(lang='en')
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-  body#page-top
+  body#page-top(ng-app='SearchModule')
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
         // Brand and toggle get grouped for better mobile display
@@ -56,8 +58,8 @@ html(lang='en')
               a.page-scroll(href='#', data-toggle='modal', data-target='#chinhsach') Chính sách
             li
               a.page-scroll(href='#contact') Liên hệ
-    header
-      .header-content
+    header(popover-close exclude-class="exclude")
+      .header-content(ng-controller='timeController')
         .header-content-inner
           h1.smallerh1 GIÚP VIỆC CHUYÊN NGHIỆP
           h2 Tìm người giúp việc trong TP.HCM
@@ -71,14 +73,14 @@ html(lang='en')
                   li
                     .form-group
                       div#quan
-                        input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                        input.form-control.sb.dpindex(type='text', name='ngay', placeholder='Chọn ngày')
+                        input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận', autocomplete='off')
+                        input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', autocomplete='off')
                     .form-group
-                        input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
-                        input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
+                        input.form-control.sbhaft.fixWTime(popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}", type='text', name='tgbd', placeholder='Từ(giờ)', autocomplete='off', readonly='readonly')
+                        input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)', autocomplete='off' readonly='readonly')
                         input#addTimeTN.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='+')
                       input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
-            div#daihan.hide(ng-controller='')
+            div#daihan.hide
               form#formDaiHan.form-inline.removedot(action='/search')
                 ul
                   li
@@ -1143,18 +1145,36 @@ html(lang='en')
       div.modal-footer
 
     // jQuery
-    script(src='js/jquery.js')
+    script(src='js/jquery-2.1.4.min.js')
     // Bootstrap Core JavaScript
     script(src='js/bootstrap.min.js')
     // Plugin JavaScript
+    script(src='js/respond.min.js')
     script(src='js/jquery.easing.min.js')
     script(src='js/jquery.fittext.js')
     script(src='js/wow.min.js')
     script(src='js/typeahead.bundle.js')
+    // angular
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-sanitize.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-touch.min.js')
+    script(src='js/angular-slider.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.min.js')
+    script(src='//gitcdn.xyz/repo/angular/bower-material/v0.11.0-rc1/angular-material.js')
+    script(src='js/ui-bootstrap-tpls-0.13.4.min.js')
+    script(src='js/range-picker.min.js')
     // Custom Theme JavaScript
     script(src='slick/slick.min.js')
     script(src='js/bootstrap-datepicker.min.js')
     script(src='locales/bootstrap-datepicker.vi.min.js')
-    script(src='js/creative.js')
-
     
+    script(src='js/creative.js')
+    script(src='angular/core.js')
+    
+    
+    
+    script(type='text/ng-template', id='myPopoverTemplate.html').
+      <div>{{dynamicPopover.title}}</div>
+      <div class="exclude" rg-range-picker="myDatetimeRange" labels="myDatetimeLabels" collapse="collapseDirective"></div>

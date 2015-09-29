@@ -1,12 +1,12 @@
 (function(){
 	//search module
-	var searchModule = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','rgkevin.datetimeRangePicker']);
+	var module = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','rgkevin.datetimeRangePicker']);
 
-	searchModule.config(function($mdThemingProvider){
+	module.config(function($mdThemingProvider){
 		$mdThemingProvider.theme('default')
 			.primaryPalette('green');
 	});
-	searchModule.controller('searchController', function($scope, $http){
+	module.controller('searchController', function($scope, $http){
 		$scope.formData = {};
 		$scope.tieuchis = [
 			{
@@ -116,16 +116,8 @@
 				id: 5
 			}
 		];
-		$http.get('http://rest-service.guides.spring.io/greeting?callback=?')
-	        .success(function(data) {
-	            $scope.khs = data;
-	            console.log(data);
-	        })
-	        .error(function(data) {
-	            console.log('Error: ' + data);
-	        });
 	});
-	searchModule.controller('dateController', function($scope){
+	module.controller('dateController', function($scope){
 	  	$scope.today = function() {
 			$scope.dt = new Date();
 		};
@@ -194,41 +186,12 @@
 		return '';
 		};
 	});
-	searchModule.controller('timeController', function($scope){
-	  	$scope.myDatetimeRange = {
-		    "time": {
-			    "from": 390,
-			    "to": 1020,
-			    "dFrom": 0,
-			    "dTo": 1440,
-			    "step": 15,
-			    "minRange": 15,
-			    "hours24": true
-		  	},
-		  "hasDatePickers": false,
-		  "hasTimeSliders": true
-		}
-		$scope.myDatetimeLabels = {
-		    date: {
-		        from: 'Start date',
-		        to: 'End date'
-		    }
-		}
-	});
-//----------------------------------------------------------------------------------------------------
-	
-	//index module
-	var indexModule = angular.module('IndexModule', ['ngMaterial','rgkevin.datetimeRangePicker']);
-
-	indexModule.config(function($mdThemingProvider){
-		$mdThemingProvider.theme('default')
-			.primaryPalette('green');
-	});
-
-	indexModule.controller('searchbarController', function($scope, $http){
-		$scope.formData = {};
-	});
-	indexModule.controller('dateController', function($scope){
+	module.controller('timeController', function($scope){
+		$scope.dynamicPopover = {
+			content: 'Hello, World!',
+			templateUrl: 'myPopoverTemplate.html',
+			title: 'Xin chọn khung thời gian'
+	  	};
 	  	$scope.myDatetimeRange = {
 		    "time": {
 			    "from": 390,

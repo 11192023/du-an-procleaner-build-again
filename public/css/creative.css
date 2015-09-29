@@ -698,9 +698,15 @@ header .header-content .header-content-inner p {
         font-size: 18px;
     }
 }
+input[readonly] {
+  cursor: pointer !important;
+}
 @media(min-width: 1024px){
     .fixWTime{
         width: 120px!important;
+    }
+    .fixWTimeNH{
+        width: 240px!important;
     }
     .fixWAdd{
         width: 40px!important;
