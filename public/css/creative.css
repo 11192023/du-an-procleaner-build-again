@@ -698,6 +698,11 @@ header .header-content .header-content-inner p {
         font-size: 18px;
     }
 }
+@media(min-width: 1024px){
+    .fixWTime{
+        width: 120px!important;
+    }
+}
 .section-heading {
     margin-bottom: 10px;
 }
