@@ -80,11 +80,13 @@ html(lang='en')
               form.form-inline(action='/search')
                 .form-group
                   div#quan
-                    input.form-control.sb.quan.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                    input.form-control.sb.dpindex(type='text', name='ngay', placeholder='Chọn ngày bắt đầu và kết thúc')
-                    input.form-control.sb(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
-                    input.form-control.sb(type='text', name='tgkt', placeholder='Thời gian kết thúc')
-                    input.btn.btn-danger(type='submit', value='Tìm kiếm')
+                    input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
+                    input.form-control.sb.dpindex(type='text', name='ngay', placeholder='Chọn ngày dài hạn')
+                .form-group
+                    input.form-control.sbhaft(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
+                    input.form-control.sbhaft(type='text', name='tgkt', placeholder='Thời gian kết thúc')
+                    input#addTime.form-control.sb.btn.btn-danger(type='button', value='+')
+                  input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
     section#about.bg-primary
       .container
         .row
@@ -146,13 +148,13 @@ html(lang='en')
             .col-xs-6.col-sm-3
               .thumbnail.center-block
                 a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
-                        | Category
+                        | 
                       .project-name
-                        | Project Name
+                        | Xem thông tin chi tiết
                 .caption
                   .row
                     .left.padleftngv
@@ -169,13 +171,13 @@ html(lang='en')
             .col-xs-6.col-sm-3
               .thumbnail.center-block
                 a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
-                        | Category
+                        | 
                       .project-name
-                        | Project Name
+                        | Xem thông tin chi tiết
                 .caption
                   .row
                     .left.padleftngv
@@ -192,13 +194,13 @@ html(lang='en')
             .col-xs-6.col-sm-3
               .thumbnail.center-block
                 a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
-                        | Category
+                        | 
                       .project-name
-                        | Project Name
+                        | Xem thông tin chi tiết
                 .caption
                   .row
                     .left.padleftngv
@@ -215,13 +217,13 @@ html(lang='en')
             .col-xs-6.col-sm-3
               .thumbnail.center-block
                 a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
-                        | Category
+                        | 
                       .project-name
-                        | Project Name
+                        | Xem thông tin chi tiết
                 .caption
                   .row
                     .left.padleftngv
@@ -238,197 +240,13 @@ html(lang='en')
             .col-xs-6.col-sm-3
               .thumbnail.center-block
                 a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
-                        | Category
+                        | 
                       .project-name
-                        | Project Name
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
-            .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
-            .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
-            .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
-            .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
-            .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | Category
-                      .project-name
-                        | Project Name
-                .caption
-                  .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | Category
-                      .project-name
-                        | Project Name
+                        | Xem thông tin chi tiết
                 .caption
                   .row
                     .left.padleftngv
@@ -445,13 +263,13 @@ html(lang='en')
             .col-xs-6.col-sm-3
               .thumbnail.center-block
                 a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
-                        | Category
+                        | 
                       .project-name
-                        | Project Name
+                        | Xem thông tin chi tiết
                 .caption
                   .row
                     .left.padleftngv
@@ -468,13 +286,13 @@ html(lang='en')
             .col-xs-6.col-sm-3
               .thumbnail.center-block
                 a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
-                        | Category
+                        | 
                       .project-name
-                        | Project Name
+                        | Xem thông tin chi tiết
                 .caption
                   .row
                     .left.padleftngv
@@ -491,13 +309,13 @@ html(lang='en')
             .col-xs-6.col-sm-3
               .thumbnail.center-block
                 a.portfolio-box(href='#')
-                  img.img-responsive(src='img/placeholder_user.png', alt='')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
-                        | Category
+                        | 
                       .project-name
-                        | Project Name
+                        | Xem thông tin chi tiết
                 .caption
                   .row
                     .left.padleftngv
@@ -512,143 +330,166 @@ html(lang='en')
                       h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
                       | 40 tuổi
             .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
+              .thumbnail.center-block
+                a.portfolio-box(href='#')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
+                  .portfolio-box-caption
+                    .portfolio-box-caption-content
+                      .project-category.text-faded
+                        | 
+                      .project-name
+                        | Xem thông tin chi tiết
+                .caption
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                      | Nguyễn Minh Tuấn
+                    .right.padrightngv
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                      | 2 năm
+                    .right.padrightngv
+                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                      | 40 tuổi
             .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
+              .thumbnail.center-block
+                a.portfolio-box(href='#')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
+                  .portfolio-box-caption
+                    .portfolio-box-caption-content
+                      .project-category.text-faded
+                        | 
+                      .project-name
+                        | Xem thông tin chi tiết
+                .caption
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                      | Nguyễn Minh Tuấn
+                    .right.padrightngv
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                      | 2 năm
+                    .right.padrightngv
+                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                      | 40 tuổi
             .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
+              .thumbnail.center-block
+                a.portfolio-box(href='#')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
+                  .portfolio-box-caption
+                    .portfolio-box-caption-content
+                      .project-category.text-faded
+                        | 
+                      .project-name
+                        | Xem thông tin chi tiết
+                .caption
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                      | Nguyễn Minh Tuấn
+                    .right.padrightngv
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                      | 2 năm
+                    .right.padrightngv
+                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                      | 40 tuổi
             .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
+              .thumbnail.center-block
+                a.portfolio-box(href='#')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
+                  .portfolio-box-caption
+                    .portfolio-box-caption-content
+                      .project-category.text-faded
+                        | 
+                      .project-name
+                        | Xem thông tin chi tiết
+                .caption
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                      | Nguyễn Minh Tuấn
+                    .right.padrightngv
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                      | 2 năm
+                    .right.padrightngv
+                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                      | 40 tuổi
             .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
+              .thumbnail.center-block
+                a.portfolio-box(href='#')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
+                  .portfolio-box-caption
+                    .portfolio-box-caption-content
+                      .project-category.text-faded
+                        | 
+                      .project-name
+                        | Xem thông tin chi tiết
+                .caption
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                      | Nguyễn Minh Tuấn
+                    .right.padrightngv
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                      | 2 năm
+                    .right.padrightngv
+                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                      | 40 tuổi
             .col-xs-6.col-sm-3
-                .thumbnail.center-block
-                  a.portfolio-box(href='#')
-                    img.img-responsive(src='img/placeholder_user.png', alt='')
-                    .portfolio-box-caption
-                      .portfolio-box-caption-content
-                        .project-category.text-faded
-                          | Category
-                        .project-name
-                          | Project Name
-                  .caption
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                        | Nguyễn Minh Tuấn
-                      .right.padrightngv
-                    .row
-                      .left.padleftngv
-                        h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                        | 2 năm
-                      .right.padrightngv
-                        h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                        | 40 tuổi
+              .thumbnail.center-block
+                a.portfolio-box(href='#')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
+                  .portfolio-box-caption
+                    .portfolio-box-caption-content
+                      .project-category.text-faded
+                        | 
+                      .project-name
+                        | Xem thông tin chi tiết
+                .caption
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                      | Nguyễn Minh Tuấn
+                    .right.padrightngv
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                      | 2 năm
+                    .right.padrightngv
+                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                      | 40 tuổi
+            .col-xs-6.col-sm-3
+              .thumbnail.center-block
+                a.portfolio-box(href='#')
+                  img.img-responsive(src='img/NGV.jpg', alt='')
+                  .portfolio-box-caption
+                    .portfolio-box-caption-content
+                      .project-category.text-faded
+                        | 
+                      .project-name
+                        | Xem thông tin chi tiết
+                .caption
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                      | Nguyễn Minh Tuấn
+                    .right.padrightngv
+                  .row
+                    .left.padleftngv
+                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                      | 2 năm
+                    .right.padrightngv
+                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                      | 40 tuổi
     section#contact.contactbg
       .container
         .col-md-6.pull-left
