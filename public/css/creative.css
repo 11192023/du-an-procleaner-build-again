@@ -703,6 +703,10 @@ header .header-content .header-content-inner p {
         width: 120px!important;
     }
 }
+.removedot ul
+{
+    list-style-type: none;
+}
 .section-heading {
     margin-bottom: 10px;
 }
@@ -717,7 +721,9 @@ header .header-content .header-content-inner p {
         margin: 20px auto 0;
     }
 }
-
+.visuallyhidden { 
+  visibility: hidden;
+}
 .service-box p {
     margin-bottom: 0;
     color: #02571C;

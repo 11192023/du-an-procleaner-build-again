@@ -86,8 +86,38 @@
             $('#theongay').addClass('hide');
         });
         
-        $('#addTime').click(function(){
-            
+        $('#addTimeTN').click(function(){
+            $('#formTheoNgay ul').append('<li>' +
+                '<div class="form-group">' +
+                '<div id="quan">' +
+                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sb visuallyhidden"/>' +
+                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sb visuallyhidden"/>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<input type="text" name="tgbd" placeholder="Từ(giờ)" class="form-control sbhaft fixWTime"/>' +
+                '<input type="text" name="tgkt" placeholder="Đến(giờ)" class="form-control sbhaft fixWTime"/>' +
+                '<input type="button" value="+" class="form-control sb btn btn-danger visuallyhidden"/>' +
+                '</div>' +
+                '<input type="submit" value="Tìm kiếm" class="form-control sb btn btn-danger visuallyhidden"/>' +
+                '</li>');
+        });
+        $('#addTimeDH').click(function(){
+            $('#formDaiHan ul').append('<li>' +
+                '<div class="form-group">' +
+                '<div id="quan">' +
+                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sb visuallyhidden"/>' +
+                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sbhaft fixWTime visuallyhidden"/>' +
+                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sbhaft fixWTime visuallyhidden"/>' +
+                '</div>' +
+                '</div>' +
+                '<div class="form-group">' +
+                '<input type="text" name="tgbd" placeholder="Từ(giờ)" class="form-control sbhaft fixWTime"/>' +
+                '<input type="text" name="tgkt" placeholder="Đến(giờ)" class="form-control sbhaft fixWTime"/>' +
+                '<input type="button" value="+" class="form-control sb btn btn-danger visuallyhidden"/>' +
+                '</div>' +
+                '<input type="submit" value="Tìm kiếm" class="form-control sb btn btn-danger visuallyhidden"/>' +
+                '</li>');
         });
         $('#mypanel > .panel').on('show.bs.collapse', function (e) {
             $(this).find('.panel-heading').addClass("active-panel");

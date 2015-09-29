@@ -66,28 +66,32 @@ html(lang='en')
               input#btntheongay.btn.btn-danger.form-control.sb.longBtn.active(type='button', value='Theo ngày')
               input#btndaihan.btn.btn-danger.form-control.sb.longBtn(type='button', value='Dài hạn')
             div#theongay
-              form.form-inline(action='/search')
-                .form-group
-                  div#quan
-                    input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                    input.form-control.sb.dpindex(type='text', name='ngay', placeholder='Chọn ngày')
-                .form-group
-                    input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
-                    input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
-                    input#addTime.form-control.sb.btn.btn-danger(type='button', value='+')
-                  input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
+              form#formTheoNgay.form-inline.removedot(action='/search')
+                ul
+                  li
+                    .form-group
+                      div#quan
+                        input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
+                        input.form-control.sb.dpindex(type='text', name='ngay', placeholder='Chọn ngày')
+                    .form-group
+                        input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
+                        input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
+                        input#addTimeTN.form-control.sb.btn.btn-danger(type='button', value='+')
+                      input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
             div#daihan.hide(ng-controller='')
-              form.form-inline(action='/search')
-                .form-group
-                  div#quan
-                    input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                    input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Từ(ngày)')
-                    input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Đến(ngày)')
-                .form-group
-                    input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
-                    input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
-                    input#addTime.form-control.sb.btn.btn-danger(type='button', value='+')
-                  input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
+              form#formDaiHan.form-inline.removedot(action='/search')
+                ul
+                  li
+                    .form-group
+                      div#quan
+                        input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
+                        input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Từ(ngày)')
+                        input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Đến(ngày)')
+                    .form-group
+                        input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
+                        input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
+                        input#addTimeDH.form-control.sb.btn.btn-danger(type='button', value='+')
+                      input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
     section#about.bg-primary
       .container
         .row
