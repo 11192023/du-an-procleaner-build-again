@@ -72,8 +72,8 @@ html(lang='en')
                     input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
                     input.form-control.sb.dpindex(type='text', name='ngay', placeholder='Chọn ngày')
                 .form-group
-                    input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
-                    input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Thời gian kết thúc')
+                    input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
+                    input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
                     input#addTime.form-control.sb.btn.btn-danger(type='button', value='+')
                   input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
             div#daihan.hide(ng-controller='')
@@ -81,11 +81,11 @@ html(lang='en')
                 .form-group
                   div#quan
                     input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                    input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Chọn ngày dài hạn')
-                    input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Chọn ngày dài hạn')
+                    input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Từ(ngày)')
+                    input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Đến(ngày)')
                 .form-group
-                    input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Thời gian bắt đầu')
-                    input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Thời gian kết thúc')
+                    input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
+                    input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
                     input#addTime.form-control.sb.btn.btn-danger(type='button', value='+')
                   input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
     section#about.bg-primary
