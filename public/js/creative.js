@@ -86,8 +86,11 @@
             $('#theongay').addClass('hide');
         });
         
+        var addtn = 0;
+        var adddh = 0;
         $('#addTimeTN').click(function(){
-            $('#formTheoNgay ul').append('<li>' +
+            addtn = addtn +1;
+            $('#formTheoNgay ul').append('<li id='+addtn+'>' +
                 '<div class="form-group">' +
                 '<div id="quan">' +
                 '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sb visuallyhidden"/>' +
@@ -97,13 +100,18 @@
                 '<div class="form-group">' +
                 '<input type="text" name="tgbd" placeholder="Từ(giờ)" class="form-control sbhaft fixWTime"/>' +
                 '<input type="text" name="tgkt" placeholder="Đến(giờ)" class="form-control sbhaft fixWTime"/>' +
-                '<input type="button" value="+" class="form-control sb btn btn-danger visuallyhidden"/>' +
+                '<input type="button" value="-" class="deletetn form-control fixWAdd sb btn btn-danger"/>' +
                 '</div>' +
                 '<input type="submit" value="Tìm kiếm" class="form-control sb btn btn-danger visuallyhidden"/>' +
                 '</li>');
         });
+        $(document).on('click', '.deletetn', function(){
+            addtn = addtn-1;
+            $(this).parent().parent().remove();
+        });
         $('#addTimeDH').click(function(){
-            $('#formDaiHan ul').append('<li>' +
+            adddh++;
+            $('#formDaiHan ul').append('<li id='+adddh+'>' +
                 '<div class="form-group">' +
                 '<div id="quan">' +
                 '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sb visuallyhidden"/>' +
@@ -114,10 +122,14 @@
                 '<div class="form-group">' +
                 '<input type="text" name="tgbd" placeholder="Từ(giờ)" class="form-control sbhaft fixWTime"/>' +
                 '<input type="text" name="tgkt" placeholder="Đến(giờ)" class="form-control sbhaft fixWTime"/>' +
-                '<input type="button" value="+" class="form-control sb btn btn-danger visuallyhidden"/>' +
+                '<input type="button" value="-" class="deletedh form-control sb btn btn-danger fixWAdd"/>' +
                 '</div>' +
                 '<input type="submit" value="Tìm kiếm" class="form-control sb btn btn-danger visuallyhidden"/>' +
                 '</li>');
+        });
+        $(document).on('click', '.deletedh', function(){
+            adddh = adddh-1;
+            $(this).parent().parent().remove();
         });
         $('#mypanel > .panel').on('show.bs.collapse', function (e) {
             $(this).find('.panel-heading').addClass("active-panel");

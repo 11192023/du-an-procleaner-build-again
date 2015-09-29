@@ -76,7 +76,7 @@ html(lang='en')
                     .form-group
                         input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
                         input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
-                        input#addTimeTN.form-control.sb.btn.btn-danger(type='button', value='+')
+                        input#addTimeTN.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='+')
                       input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
             div#daihan.hide(ng-controller='')
               form#formDaiHan.form-inline.removedot(action='/search')
@@ -90,7 +90,7 @@ html(lang='en')
                     .form-group
                         input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
                         input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
-                        input#addTimeDH.form-control.sb.btn.btn-danger(type='button', value='+')
+                        input#addTimeDH.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='+')
                       input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
     section#about.bg-primary
       .container
@@ -965,12 +965,12 @@ html(lang='en')
                     | 1.   Tại sao Quý khách hàng nên chọn người giúp việc thông qua Procleaner?
               #cau1.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd1')
                 .panel-body
-                  h4 Những lý do sau đây sẽ giúp cho quý khách hàng giải đáp được thắc mắc trên:
-                  h4 - Người giúp việc là nhân viên của ProCleaner, chịu sự quản lý và chấp hành nội quy của Công ty nên Quý khách hàng không cần lo lắng về việc quản lý Người giúp việc.
-                  h4 - Người giúp việc có lý lịch nhân thân rõ ràng, có giấy chứng nhận sức khỏe của bệnh viện.
-                  h4 - Quý khách hàng sẽ luôn có Người giúp việc ổn định trong suốt thời gian hợp đồng.
-                  h4 - Quý khách hàng được ProCleaner chịu trách nhiệm vật chất nếu có thất thoát xảy ra do người giúp việc.
-                  h4 - ProCleaner xếp hạng nhân viên thông qua đánh giá của khách hàng nên luôn đảm bảo chất lượng Người giúp việc.
+                  p.justify Những lý do sau đây sẽ giúp cho quý khách hàng giải đáp được thắc mắc trên:
+                  p.justify.padleft - Người giúp việc là nhân viên của ProCleaner, chịu sự quản lý và chấp hành nội quy của Công ty nên Quý khách hàng không cần lo lắng về việc quản lý Người giúp việc.
+                  p.justify.padleft - Người giúp việc có lý lịch nhân thân rõ ràng, có giấy chứng nhận sức khỏe của bệnh viện.
+                  p.justify.padleft - Quý khách hàng sẽ luôn có Người giúp việc ổn định trong suốt thời gian hợp đồng.
+                  p.justify.padleft - Quý khách hàng được ProCleaner chịu trách nhiệm vật chất nếu có thất thoát xảy ra do người giúp việc.
+                  p.justify.padleft - ProCleaner xếp hạng nhân viên thông qua đánh giá của khách hàng nên luôn đảm bảo chất lượng Người giúp việc.
             .panel.panel-default
               .panel-heading(role='tab', id='hd2')
                 h3.panel-title
@@ -978,7 +978,7 @@ html(lang='en')
                     | 2.  Liên hệ với Procleaner như thế nào?
               #cau2.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd2')
                 .panel-body
-                  h4 Vui lòng gọi 19000000 hoặc gửi email đến contact@procleaner.vn
+                  p.justify Vui lòng gọi 19000000 hoặc gửi email đến contact@procleaner.vn
             .panel.panel-default
               .panel-heading(role='tab', id='hd3')
                 h3.panel-title
@@ -986,15 +986,15 @@ html(lang='en')
                     | 3.  Ứng dụng ProCleaner đòi các quyền truy cập (permission) để làm gì?
               #cau3.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd3')
                 .panel-body
-                  h4 Ứng dụng ProCleaner khi cài đặt sẽ sử dụng các quyền truy cập sau đây:
-                  h4 -  Vị trí người dùng: Giúp ứng dụng tìm vị trí hiện tại của người dùng để thiết lập địa điểm phục vụ dễ dàng hơn.
-                  h4 -  SMS: Giúp ứng dụng tự động điền mã kích hoạt tài khoản mà không cần phải vào ứng dụng tin nhắn.
-                  h4 -  Điện thoại: Giúp khách hàng khi click vào số điện thoại thì có thể gọi ngay cho ProCleaner.
-                  h4 -  Ảnh/phương tiện/tệp: ProCleaner lưu lại một số hình ảnh ít thay đổi để giúp ứng dụng chạy nhanh hơn.
-                  h4 -  Lịch sử ứng dụng và thiết bị: ProCleaner sẽ tự động ghi nhận những trường hợp chạy ứng dụng bị lỗi tạo điều kiện cho nhóm phát triển nâng cao chất lượng ứng dụng.
-                  h4 -  Quyền truy cập mạng: ProCleaner là ứng dụng cần kết nối mạng để có thể hoạt động.
-                  h4 -  Nhận dạng: ProCleaner sử dụng nhận dạng để gửi thông tin trạng thái Yêu cầu cho người dùng thông qua trung tâm thông báo của điện thoại.
-                  h4 -  Các quyền truy cập còn lại ProCleaner dùng để ghi nhận thói quen sử dụng của người dùng nhằm giúp nhóm phát triển liên tục cải tiến ứng dụng để phục vụ người sử dụng tốt hơn.
+                  p.justify Ứng dụng ProCleaner khi cài đặt sẽ sử dụng các quyền truy cập sau đây:
+                  p.justify.padleft -  Vị trí người dùng: Giúp ứng dụng tìm vị trí hiện tại của người dùng để thiết lập địa điểm phục vụ dễ dàng hơn.
+                  p.justify.padleft -  SMS: Giúp ứng dụng tự động điền mã kích hoạt tài khoản mà không cần phải vào ứng dụng tin nhắn.
+                  p.justify.padleft -  Điện thoại: Giúp khách hàng khi click vào số điện thoại thì có thể gọi ngay cho ProCleaner.
+                  p.justify.padleft -  Ảnh/phương tiện/tệp: ProCleaner lưu lại một số hình ảnh ít thay đổi để giúp ứng dụng chạy nhanh hơn.
+                  p.justify.padleft -  Lịch sử ứng dụng và thiết bị: ProCleaner sẽ tự động ghi nhận những trường hợp chạy ứng dụng bị lỗi tạo điều kiện cho nhóm phát triển nâng cao chất lượng ứng dụng.
+                  p.justify.padleft -  Quyền truy cập mạng: ProCleaner là ứng dụng cần kết nối mạng để có thể hoạt động.
+                  p.justify.padleft -  Nhận dạng: ProCleaner sử dụng nhận dạng để gửi thông tin trạng thái Yêu cầu cho người dùng thông qua trung tâm thông báo của điện thoại.
+                  p.justify.padleft -  Các quyền truy cập còn lại ProCleaner dùng để ghi nhận thói quen sử dụng của người dùng nhằm giúp nhóm phát triển liên tục cải tiến ứng dụng để phục vụ người sử dụng tốt hơn.
             .panel.panel-default
               .panel-heading(role='tab', id='hd4')
                 h3.panel-title
@@ -1002,7 +1002,7 @@ html(lang='en')
                     | 4.  Tại sao phải đánh giá người giúp việc?
               #cau4.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd4')
                 .panel-body
-                  h4 .....
+                  p.justify .....
             .panel.panel-default
               .panel-heading(role='tab', id='hd5')
                 h3.panel-title
@@ -1010,8 +1010,8 @@ html(lang='en')
                     | 5.  Làm thế nào để sử dụng dịch vụ của Procleaner?
               #cau5.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd5')
                 .panel-body
-                  h4 •  Đặt yêu cầu trực tiếp hoặc bằng ứng dụng ProCleaner trên smartphone hoặc thông qua website ProCleaner.vn.
-                  h4 •  Liên hệ với chúng tôi:
+                  p.justify •  Đặt yêu cầu trực tiếp hoặc bằng ứng dụng ProCleaner trên smartphone hoặc thông qua website ProCleaner.vn.
+                  p.justify •  Liên hệ với chúng tôi:
                   h5.padleft    Hotline: 190000000000000
                   h5.padleft    Email: sales@procleaner.vn
                   h5.padleft    Đến Trụ sở: ………………………….., Quận 7, Tp.HCM
@@ -1022,7 +1022,7 @@ html(lang='en')
                     | 6.  Hình thức thanh toán như thế nào? Theo từng sự vụ thì sao, dài hạn thì sao? Thời điểm thu như thế nào? Ai thu? Mẫu phiếu thu?
               #cau6.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd6')
                 .panel-body
-                  h4 Quý khách hàng có thể lựa chọn một trong các phương cách sau:
+                  p.justify Quý khách hàng có thể lựa chọn một trong các phương cách sau:
                   h5.padleft    - Chuyển khoản qua ATM
                   h5.padleft    - Thanh toán trực tiếp tại Trụ sở Công ty
                   h5.padleft    - Nhân viên của Chúng tôi đến thu tận nhà 
@@ -1033,7 +1033,7 @@ html(lang='en')
                     | 7.  Hợp đồng giúp việc sẽ như thế nào? Mẫu hợp đồng – đặt yêu cầu qua ứng dụng (hoặc web) thì có cần hợp đồng không? Tổng quát hơn thì trường hợp nào thì cần có hợp đồng và trường hợp nào thì không. Cách thức ký hợp đồng thế nào? Có tạm ứng không?
               #cau7.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd7')
                 .panel-body
-                  h4 Công ty chúng tôi thu phí đặt cọc là 50% của tháng hợp đồng đầu tiên. Sự "ràng buộc" này nhằm đảm bảo rằng chúng tôi luôn cố gắng đảm bảo quyền lợi của khách hàng khi thực hiện theo đúng những điều khoản trong hợp đồng. Quý khách hàng sẽ được an tâm và tin tưởng trong quá trình sử dụng dịch vụ của chúng tôi
+                  p.justify Công ty chúng tôi thu phí đặt cọc là 50% của tháng hợp đồng đầu tiên. Sự "ràng buộc" này nhằm đảm bảo rằng chúng tôi luôn cố gắng đảm bảo quyền lợi của khách hàng khi thực hiện theo đúng những điều khoản trong hợp đồng. Quý khách hàng sẽ được an tâm và tin tưởng trong quá trình sử dụng dịch vụ của chúng tôi
             .panel.panel-default
               .panel-heading(role='tab', id='hd8')
                 h3.panel-title
@@ -1041,8 +1041,8 @@ html(lang='en')
                     | 8.  Nếu muốn chấm dứt hợp đồng phải làm thế nào?
               #cau8.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd8')
                 .panel-body
-                  h4 Nếu Quý khách hàng muốn chấm dứt hợp đồng trước thời hạn thì cần thông báo trước cho chúng tôi 15 ngày, khi đó Công ty chúng tôi sẽ hoàn trả 50% tiền đặt cọc cho khách hàng.
-                  h4 Trường hợp đơn phương chấm dứt hợp đồng trước thời hạn và không thông báo trước thì sẽ không được hoàn tiền cọc và thanh toán số tiền  =  Tổng số giờ làm việc tháng đó  x Đơn giá
+                  p.justify - Nếu Quý khách hàng muốn chấm dứt hợp đồng trước thời hạn thì cần thông báo trước cho chúng tôi 15 ngày, khi đó Công ty chúng tôi sẽ hoàn trả 50% tiền đặt cọc cho khách hàng.
+                  p.justify - Trường hợp đơn phương chấm dứt hợp đồng trước thời hạn và không thông báo trước thì sẽ không được hoàn tiền cọc và thanh toán số tiền  =  Tổng số giờ làm việc tháng đó  x Đơn giá
             .panel.panel-default
               .panel-heading(role='tab', id='hd9')
                 h3.panel-title
@@ -1082,7 +1082,7 @@ html(lang='en')
                     | 13. Giá dịch vụ có tăng trong thời điểm Tết hay không?
               #cau13.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd13')
                 .panel-body
-                  h4 Đối với những ngày thường hay ngày Tết lượng Khách hàng đăng ký sử dụng dịch vụ đang tăng lên rất nhanh nhưng với phương châm phục vụ Khách hàng đặt chất lượng lên hàng đầu, trở thành Khách hàng thường xuyên và gắn bó với Công ty thì ProCleaner vẫn giữ giá dịch vụ như cũ đối với tất cả các dịch vụ. Trừ những Khách hàng có nhu cầu sử dụng trong khoảng thời gian Công ty nghỉ Tết Nguyên Đán bắt đâu từ 30 Tết – hết mùng 4 Tết thì giá dịch vụ sẽ tính 300% so với ngày thường theo quy định Luật lao động của Việt Nam.
+                  p.justify Đối với những ngày thường hay ngày Tết lượng Khách hàng đăng ký sử dụng dịch vụ đang tăng lên rất nhanh nhưng với phương châm phục vụ Khách hàng đặt chất lượng lên hàng đầu, trở thành Khách hàng thường xuyên và gắn bó với Công ty thì ProCleaner vẫn giữ giá dịch vụ như cũ đối với tất cả các dịch vụ. Trừ những Khách hàng có nhu cầu sử dụng trong khoảng thời gian Công ty nghỉ Tết Nguyên Đán bắt đâu từ 30 Tết – hết mùng 4 Tết thì giá dịch vụ sẽ tính 300% so với ngày thường theo quy định Luật lao động của Việt Nam.
             .panel.panel-default
               .panel-heading(role='tab', id='hd14')
                 h3.panel-title

@@ -702,6 +702,9 @@ header .header-content .header-content-inner p {
     .fixWTime{
         width: 120px!important;
     }
+    .fixWAdd{
+        width: 40px!important;
+    }
 }
 .removedot ul
 {
