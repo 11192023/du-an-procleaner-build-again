@@ -186,51 +186,53 @@
 		return '';
 		};
 	});
-	module.controller('timeController', function($scope, $log){
+	module.controller('timeController',['$scope', function($scope, $log){
 		$scope.dynamicPopover = {
 			content: 'Hello, World!',
 			templateUrl: 'myPopoverTemplate.html',
-			title: 'Xin chọn khung thời gian'
-	  	};
-	  	$scope.mytime = new Date();
+			title: 'Xin chọn khung thời gian',
+			tugio: {
+				gio: 0,
+				phut: 0,
+			},
+			toigio: {
+				gio: 0,
+				phut: 0,
+			},
+			isOpen: false,
+			timetext: 'Chọn khung giờ',
+			myDatetimeRange: {
+			    time: {
+				    from: 390,
+				    to: 1020,
+				    dFrom: 0,
+				    dTo: 1440,
+				    step: 15,
+				    minRange: 15,
+				    hours24: true
+			  	},
+			  hasDatePickers: false,
+			  hasTimeSliders: true,
+			},
+			myDatetimeLabels: {
+			    date: {
+			        from: 'Start date',
+			        to: 'End date'
+			    }
+			},
+			open: function open() {
+	          $scope.dynamicPopover.isOpen = true;
+	        }, 
+	        close: function close() {
+	          $scope.dynamicPopover.isOpen = false;
+	          $scope.dynamicPopover.tugio.gio = Math.floor($scope.dynamicPopover.myDatetimeRange.time.from/60);
+	          $scope.dynamicPopover.tugio.phut = Math.floor($scope.dynamicPopover.myDatetimeRange.time.from%60); 
+	          $scope.dynamicPopover.toigio.gio = Math.floor($scope.dynamicPopover.myDatetimeRange.time.to/60);
+	          $scope.dynamicPopover.toigio.phut = Math.floor($scope.dynamicPopover.myDatetimeRange.time.to%60); 
+	          $scope.dynamicPopover.timetext = 'Từ ' + $scope.dynamicPopover.tugio.gio + ':' + $scope.dynamicPopover.tugio.phut +
+	          								   ' đến '+ $scope.dynamicPopover.toigio.gio + ':' + $scope.dynamicPopover.toigio.phut;
+	        }
+	  	}
 
-		$scope.hstep = 1;
-		$scope.mstep = 5;
-
-		$scope.ismeridian = true;
-
-		$scope.update = function() {
-			var d = new Date();
-			d.setHours( 14 );
-			d.setMinutes( 0 );
-			$scope.mytime = d;
-		};
-
-		$scope.changed = function () {
-			$log.log('Time changed to: ' + $scope.mytime);
-		};
-
-		$scope.clear = function() {
-			$scope.mytime = null;
-		};
-	  	$scope.myDatetimeRange = {
-		    "time": {
-			    "from": 390,
-			    "to": 1020,
-			    "dFrom": 0,
-			    "dTo": 1440,
-			    "step": 15,
-			    "minRange": 15,
-			    "hours24": true
-		  	},
-		  "hasDatePickers": false,
-		  "hasTimeSliders": true
-		}
-		$scope.myDatetimeLabels = {
-		    date: {
-		        from: 'Start date',
-		        to: 'End date'
-		    }
-		}
-	});
+	}]);
 })();
