@@ -83,8 +83,7 @@ html(lang='en')
                         input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', autocomplete='off')
                     .form-group
-                        input.form-control.sbhaft.fixWTime(popover-template="dynamicPopover.templateUrl" popover-title="{{dynamicPopover.title}}", type='text', name='tgbd', placeholder='Từ(giờ)', autocomplete='off', readonly='readonly')
-                        input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)', autocomplete='off' readonly='readonly')
+                        input.form-control.sb.fixWTimeNH(popover-template="dynamicPopover.templateUrl", type='text', name='tgbd', placeholder='Khung thời gian', autocomplete='off', readonly='readonly')
                         input#addTimeTN.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='+')
                       input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
             div#daihan.hide
@@ -1185,5 +1184,4 @@ html(lang='en')
     
     
     script(type='text/ng-template', id='myPopoverTemplate.html').
-      <div>{{dynamicPopover.title}}</div>
       <div rg-range-picker="myDatetimeRange" labels="myDatetimeLabels"></div>
