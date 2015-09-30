@@ -81,7 +81,7 @@ html(lang='en')
                     .form-group
                       div#quan
                         input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận', autocomplete='off')
-                        input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', autocomplete='off')
+                        input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
                     .form-group
                         input.form-control.sb.fixWTimeNH(popover-template="dynamicPopover.templateUrl", type='text', name='tgbd', popover-is-open="dynamicPopover.isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='dynamicPopover.open()', ng-model='dynamicPopover.timetext')
                         input#addTimeTN.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='+')
