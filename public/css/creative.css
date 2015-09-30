@@ -13,6 +13,7 @@
     height: 100%;
     z-index: 9999;
     background: center #fff;
+    margin-top: 50%;
 }
 .sk-folding-cube {
   margin: 40px auto;
