@@ -13,12 +13,11 @@
     height: 100%;
     z-index: 9999;
     background: center #fff;
-    margin-top: 50%;
 }
 .sk-folding-cube {
-  margin: 40px auto;
-  width: 40px;
-  height: 40px;
+  margin: 20% auto;
+  width: 60px;
+  height: 60px;
   position: relative;
   -webkit-transform: rotateZ(45deg);
           transform: rotateZ(45deg); }
@@ -37,7 +36,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: #333;
+    background-color: #8CC13D;
     -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
             animation: sk-foldCubeAngle 2.4s infinite linear both;
     -webkit-transform-origin: 100% 100%;
