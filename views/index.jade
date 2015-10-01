@@ -84,9 +84,10 @@ html(lang='en')
                         input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
                     .form-group
                         input.form-control.sb.fixWTimeNH(popover-template="dynamicPopover[0].templateUrl", type='text', name='tgbd', popover-is-open="dynamicPopover[0].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='dynamicPopover[0].open()', ng-model='dynamicPopover[0].timetext')
+
                         input#addTimeTN.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='+')
                       input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
-                  li#kg2.visuallyhidden
+                  li#kg2.hide
                     .form-group
                       div#quan
                         input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')
@@ -96,7 +97,7 @@ html(lang='en')
 
                         input#removekg2.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='-')
                       input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
-                  li#kg3.visuallyhidden
+                  li#kg3.hide
                     .form-group
                       div#quan
                         input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')
@@ -106,7 +107,7 @@ html(lang='en')
 
                         input#removekg3.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='-')
                       input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
-                  li#kg4.visuallyhidden
+                  li#kg4.hide
                     .form-group
                       div#quan
                         input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')

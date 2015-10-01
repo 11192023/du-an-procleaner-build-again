@@ -92,19 +92,19 @@
             if(addtn==4) return;
             addtn = addtn +1;
             var kg = '#kg' + addtn;
-            $(kg).removeClass('visuallyhidden');
+            $(kg).removeClass('hide');
         });
         $('#removekg2').click(function(){
             addtn = addtn-1;
-            $('#kg2').addClass('visuallyhidden');
+            $('#kg2').addClass('hide');
         });
         $('#removekg3').click(function(){
             addtn = addtn-1;
-            $('#kg3').addClass('visuallyhidden');
+            $('#kg3').addClass('hide');
         });
         $('#removekg4').click(function(){
             addtn = addtn-1;
-            $('#kg4').addClass('visuallyhidden');
+            $('#kg4').addClass('hide');
         });
         $('#addTimeDH').click(function(){
             adddh++;
