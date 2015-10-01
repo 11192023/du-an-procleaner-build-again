@@ -86,28 +86,25 @@
             $('#theongay').addClass('hide');
         });
         
-        var addtn = 0;
-        var adddh = 0;
+        var addtn = 1;
+        var adddh = 1;
         $('#addTimeTN').click(function(){
+            if(addtn==4) return;
             addtn = addtn +1;
-            $('#formTheoNgay ul').append('<li id='+addtn+'>' +
-                '<div class="form-group">' +
-                '<div id="quan">' +
-                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sb visuallyhidden"/>' +
-                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sb visuallyhidden"/>' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<input type="text" name="tgbd" placeholder="Từ(giờ)" class="form-control sbhaft fixWTime"/>' +
-                '<input type="text" name="tgkt" placeholder="Đến(giờ)" class="form-control sbhaft fixWTime"/>' +
-                '<input type="button" value="-" class="deletetn form-control fixWAdd sb btn btn-danger"/>' +
-                '</div>' +
-                '<input type="submit" value="Tìm kiếm" class="form-control sb btn btn-danger visuallyhidden"/>' +
-                '</li>');
+            var kg = '#kg' + addtn;
+            $(kg).removeClass('visuallyhidden');
         });
-        $(document).on('click', '.deletetn', function(){
+        $('#removekg2').click(function(){
             addtn = addtn-1;
-            $(this).parent().parent().remove();
+            $('#kg2').addClass('visuallyhidden');
+        });
+        $('#removekg3').click(function(){
+            addtn = addtn-1;
+            $('#kg3').addClass('visuallyhidden');
+        });
+        $('#removekg4').click(function(){
+            addtn = addtn-1;
+            $('#kg4').addClass('visuallyhidden');
         });
         $('#addTimeDH').click(function(){
             adddh++;
@@ -137,46 +134,7 @@
         $('#mypanel > .panel').on('hide.bs.collapse', function (e) {
             $(this).find('.panel-heading').removeClass("active-panel");
         });
-      $('.slicktest').slick({
-        dots: false,
-        /* Just changed this to get the bottom dots navigation */
-        infinite: true,
-        speed: 300,
-        slidesToShow: 4,
-        slidesToScroll: 4,
-        rows: 2,
-        arrows: true,
-        responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            infinite: true,
-            dots: true
-          }
-        },
-        {
-          breakpoint: 600,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 2,
-            arrows: false
-          }
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            arrows: false
-          }
-        }
-        // You can unslick at a given breakpoint now by adding:
-        // settings: "unslick"
-        // instead of a settings object
-      ]
-      });
+      
     });
     "use strict"; // Start of use strict
     // jQuery for page scrolling feature - requires jQuery Easing plugin

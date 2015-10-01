@@ -1,6 +1,6 @@
 (function(){
 	//search module
-	var module = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','rgkevin.datetimeRangePicker']);
+	var module = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','rgkevin.datetimeRangePicker','slickCarousel']);
 
 	module.config(function($mdThemingProvider){
 		$mdThemingProvider.theme('default')
@@ -187,52 +187,235 @@
 		};
 	});
 	module.controller('timeController',['$scope', function($scope, $log){
-		$scope.dynamicPopover = {
-			content: 'Hello, World!',
-			templateUrl: 'myPopoverTemplate.html',
-			title: 'Xin chọn khung thời gian',
-			tugio: {
-				gio: 0,
-				phut: 0,
-			},
-			toigio: {
-				gio: 0,
-				phut: 0,
-			},
-			isOpen: false,
-			timetext: 'Chọn khung giờ',
-			myDatetimeRange: {
-			    time: {
-				    from: 390,
-				    to: 1020,
-				    dFrom: 0,
-				    dTo: 1440,
-				    step: 15,
-				    minRange: 15,
-				    hours24: true
-			  	},
-			  hasDatePickers: false,
-			  hasTimeSliders: true,
-			},
-			myDatetimeLabels: {
-			    date: {
-			        from: 'Start date',
-			        to: 'End date'
-			    }
-			},
-			open: function open() {
-	          $scope.dynamicPopover.isOpen = true;
-	        }, 
-	        close: function close() {
-	          $scope.dynamicPopover.isOpen = false;
-	          $scope.dynamicPopover.tugio.gio = Math.floor($scope.dynamicPopover.myDatetimeRange.time.from/60);
-	          $scope.dynamicPopover.tugio.phut = Math.floor($scope.dynamicPopover.myDatetimeRange.time.from%60); 
-	          $scope.dynamicPopover.toigio.gio = Math.floor($scope.dynamicPopover.myDatetimeRange.time.to/60);
-	          $scope.dynamicPopover.toigio.phut = Math.floor($scope.dynamicPopover.myDatetimeRange.time.to%60); 
-	          $scope.dynamicPopover.timetext = 'Từ ' + $scope.dynamicPopover.tugio.gio + ':' + $scope.dynamicPopover.tugio.phut +
-	          								   ' đến '+ $scope.dynamicPopover.toigio.gio + ':' + $scope.dynamicPopover.toigio.phut;
-	        }
-	  	}
+		$scope.dynamicPopover = [
+			//khung giờ 1
+			{
+				content: 'Hello, World!',
+				templateUrl: 'kg1.html',
+				title: 'Xin chọn khung thời gian',
+				tugio: {
+					gio: 0,
+					phut: 0,
+				},
+				toigio: {
+					gio: 0,
+					phut: 0,
+				},
+				isOpen: false,
+				timetext: 'Chọn khung giờ',
+				myDatetimeRange: {
+				    time: {
+					    from: 390,
+					    to: 1020,
+					    dFrom: 0,
+					    dTo: 1440,
+					    step: 15,
+					    minRange: 15,
+					    hours24: true
+				  	},
+				  hasDatePickers: false,
+				  hasTimeSliders: true,
+				},
+				myDatetimeLabels: {
+				    date: {
+				        from: 'Start date',
+				        to: 'End date'
+				    }
+				},
+				open: function open() {
+		          $scope.dynamicPopover[0].isOpen = true;
+		        }, 
+		        close: function close() {
+		          $scope.dynamicPopover[0].isOpen = false;
+		          $scope.dynamicPopover[0].tugio.gio = Math.floor($scope.dynamicPopover[0].myDatetimeRange.time.from/60);
+		          $scope.dynamicPopover[0].tugio.phut = Math.floor($scope.dynamicPopover[0].myDatetimeRange.time.from%60); 
+		          $scope.dynamicPopover[0].toigio.gio = Math.floor($scope.dynamicPopover[0].myDatetimeRange.time.to/60);
+		          $scope.dynamicPopover[0].toigio.phut = Math.floor($scope.dynamicPopover[0].myDatetimeRange.time.to%60); 
+		          $scope.dynamicPopover[0].timetext = 'Từ ' + $scope.dynamicPopover[0].tugio.gio + ':' + $scope.dynamicPopover[0].tugio.phut +
+		          								   ' đến '+ $scope.dynamicPopover[0].toigio.gio + ':' + $scope.dynamicPopover[0].toigio.phut;
+		        }
+		  	},
+		  	//khung giờ 2
+		  	{
+				content: 'Hello, World!',
+				templateUrl: 'kg2.html',
+				title: 'Xin chọn khung thời gian',
+				tugio: {
+					gio: 0,
+					phut: 0,
+				},
+				toigio: {
+					gio: 0,
+					phut: 0,
+				},
+				isOpen: false,
+				timetext: 'Chọn khung giờ',
+				myDatetimeRange: {
+				    time: {
+					    from: 390,
+					    to: 1020,
+					    dFrom: 0,
+					    dTo: 1440,
+					    step: 15,
+					    minRange: 15,
+					    hours24: true
+				  	},
+				  hasDatePickers: false,
+				  hasTimeSliders: true,
+				},
+				myDatetimeLabels: {
+				    date: {
+				        from: 'Start date',
+				        to: 'End date'
+				    }
+				},
+				open: function open() {
+		          $scope.dynamicPopover[1].isOpen = true;
+		        }, 
+		        close: function close() {
+		          $scope.dynamicPopover[1].isOpen = false;
+		          $scope.dynamicPopover[1].tugio.gio = Math.floor($scope.dynamicPopover[1].myDatetimeRange.time.from/60);
+		          $scope.dynamicPopover[1].tugio.phut = Math.floor($scope.dynamicPopover[1].myDatetimeRange.time.from%60); 
+		          $scope.dynamicPopover[1].toigio.gio = Math.floor($scope.dynamicPopover[1].myDatetimeRange.time.to/60);
+		          $scope.dynamicPopover[1].toigio.phut = Math.floor($scope.dynamicPopover[1].myDatetimeRange.time.to%60); 
+		          $scope.dynamicPopover[1].timetext = 'Từ ' + $scope.dynamicPopover[1].tugio.gio + ':' + $scope.dynamicPopover[1].tugio.phut +
+		          								   ' đến '+ $scope.dynamicPopover[1].toigio.gio + ':' + $scope.dynamicPopover[1].toigio.phut;
+		        }
+		  	},
+		  	//khung giờ 3
+		  	{
+				content: 'Hello, World!',
+				templateUrl: 'kg3.html',
+				title: 'Xin chọn khung thời gian',
+				tugio: {
+					gio: 0,
+					phut: 0,
+				},
+				toigio: {
+					gio: 0,
+					phut: 0,
+				},
+				isOpen: false,
+				timetext: 'Chọn khung giờ',
+				myDatetimeRange: {
+				    time: {
+					    from: 390,
+					    to: 1020,
+					    dFrom: 0,
+					    dTo: 1440,
+					    step: 15,
+					    minRange: 15,
+					    hours24: true
+				  	},
+				  hasDatePickers: false,
+				  hasTimeSliders: true,
+				},
+				myDatetimeLabels: {
+				    date: {
+				        from: 'Start date',
+				        to: 'End date'
+				    }
+				},
+				open: function open() {
+		          $scope.dynamicPopover[2].isOpen = true;
+		        }, 
+		        close: function close() {
+		          $scope.dynamicPopover[2].isOpen = false;
+		          $scope.dynamicPopover[2].tugio.gio = Math.floor($scope.dynamicPopover[2].myDatetimeRange.time.from/60);
+		          $scope.dynamicPopover[2].tugio.phut = Math.floor($scope.dynamicPopover[2].myDatetimeRange.time.from%60); 
+		          $scope.dynamicPopover[2].toigio.gio = Math.floor($scope.dynamicPopover[2].myDatetimeRange.time.to/60);
+		          $scope.dynamicPopover[2].toigio.phut = Math.floor($scope.dynamicPopover[2].myDatetimeRange.time.to%60); 
+		          $scope.dynamicPopover[2].timetext = 'Từ ' + $scope.dynamicPopover[2].tugio.gio + ':' + $scope.dynamicPopover[2].tugio.phut +
+		          								   ' đến '+ $scope.dynamicPopover[2].toigio.gio + ':' + $scope.dynamicPopover[2].toigio.phut;
+		        }
+		  	},
+		  	//khung giờ 4
+		  	{
+				content: 'Hello, World!',
+				templateUrl: 'kg4.html',
+				title: 'Xin chọn khung thời gian',
+				tugio: {
+					gio: 0,
+					phut: 0,
+				},
+				toigio: {
+					gio: 0,
+					phut: 0,
+				},
+				isOpen: false,
+				timetext: 'Chọn khung giờ',
+				myDatetimeRange: {
+				    time: {
+					    from: 390,
+					    to: 1020,
+					    dFrom: 0,
+					    dTo: 1440,
+					    step: 15,
+					    minRange: 15,
+					    hours24: true
+				  	},
+				  hasDatePickers: false,
+				  hasTimeSliders: true,
+				},
+				myDatetimeLabels: {
+				    date: {
+				        from: 'Start date',
+				        to: 'End date'
+				    }
+				},
+				open: function open() {
+		          $scope.dynamicPopover[3].isOpen = true;
+		        }, 
+		        close: function close() {
+		          $scope.dynamicPopover[3].isOpen = false;
+		          $scope.dynamicPopover[3].tugio.gio = Math.floor($scope.dynamicPopover[3].myDatetimeRange.time.from/60);
+		          $scope.dynamicPopover[3].tugio.phut = Math.floor($scope.dynamicPopover[3].myDatetimeRange.time.from%60); 
+		          $scope.dynamicPopover[3].toigio.gio = Math.floor($scope.dynamicPopover[3].myDatetimeRange.time.to/60);
+		          $scope.dynamicPopover[3].toigio.phut = Math.floor($scope.dynamicPopover[3].myDatetimeRange.time.to%60); 
+		          $scope.dynamicPopover[3].timetext = 'Từ ' + $scope.dynamicPopover[3].tugio.gio + ':' + $scope.dynamicPopover[3].tugio.phut +
+		          								   ' đến '+ $scope.dynamicPopover[3].toigio.gio + ':' + $scope.dynamicPopover[3].toigio.phut;
+		        }
+		  	}
+	  	]
+	}]);
+	module.controller('slickController',['$scope', function($scope){
+		$scope.numberLoaded = true;
+		$scope.slickconfig = {
+			dots: false,
+	        infinite: true,
+	        speed: 300,
+	        slidesToShow: 4,
+	        slidesToScroll: 4,
+	        rows: 2,
+	        arrows: true,
+	        responsive: [
+	            {
+	              breakpoint: 1024,
+	              settings: {
+	                slidesToShow: 3,
+	                slidesToScroll: 3,
+	                infinite: true,
+	                dots: true
+	              }
+	            },
+	            {
+	              breakpoint: 600,
+	              settings: {
+	                slidesToShow: 2,
+	                slidesToScroll: 2,
+	                arrows: false
+	              }
+	            },
+	            {
+	              breakpoint: 480,
+	              settings: {
+	                slidesToShow: 1,
+	                slidesToScroll: 1,
+	                arrows: false
+	              }
+	            }
+        	]
+		}
 
 	}]);
 })();
