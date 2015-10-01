@@ -522,6 +522,7 @@
 	module.controller('slickController',['$scope', function($scope){
 		$scope.numberLoaded = true;
 		$scope.slickconfig = {
+			lazyLoad: 'ondemand',
 			dots: false,
 	        infinite: true,
 	        speed: 300,
