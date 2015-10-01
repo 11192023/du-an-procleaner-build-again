@@ -83,7 +83,7 @@ html(lang='en')
                         input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
                     .form-group
-                        input.form-control.sb.fixWTimeNH(popover-template="dynamicPopover[0].templateUrl", type='text', name='tgbd', popover-is-open="dynamicPopover[0].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='dynamicPopover[0].open()', ng-model='dynamicPopover[0].timetext')
+                        input.form-control.sb.fixWTimeNH(popover-template="timeNHPopover[0].templateUrl", type='text', name='tgbd', popover-is-open="timeNHPopover[0].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='timeNHPopover[0].open()', ng-model='timeNHPopover[0].timetext')
 
                         input#addTimeTN.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='+')
                       input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
@@ -93,7 +93,7 @@ html(lang='en')
                         input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTimeNH.visuallyhidden(type='text', name='', placeholder='', readonly='readonly', autocomplete='off')
                     .form-group
-                        input.form-control.sb.fixWTimeNH(popover-template="dynamicPopover[1].templateUrl", type='text', name='tgbd', popover-is-open="dynamicPopover[1].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='dynamicPopover[1].open()', ng-model='dynamicPopover[1].timetext')
+                        input.form-control.sb.fixWTimeNH(popover-template="timeNHPopover[1].templateUrl", type='text', name='tgbd', popover-is-open="timeNHPopover[1].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='timeNHPopover[1].open()', ng-model='timeNHPopover[1].timetext')
 
                         input#removekg2.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='-')
                       input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
@@ -103,7 +103,7 @@ html(lang='en')
                         input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTimeNH.visuallyhidden(type='text', name='', placeholder='', readonly='readonly', autocomplete='off')
                     .form-group
-                        input.form-control.sb.fixWTimeNH(popover-template="dynamicPopover[2].templateUrl", type='text', name='tgbd', popover-is-open="dynamicPopover[2].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='dynamicPopover[2].open()', ng-model='dynamicPopover[2].timetext')
+                        input.form-control.sb.fixWTimeNH(popover-template="timeNHPopover[2].templateUrl", type='text', name='tgbd', popover-is-open="timeNHPopover[2].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='timeNHPopover[2].open()', ng-model='timeNHPopover[2].timetext')
 
                         input#removekg3.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='-')
                       input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
@@ -113,7 +113,7 @@ html(lang='en')
                         input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTimeNH.visuallyhidden(type='text', name='', placeholder='', readonly='readonly', autocomplete='off')
                     .form-group
-                        input.form-control.sb.fixWTimeNH(popover-template="dynamicPopover[3].templateUrl", type='text', name='tgbd', popover-is-open="dynamicPopover[3].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='dynamicPopover[3].open()', ng-model='dynamicPopover[3].timetext')
+                        input.form-control.sb.fixWTimeNH(popover-template="timeNHPopover[3].templateUrl", type='text', name='tgbd', popover-is-open="timeNHPopover[3].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='timeNHPopover[3].open()', ng-model='timeNHPopover[3].timetext')
 
                         input#removekg4.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='-')
                       input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
@@ -124,12 +124,11 @@ html(lang='en')
                     .form-group
                       div#quan
                         input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                        input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Từ(ngày)')
-                        input.form-control.sbhaft.fixWTime.dpindex(type='text', name='ngay', placeholder='Đến(ngày)')
+                        input.form-control.sbhaft.fixWTimeNH(popover-template="dateDNPopover[0].templateUrl", type='text', name='tgbd', popover-is-open="dateDNPopover[0].isOpen", placeholder='Chọn ngày', autocomplete='off', readonly='readonly', ng-click='dateDNPopover[0].open()', ng-model='dateDNPopover[0].datetext')
                     .form-group
-                        input.form-control.sbhaft.fixWTime(type='text', name='tgbd', placeholder='Từ(giờ)')
-                        input.form-control.sbhaft.fixWTime(type='text', name='tgkt', placeholder='Đến(giờ)')
+                        input.form-control.sb.fixWTimeNH(popover-template="timeDNPopover[0].templateUrl", type='text', name='tgbd', popover-is-open="timeDNPopover[0].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='timeDNPopover[0].open()', ng-model='timeDNPopover[0].timetext')
                         input#addTimeDH.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='+')
+
                       input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
     section#about.bg-primary
       .container
@@ -1195,6 +1194,7 @@ html(lang='en')
     script(src='js/typeahead.bundle.js')
     // angular
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js')
+    script(src='//code.angularjs.org/1.0.8/i18n/angular-locale_vi-vn.js')
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js')
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-sanitize.min.js')
     script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-touch.min.js')
@@ -1214,16 +1214,34 @@ html(lang='en')
     script(src='angular/core.js')
     
     
-    
+    // ngắn hạn
     script(type='text/ng-template', id='kg1.html').
-      <div rg-range-picker="dynamicPopover[0].myDatetimeRange" labels="dynamicPopover[0].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="dynamicPopover[0].close()"/>
+      <div rg-range-picker="timeNHPopover[0].myDatetimeRange" labels="timeNHPopover[0].myDatetimeLabels"></div>
+      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[0].close()"/>
     script(type='text/ng-template', id='kg2.html').
-      <div rg-range-picker="dynamicPopover[1].myDatetimeRange" labels="dynamicPopover[1].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="dynamicPopover[1].close()"/>
+      <div rg-range-picker="timeNHPopover[1].myDatetimeRange" labels="timeNHPopover[1].myDatetimeLabels"></div>
+      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[1].close()"/>
     script(type='text/ng-template', id='kg3.html').
-      <div rg-range-picker="dynamicPopover[2].myDatetimeRange" labels="dynamicPopover[2].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="dynamicPopover[2].close()"/>
+      <div rg-range-picker="timeNHPopover[2].myDatetimeRange" labels="timeNHPopover[2].myDatetimeLabels"></div>
+      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[2].close()"/>
     script(type='text/ng-template', id='kg4.html').
-      <div rg-range-picker="dynamicPopover[3].myDatetimeRange" labels="dynamicPopover[3].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="dynamicPopover[3].close()"/>
+      <div rg-range-picker="timeNHPopover[3].myDatetimeRange" labels="timeNHPopover[3].myDatetimeLabels"></div>
+      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[3].close()"/>
+    // dài ngày
+    // date
+    script(type='text/ng-template', id='dayrangedn1.html').
+      <div rg-range-picker="dateDNPopover[0].myDatetimeRange" labels="dateDNPopover[0].myDatetimeLabels"></div>
+      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="dateDNPopover[0].close()"/>
+    //time
+    script(type='text/ng-template', id='kgdn1.html').
+      <div rg-range-picker="timeDNPopover[0].myDatetimeRange" labels="timeDNPopover[0].myDatetimeLabels"></div>
+      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[0].close()"/>
+    script(type='text/ng-template', id='kgdn2.html').
+      <div rg-range-picker="timeDNPopover[1].myDatetimeRange" labels="timeDNPopover[1].myDatetimeLabels"></div>
+      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[1].close()"/>
+    script(type='text/ng-template', id='kgdn3.html').
+      <div rg-range-picker="timeDNPopover[2].myDatetimeRange" labels="timeDNPopover[2].myDatetimeLabels"></div>
+      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[2].close()"/>
+    script(type='text/ng-template', id='kgdn4.html').
+      <div rg-range-picker="timeDNPopover[3].myDatetimeRange" labels="timeDNPopover[3].myDatetimeLabels"></div>
+      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[3].close()"/>
