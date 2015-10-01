@@ -339,7 +339,7 @@
 				tungay: '',
 				toingay: '',
 				isOpen: false,
-				datetext: 'Chọn ngày',
+				datetext: 'Chọn từ ngày đến ngày',
 				myDatetimeRange: {
 				    date: {
 					    from: new Date(),
