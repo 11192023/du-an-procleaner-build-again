@@ -86,43 +86,42 @@
             $('#theongay').addClass('hide');
         });
         
-        var addtn = 1;
-        var adddh = 1;
         $('#addTimeTN').click(function(){
-            if(addtn==4) return;
-            addtn = addtn +1;
-            var kg = '#kg' + addtn;
-            $(kg).removeClass('hide');
+            if($('#kg2').hasClass('visuallyhidden')){
+                $('#kg2').removeClass('visuallyhidden');
+            }
+            else if($('#kg3').hasClass('visuallyhidden')){
+                $('#kg3').removeClass('visuallyhidden');
+            }
         });
         $('#removekg2').click(function(){
-            addtn = addtn-1;
-            $('#kg2').addClass('hide');
+            if(!$('#kg3').hasClass('visuallyhidden')){
+                $('#kg2').appendTo('#nhlist');
+            }
+            $('#kg2').addClass('visuallyhidden');
         });
         $('#removekg3').click(function(){
-            addtn = addtn-1;
-            $('#kg3').addClass('hide');
+            $('#kg3').addClass('visuallyhidden');
+            $('#kg3').appendTo('#nhlist');
         });
-        $('#removekg4').click(function(){
-            addtn = addtn-1;
-            $('#kg4').addClass('hide');
-        });
+
         $('#addTimeDH').click(function(){
-            adddh++;
-            $('#formDaiHan ul').append('<li id='+adddh+'>' +
-                '<div class="form-group">' +
-                '<div id="quan">' +
-                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sb visuallyhidden"/>' +
-                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sbhaft fixWTime visuallyhidden"/>' +
-                '<input type="text" name="" placeholder="" readonly="readonly" class="form-control sbhaft fixWTime visuallyhidden"/>' +
-                '</div>' +
-                '</div>' +
-                '<div class="form-group">' +
-                '<input type="text" name="tgbd" placeholder="Từ(giờ)" class="form-control sbhaft fixWTime"/>' +
-                '<input type="text" name="tgkt" placeholder="Đến(giờ)" class="form-control sbhaft fixWTime"/>' +
-                '<input type="button" value="-" class="deletedh form-control sb btn btn-danger fixWAdd"/>' +
-                '</div>' +
-                '<input type="submit" value="Tìm kiếm" class="form-control sb btn btn-danger visuallyhidden"/>' +
-                '</li>');
+            if($('#kgdn2').hasClass('visuallyhidden')){
+                $('#kgdn2').removeClass('visuallyhidden');
+            }
+            else if($('#kgdn3').hasClass('visuallyhidden')){
+                $('#kgdn3').removeClass('visuallyhidden');
+            }
+        });
+        $('#removekgdn2').click(function(){
+            if(!$('#kgdn3').hasClass('visuallyhidden')){
+                $('#kgdn2').appendTo('#dhlist');
+            }
+            $('#kgdn2').addClass('visuallyhidden');
+        });
+        $('#removekgdn3').click(function(){
+            $('#kgdn3').addClass('visuallyhidden');
+            $('#kgdn3').appendTo('#dhlist');
         });
         $(document).on('click', '.deletedh', function(){
             adddh = adddh-1;

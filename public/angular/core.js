@@ -328,55 +328,8 @@
 		          $scope.timeNHPopover[2].timetext = 'Từ ' + $scope.timeNHPopover[2].tugio.gio + ':' + $scope.timeNHPopover[2].tugio.phut +
 		          								   ' đến '+ $scope.timeNHPopover[2].toigio.gio + ':' + $scope.timeNHPopover[2].toigio.phut;
 		        }
-		  	},
-		  	//khung giờ 4
-		  	{
-				content: 'Hello, World!',
-				templateUrl: 'kg4.html',
-				title: 'Xin chọn khung thời gian',
-				tugio: {
-					gio: 0,
-					phut: 0,
-				},
-				toigio: {
-					gio: 0,
-					phut: 0,
-				},
-				isOpen: false,
-				timetext: 'Chọn khung giờ',
-				myDatetimeRange: {
-				    time: {
-					    from: 390,
-					    to: 1020,
-					    dFrom: 0,
-					    dTo: 1440,
-					    step: 15,
-					    minRange: 15,
-					    hours24: true
-				  	},
-				  hasDatePickers: false,
-				  hasTimeSliders: true,
-				},
-				myDatetimeLabels: {
-				    date: {
-				        from: 'Start date',
-				        to: 'End date'
-				    }
-				},
-				open: function open() {
-		          $scope.timeNHPopover[3].isOpen = true;
-		        }, 
-		        close: function close() {
-		          $scope.timeNHPopover[3].isOpen = false;
-		          $scope.timeNHPopover[3].tugio.gio = Math.floor($scope.timeNHPopover[3].myDatetimeRange.time.from/60);
-		          $scope.timeNHPopover[3].tugio.phut = Math.floor($scope.timeNHPopover[3].myDatetimeRange.time.from%60); 
-		          $scope.timeNHPopover[3].toigio.gio = Math.floor($scope.timeNHPopover[3].myDatetimeRange.time.to/60);
-		          $scope.timeNHPopover[3].toigio.phut = Math.floor($scope.timeNHPopover[3].myDatetimeRange.time.to%60); 
-		          $scope.timeNHPopover[3].timetext = 'Từ ' + $scope.timeNHPopover[3].tugio.gio + ':' + $scope.timeNHPopover[3].tugio.phut +
-		          								   ' đến '+ $scope.timeNHPopover[3].toigio.gio + ':' + $scope.timeNHPopover[3].toigio.phut;
-		        }
 		  	}
-	  	],
+	  	];
 	  	$scope.dateDNPopover = [
 			//khung thời gian 1
 			{
@@ -421,7 +374,7 @@
 		          		toyear;
 		        }
 		  	}
-	  	]
+	  	];
 	  	$scope.timeDNPopover = [
 			//khung giờ 1
 			{
@@ -517,7 +470,7 @@
 		          								   ' đến '+ $scope.timeDNPopover[1].toigio.gio + ':' + $scope.timeDNPopover[1].toigio.phut;
 		        }
 		  	},
-		  	//khung giờ 3
+		  	//khung giờ 2
 		  	{
 				content: 'Hello, World!',
 				templateUrl: 'kgdn3.html',
@@ -564,54 +517,7 @@
 		          								   ' đến '+ $scope.timeDNPopover[2].toigio.gio + ':' + $scope.timeDNPopover[2].toigio.phut;
 		        }
 		  	},
-		  	//khung giờ 4
-		  	{
-				content: 'Hello, World!',
-				templateUrl: 'kgdn4.html',
-				title: 'Xin chọn khung thời gian',
-				tugio: {
-					gio: 0,
-					phut: 0,
-				},
-				toigio: {
-					gio: 0,
-					phut: 0,
-				},
-				isOpen: false,
-				timetext: 'Chọn khung giờ',
-				myDatetimeRange: {
-				    time: {
-					    from: 390,
-					    to: 1020,
-					    dFrom: 0,
-					    dTo: 1440,
-					    step: 15,
-					    minRange: 15,
-					    hours24: true
-				  	},
-				  hasDatePickers: false,
-				  hasTimeSliders: true,
-				},
-				myDatetimeLabels: {
-				    date: {
-				        from: 'Start date',
-				        to: 'End date'
-				    }
-				},
-				open: function open() {
-		          $scope.timeDNPopover[3].isOpen = true;
-		        }, 
-		        close: function close() {
-		          $scope.timeDNPopover[3].isOpen = false;
-		          $scope.timeDNPopover[3].tugio.gio = Math.floor($scope.timeDNPopover[3].myDatetimeRange.time.from/60);
-		          $scope.timeDNPopover[3].tugio.phut = Math.floor($scope.timeDNPopover[3].myDatetimeRange.time.from%60); 
-		          $scope.timeDNPopover[3].toigio.gio = Math.floor($scope.timeDNPopover[3].myDatetimeRange.time.to/60);
-		          $scope.timeDNPopover[3].toigio.phut = Math.floor($scope.timeDNPopover[3].myDatetimeRange.time.to%60); 
-		          $scope.timeDNPopover[3].timetext = 'Từ ' + $scope.timeDNPopover[3].tugio.gio + ':' + $scope.timeDNPopover[3].tugio.phut +
-		          								   ' đến '+ $scope.timeDNPopover[3].toigio.gio + ':' + $scope.timeDNPopover[3].toigio.phut;
-		        }
-		  	}
-	  	]
+	  	];
 	}]);
 	module.controller('slickController',['$scope', function($scope){
 		$scope.numberLoaded = true;
