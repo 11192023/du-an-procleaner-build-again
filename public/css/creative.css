@@ -51,15 +51,19 @@
     color: #02571C;
 }
 .popover {
-    min-width: 500px!important;
+    min-width: 600px!important;
     max-width: 900px!important;
 }
 .rg-range-picker-calendars span{
     white-space: normal!important;
     font-size: 14px!important;
 }
+.rg-range-picker-calendar-label{
+    color: #02571C!important;
+    font-weight: bold!important;
+}
 .rg-range-picker-calendars{
-
+    min-width: 600px!important;
 }
 .tt-menu { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
     width: 100%;
@@ -872,7 +876,7 @@ input[readonly] {
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
     border-color: #02571C;
-    color: #fff;
+    color: #8CC13D;
     background-color: #02571C;
 }
 
