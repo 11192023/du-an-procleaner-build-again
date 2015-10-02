@@ -129,7 +129,7 @@ html(lang='en')
                         input.form-control.sb.fixWTimeNH(popover-template="timeDNPopover[1].templateUrl", type='text', name='tgbd', popover-is-open="timeDNPopover[1].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='timeDNPopover[1].open()', ng-model='timeDNPopover[1].timetext')
 
                         input#removekgdn2.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
+                      input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
                   li#kgdn3.visuallyhidden
                     .form-group
                       div#quan
@@ -139,7 +139,7 @@ html(lang='en')
                         input.form-control.sb.fixWTimeNH(popover-template="timeDNPopover[2].templateUrl", type='text', name='tgbd', popover-is-open="timeDNPopover[2].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='timeDNPopover[2].open()', ng-model='timeDNPopover[2].timetext')
 
                         input#removekgdn3.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
+                      input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
     section#about.bg-primary
       .container
         .row
@@ -196,8 +196,8 @@ html(lang='en')
           .col-lg-3.col-md-6.text-center
             .service-box
               i.fa.fa-4x.fa-building.wow.bounceIn.text-primary(data-wow-delay='.3s')
-              h3 Vệ sinh văn phòng, công ty
-              p.text-muted.justify Vệ sinh sàn, trần; giặt thảm, ghế sofa; lau chùi cửa, kính, bàn ghế, tủ hồ sơ; vệ sinh nhà xưởng...
+              h3 Vệ sinh văn phòng
+              p.text-muted.justify Vệ sinh trần, sàn; giặt thảm, ghế sofa; lau chùi cửa, kính, bàn ghế, tủ hồ sơ; vệ sinh văn phòng, công ty, nhà xưởng...
 
     section#portfolio.no-padding
       .container-fluid(ng-controller='slickController')
