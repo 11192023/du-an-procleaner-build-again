@@ -227,6 +227,9 @@
 		        }, 
 		        close: function close() {
 		          $scope.timeNHPopover[0].isOpen = false;
+		        },
+		        apply: function apply() {
+		          $scope.timeNHPopover[0].isOpen = false;
 		          $scope.timeNHPopover[0].tugio.gio = Math.floor($scope.timeNHPopover[0].myDatetimeRange.time.from/60);
 		          $scope.timeNHPopover[0].tugio.phut = Math.floor($scope.timeNHPopover[0].myDatetimeRange.time.from%60); 
 		          $scope.timeNHPopover[0].toigio.gio = Math.floor($scope.timeNHPopover[0].myDatetimeRange.time.to/60);
@@ -273,6 +276,9 @@
 		          $scope.timeNHPopover[1].isOpen = true;
 		        }, 
 		        close: function close() {
+		          $scope.timeNHPopover[1].isOpen = false;
+		        },
+		        apply: function apply() {
 		          $scope.timeNHPopover[1].isOpen = false;
 		          $scope.timeNHPopover[1].tugio.gio = Math.floor($scope.timeNHPopover[1].myDatetimeRange.time.from/60);
 		          $scope.timeNHPopover[1].tugio.phut = Math.floor($scope.timeNHPopover[1].myDatetimeRange.time.from%60); 
@@ -321,6 +327,9 @@
 		        }, 
 		        close: function close() {
 		          $scope.timeNHPopover[2].isOpen = false;
+		        },
+		        apply: function apply() {
+		          $scope.timeNHPopover[2].isOpen = false;
 		          $scope.timeNHPopover[2].tugio.gio = Math.floor($scope.timeNHPopover[2].myDatetimeRange.time.from/60);
 		          $scope.timeNHPopover[2].tugio.phut = Math.floor($scope.timeNHPopover[2].myDatetimeRange.time.from%60); 
 		          $scope.timeNHPopover[2].toigio.gio = Math.floor($scope.timeNHPopover[2].myDatetimeRange.time.to/60);
@@ -359,6 +368,9 @@
 		          $scope.dateDNPopover[0].isOpen = true;
 		        }, 
 		        close: function close() {
+		          $scope.dateDNPopover[0].isOpen = false;
+		        },
+		        apply: function apply() {
 		        	var fromdate = $scope.dateDNPopover[0].myDatetimeRange.date.from.getDate();
 		        	var frommonth = $scope.dateDNPopover[0].myDatetimeRange.date.from.getMonth() + 1;
 		        	var fromyear = $scope.dateDNPopover[0].myDatetimeRange.date.from.getFullYear();
@@ -415,6 +427,9 @@
 		        }, 
 		        close: function close() {
 		          $scope.timeDNPopover[0].isOpen = false;
+		        },
+		        apply: function apply() {
+		          $scope.timeDNPopover[0].isOpen = false;
 		          $scope.timeDNPopover[0].tugio.gio = Math.floor($scope.timeDNPopover[0].myDatetimeRange.time.from/60);
 		          $scope.timeDNPopover[0].tugio.phut = Math.floor($scope.timeDNPopover[0].myDatetimeRange.time.from%60); 
 		          $scope.timeDNPopover[0].toigio.gio = Math.floor($scope.timeDNPopover[0].myDatetimeRange.time.to/60);
@@ -462,6 +477,9 @@
 		        }, 
 		        close: function close() {
 		          $scope.timeDNPopover[1].isOpen = false;
+		        },
+		        apply: function apply() {
+		          $scope.timeDNPopover[1].isOpen = false;
 		          $scope.timeDNPopover[1].tugio.gio = Math.floor($scope.timeDNPopover[1].myDatetimeRange.time.from/60);
 		          $scope.timeDNPopover[1].tugio.phut = Math.floor($scope.timeDNPopover[1].myDatetimeRange.time.from%60); 
 		          $scope.timeDNPopover[1].toigio.gio = Math.floor($scope.timeDNPopover[1].myDatetimeRange.time.to/60);
@@ -508,6 +526,9 @@
 		          $scope.timeDNPopover[2].isOpen = true;
 		        }, 
 		        close: function close() {
+		          $scope.timeDNPopover[2].isOpen = false;
+		        },
+		        apply: function apply() {
 		          $scope.timeDNPopover[2].isOpen = false;
 		          $scope.timeDNPopover[2].tugio.gio = Math.floor($scope.timeDNPopover[2].myDatetimeRange.time.from/60);
 		          $scope.timeDNPopover[2].tugio.phut = Math.floor($scope.timeDNPopover[2].myDatetimeRange.time.from%60); 

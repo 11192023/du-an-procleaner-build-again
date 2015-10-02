@@ -114,7 +114,7 @@ html(lang='en')
                     .form-group
                       div#quan
                         input.form-control.sb.typeahead(type='text', name='thanhpho', placeholder='Chọn Quận')
-                        input.form-control.sbhaft.fixWTimeNH(popover-template="dateDNPopover[0].templateUrl", type='text', name='tgbd', popover-is-open="dateDNPopover[0].isOpen", placeholder='Chọn ngày', autocomplete='off', readonly='readonly', ng-click='dateDNPopover[0].open()', ng-model='dateDNPopover[0].datetext')
+                        input.form-control.sbhaft.fixWTimeNH(popover-template="dateDNPopover[0].templateUrl", popover-placement='right' type='text', name='tgbd', popover-is-open="dateDNPopover[0].isOpen", placeholder='Chọn ngày', autocomplete='off', readonly='readonly', ng-click='dateDNPopover[0].open()', ng-model='dateDNPopover[0].datetext')
                     .form-group
                         input.form-control.sb.fixWTimeNH(popover-template="timeDNPopover[0].templateUrl", type='text', name='tgbd', popover-is-open="timeDNPopover[0].isOpen", placeholder='Khung thời gian', autocomplete='off', readonly='readonly', ng-click='timeDNPopover[0].open()', ng-model='timeDNPopover[0].timetext')
 
@@ -1038,8 +1038,8 @@ html(lang='en')
           {angular_slick: "slick/angular/angular-slick.min.js"},
           {datepicker: "js/bootstrap-datepicker.min.js"},
           {dpvn: "locales/bootstrap-datepicker.vi.min.js"},
-          {custom_index: "js/creative_compress.js"},
-          {custom_angular: "angular/core_compress.js"}
+          {custom_index: "js/creative.js"},
+          {custom_angular: "angular/core.js"}
       );
     // jQuery------------------------------------------------------------------------------
     //script(src='js/jquery-2.1.4.min.js')
@@ -1077,27 +1077,62 @@ html(lang='en')
     
     // ngắn hạn ------------------------------------------------------------------------------
     script(type='text/ng-template', id='kg1.html').
-      <div rg-range-picker="timeNHPopover[0].myDatetimeRange" labels="timeNHPopover[0].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[0].close()"/>
+      <div class="panel-heading">
+        <button type="button" data-dismiss="modal" class="close marbtm" ng-click="timeNHPopover[0].close()">×</button>
+      </div>
+      <div class="panel-body">
+        <div rg-range-picker="timeNHPopover[0].myDatetimeRange" labels="timeNHPopover[0].myDatetimeLabels"></div>
+        <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[0].apply()"/>
+      </div>
     script(type='text/ng-template', id='kg2.html').
-      <div rg-range-picker="timeNHPopover[1].myDatetimeRange" labels="timeNHPopover[1].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[1].close()"/>
+      <div class="panel-heading">
+        <button type="button" data-dismiss="modal" class="close marbtm" ng-click="timeNHPopover[1].close()">×</button>
+      </div>
+      <div class="panel-body">
+        <div rg-range-picker="timeNHPopover[1].myDatetimeRange" labels="timeNHPopover[1].myDatetimeLabels"></div>
+        <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[1].apply()"/>
+      </div>
     script(type='text/ng-template', id='kg3.html').
-      <div rg-range-picker="timeNHPopover[2].myDatetimeRange" labels="timeNHPopover[2].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[2].close()"/>
+      <div class="panel-heading">
+        <button type="button" data-dismiss="modal" class="close marbtm" ng-click="timeNHPopover[2].close()">×</button>
+      </div>
+      <div class="panel-body">
+        <div rg-range-picker="timeNHPopover[2].myDatetimeRange" labels="timeNHPopover[2].myDatetimeLabels"></div>
+        <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeNHPopover[2].apply()"/>
+      </div>
 
     // dài ngày------------------------------------------------------------------------------
     // date ------------------------------------------------------------------------------
     script(type='text/ng-template', id='dayrangedn1.html').
-      <div rg-range-picker="dateDNPopover[0].myDatetimeRange" labels="dateDNPopover[0].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="dateDNPopover[0].close()"/>
+      <div class="panel-heading">
+        <button type="button" data-dismiss="modal" class="close marbtm" ng-click="dateDNPopover[0].close()">×</button>
+      </div>
+      <div class="panel-body">
+        <div rg-range-picker="dateDNPopover[0].myDatetimeRange" labels="dateDNPopover[0].myDatetimeLabels"></div>
+        <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="dateDNPopover[0].apply()"/>
+      </div>
     //time ------------------------------------------------------------------------------
     script(type='text/ng-template', id='kgdn1.html').
-      <div rg-range-picker="timeDNPopover[0].myDatetimeRange" labels="timeDNPopover[0].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[0].close()"/>
+      <div class="panel-heading">
+        <button type="button" data-dismiss="modal" class="close marbtm" ng-click="timeDNPopover[0].close()">×</button>
+      </div>
+      <div class="panel-body">
+        <div rg-range-picker="timeDNPopover[0].myDatetimeRange" labels="timeDNPopover[0].myDatetimeLabels"></div>
+        <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[0].apply()"/>
+      </div>
     script(type='text/ng-template', id='kgdn2.html').
-      <div rg-range-picker="timeDNPopover[1].myDatetimeRange" labels="timeDNPopover[1].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[1].close()"/>
+      <div class="panel-heading">
+        <button type="button" data-dismiss="modal" class="close marbtm" ng-click="timeDNPopover[1].close()">×</button>
+      </div>
+      <div class="panel-body">
+        <div rg-range-picker="timeDNPopover[1].myDatetimeRange" labels="timeDNPopover[1].myDatetimeLabels"></div>
+        <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[1].apply()"/>
+      </div>
     script(type='text/ng-template', id='kgdn3.html').
-      <div rg-range-picker="timeDNPopover[2].myDatetimeRange" labels="timeDNPopover[2].myDatetimeLabels"></div>
-      <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[2].close()"/>
+      <div class="panel-heading">
+        <button type="button" data-dismiss="modal" class="close marbtm" ng-click="timeDNPopover[2].close()">×</button>
+      </div>
+      <div class="panel-body">
+        <div rg-range-picker="timeDNPopover[2].myDatetimeRange" labels="timeDNPopover[2].myDatetimeLabels"></div>
+        <input type='button' class='btn btn-danger marbtn pull-right smallbtn' value='đồng ý' ng-click="timeDNPopover[2].apply()"/>
+      </div>
