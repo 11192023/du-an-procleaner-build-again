@@ -36,16 +36,17 @@ block search
               span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
             div.form-group
               h4.xanhnhat Quận
-          div(ng-repeat='quan in quans')
-            md-checkbox.md-primary.md-align-top-left(ng-model='quan.id', aria-label='quan.ten', ng-true-value="'yup'", ng-false-value="'nope'")
-              | {{quan.ten}}
+            md-radio-group(ng-model="data.group1")
+              div(ng-repeat='quan in quans')
+                md-radio-button(value='{{quan.ten}}')
+                  {{quan.ten}}
       .col-lg-9.content-right(ng-controller='searchController')
         h4 Recommended
         div(ng-repeat='ngv in ngvs')
           .row.selected-classifieds
             .col-md-3
               a(href='#')
-                img.img-responsive(src='img/placeholder_user.png', alt='')
+                img.img-responsive(src='{{"img/ngv/"+ngv.hinhanh}}', alt='')
             .col-md-9
               h3 {{ngv.hoten}}
               h4 Subheading
