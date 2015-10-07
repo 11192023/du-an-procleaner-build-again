@@ -12,10 +12,7 @@
         });
 	});
 	module.controller('searchController', function($scope, $http, $location){
-		console.log($location.search().ngaybd);
-		console.log($location.search().ngaykt);
 		var q = '?diachi.quan=' + $location.search().quan;
-		console.log(q);
 		$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q)
 	        .success(function(data) {
 	            $scope.ngvs = data;
@@ -51,6 +48,10 @@
 			{
 				ten: 'Nấu ăn',
 				id: 7
+			},
+			{
+				ten: 'Vệ sinh văn phòng',
+				id: 8
 			}
 		];
 		$scope.quans = [

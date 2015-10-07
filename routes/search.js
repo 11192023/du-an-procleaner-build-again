@@ -16,9 +16,9 @@ router.post('/', function(req, res, next) {
       + '&ngay=' + ngay 
       + '&giobd1=' + giobd1 
       + '&giokt1=' + giokt1;
-    if(giobd2!='')
+    if(giobd2!=null)
       q += '&giobd2=' + giobd2 + '&giokt2=' + giokt2;
-    if(giobd3!='')
+    if(giobd3!=null)
       q += '&giobd3=' + giobd3 + '&giokt3=' + giokt3;
     res.redirect('/search' + q);
   }
@@ -35,9 +35,9 @@ router.post('/', function(req, res, next) {
     var q = '?type='+typesearch+'&quan=' + quan 
       + '&ngaybd=' + ngaybd + '&ngaykt=' + ngaykt 
       + '&giobd1=' + giobd1 + '&giokt1=' + giokt1;
-    if(giobd2!='')
+    if(giobd2!=null)
       q += '&giobd2=' + giobd2 + '&giokt2=' + giokt2;
-    if(giobd3!='')
+    if(giobd3!=null)
       q += '&giobd3=' + giobd3 + '&giokt3=' + giokt3;
     res.redirect('/search' + q);
   }

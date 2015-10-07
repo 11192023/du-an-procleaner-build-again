@@ -250,6 +250,9 @@ select{
         .btn{
             width: 100%;
         }
+        .visuallyhidden { 
+          display: none!important;
+        }
         .navbar-collapse.collapse {
         display: none !important;
         }
