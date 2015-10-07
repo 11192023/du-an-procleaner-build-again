@@ -6,6 +6,10 @@
 
 (function($) {
     $(document).ready(function(){
+        $('.selectpicker').selectpicker({
+              style: 'btn-info',
+              size: 8
+        });
         $('.dpindex').datepicker({
             language: 'vi'
         });
@@ -38,6 +42,7 @@
           queryTokenizer: Bloodhound.tokenizers.whitespace,
           local: quan
         });
+
         function showall(q, sync) {
           if (q === '') {
             sync(quans.get('Quận 1',

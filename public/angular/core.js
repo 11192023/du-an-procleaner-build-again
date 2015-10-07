@@ -1,13 +1,28 @@
 (function(){
 	//search module
-	var module = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','rgkevin.datetimeRangePicker','slickCarousel']);
+	var module = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','slickCarousel']);
 
-	module.config(function($mdThemingProvider){
+	module.config(function($mdThemingProvider, $locationProvider){
 		$mdThemingProvider.theme('default')
 			.primaryPalette('green');
+        //routing DOESN'T work without html5Mode
+        $locationProvider.html5Mode({
+        	enabled: true,
+  			requireBase: false
+        });
 	});
-	module.controller('searchController', function($scope, $http){
-		$scope.formData = {};
+	module.controller('searchController', function($scope, $http, $location){
+		console.log($location.search().ngaybd);
+		console.log($location.search().ngaykt);
+		var q = '?diachi.quan=' + $location.search().quan;
+		console.log(q);
+		$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q)
+	        .success(function(data) {
+	            $scope.ngvs = data;
+	        })
+	        .error(function(data) {
+	            console.log('Error: ' + data);
+        });
 		$scope.tieuchis = [
 			{
 				ten: 'Chăm sóc bé',
@@ -187,358 +202,45 @@
 		};
 	});
 	module.controller('timeController',['$scope', function($scope, $log){
-		$scope.timeNHPopover = [
-			//khung giờ 1
-			{
-				content: 'Hello, World!',
-				templateUrl: 'kg1.html',
-				title: 'Xin chọn khung thời gian',
-				tugio: {
-					gio: 0,
-					phut: 0,
-				},
-				toigio: {
-					gio: 0,
-					phut: 0,
-				},
-				isOpen: false,
-				timetext: 'Chọn khung giờ',
-				myDatetimeRange: {
-				    time: {
-					    from: 390,
-					    to: 1020,
-					    dFrom: 0,
-					    dTo: 1440,
-					    step: 15,
-					    minRange: 15,
-					    hours24: true
-				  	},
-				  hasDatePickers: false,
-				  hasTimeSliders: true,
-				},
-				myDatetimeLabels: {
-				    date: {
-				        from: 'Start date',
-				        to: 'End date'
-				    }
-				},
-				open: function open() {
-		          $scope.timeNHPopover[0].isOpen = true;
-		        }, 
-		        close: function close() {
-		          $scope.timeNHPopover[0].isOpen = false;
-		        },
-		        apply: function apply() {
-		          $scope.timeNHPopover[0].isOpen = false;
-		          $scope.timeNHPopover[0].tugio.gio = Math.floor($scope.timeNHPopover[0].myDatetimeRange.time.from/60);
-		          $scope.timeNHPopover[0].tugio.phut = Math.floor($scope.timeNHPopover[0].myDatetimeRange.time.from%60); 
-		          $scope.timeNHPopover[0].toigio.gio = Math.floor($scope.timeNHPopover[0].myDatetimeRange.time.to/60);
-		          $scope.timeNHPopover[0].toigio.phut = Math.floor($scope.timeNHPopover[0].myDatetimeRange.time.to%60); 
-		          $scope.timeNHPopover[0].timetext = 'Từ ' + $scope.timeNHPopover[0].tugio.gio + ':' + $scope.timeNHPopover[0].tugio.phut +
-		          								   ' đến '+ $scope.timeNHPopover[0].toigio.gio + ':' + $scope.timeNHPopover[0].toigio.phut;
-		        }
-		  	},
-		  	//khung giờ 2
-		  	{
-				content: 'Hello, World!',
-				templateUrl: 'kg2.html',
-				title: 'Xin chọn khung thời gian',
-				tugio: {
-					gio: 0,
-					phut: 0,
-				},
-				toigio: {
-					gio: 0,
-					phut: 0,
-				},
-				isOpen: false,
-				timetext: 'Chọn khung giờ',
-				myDatetimeRange: {
-				    time: {
-					    from: 390,
-					    to: 1020,
-					    dFrom: 0,
-					    dTo: 1440,
-					    step: 15,
-					    minRange: 15,
-					    hours24: true
-				  	},
-				  hasDatePickers: false,
-				  hasTimeSliders: true,
-				},
-				myDatetimeLabels: {
-				    date: {
-				        from: 'Start date',
-				        to: 'End date'
-				    }
-				},
-				open: function open() {
-		          $scope.timeNHPopover[1].isOpen = true;
-		        }, 
-		        close: function close() {
-		          $scope.timeNHPopover[1].isOpen = false;
-		        },
-		        apply: function apply() {
-		          $scope.timeNHPopover[1].isOpen = false;
-		          $scope.timeNHPopover[1].tugio.gio = Math.floor($scope.timeNHPopover[1].myDatetimeRange.time.from/60);
-		          $scope.timeNHPopover[1].tugio.phut = Math.floor($scope.timeNHPopover[1].myDatetimeRange.time.from%60); 
-		          $scope.timeNHPopover[1].toigio.gio = Math.floor($scope.timeNHPopover[1].myDatetimeRange.time.to/60);
-		          $scope.timeNHPopover[1].toigio.phut = Math.floor($scope.timeNHPopover[1].myDatetimeRange.time.to%60); 
-		          $scope.timeNHPopover[1].timetext = 'Từ ' + $scope.timeNHPopover[1].tugio.gio + ':' + $scope.timeNHPopover[1].tugio.phut +
-		          								   ' đến '+ $scope.timeNHPopover[1].toigio.gio + ':' + $scope.timeNHPopover[1].toigio.phut;
-		        }
-		  	},
-		  	//khung giờ 3
-		  	{
-				content: 'Hello, World!',
-				templateUrl: 'kg3.html',
-				title: 'Xin chọn khung thời gian',
-				tugio: {
-					gio: 0,
-					phut: 0,
-				},
-				toigio: {
-					gio: 0,
-					phut: 0,
-				},
-				isOpen: false,
-				timetext: 'Chọn khung giờ',
-				myDatetimeRange: {
-				    time: {
-					    from: 390,
-					    to: 1020,
-					    dFrom: 0,
-					    dTo: 1440,
-					    step: 15,
-					    minRange: 15,
-					    hours24: true
-				  	},
-				  hasDatePickers: false,
-				  hasTimeSliders: true,
-				},
-				myDatetimeLabels: {
-				    date: {
-				        from: 'Start date',
-				        to: 'End date'
-				    }
-				},
-				open: function open() {
-		          $scope.timeNHPopover[2].isOpen = true;
-		        }, 
-		        close: function close() {
-		          $scope.timeNHPopover[2].isOpen = false;
-		        },
-		        apply: function apply() {
-		          $scope.timeNHPopover[2].isOpen = false;
-		          $scope.timeNHPopover[2].tugio.gio = Math.floor($scope.timeNHPopover[2].myDatetimeRange.time.from/60);
-		          $scope.timeNHPopover[2].tugio.phut = Math.floor($scope.timeNHPopover[2].myDatetimeRange.time.from%60); 
-		          $scope.timeNHPopover[2].toigio.gio = Math.floor($scope.timeNHPopover[2].myDatetimeRange.time.to/60);
-		          $scope.timeNHPopover[2].toigio.phut = Math.floor($scope.timeNHPopover[2].myDatetimeRange.time.to%60); 
-		          $scope.timeNHPopover[2].timetext = 'Từ ' + $scope.timeNHPopover[2].tugio.gio + ':' + $scope.timeNHPopover[2].tugio.phut +
-		          								   ' đến '+ $scope.timeNHPopover[2].toigio.gio + ':' + $scope.timeNHPopover[2].toigio.phut;
-		        }
-		  	}
-	  	];
-	  	$scope.dateDNPopover = [
-			//khung thời gian 1
-			{
-				content: 'Hello, World!',
-				templateUrl: 'dayrangedn1.html',
-				title: 'Xin chọn khung thời gian',
-				tungay: '',
-				toingay: '',
-				isOpen: false,
-				datetext: 'Chọn từ ngày đến ngày',
-				myDatetimeRange: {
-				    date: {
-					    from: new Date(),
-					    to: new Date(),
-					    min: new Date()
-				  	},
-				  hasDatePickers: true,
-				  hasTimeSliders: false,
-				},
-				myDatetimeLabels: {
-				    date: {
-				        from: 'Ngày bắt đầu',
-				        to: 'Ngày kết thúc'
-				    }
-				},
-				open: function open() {
-		          $scope.dateDNPopover[0].isOpen = true;
-		        }, 
-		        close: function close() {
-		          $scope.dateDNPopover[0].isOpen = false;
-		        },
-		        apply: function apply() {
-		        	var fromdate = $scope.dateDNPopover[0].myDatetimeRange.date.from.getDate();
-		        	var frommonth = $scope.dateDNPopover[0].myDatetimeRange.date.from.getMonth() + 1;
-		        	var fromyear = $scope.dateDNPopover[0].myDatetimeRange.date.from.getFullYear();
-		        	var todate = $scope.dateDNPopover[0].myDatetimeRange.date.to.getDate();
-		        	var tomonth = $scope.dateDNPopover[0].myDatetimeRange.date.to.getMonth() + 1;
-		        	var toyear = $scope.dateDNPopover[0].myDatetimeRange.date.to.getFullYear();
-		          $scope.dateDNPopover[0].isOpen = false;
-		          $scope.dateDNPopover[0].datetext = 'Từ ' + fromdate + '/' + 
-		          		frommonth + '/' +
-		          		fromyear + ' tới ' +
-		          		todate + '/' + 
-		          		tomonth + '/' +
-		          		toyear;
-		        }
-		  	}
-	  	];
-	  	$scope.timeDNPopover = [
-			//khung giờ 1
-			{
-				content: 'Hello, World!',
-				templateUrl: 'kgdn1.html',
-				title: 'Xin chọn khung thời gian',
-				tugio: {
-					gio: 0,
-					phut: 0,
-				},
-				toigio: {
-					gio: 0,
-					phut: 0,
-				},
-				isOpen: false,
-				timetext: 'Chọn khung giờ',
-				myDatetimeRange: {
-				    time: {
-					    from: 390,
-					    to: 1020,
-					    dFrom: 0,
-					    dTo: 1440,
-					    step: 15,
-					    minRange: 15,
-					    hours24: true
-				  	},
-				  hasDatePickers: false,
-				  hasTimeSliders: true,
-				},
-				myDatetimeLabels: {
-				    date: {
-				        from: 'Start date',
-				        to: 'End date'
-				    }
-				},
-				open: function open() {
-		          $scope.timeDNPopover[0].isOpen = true;
-		        }, 
-		        close: function close() {
-		          $scope.timeDNPopover[0].isOpen = false;
-		        },
-		        apply: function apply() {
-		          $scope.timeDNPopover[0].isOpen = false;
-		          $scope.timeDNPopover[0].tugio.gio = Math.floor($scope.timeDNPopover[0].myDatetimeRange.time.from/60);
-		          $scope.timeDNPopover[0].tugio.phut = Math.floor($scope.timeDNPopover[0].myDatetimeRange.time.from%60); 
-		          $scope.timeDNPopover[0].toigio.gio = Math.floor($scope.timeDNPopover[0].myDatetimeRange.time.to/60);
-		          $scope.timeDNPopover[0].toigio.phut = Math.floor($scope.timeDNPopover[0].myDatetimeRange.time.to%60); 
-		          $scope.timeDNPopover[0].timetext = 'Từ ' + $scope.timeDNPopover[0].tugio.gio + ':' + $scope.timeDNPopover[0].tugio.phut +
-		          								   ' đến '+ $scope.timeDNPopover[0].toigio.gio + ':' + $scope.timeDNPopover[0].toigio.phut;
-		        }
-		  	},
-		  	//khung giờ 2
-		  	{
-				content: 'Hello, World!',
-				templateUrl: 'kgdn2.html',
-				title: 'Xin chọn khung thời gian',
-				tugio: {
-					gio: 0,
-					phut: 0,
-				},
-				toigio: {
-					gio: 0,
-					phut: 0,
-				},
-				isOpen: false,
-				timetext: 'Chọn khung giờ',
-				myDatetimeRange: {
-				    time: {
-					    from: 390,
-					    to: 1020,
-					    dFrom: 0,
-					    dTo: 1440,
-					    step: 15,
-					    minRange: 15,
-					    hours24: true
-				  	},
-				  hasDatePickers: false,
-				  hasTimeSliders: true,
-				},
-				myDatetimeLabels: {
-				    date: {
-				        from: 'Start date',
-				        to: 'End date'
-				    }
-				},
-				open: function open() {
-		          $scope.timeDNPopover[1].isOpen = true;
-		        }, 
-		        close: function close() {
-		          $scope.timeDNPopover[1].isOpen = false;
-		        },
-		        apply: function apply() {
-		          $scope.timeDNPopover[1].isOpen = false;
-		          $scope.timeDNPopover[1].tugio.gio = Math.floor($scope.timeDNPopover[1].myDatetimeRange.time.from/60);
-		          $scope.timeDNPopover[1].tugio.phut = Math.floor($scope.timeDNPopover[1].myDatetimeRange.time.from%60); 
-		          $scope.timeDNPopover[1].toigio.gio = Math.floor($scope.timeDNPopover[1].myDatetimeRange.time.to/60);
-		          $scope.timeDNPopover[1].toigio.phut = Math.floor($scope.timeDNPopover[1].myDatetimeRange.time.to%60); 
-		          $scope.timeDNPopover[1].timetext = 'Từ ' + $scope.timeDNPopover[1].tugio.gio + ':' + $scope.timeDNPopover[1].tugio.phut +
-		          								   ' đến '+ $scope.timeDNPopover[1].toigio.gio + ':' + $scope.timeDNPopover[1].toigio.phut;
-		        }
-		  	},
-		  	//khung giờ 2
-		  	{
-				content: 'Hello, World!',
-				templateUrl: 'kgdn3.html',
-				title: 'Xin chọn khung thời gian',
-				tugio: {
-					gio: 0,
-					phut: 0,
-				},
-				toigio: {
-					gio: 0,
-					phut: 0,
-				},
-				isOpen: false,
-				timetext: 'Chọn khung giờ',
-				myDatetimeRange: {
-				    time: {
-					    from: 390,
-					    to: 1020,
-					    dFrom: 0,
-					    dTo: 1440,
-					    step: 15,
-					    minRange: 15,
-					    hours24: true
-				  	},
-				  hasDatePickers: false,
-				  hasTimeSliders: true,
-				},
-				myDatetimeLabels: {
-				    date: {
-				        from: 'Start date',
-				        to: 'End date'
-				    }
-				},
-				open: function open() {
-		          $scope.timeDNPopover[2].isOpen = true;
-		        }, 
-		        close: function close() {
-		          $scope.timeDNPopover[2].isOpen = false;
-		        },
-		        apply: function apply() {
-		          $scope.timeDNPopover[2].isOpen = false;
-		          $scope.timeDNPopover[2].tugio.gio = Math.floor($scope.timeDNPopover[2].myDatetimeRange.time.from/60);
-		          $scope.timeDNPopover[2].tugio.phut = Math.floor($scope.timeDNPopover[2].myDatetimeRange.time.from%60); 
-		          $scope.timeDNPopover[2].toigio.gio = Math.floor($scope.timeDNPopover[2].myDatetimeRange.time.to/60);
-		          $scope.timeDNPopover[2].toigio.phut = Math.floor($scope.timeDNPopover[2].myDatetimeRange.time.to%60); 
-		          $scope.timeDNPopover[2].timetext = 'Từ ' + $scope.timeDNPopover[2].tugio.gio + ':' + $scope.timeDNPopover[2].tugio.phut +
-		          								   ' đến '+ $scope.timeDNPopover[2].toigio.gio + ':' + $scope.timeDNPopover[2].toigio.phut;
-		        }
-		  	},
-	  	];
+		$scope.data = {
+	    giobd1: null,
+	    giokt1: null,
+	    giobd2: null,
+	    giokt2: null,
+	    giobd3: null,
+	    giokt3: null,
+		    availableOptions: [
+		      {id: 360, name: '7:00 giờ'},
+		      {id: 390, name: '7:00 giờ'},
+		      {id: 420, name: '7:00 giờ'},
+		      {id: 450, name: '7:30 giờ'},
+		      {id: 480, name: '8:00 giờ'},
+		      {id: 510, name: '8:30 giờ'},
+		      {id: 540, name: '9:00 giờ'},
+		      {id: 570, name: '9:30 giờ'},
+		      {id: 600, name: '10:00 giờ'},
+		      {id: 630, name: '10:30 giờ'},
+		      {id: 660, name: '11:00 giờ'},
+		      {id: 690, name: '11:30 giờ'},
+		      {id: 720, name: '12:00 giờ'},
+		      {id: 750, name: '12:30 giờ'},
+		      {id: 780, name: '13:00 giờ'},
+		      {id: 810, name: '13:30 giờ'},
+		      {id: 840, name: '14:00 giờ'},
+		      {id: 870, name: '14:30 giờ'},
+		      {id: 900, name: '15:00 giờ'},
+		      {id: 930, name: '15:30 giờ'},
+		      {id: 960, name: '16:00 giờ'},
+		      {id: 990, name: '16:30 giờ'},
+		      {id: 1020, name: '17:00 giờ'},
+		      {id: 1050, name: '17:30 giờ'},
+		      {id: 1070, name: '18:00 giờ'},
+		      {id: 1100, name: '18:30 giờ'},
+		      {id: 1130, name: '19:00 giờ'},
+		      {id: 1160, name: '19:30 giờ'},
+		      {id: 1190, name: '20:00 giờ'}
+		    ],
+	    };
 	}]);
 	module.controller('slickController',['$scope', function($scope){
 		$scope.numberLoaded = true;

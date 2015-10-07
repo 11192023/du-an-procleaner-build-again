@@ -39,110 +39,19 @@ block search
           div(ng-repeat='quan in quans')
             md-checkbox.md-primary.md-align-top-left(ng-model='quan.id', aria-label='quan.ten', ng-true-value="'yup'", ng-false-value="'nope'")
               | {{quan.ten}}
-      .col-lg-9.content-right
+      .col-lg-9.content-right(ng-controller='searchController')
         h4 Recommended
-        .row.selected-classifieds
-          .col-md-3
-            a(href='#')
-              img.img-responsive(src='img/placeholder_user.png', alt='')
-          .col-md-9
-            h3 Mr.A
-            h4 Subheading
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
-            a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
-              | View Project 
-              span.glyphicon.glyphicon-chevron-right
-        hr
-        .row.selected-classifieds
-          .col-md-3
-            a(href='#')
-              img.img-responsive(src='img/placeholder_user.png', alt='')
-          .col-md-9
-            h3 Mr.A
-            h4 Subheading
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
-            a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
-              | View Project 
-              span.glyphicon.glyphicon-chevron-right
-        hr
-        .row.selected-classifieds
-          .col-md-3
-            a(href='#')
-              img.img-responsive(src='img/placeholder_user.png', alt='')
-          .col-md-9
-            h3 Mr.A
-            h4 Subheading
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
-            a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
-              | View Project 
-              span.glyphicon.glyphicon-chevron-right
-        hr
-        .row.selected-classifieds
-          .col-md-3
-            a(href='#')
-              img.img-responsive(src='img/placeholder_user.png', alt='')
-          .col-md-9
-            h3 Mr.A
-            h4 Subheading
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
-            a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
-              | View Project 
-              span.glyphicon.glyphicon-chevron-right
-        hr
-        .row.selected-classifieds
-          .col-md-3
-            a(href='#')
-              img.img-responsive(src='img/placeholder_user.png', alt='')
-          .col-md-9
-            h3 Mr.A
-            h4 Subheading
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
-            a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
-              | View Project 
-              span.glyphicon.glyphicon-chevron-right
-        hr
-        .row.selected-classifieds
-          .col-md-3
-            a(href='#')
-              img.img-responsive(src='img/placeholder_user.png', alt='')
-          .col-md-9
-            h3 Mr.A
-            h4 Subheading
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
-            a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
-              | View Project 
-              span.glyphicon.glyphicon-chevron-right
-        hr
-        .row.selected-classifieds
-          .col-md-3
-            a(href='#')
-              img.img-responsive(src='img/placeholder_user.png', alt='')
-          .col-md-9
-            h3 Mr.A
-            h4 Subheading
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
-            a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
-              | View Project 
-              span.glyphicon.glyphicon-chevron-right
-        hr
-        .row.selected-classifieds
-          .col-md-3
-            a(href='#')
-              img.img-responsive(src='img/placeholder_user.png', alt='')
-          .col-md-9
-            h3 Mr.A
-            h4 Subheading
-            p
-              | Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.
-            a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
-              | View Project 
-              span.glyphicon.glyphicon-chevron-right
-        hr
+        div(ng-repeat='ngv in ngvs')
+          .row.selected-classifieds
+            .col-md-3
+              a(href='#')
+                img.img-responsive(src='img/placeholder_user.png', alt='')
+            .col-md-9
+              h3 {{ngv.hoten}}
+              h4 Subheading
+              p(ng-repeat='st in ngv.sotruong') {{st}}
+              a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
+                | View Project 
+                span.glyphicon.glyphicon-chevron-right
+          hr
     // /Content

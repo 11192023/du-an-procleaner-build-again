@@ -10,7 +10,9 @@
     z-index: 9999;
     background: url(../img/preloader.gif) center no-repeat #fff;
 }
-
+.logow{
+    width: 200px!important;
+ }
 body {
   padding: 10px 20px 10px 20px;
 }

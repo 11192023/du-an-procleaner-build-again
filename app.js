@@ -9,7 +9,6 @@ var users = require('./routes/users');
 var search = require('./routes/search');
 var search_daihan = require('./routes/search_daihan');
 var ngv_chitiet = require('./routes/ngv_chitiet');
-var cors = require('cors');
 var app = express();
 var fs = require('fs');
 var User = require('./models/user.js');
@@ -22,7 +21,6 @@ app.set('view engine', 'jade');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(cors({credentials: true, origin: true}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());                                     // parse application/json
@@ -40,18 +38,6 @@ app.use('/search', search);
 app.use('/ngv_chitiet', ngv_chitiet);
 app.use('/search_daihan', search_daihan);
 
-/* api */
-var api_tieuchi = require('./api/tieuchi')
-var api_nguoigiupviec = require('./api/nguoigiupviec')
-var api_quan = require('./api/quan')
-var api_khachhang = require('./api/khachhang')
-var api_yeucau = require('./api/yeucau')
-
-app.use('/api/tieuchis',api_tieuchi);
-app.use('/api/nguoigiupviecs',api_nguoigiupviec);
-app.use('/api/quans',api_quan);
-app.use('/api/khachhangs',api_khachhang);
-app.use('/api/yeucaus',api_yeucau);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -9,11 +9,11 @@ var NgvSchema = new db.Schema({
         phuong : String,
         quan : String
     },
-    sotruong :[{ tensotruong : String}],
+    sotruong :[],
     sonamkinhnghiem : Number,
     motakinhnghiem : String,
     hinhanh : String,
-    giaykhamsuckhoe : [ {url : String} ],
+    giaykhamsuckhoe : String,
     //trangthai : Boolean,
     luongcodinh : Number,
     mucluongtheogio : Number,
@@ -26,4 +26,5 @@ var NgvSchema = new db.Schema({
         }]
     }]
 });
-var NgvDB = db.mongoose.model('nguoigiupviec', NgvSchema); 
+var NgvDB = db.mongoose.model('nguoigiupviec', NgvSchema);
+module.exports.ngvModel = NgvDB;

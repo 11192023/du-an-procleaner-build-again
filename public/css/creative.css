@@ -3,7 +3,25 @@
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
-
+#dhlist,
+#nhlist{
+    padding-left: 0px!important;
+}
+/* select */
+.form-control{
+    height: 50px!important;
+}
+.form-group{
+    margin-bottom: 0px!important;
+}
+.btn-info{
+    color:black!important;
+    background-color: #fff!important;
+    height: 50px!important;
+    text-transform: none!important;
+    font-weight: normal!important;
+    border-radius: 0px;
+}
 /* time slider */
 .smallbtn{
     height: 30px!important;
@@ -51,19 +69,20 @@
     color: #02571C;
 }
 .popover {
-    min-width: 600px!important;
-    max-width: 900px!important;
+    min-width: 450px!important;
+    max-width: 450px!important;
+    max-height: 300px!important;
 }
 .rg-range-picker-calendars span{
     white-space: normal!important;
-    font-size: 14px!important;
+    font-size: 10px!important;
 }
 .rg-range-picker-calendar-label{
     color: #02571C!important;
     font-weight: bold!important;
 }
 .rg-range-picker-calendars{
-    min-width: 600px!important;
+    min-width: 450px!important;
 }
 .tt-menu { /* UPDATE: newer versions use tt-menu instead of tt-dropdown-menu */
     width: 100%;
@@ -197,6 +216,11 @@ input[type=submit] {
 input[type=button] {
     height: 50px;
     border-radius: 2px!important;
+}
+select{
+    height: 50px!important;
+    border-radius: 0px!important;
+    border-color: #fff!important;
 }
 .marbtmDate{
     margin-bottom: 2px;

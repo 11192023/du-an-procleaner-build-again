@@ -6,14 +6,9 @@ var YeucauSchema = new db.Schema({
 	ngaybatdau : Date,
 	ngayketthuc : Date,
 	chiphi : Number,
-	khunggio : [{
-		giobatdau : Date,
-		gioketthuc : Date,
-		nguoigiupviec : Number
-	}]
   	nhanvienxuly : Number,
   	sdtkhachhang : Number,
-  	loaiyeucau : Number,
+  	loaiyeucau : String,
   	trangthai : String
 })
 var YeucauDB = db.mongoose.model('yeucau', YeucauSchema);
