@@ -21,8 +21,8 @@ var NgvSchema = new db.Schema({
     ngayban : [{
         ngay : Date,
         khunggio : [{
-            giobatdau : Date,
-            Giokethuc : Date
+            giobatdau : Number,
+            Giokethuc : Number
         }]
     }]
 });

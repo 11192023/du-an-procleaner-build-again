@@ -11,10 +11,8 @@
               size: 8
         });
         $('.dpindex').datepicker({
-            language: 'vi'
-        });
-        $('.input-daterange').datepicker({
-            language: 'vi'
+            language: 'vi',
+            format: 'mm/dd/yyyy'
         });
         var quan = [
                 'Quận 1',

@@ -12,10 +12,25 @@
         });
 	});
 	module.controller('searchController', function($scope, $http, $location){
-		var q = '?diachi.quan=' + $location.search().quan;
-		$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q)
+		var q = '?ngaylam=' + $location.search().ngay +
+				'&giobatdau__lte=' + $location.search().giokt1 +
+				'&gioketthuc__gte=' + $location.search().giobd1;
+		console.log(q);
+		$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q)
 	        .success(function(data) {
-	            $scope.ngvs = data;
+	        	var x = '?diachi.quan=' + $location.search().quan;
+	            for(i=0; i<data.length; i++){
+	            	x += '&cmnd__nin=' + data[i].nguoigiupviec;
+	            	if(i != data.length-1) x += ',';
+	            }
+	            console.log(x);
+	            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x)
+			        .success(function(data) {
+			            $scope.ngvs = data;
+			        })
+			        .error(function(data) {
+			            console.log('Error: ' + data);
+		        });
 	        })
 	        .error(function(data) {
 	            console.log('Error: ' + data);
@@ -211,8 +226,8 @@
 	    giobd3: null,
 	    giokt3: null,
 		    availableOptions: [
-		      {id: 360, name: '7:00 giờ'},
-		      {id: 390, name: '7:00 giờ'},
+		      {id: 360, name: '6:00 giờ'},
+		      {id: 390, name: '6:30 giờ'},
 		      {id: 420, name: '7:00 giờ'},
 		      {id: 450, name: '7:30 giờ'},
 		      {id: 480, name: '8:00 giờ'},
