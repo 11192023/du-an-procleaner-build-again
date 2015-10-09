@@ -94,7 +94,7 @@ html(lang='en')
                         input.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
 
                         input#addTimeTN.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='+')
-                      input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
+                      input.form-control.sb.btn.btn-danger(id='submitnh1' type='submit', value='Tìm kiếm')
                   li#kg2.visuallyhidden
                     .form-group
                       div#quan
@@ -112,7 +112,7 @@ html(lang='en')
                         input.form-control.sb.typeahead(type='hidden', name='giokt2', value='{{data.giokt2}}')
 
                         input#removekg2.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
+                      input.form-control.sb.btn.btn-danger.visuallyhidden(id='submitnh2' type='submit', value='Tìm kiếm')
                   li#kg3.visuallyhidden
                     .form-group
                       div#quan
@@ -130,7 +130,7 @@ html(lang='en')
                         input.form-control.sb.typeahead(type='hidden', name='giokt3', value='{{data.giokt3}}')
                         
                         input#removekg3.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
+                      input.form-control.sb.btn.btn-danger.visuallyhidden(id='submitnh3' type='submit', value='Tìm kiếm')
             div#daihan.hide
               form#formDaiHan.form-inline.removedot(action='/search')
                 input.form-control.sb.typeahead(type='hidden', name='typesearch', value='dh')
@@ -154,7 +154,7 @@ html(lang='en')
                         input.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
 
                         input#addTimeDH.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='+')
-                      input.form-control.sb.btn.btn-danger(type='submit', value='Tìm kiếm')
+                      input.form-control.sb.btn.btn-danger(id='submitdh1' type='submit', value='Tìm kiếm')
                   li#kgdn2.visuallyhidden
                     .form-group
                       div#quan
@@ -172,7 +172,7 @@ html(lang='en')
                         input.form-control.sb.typeahead(type='hidden', name='giokt2', value='{{data.giokt2}}')
 
                         input#removekgdn2.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
+                      input.form-control.sb.btn.btn-danger.visuallyhidden(id='submitdh2' type='submit', value='Tìm kiếm')
                   li#kgdn3.visuallyhidden
                     .form-group
                       div#quan
@@ -190,7 +190,7 @@ html(lang='en')
                         input.form-control.sb.typeahead(type='hidden', name='giokt3', value='{{data.giokt3}}')
 
                         input#removekgdn3.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger.visuallyhidden(type='submit', value='Tìm kiếm')
+                      input.form-control.sb.btn.btn-danger.visuallyhidden(id='submitdh3' type='submit', value='Tìm kiếm')
     section#about.bg-primary
       .container
         .row
