@@ -83,12 +83,12 @@ html(lang='en')
                         input#quannh.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
                     .form-group
-                        select.form-control.sb.fixWTime.selectpicker(ng-change='data.update()' ng-model="data.giobd1")
+                        select.form-control.sb.fixWTime.selectpicker(ng-model="data.giobd1")
                           option(value='' disabled) Từ giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
                         input#gbdnh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-                        select.form-control.sb.fixWTime.selectpicker(ng-change='data.update()' ng-model="data.giokt1")
+                        select.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1")
                           option(value='' disabled) Đến giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
                         input#gktnh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
@@ -107,12 +107,12 @@ html(lang='en')
                         input.form-control.sb.dpindex.fixWTime(type='text', name='ngaykt', placeholder='Đến ngày', readonly='readonly', autocomplete='off')
 
                     .form-group
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giobd1")
+                        select.form-control.sb.fixWTime.selectpicker(ng-model="data.giobd1")
                           option(value='' disabled) Từ giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
                         input#gbddh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giokt1")
+                        select.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1")
                           option(value='' disabled) Đến giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
                         input#gktdh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')

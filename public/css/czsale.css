@@ -1,4 +1,38 @@
-
+input[readonly] {
+  cursor: pointer !important;
+}
+input[type=text] {
+    border-color: #02571C;
+    height: 30px;
+    border-radius: 0px!important;
+    background-color: #fff!important;
+}
+select{
+    height: 30px!important;
+    border-radius: 0px!important;
+    border-color: #02571C!important;
+}
+.btn-info{
+    color:black!important;
+    border-color: #02571C!important;
+    background-color: #fff!important;
+    height: 30px!important;
+    text-transform: none!important;
+    font-weight: normal!important;
+    border-radius: 0px;
+}
+md-checkbox {
+  margin: 15px!important;
+}
+.timewidth{
+  width: 220px!important;
+}
+.timewidthhalf{
+  width: 110px!important;
+}
+.marleft{
+  margin-left: 15px;
+}
 .no-js #loader { display: none;  }
 .js #loader { display: block; position: absolute; left: 100px; top: 0; }
 .se-pre-con {

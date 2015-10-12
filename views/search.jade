@@ -1,19 +1,19 @@
 extends layout
 
 block search
+  base(href='/')
   .container.wrapper(ng-app='SearchModule')
     .row.content
       .col-lg-3.content-left
         h4 Tìm kiếm
-        div(ng-controller='dateController')
+        div
           div.form-inline
             div.form-group.padright
               span.glyphicon.glyphicon-calendar.xanhnhat(aria-hidden="true")
             div.form-group
               h4.xanhnhat Ngày
             div
-              p.input-group
-              input.form-control(type='text', datepicker-popup='{{format}}', ng-model='dt', is-open='status.opened', min-date='minDate', max-date='maxDate', datepicker-options='dateOptions', date-disabled='disabled(date, mode)', ng-required='true', close-text='Close', ng-click='open($event)')
+              input#ngay.marleft.form-control.timewidth.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
         div(ng-controller='timeController')
           div.form-inline
             div.form-group.padright
@@ -21,37 +21,58 @@ block search
             div.form-group
               h4.xanhnhat Khung giờ
           div.col-md-12
-            div(rg-range-picker='dynamicPopover.myDatetimeRange', labels='dynamicPopover.myDatetimeLabels')
-        div.form-inline
-          div.form-group.padright
-            span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
-          div.form-group
-            h4.xanhnhat Chuyên môn
+            .form-inline
+              .form-group
+                select.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions")
+                  option(value='' disabled) Từ giờ
+                input#gbdnh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
+
+                select.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions")
+                  option(value='' disabled) Đến giờ
+                input#gktnh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
         div(ng-controller='searchController')
-          div(ng-repeat='tieuchi in tieuchis')
-            md-checkbox.md-primary.md-align-top-left(ng-model='tieuchi.id', aria-label='kh.hoten', ng-true-value="'yup'", ng-false-value="'nope'")
-              | {{tieuchi.ten}}
-          div.form-inline
-            div.form-group.padright
-              span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
-            div.form-group
-              h4.xanhnhat Quận
-            md-radio-group(ng-model="data.group1")
-              div(ng-repeat='quan in quans')
-                md-radio-button(value='{{quan.ten}}')
-                  {{quan.ten}}
+          div
+            div.form-inline
+              div.form-group.padright
+                span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
+              div.form-group
+                h4.xanhnhat Kinh Nghiệm
+            div
+              div(ng-repeat='kn in kinhnghiems')
+                md-checkbox.md-primary.md-align-top-left(ng-model='kn.id')
+                  | {{kn.ten}}
+          div
+            div.form-inline
+              div.form-group.padright
+                span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
+              div.form-group
+                h4.xanhnhat Dịch vụ
+            div
+              div(ng-repeat='tieuchi in tieuchis')
+                md-checkbox.md-primary.md-align-top-left(ng-model='tieuchi.id')
+                  | {{tieuchi.ten}}
+          div
+            div.form-inline
+              div.form-group.padright
+                span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
+              div.form-group
+                h4.xanhnhat Quận
+              md-radio-group(ng-model="data.group1")
+                div(ng-repeat='quan in quans')
+                  md-radio-button(value='{{quan.ten}}')
+                    {{quan.ten}}
       .col-lg-9.content-right(ng-controller='searchController')
         h4 Recommended
         div(ng-repeat='ngv in ngvs')
           .row.selected-classifieds
             .col-md-3
               a(href='#')
-                img.img-responsive(src='{{"img/ngv/"+ngv.hinhanh}}', alt='')
+                img.img-responsive(src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
             .col-md-9
               h3 {{ngv.hoten}}
               h4 Subheading
               p(ng-repeat='st in ngv.sotruong') {{st}}
-              a.btn.btn-danger.pull-right(href='/ngv_chitiet/1')
+              a.btn.btn-danger.pull-right(ng-href='/ngv_chitiet/1' target="_self")
                 | View Project 
                 span.glyphicon.glyphicon-chevron-right
           hr

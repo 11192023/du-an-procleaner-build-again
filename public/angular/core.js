@@ -7,11 +7,13 @@
 			.primaryPalette('green');
         //routing DOESN'T work without html5Mode
         $locationProvider.html5Mode({
-        	enabled: true,
-  			requireBase: false
+        	enabled: true
         });
 	});
 	module.controller('searchController', function($scope, $http, $location){
+		$scope.go = function ( path ) {
+		  $location.path( path );
+		};
 		var q_ngv_trunglich = '?ngaylam=' + $location.search().ngay +
 				'&giobatdau__lte=' + $location.search().giokt1 +
 				'&gioketthuc__gte=' + $location.search().giobd1;
@@ -33,6 +35,24 @@
 	        .error(function(data) {
 	            console.log('Error: ' + data);
         });
+        $scope.kinhnghiems = [
+			{
+				ten: '1 Năm',
+				id: 1
+			},
+			{
+				ten: '2 Năm',
+				id: 2
+			},
+			{
+				ten: '3 Năm',
+				id: 3
+			},
+			{
+				ten: '4 Năm',
+				id: 4
+			}
+		];
 		$scope.tieuchis = [
 			{
 				ten: 'Chăm sóc bé',
@@ -146,84 +166,11 @@
 			}
 		];
 	});
-	module.controller('dateController', function($scope){
-	  	$scope.today = function() {
-			$scope.dt = new Date();
-		};
-		$scope.today();
-
-		$scope.clear = function () {
-			$scope.dt = null;
-		};
-
-		// Disable weekend selection
-		$scope.disabled = function(date, mode) {
-			return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
-		};
-
-		$scope.toggleMin = function() {
-			$scope.minDate = $scope.minDate ? null : new Date();
-		};
-		$scope.toggleMin();
-		$scope.maxDate = new Date(2020, 5, 22);
-
-		$scope.open = function($event) {
-			$scope.status.opened = true;
-		};
-
-		$scope.dateOptions = {
-			formatYear: 'yy',
-			startingDay: 1
-		};
-
-		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-		$scope.format = $scope.formats[0];
-
-		$scope.status = {
-			opened: false
-		};
-
-		var tomorrow = new Date();
-		tomorrow.setDate(tomorrow.getDate() + 1);
-		var afterTomorrow = new Date();
-		afterTomorrow.setDate(tomorrow.getDate() + 2);
-		$scope.events =
-		[
-		  {
-		    date: tomorrow,
-		    status: 'full'
-		  },
-		  {
-		    date: afterTomorrow,
-		    status: 'partially'
-		  }
-		];
-
-		$scope.getDayClass = function(date, mode) {
-			if (mode === 'day') {
-			  var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-			  for (var i=0;i<$scope.events.length;i++){
-			    var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-			    if (dayToCheck === currentDay) {
-			      return $scope.events[i].status;
-			    }
-			  }
-			}
-
-			return '';
-		};
-	});
-	module.controller('timeController',['$scope', function($scope, $log){
+	module.controller('timeController', function($scope, $log, $location){
 		$scope.data = {
 
-		    giobd1: null,
-		    giokt1: null,
-		    //giờ bắt đầu phải cách giờ hiện tại 3 tiếng
-		    update: function(){
-		    	
-			},
+		    giobd1: $location.search().giobd1,
+		    giokt1: $location.search().giokt1,
 		    availableOptions: [
 			      {id: 360, name: '6:00 giờ'},
 			      {id: 390, name: '6:30 giờ'},
@@ -256,7 +203,13 @@
 			      {id: 1200, name: '20:00 giờ'}
 			    ],
 	    };
-	}]);
+	    for(i=0; i<$scope.data.availableOptions.length; i++){
+	    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id)
+	    		$scope.data.giobd1 = $scope.data.availableOptions[i].id;
+	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id)
+	    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
+	    }
+	});
 	module.controller('slickController',['$scope', function($scope){
 		$scope.numberLoaded = true;
 		$scope.slickconfig = {
