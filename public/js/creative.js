@@ -9,9 +9,9 @@
         $('#formTheoNgay').submit(function(ev) {
             ev.preventDefault(); // to stop the form from submitting
             /* Validations go here */
-            var bd1 = Number($("input[name=giobd1]").val());
-            var kt1 = Number($("input[name=giokt1]").val());
-            var quan = $("input[name=quan]").val();
+            var bd1 = Number($("#gbdnh").val());
+            var kt1 = Number($("#gktnh").val());
+            var quan = $("#quannh").val();
             var ngay = $("input[name=ngay]").val();
             var ngayarr = ngay.split('/');
             var now = new Date();
@@ -43,6 +43,60 @@
                     alert('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + ':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).');
                     return;
                 }
+            }
+            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
+                alert('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.');
+                return;
+            }
+            this.submit();
+        });
+        $('#formDaiHan').submit(function(ev) {
+            ev.preventDefault(); // to stop the form from submitting
+            /* Validations go here */
+            var bd1 = Number($("#gbddh").val());
+            var kt1 = Number($("#gktdh").val());
+            var quan = $("#quandh").val();
+            var ngaybd = $("input[name=ngaybd]").val();
+            var ngaykt = $("input[name=ngaykt]").val();
+            var ngaybdarr = ngaybd.split('/');
+            var ngayktarr = ngaykt.split('/');
+            var now = new Date();
+            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
+            //validate empty field
+            if(quan == ''){
+                alert('Xin chọn quận!!');
+                return;
+            }
+            if(ngaybd == ''){
+                alert('Xin chọn ngày bắt đầu!!');
+                return; 
+            }
+            if(ngaykt == ''){
+                alert('Xin chọn ngày kết thúc!!');
+                return; 
+            }
+            if(bd1 == 0){
+                alert('Xin chọn giờ bắt đầu!!');
+                return;
+            }
+            if(kt1 == 0){
+                alert('Xin chọn giờ kết thúc!!');
+                return;
+            }
+            //end validate empty field
+
+            //validate date time
+            if(ngaybdarr[1] == now.getDate() 
+                && ngaybdarr[0] == now.getMonth()+1 
+                && ngaybdarr[2] == now.getFullYear()){
+                alert('Ngày bắt đầu không được là ngày hiện tại');
+                return;
+            }
+            if(ngaybdarr[1] == ngayktarr[1] 
+                && ngaybdarr[0] == ngayktarr[0] 
+                && ngaybdarr[2] == ngayktarr[2]){
+                alert('Ngày bắt đầu không được trùng với ngày kết thúc');
+                return;
             }
             if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
                 alert('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.');

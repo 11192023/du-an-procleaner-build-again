@@ -80,18 +80,18 @@ html(lang='en')
                   li
                     .form-group
                       div#quan
-                        input.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận', autocomplete='off')
+                        input#quannh.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
                     .form-group
-                        select#gbdnh.form-control.sb.fixWTime.selectpicker(ng-change='data.update()' ng-model="data.giobd1")
+                        select.form-control.sb.fixWTime.selectpicker(ng-change='data.update()' ng-model="data.giobd1")
                           option(value='' disabled) Từ giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
+                        input#gbdnh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-                        select#gktnh.form-control.sb.fixWTime.selectpicker(ng-change='data.update()' ng-model="data.giokt1")
+                        select.form-control.sb.fixWTime.selectpicker(ng-change='data.update()' ng-model="data.giokt1")
                           option(value='' disabled) Đến giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
+                        input#gktnh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
 
                       input.form-control.sb.btn.btn-danger(id='submitnh1' type='submit', value='Tìm kiếm')
                   
@@ -102,7 +102,7 @@ html(lang='en')
                   li
                     .form-group
                       div#quan
-                        input.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận')
+                        input#quandh.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận')
                         input.form-control.sb.dpindex.fixWTime(type='text', name='ngaybd', placeholder='Từ ngày', readonly='readonly', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTime(type='text', name='ngaykt', placeholder='Đến ngày', readonly='readonly', autocomplete='off')
 
@@ -110,12 +110,12 @@ html(lang='en')
                         select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giobd1")
                           option(value='' disabled) Từ giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
+                        input#gbddh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
                         select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giokt1")
                           option(value='' disabled) Đến giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
+                        input#gktdh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
 
                       input.form-control.sb.btn.btn-danger(id='submitdh1' type='submit', value='Tìm kiếm')
                   
