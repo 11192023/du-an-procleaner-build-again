@@ -12,25 +12,23 @@
         });
 	});
 	module.controller('searchController', function($scope, $http, $location){
-		var q = '?ngaylam=' + $location.search().ngay +
+		var q_ngv_trunglich = '?ngaylam=' + $location.search().ngay +
 				'&giobatdau__lte=' + $location.search().giokt1 +
 				'&gioketthuc__gte=' + $location.search().giobd1;
-		console.log(q);
-		$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q)
+		$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich)
 	        .success(function(data) {
 	        	var x = '?diachi.quan=' + $location.search().quan;
 	            for(i=0; i<data.length; i++){
 	            	x += '&cmnd__nin=' + data[i].nguoigiupviec;
 	            	if(i != data.length-1) x += ',';
 	            }
-	            console.log(x);
 	            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x)
 			        .success(function(data) {
 			            $scope.ngvs = data;
 			        })
 			        .error(function(data) {
 			            console.log('Error: ' + data);
-		        });
+	    			});
 	        })
 	        .error(function(data) {
 	            console.log('Error: ' + data);
@@ -202,60 +200,61 @@
 		];
 
 		$scope.getDayClass = function(date, mode) {
-		if (mode === 'day') {
-		  var dayToCheck = new Date(date).setHours(0,0,0,0);
+			if (mode === 'day') {
+			  var dayToCheck = new Date(date).setHours(0,0,0,0);
 
-		  for (var i=0;i<$scope.events.length;i++){
-		    var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+			  for (var i=0;i<$scope.events.length;i++){
+			    var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
 
-		    if (dayToCheck === currentDay) {
-		      return $scope.events[i].status;
-		    }
-		  }
-		}
+			    if (dayToCheck === currentDay) {
+			      return $scope.events[i].status;
+			    }
+			  }
+			}
 
-		return '';
+			return '';
 		};
 	});
 	module.controller('timeController',['$scope', function($scope, $log){
 		$scope.data = {
-	    giobd1: null,
-	    giokt1: null,
-	    giobd2: null,
-	    giokt2: null,
-	    giobd3: null,
-	    giokt3: null,
+
+		    giobd1: null,
+		    giokt1: null,
+		    //giờ bắt đầu phải cách giờ hiện tại 3 tiếng
+		    update: function(){
+		    	
+			},
 		    availableOptions: [
-		      {id: 360, name: '6:00 giờ'},
-		      {id: 390, name: '6:30 giờ'},
-		      {id: 420, name: '7:00 giờ'},
-		      {id: 450, name: '7:30 giờ'},
-		      {id: 480, name: '8:00 giờ'},
-		      {id: 510, name: '8:30 giờ'},
-		      {id: 540, name: '9:00 giờ'},
-		      {id: 570, name: '9:30 giờ'},
-		      {id: 600, name: '10:00 giờ'},
-		      {id: 630, name: '10:30 giờ'},
-		      {id: 660, name: '11:00 giờ'},
-		      {id: 690, name: '11:30 giờ'},
-		      {id: 720, name: '12:00 giờ'},
-		      {id: 750, name: '12:30 giờ'},
-		      {id: 780, name: '13:00 giờ'},
-		      {id: 810, name: '13:30 giờ'},
-		      {id: 840, name: '14:00 giờ'},
-		      {id: 870, name: '14:30 giờ'},
-		      {id: 900, name: '15:00 giờ'},
-		      {id: 930, name: '15:30 giờ'},
-		      {id: 960, name: '16:00 giờ'},
-		      {id: 990, name: '16:30 giờ'},
-		      {id: 1020, name: '17:00 giờ'},
-		      {id: 1050, name: '17:30 giờ'},
-		      {id: 1070, name: '18:00 giờ'},
-		      {id: 1100, name: '18:30 giờ'},
-		      {id: 1130, name: '19:00 giờ'},
-		      {id: 1160, name: '19:30 giờ'},
-		      {id: 1190, name: '20:00 giờ'}
-		    ],
+			      {id: 360, name: '6:00 giờ'},
+			      {id: 390, name: '6:30 giờ'},
+			      {id: 420, name: '7:00 giờ'},
+			      {id: 450, name: '7:30 giờ'},
+			      {id: 480, name: '8:00 giờ'},
+			      {id: 510, name: '8:30 giờ'},
+			      {id: 540, name: '9:00 giờ'},
+			      {id: 570, name: '9:30 giờ'},
+			      {id: 600, name: '10:00 giờ'},
+			      {id: 630, name: '10:30 giờ'},
+			      {id: 660, name: '11:00 giờ'},
+			      {id: 690, name: '11:30 giờ'},
+			      {id: 720, name: '12:00 giờ'},
+			      {id: 750, name: '12:30 giờ'},
+			      {id: 780, name: '13:00 giờ'},
+			      {id: 810, name: '13:30 giờ'},
+			      {id: 840, name: '14:00 giờ'},
+			      {id: 870, name: '14:30 giờ'},
+			      {id: 900, name: '15:00 giờ'},
+			      {id: 930, name: '15:30 giờ'},
+			      {id: 960, name: '16:00 giờ'},
+			      {id: 990, name: '16:30 giờ'},
+			      {id: 1020, name: '17:00 giờ'},
+			      {id: 1050, name: '17:30 giờ'},
+			      {id: 1080, name: '18:00 giờ'},
+			      {id: 1110, name: '18:30 giờ'},
+			      {id: 1140, name: '19:00 giờ'},
+			      {id: 1170, name: '19:30 giờ'},
+			      {id: 1200, name: '20:00 giờ'}
+			    ],
 	    };
 	}]);
 	module.controller('slickController',['$scope', function($scope){

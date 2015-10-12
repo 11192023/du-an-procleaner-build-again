@@ -83,54 +83,18 @@ html(lang='en')
                         input.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
                     .form-group
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giobd1")
+                        select#gbdnh.form-control.sb.fixWTime.selectpicker(ng-change='data.update()' ng-model="data.giobd1")
                           option(value='' disabled) Từ giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
                         input.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giokt1")
+                        select#gktnh.form-control.sb.fixWTime.selectpicker(ng-change='data.update()' ng-model="data.giokt1")
                           option(value='' disabled) Đến giờ
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
                         input.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
 
-                        input#addTimeTN.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='+')
                       input.form-control.sb.btn.btn-danger(id='submitnh1' type='submit', value='Tìm kiếm')
-                  li#kg2.visuallyhidden
-                    .form-group
-                      div#quan
-                        input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')
-                        input.form-control.sb.dpindex.fixWTimeNH.visuallyhidden(type='text', name='', placeholder='', readonly='readonly', autocomplete='off')
-                    .form-group
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giobd2")
-                          option(value='' disabled) Từ giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giobd2', value='{{data.giobd2}}')
-
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giokt2")
-                          option(value='' disabled) Đến giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giokt2', value='{{data.giokt2}}')
-
-                        input#removekg2.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger.visuallyhidden(id='submitnh2' type='submit', value='Tìm kiếm')
-                  li#kg3.visuallyhidden
-                    .form-group
-                      div#quan
-                        input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')
-                        input.form-control.sb.dpindex.fixWTimeNH.visuallyhidden(type='text', name='', placeholder='', readonly='readonly', autocomplete='off')
-                    .form-group
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giobd3")
-                          option(value='' disabled) Từ giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giobd3', value='{{data.giobd3}}')
-
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giokt3")
-                          option(value='' disabled) Đến giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giokt3', value='{{data.giokt3}}')
-                        
-                        input#removekg3.form-control.sb.fixWAdd.btn.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger.visuallyhidden(id='submitnh3' type='submit', value='Tìm kiếm')
+                  
             div#daihan.hide
               form#formDaiHan.form-inline.removedot(action='/search')
                 input.form-control.sb.typeahead(type='hidden', name='typesearch', value='dh')
@@ -153,44 +117,8 @@ html(lang='en')
                           option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
                         input.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
 
-                        input#addTimeDH.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='+')
                       input.form-control.sb.btn.btn-danger(id='submitdh1' type='submit', value='Tìm kiếm')
-                  li#kgdn2.visuallyhidden
-                    .form-group
-                      div#quan
-                        input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')
-                        input.form-control.sb.dpindex.fixWTimeNH.visuallyhidden(type='text', name='', placeholder='', readonly='readonly', autocomplete='off')
-                    .form-group
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giobd2")
-                          option(value='' disabled) Từ giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giobd2', value='{{data.giobd2}}')
-
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giokt2")
-                          option(value='' disabled) Đến giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giokt2', value='{{data.giokt2}}')
-
-                        input#removekgdn2.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger.visuallyhidden(id='submitdh2' type='submit', value='Tìm kiếm')
-                  li#kgdn3.visuallyhidden
-                    .form-group
-                      div#quan
-                        input.form-control.sb.visuallyhidden(type='text', name='', placeholder='', autocomplete='off')
-                        input.form-control.sb.dpindex.fixWTimeNH.visuallyhidden(type='text', name='', placeholder='', readonly='readonly', autocomplete='off')
-                    .form-group
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giobd3")
-                          option(value='' disabled) Từ giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giobd3', value='{{data.giobd3}}')
-
-                        select.form-control.sb.fixWTime.selectpicker(id="repeatSelect" ng-model="data.giokt3")
-                          option(value='' disabled) Đến giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input.form-control.sb.typeahead(type='hidden', name='giokt3', value='{{data.giokt3}}')
-
-                        input#removekgdn3.form-control.sb.btn.fixWAdd.btn-danger(type='button', value='-')
-                      input.form-control.sb.btn.btn-danger.visuallyhidden(id='submitdh3' type='submit', value='Tìm kiếm')
+                  
     section#about.bg-primary
       .container
         .row

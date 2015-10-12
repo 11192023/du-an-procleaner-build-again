@@ -6,13 +6,61 @@
 
 (function($) {
     $(document).ready(function(){
+        $('#formTheoNgay').submit(function(ev) {
+            ev.preventDefault(); // to stop the form from submitting
+            /* Validations go here */
+            var bd1 = Number($("input[name=giobd1]").val());
+            var kt1 = Number($("input[name=giokt1]").val());
+            var quan = $("input[name=quan]").val();
+            var ngay = $("input[name=ngay]").val();
+            var ngayarr = ngay.split('/');
+            var now = new Date();
+            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
+            //validate empty field
+            if(quan == ''){
+                alert('Xin chọn quận!!');
+                return;
+            }
+            if(ngay == ''){
+                alert('Xin chọn ngày!!');
+                return; 
+            }
+            if(bd1 == 0){
+                alert('Xin chọn giờ bắt đầu!!');
+                return;
+            }
+            if(kt1 == 0){
+                alert('Xin chọn giờ kết thúc!!');
+                return;
+            }
+            //end validate empty field
+
+            //validate date time
+            if(ngayarr[1] == now.getDate() 
+                && ngayarr[0] == now.getMonth()+1 
+                && ngayarr[2] == now.getFullYear()){
+                if(bd1 < sophutht) {
+                    alert('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + ':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).');
+                    return;
+                }
+                if(bd1+120 >= kt1 && bd1 != 0 && kt1 != 0) {
+                    alert('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.');
+                    return;
+                }
+            }
+            this.submit();
+        });
         $('.selectpicker').selectpicker({
               style: 'btn-info',
               size: 8
         });
+        var limitday = new Date();
+        limitday.setDate(limitday.getDate() + 30);
         $('.dpindex').datepicker({
             language: 'vi',
-            format: 'mm/dd/yyyy'
+            format: 'mm/dd/yyyy',
+            startDate: new Date(),
+            endDate: limitday
         });
         var quan = [
                 'Quận 1',
