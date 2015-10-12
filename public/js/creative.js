@@ -43,10 +43,10 @@
                     alert('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + ':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).');
                     return;
                 }
-                if(bd1+120 >= kt1 && bd1 != 0 && kt1 != 0) {
-                    alert('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.');
-                    return;
-                }
+            }
+            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
+                alert('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.');
+                return;
             }
             this.submit();
         });
