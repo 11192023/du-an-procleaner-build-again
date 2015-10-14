@@ -39,6 +39,12 @@
 		            console.log('Error: ' + data);
         	});
 	    }
+	    $scope.tinh_tuoi_ngv = function(ngaysinhstr){
+	    	var ngaysinh = new Date(Date.parse(ngaysinhstr));
+	    	var ageDifMs = Date.now() - ngaysinh.getTime();
+			var ageDate = new Date(ageDifMs);
+			return Math.abs(ageDate.getUTCFullYear() - 1970);
+	    }
 	    $scope.ngvs = $scope.getData($location.search().ngay,
 	    							 $location.search().giobd1,
 	    							 $location.search().giokt1);
