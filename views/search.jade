@@ -10,17 +10,17 @@ block search
             h4.i.fa.fa-calendar.padright.xanhnhat 
             | Ngày
             div
-              input#ngay.marleft.form-control.timewidth.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
+              input#ngay.marleft.form-control.timewidth.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngay' ng-change='filter_ngaygio()')
           div.form-inline.xanhnhat
             h4.i.fa.fa-clock-o.padright.xanhnhat 
             | Giờ
           .form-inline
             .form-group
-              select.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions")
+              select.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions" ng-change='filter_ngaygio()')
                 option(value='' disabled) Từ giờ
               input#gbdnh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-              select.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions")
+              select.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions" ng-change='filter_ngaygio()')
                 option(value='' disabled) Đến giờ
               input#gktnh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
           // số năm kinh nghiệm ---------------------------------------------------

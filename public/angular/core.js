@@ -12,29 +12,41 @@
 	});
 	module.controller('timeController', function($scope, $http, $log, $location){
 		$scope.loading = true;
-		var q_ngv_trunglich = '?ngaylam=' + $location.search().ngay +
-				'&giobatdau__lte=' + $location.search().giokt1 +
-				'&gioketthuc__gte=' + $location.search().giobd1;
-		$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich)
-	        .success(function(data) {
-	        	var x = '';
-	            for(i=0; i<data.length; i++){
-	            	x += '?cmnd__nin=' + data[i].nguoigiupviec;
-	            	if(i != data.length-1) x += ',';
-	            }
-	            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x)
-			        .success(function(data) {
-			        	$scope.loading=false;
-			            $scope.ngvs = data;
-			        })
-			        .error(function(data) {
-			            console.log('Error: ' + data);
-	    			});
-	        })
-	        .error(function(data) {
-	            console.log('Error: ' + data);
-        });
+		$scope.ngvs = null;
+		$scope.getData = function(ngay, giobd, giokt){
+			var q_ngv_trunglich = '?ngaylam=' + ngay +
+				'&giobatdau__lte=' + giokt +
+				'&gioketthuc__gte=' + giobd;
+			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
+		        .success(function(data) {
+		        	var x = '';
+		            for(i=0; i<data.length; i++){
+		            	x += '?cmnd__nin=' + data[i].nguoigiupviec;
+		            	if(i != data.length-1) x += ',';
+		            }
+		            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x, { cache: false})
+				        .success(function(data) {
+				        	$scope.loading=false;
+				            $scope.ngvs = data;
+				            return data;
+				            console.log(data);
+				        })
+				        .error(function(data) {
+				            console.log('Error: ' + data);
+		    			});
+		        })
+		        .error(function(data) {
+		            console.log('Error: ' + data);
+        	});
+	    }
+	    $scope.ngvs = $scope.getData($location.search().ngay,
+	    							 $location.search().giobd1,
+	    							 $location.search().giokt1);
 	    $scope.kinhnghiems = [
+	    	{
+	    		ten: 'Tất cả',
+				id: 0
+	    	},
 			{
 				ten: 'Từ 1 năm trở lên',
 				id: 1
@@ -236,6 +248,31 @@
 	    		return true
 	    	else return false;
 	    }
+	    $scope.filter_ngaygio = function(){
+	    	var bd1 = Number($scope.data.giobd1);
+            var kt1 = Number($scope.data.giokt1);
+	    	var now = new Date();
+            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
+            var ngayarr = $scope.data.ngay.split('/');
+	    	if(ngayarr[1] == now.getDate() 
+                && ngayarr[0] == now.getMonth()+1 
+                && ngayarr[2] == now.getFullYear()){
+                if(bd1 < sophutht) {
+                    alert('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
+                    	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).');
+                    return;
+                }
+            }
+            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
+                alert('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.');
+                return;
+            }
+	    	$scope.loading = true;
+	    	$scope.ngvs = null;
+			$scope.ngvs = $scope.getData($scope.data.ngay, 
+										 $scope.data.giobd1,
+										 $scope.data.giokt1);
+	    }
 	    $scope.filtering = function(sotruongs, sonamkn, quan){
 	    	if($scope.filter_dichvu(sotruongs) && 
 	    	   $scope.filter_kinhnghiem(sonamkn) &&
@@ -246,6 +283,7 @@
         
 
 		$scope.data = {
+			ngay: $location.search().ngay,
 			sonamkn: 0,
 			quan: $location.search().quan,
 			dichvu: $location.search().dichvu,
