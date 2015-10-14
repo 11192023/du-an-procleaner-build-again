@@ -95,6 +95,9 @@ block search
                             h4.i.fa.fa-map-marker.padright.xanhnhat
                             | {{ngv.diachi.quan}}
                         div.form-group
+                          h4.i.fa.fa-tags.padright.xanhnhat
+                          | Sở trường
+                          br
                           input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
                       .rightfooter
                         a.btn.btn-danger.pull-right(ng-href='/ngv_chitiet/1' target="_self")
