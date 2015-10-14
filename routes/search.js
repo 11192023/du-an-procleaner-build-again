@@ -6,9 +6,11 @@ router.post('/', function(req, res, next) {
   if(typesearch == 'nh'){
     var quan = req.body.quan;
     var ngay = req.body.ngay;
+    var dichvu = req.body.dichvu;
     var giobd1 = req.body.giobd1;
     var giokt1 = req.body.giokt1;
     var q = '?type='+typesearch+'&quan=' + quan 
+      + '&dichvu=' + dichvu
       + '&ngay=' + ngay 
       + '&giobd1=' + giobd1 
       + '&giokt1=' + giokt1;
@@ -16,11 +18,13 @@ router.post('/', function(req, res, next) {
   }
   else if(typesearch == 'dh'){
     var quan = req.body.quan;
+    var dichvu = req.body.dichvu;
     var ngaybd = req.body.ngaybd;
     var ngaykt = req.body.ngaykt;
     var giobd1 = req.body.giobd1;
     var giokt1 = req.body.giokt1;
     var q = '?type='+typesearch+'&quan=' + quan 
+      + '&dichvu=' + dichvu +
       + '&ngaybd=' + ngaybd + '&ngaykt=' + ngaykt 
       + '&giobd1=' + giobd1 + '&giokt1=' + giokt1;
     res.redirect('/search' + q);
@@ -28,15 +32,7 @@ router.post('/', function(req, res, next) {
 });
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-	var thanhpho = req.query.thanhpho;
-	var ngay = req.query.ngay;
-	var tgbd = req.query.tgbd;
-	var tgkt = req.query.tgkt;
-  	res.render('search', { title: 'Express',
-  	  thanhpho : thanhpho,
-  	  ngay : ngay,
-  	  tgbd : tgbd,
-  	  tgkt : tgkt });
+  	res.render('search', { title: 'Express'});
 });
 
 module.exports = router;

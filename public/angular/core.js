@@ -10,31 +10,45 @@
         	enabled: true
         });
 	});
-	module.controller('searchController', function($scope, $http, $location){
-		$scope.go = function ( path ) {
-		  $location.path( path );
-		};
+	module.controller('timeController', function($scope, $http, $log, $location){
+		$scope.loading = true;
 		var q_ngv_trunglich = '?ngaylam=' + $location.search().ngay +
 				'&giobatdau__lte=' + $location.search().giokt1 +
 				'&gioketthuc__gte=' + $location.search().giobd1;
-		$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich)
-	        .success(function(data) {
-	        	var x = '?diachi.quan=' + $location.search().quan;
-	            for(i=0; i<data.length; i++){
-	            	x += '&cmnd__nin=' + data[i].nguoigiupviec;
-	            	if(i != data.length-1) x += ',';
-	            }
-	            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x)
-			        .success(function(data) {
-			            $scope.ngvs = data;
-			        })
-			        .error(function(data) {
-			            console.log('Error: ' + data);
-	    			});
-	        })
-	        .error(function(data) {
-	            console.log('Error: ' + data);
-        });
+		if($location.search().typesearch != null){
+			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich)
+		        .success(function(data) {
+		        	var x = '?diachi.quan=' + $location.search().quan;
+		            for(i=0; i<data.length; i++){
+		            	x += '&cmnd__nin=' + data[i].nguoigiupviec;
+		            	if(i != data.length-1) x += ',';
+		            }
+		            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x)
+				        .success(function(data) {
+				        	$scope.loading=false;
+				            $scope.ngvs = data;
+				        })
+				        .error(function(data) {
+				            console.log('Error: ' + data);
+		    			});
+		        })
+		        .error(function(data) {
+		            console.log('Error: ' + data);
+	        });
+		}
+		
+	    $scope.mang_tieuchi = $location.search().dichvu;
+	    $scope.filtering = function(sotruongs){
+	    	console.log($scope.mang_tieuchi);
+	    	for(i=0; i<sotruongs.length; i++){
+	    		var index = $scope.mang_tieuchi.indexOf(sotruongs[i]);
+				if (index !== -1) {
+				    return true;
+				}
+	    	}
+	    	console.log('false');
+	    	return false;
+	    }
         $scope.kinhnghiems = [
 			{
 				ten: '1 Năm',
@@ -51,6 +65,14 @@
 			{
 				ten: '4 Năm',
 				id: 4
+			},
+			{
+				ten: '5 Năm',
+				id: 5
+			},
+			{
+				ten: 'Trên 5 Năm',
+				id: 6
 			}
 		];
 		$scope.tieuchis = [
@@ -165,12 +187,21 @@
 				id: 5
 			}
 		];
-	});
-	module.controller('timeController', function($scope, $log, $location){
-		$scope.data = {
 
+		$scope.data = {
+			dichvu: $location.search().dichvu,
 		    giobd1: $location.search().giobd1,
 		    giokt1: $location.search().giokt1,
+		    danhsachdichvu: [
+		    	'Chăm sóc bé',
+                'Chăm sóc người già',
+                'Chăm sóc sản phụ',
+                'Nuôi bệnh',
+                'Dọn dẹp vệ sinh',
+                'Đưa đón bé đi học',
+                'Nấu ăn',
+                'Vệ sinh văn phòng'
+		    ],
 		    availableOptions: [
 			      {id: 360, name: '6:00 giờ'},
 			      {id: 390, name: '6:30 giờ'},

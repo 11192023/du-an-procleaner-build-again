@@ -11,6 +11,7 @@
             /* Validations go here */
             var bd1 = Number($("#gbdnh").val());
             var kt1 = Number($("#gktnh").val());
+            var dichvu = $("#dichvunh").val();
             var quan = $("#quannh").val();
             var ngay = $("input[name=ngay]").val();
             var ngayarr = ngay.split('/');
@@ -19,6 +20,10 @@
             //validate empty field
             if(quan == ''){
                 alert('Xin chọn quận!!');
+                return;
+            }
+            if(dichvu == ''){
+                alert('Xin chọn dịch vụ!!');
                 return;
             }
             if(ngay == ''){
@@ -56,6 +61,8 @@
             var bd1 = Number($("#gbddh").val());
             var kt1 = Number($("#gktdh").val());
             var quan = $("#quandh").val();
+            var dichvu = $("#dichvudh").val();
+            alert(dichvu);
             var ngaybd = $("input[name=ngaybd]").val();
             var ngaykt = $("input[name=ngaykt]").val();
             var ngaybdarr = ngaybd.split('/');
@@ -65,6 +72,10 @@
             //validate empty field
             if(quan == ''){
                 alert('Xin chọn quận!!');
+                return;
+            }
+            if(dichvu == ''){
+                alert('Xin chọn dịch vụ!!');
                 return;
             }
             if(ngaybd == ''){

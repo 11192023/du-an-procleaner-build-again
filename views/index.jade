@@ -81,7 +81,13 @@ html(lang='en')
                   li
                     .form-group
                       div#quan
-                        input#quannh.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận', autocomplete='off')
+                        input#quannh.fixwquan.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận', autocomplete='off')
+
+                        select.form-control.sb.fixwdichvu.selectpicker(ng-model="data.dichvu")
+                          option(value='' disabled) Chọn dịch vụ
+                          option(ng-repeat="dichvu in data.danhsachdichvu" value="{{dichvu}}"){{dichvu}}
+                        input#dichvunh.form-control.sb.typeahead(type='hidden', name='dichvu', value='{{data.dichvu}}')
+
                         input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
                     .form-group
                         select.form-control.sb.fixWTime.selectpicker(ng-model="data.giobd1")
@@ -103,7 +109,13 @@ html(lang='en')
                   li
                     .form-group
                       div#quan
-                        input#quandh.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận')
+                        input#quandh.fixwquan.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận')
+
+                        select.form-control.sb.fixwdichvu.selectpicker(ng-model="data.dichvu")
+                          option(value='' disabled) Chọn dịch vụ
+                          option(ng-repeat="dichvu in data.danhsachdichvu" value="{{dichvu}}"){{dichvu}}
+                        input#dichvudh.form-control.sb.typeahead(type='hidden', name='dichvu', value='{{data.dichvu}}')
+
                         input.form-control.sb.dpindex.fixWTime(type='text', name='ngaybd', placeholder='Từ ngày', readonly='readonly', autocomplete='off')
                         input.form-control.sb.dpindex.fixWTime(type='text', name='ngaykt', placeholder='Đến ngày', readonly='readonly', autocomplete='off')
 

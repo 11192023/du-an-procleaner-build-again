@@ -778,6 +778,12 @@ input[readonly] {
   cursor: pointer !important;
 }
 @media(min-width: 1024px){
+    .fixwquan{
+        width: 150px!important;
+    }
+    .fixwdichvu{
+        width: 180px!important;
+    }
     .fixWTime{
         width: 120px!important;
     }

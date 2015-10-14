@@ -3,10 +3,9 @@ extends layout
 block search
   base(href='/')
   .container.wrapper(ng-app='SearchModule')
-    .row.content
+    .row.content(ng-controller='timeController')
       .col-lg-3.content-left
         h4 Tìm kiếm
-        div
           div.form-inline
             div.form-group.padright
               span.glyphicon.glyphicon-calendar.xanhnhat(aria-hidden="true")
@@ -14,7 +13,6 @@ block search
               h4.xanhnhat Ngày
             div
               input#ngay.marleft.form-control.timewidth.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
-        div(ng-controller='timeController')
           div.form-inline
             div.form-group.padright
               span.glyphicon.glyphicon-time.xanhnhat(aria-hidden="true")
@@ -30,40 +28,36 @@ block search
                 select.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions")
                   option(value='' disabled) Đến giờ
                 input#gktnh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
-        div(ng-controller='searchController')
-          div
             div.form-inline
               div.form-group.padright
                 span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
               div.form-group
                 h4.xanhnhat Kinh Nghiệm
-            div
               div(ng-repeat='kn in kinhnghiems')
                 md-checkbox.md-primary.md-align-top-left(ng-model='kn.id')
                   | {{kn.ten}}
-          div
             div.form-inline
               div.form-group.padright
                 span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
               div.form-group
                 h4.xanhnhat Dịch vụ
-            div
-              div(ng-repeat='tieuchi in tieuchis')
-                md-checkbox.md-primary.md-align-top-left(ng-model='tieuchi.id')
-                  | {{tieuchi.ten}}
-          div
+              md-radio-group(ng-model='mang_tieuchi')
+                div(ng-repeat='tieuchi in tieuchis')
+                  md-radio-button(value='{{tieuchi.ten}}')
+                    {{tieuchi.ten}}
             div.form-inline
               div.form-group.padright
                 span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
               div.form-group
                 h4.xanhnhat Quận
-              md-radio-group(ng-model="data.group1")
+              md-radio-group
                 div(ng-repeat='quan in quans')
                   md-radio-button(value='{{quan.ten}}')
                     {{quan.ten}}
-      .col-lg-9.content-right(ng-controller='searchController')
-        h4 Recommended
-        div(ng-repeat='ngv in ngvs')
+      .col-lg-9.content-right
+        h4 Danh sách người giúp việc
+        div.loading(ng-show='loading')
+        div(ng-repeat='ngv in ngvs' ng-show='filtering(ngv.sotruong)')
           .row.selected-classifieds
             .col-md-3
               a(href='#')
@@ -75,5 +69,5 @@ block search
               a.btn.btn-danger.pull-right(ng-href='/ngv_chitiet/1' target="_self")
                 | View Project 
                 span.glyphicon.glyphicon-chevron-right
-          hr
+            hr
     // /Content

@@ -1,3 +1,7 @@
+.loading {
+  background: url(../img/preloader.gif) center no-repeat #fff;
+  height: 50px;
+}
 input[readonly] {
   cursor: pointer !important;
 }
