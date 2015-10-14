@@ -35,7 +35,7 @@ md-checkbox {
   width: 110px!important;
 }
 .marleft{
-  margin-left: 15px;
+  margin-left: 15px!important;
 }
 .no-js #loader { display: none;  }
 .js #loader { display: block; position: absolute; left: 100px; top: 0; }
@@ -63,13 +63,16 @@ a:hover {
 }
 
 .xanhdam {
-  color: #02571C;
+  color: #02571C!important;
 }
 .xanhnhat {
-  color: #8CC13D;
+  color: #8CC13D!important;
+}
+.xanhnhat h4{
+  color: #8CC13D!important;
 }
 .padright{
-  padding-right: 4px;
+  padding-right: 4px!important;
 }
 .tagmargin{
   margin-right: 4px;
