@@ -10,7 +10,7 @@
         	enabled: true
         });
 	});
-	module.controller('timeController', function($scope, $http, $log, $location){
+	module.controller('timeController', function($scope, $http, $log, $location, $mdDialog){
 		$scope.loading = true;
 		$scope.ngvs = null;
 		$scope.getData = function(ngay, giobd, giokt){
@@ -248,7 +248,7 @@
 	    		return true
 	    	else return false;
 	    }
-	    $scope.filter_ngaygio = function(){
+	    $scope.filter_ngaygio = function(ev){
 	    	var bd1 = Number($scope.data.giobd1);
             var kt1 = Number($scope.data.giokt1);
 	    	var now = new Date();
@@ -258,13 +258,29 @@
                 && ngayarr[0] == now.getMonth()+1 
                 && ngayarr[2] == now.getFullYear()){
                 if(bd1 < sophutht) {
-                    alert('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
-                    	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).');
+                	$mdDialog.show(
+				      $mdDialog.alert()
+				        .parent(angular.element(document.querySelector('body')))
+				        .clickOutsideToClose(true)
+				        .title('Thông báo')
+				        .content('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
+                    	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).')
+				        .ok('Đồng ý!')
+				        .targetEvent(ev)
+				    );
                     return;
                 }
             }
             if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
-                alert('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.');
+            	$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.')
+			        .ok('Đồng ý!')
+			        .targetEvent(ev)
+			    );
                 return;
             }
 	    	$scope.loading = true;

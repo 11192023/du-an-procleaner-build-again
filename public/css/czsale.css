@@ -1,3 +1,39 @@
+.removedot ul
+{
+    list-style-type: none;
+    padding-left: 0px!important;
+}
+.chutrang {
+    color: white!important;
+    opacity: 1!important;
+}
+.itembody{
+  padding-left: 17px;
+  padding-right: 20px;
+}
+.rightbody{
+  min-height: 180px;
+}
+.left{
+  float: left;
+}
+.right{
+  float: right;
+}
+.rating{
+  margin-top: 10px;
+  direction: ltr;
+  text-align: center;
+}
+.md-subheader {
+  font-size: 16px!important;
+}
+.center{
+  text-align: center!important;
+}
+hr{
+  border-top: 1px solid rgba(2,87,28,.2)!important; 
+}
 .loading {
   background: url(../img/preloader.gif) center no-repeat #fff;
   height: 50px;
@@ -26,7 +62,12 @@ select{
     border-radius: 0px;
 }
 md-checkbox {
-  margin: 15px!important;
+  margin: 5px!important;
+  margin-left: 25px!important;
+}
+md-radio-button{
+  margin-left: 25px!important;
+  margin-top: 3px!important;
 }
 .timewidth{
   width: 220px!important;
@@ -35,7 +76,7 @@ md-checkbox {
   width: 110px!important;
 }
 .marleft{
-  margin-left: 15px!important;
+  margin-left: 25px!important;
 }
 .no-js #loader { display: none;  }
 .js #loader { display: block; position: absolute; left: 100px; top: 0; }
