@@ -36,43 +36,41 @@
 		            console.log('Error: ' + data);
 	        });
 		}
-		
+		$scope.sonamekn = [];
 	    $scope.mang_tieuchi = $location.search().dichvu;
-	    $scope.filtering = function(sotruongs){
-	    	console.log($scope.mang_tieuchi);
+	    $scope.filtering = function(sotruongs, sonamkn){
 	    	for(i=0; i<sotruongs.length; i++){
 	    		var index = $scope.mang_tieuchi.indexOf(sotruongs[i]);
 				if (index !== -1) {
 				    return true;
 				}
 	    	}
-	    	console.log('false');
 	    	return false;
 	    }
         $scope.kinhnghiems = [
 			{
 				ten: '1 Năm',
-				id: 1
+				id: true
 			},
 			{
 				ten: '2 Năm',
-				id: 2
+				id: true
 			},
 			{
 				ten: '3 Năm',
-				id: 3
+				id: true
 			},
 			{
 				ten: '4 Năm',
-				id: 4
+				id: true
 			},
 			{
 				ten: '5 Năm',
-				id: 5
+				id: true
 			},
 			{
 				ten: 'Trên 5 Năm',
-				id: 6
+				id: true
 			}
 		];
 		$scope.tieuchis = [
@@ -189,9 +187,31 @@
 		];
 
 		$scope.data = {
+			quan: $location.search().quan,
 			dichvu: $location.search().dichvu,
 		    giobd1: $location.search().giobd1,
 		    giokt1: $location.search().giokt1,
+		    danhsachquan: [
+		    	'Quận 1',
+                'Quận 12',
+                'Quận Thủ đức',
+                'Quận 9',
+                'Quận Gò Vấp',
+                'Quận Bình Thạnh',
+                'Quận Tân Bình',
+                'Quận Tân Phú',
+                'Quận Phú Nhuận',
+                'Quận 2',
+                'Quận 3',
+                'Quận 10',
+                'Quận 11',
+                'Quận 4',
+                'Quận 5',
+                'Quận 6',
+                'Quận 8',
+                'Quận Bình Tân',
+                'Quận 7'
+		    ],
 		    danhsachdichvu: [
 		    	'Chăm sóc bé',
                 'Chăm sóc người già',

@@ -18,46 +18,48 @@ block search
               span.glyphicon.glyphicon-time.xanhnhat(aria-hidden="true")
             div.form-group
               h4.xanhnhat Khung giờ
-          div.col-md-12
-            .form-inline
-              .form-group
-                select.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions")
-                  option(value='' disabled) Từ giờ
-                input#gbdnh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
+          .form-inline
+            .form-group
+              select.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions")
+                option(value='' disabled) Từ giờ
+              input#gbdnh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-                select.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions")
-                  option(value='' disabled) Đến giờ
-                input#gktnh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
-            div.form-inline
-              div.form-group.padright
-                span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
-              div.form-group
-                h4.xanhnhat Kinh Nghiệm
-              div(ng-repeat='kn in kinhnghiems')
-                md-checkbox.md-primary.md-align-top-left(ng-model='kn.id')
-                  | {{kn.ten}}
-            div.form-inline
-              div.form-group.padright
-                span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
-              div.form-group
-                h4.xanhnhat Dịch vụ
-              md-radio-group(ng-model='mang_tieuchi')
-                div(ng-repeat='tieuchi in tieuchis')
-                  md-radio-button(value='{{tieuchi.ten}}')
-                    {{tieuchi.ten}}
-            div.form-inline
-              div.form-group.padright
-                span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
-              div.form-group
-                h4.xanhnhat Quận
-              md-radio-group
-                div(ng-repeat='quan in quans')
-                  md-radio-button(value='{{quan.ten}}')
-                    {{quan.ten}}
+              select.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions")
+                option(value='' disabled) Đến giờ
+              input#gktnh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
+          // số năm kinh nghiệm ---------------------------------------------------
+          div.form-inline
+            div.form-group.padright
+              span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
+            div.form-group
+              h4.xanhnhat Kinh Nghiệm
+            div(ng-repeat='kn in kinhnghiems')
+              md-checkbox.md-primary.md-align-top-left(ng-model='kn.id')
+                | {{kn.ten}} : {{kn.id}}
+          // dịch vụ ---------------------------------------------------
+          div.form-inline
+            div.form-group.padright
+              span.glyphicon.glyphicon-tags.xanhnhat(aria-hidden="true")
+            div.form-group
+              h4.xanhnhat Dịch vụ
+            md-radio-group(ng-model='mang_tieuchi')
+              div(ng-repeat='tieuchi in tieuchis')
+                md-radio-button(value='{{tieuchi.ten}}')
+                  {{tieuchi.ten}}
+          // Quận ---------------------------------------------------
+          div.form-inline
+            div.form-group.padright
+              span.glyphicon.glyphicon-map-marker.xanhnhat(aria-hidden="true")
+            div.form-group
+              h4.xanhnhat Quận
+            md-radio-group
+              div(ng-repeat='quan in quans')
+                md-radio-button(value='{{quan.ten}}')
+                  {{quan.ten}}
       .col-lg-9.content-right
         h4 Danh sách người giúp việc
         div.loading(ng-show='loading')
-        div(ng-repeat='ngv in ngvs' ng-show='filtering(ngv.sotruong)')
+        div(ng-repeat='ngv in ngvs' ng-show='filtering(ngv.sotruong, ngv.sonamkinhnghiem)')
           .row.selected-classifieds
             .col-md-3
               a(href='#')

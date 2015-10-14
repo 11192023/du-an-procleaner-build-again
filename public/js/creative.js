@@ -127,68 +127,6 @@
             startDate: new Date(),
             endDate: limitday
         });
-        var quan = [
-                'Quận 1',
-                'Quận 12',
-                'Quận Thủ đức',
-                'Quận 9',
-                'Quận Gò Vấp',
-                'Quận Bình Thạnh',
-                'Quận Tân Bình',
-                'Quận Tân Phú',
-                'Quận Phú Nhuận',
-                'Quận 2',
-                'Quận 3',
-                'Quận 10',
-                'Quận 11',
-                'Quận 4',
-                'Quận 5',
-                'Quận 6',
-                'Quận 8',
-                'Quận Bình Tân',
-                'Quận 7'
-            ];
-        var quans = new Bloodhound({
-          datumTokenizer: Bloodhound.tokenizers.whitespace,
-          queryTokenizer: Bloodhound.tokenizers.whitespace,
-          local: quan
-        });
-
-        function showall(q, sync) {
-          if (q === '') {
-            sync(quans.get('Quận 1',
-                'Quận 12',
-                'Quận Thủ đức',
-                'Quận 9',
-                'Quận Gò Vấp',
-                'Quận Bình Thạnh',
-                'Quận Tân Bình',
-                'Quận Tân Phú',
-                'Quận Phú Nhuận',
-                'Quận 2',
-                'Quận 3',
-                'Quận 10',
-                'Quận 11',
-                'Quận 4',
-                'Quận 5',
-                'Quận 6',
-                'Quận 8',
-                'Quận Bình Tân',
-                'Quận 7'));
-          }
-
-          else {
-            quans.search(q, sync);
-          }
-        }
-        $('#quan .typeahead').typeahead({
-            minLength: 0
-        },
-        {
-            name: 'quan',
-            limit: 9999,
-            source: showall
-        });
         $('#btntheongay').click(function(){
             $('#btntheongay').addClass('active');
             $('#theongay').removeClass('hide');

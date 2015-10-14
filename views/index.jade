@@ -80,8 +80,10 @@ html(lang='en')
                 ul#nhlist
                   li
                     .form-group
-                      div#quan
-                        input#quannh.fixwquan.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận', autocomplete='off')
+                        select.form-control.sb.fixwquan.selectpicker(ng-model="data.quan")
+                          option(value='' disabled) Chọn Quận
+                          option(ng-repeat="quan in data.danhsachquan" value="{{quan}}"){{quan}}
+                        input#quannh.form-control.sb.typeahead(type='hidden', name='quan', value='{{data.quan}}')
 
                         select.form-control.sb.fixwdichvu.selectpicker(ng-model="data.dichvu")
                           option(value='' disabled) Chọn dịch vụ
@@ -108,8 +110,10 @@ html(lang='en')
                 ul#dhlist
                   li
                     .form-group
-                      div#quan
-                        input#quandh.fixwquan.form-control.sb.typeahead(type='text', name='quan', placeholder='Chọn Quận')
+                        select.form-control.sb.fixwquan.selectpicker(ng-model="data.quan")
+                          option(value='' disabled) Chọn Quận
+                          option(ng-repeat="quan in data.danhsachquan" value="{{quan}}"){{quan}}
+                        input#quandh.form-control.sb.typeahead(type='hidden', name='quan', value='{{data.quan}}')
 
                         select.form-control.sb.fixwdichvu.selectpicker(ng-model="data.dichvu")
                           option(value='' disabled) Chọn dịch vụ
