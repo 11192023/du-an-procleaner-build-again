@@ -6,11 +6,9 @@ block chitiet
     .row.content(ng-controller='chitietController')
       div.loading(ng-show='loading')
       input#cmnd(type='hidden', name='', value=cmnd)
-      .col-lg-3.content-left
-        .row
-      .col-lg-9.content-right(ng-repeat='ngv in ngvs')
+      
+      .col-md-9.col-md-push-3.content-right(ng-repeat='ngv in ngvs')
         h4 Thông tin chi tiết
-        cmnd
         .row
           .col-md-4
             a(href='#')
@@ -92,4 +90,42 @@ block chitiet
                       div(ng-repeat='gksk in ngv.giaykhamsuckhoe')
                         img.center(src='{{"img/ngv/" + gksk}}', alt='')
         hr
+      .col-md-3.col-md-pull-9.content-left
+        h4 Nhân viên tương đồng
+        .row
+          .thumbnail.sm-img-left
+            a.center.portfolio-box(href='#')
+              img.img-responsive(src='img/ngv/111222333/avatar.jpg', alt='')
+            .caption.center
+              .row
+                .left.padleft
+                  h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                  | Nguyễn Minh Tuấn
+                .right.padrightngv
+              .row
+                .left.padleft
+                  h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                  | 2 năm kinh nghiệm
+              .row
+                .left.padleft
+                  h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                  | 40 tuổi
+        .row
+          .thumbnail.sm-img-left
+            a.center.portfolio-box(href='#')
+              img.img-responsive(src='img/ngv/111222333/avatar.jpg', alt='')
+            .caption.center
+              .row
+                .left.padleft
+                  h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                  | Nguyễn Minh Tuấn
+                .right.padrightngv
+              .row
+                .left.padleft
+                  h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                  | 2 năm kinh nghiệm
+              .row
+                .left.padleft
+                  h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                  | 40 tuổi
     // /Content
