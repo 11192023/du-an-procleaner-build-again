@@ -49,18 +49,7 @@ block chitiet
               h3.i.fa.fa-tags.padright.xanhnhat 
               | Sở trường
               div.form-group
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Coi trẻ')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Trông người già')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Nuôi bệnh')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Đưa đón bé đi học')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Nấu ăn')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Dọn vệ sinh')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Coi trẻ')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Trông người già')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Nuôi bệnh')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Đưa đón bé đi học')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Nấu ăn')
-                input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Dọn vệ sinh')
+                input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
             hr
 
             button.btn.btn-danger.pull-right(type='button')
