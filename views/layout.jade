@@ -48,26 +48,22 @@ html
     block chitiet
     block content
       
-  .footer
-    .well.well-sm
-      .pull-left
-        ul.nav.nav-pills
-          li
-            a(href='addClassified.html')
-              span.glyphicon.glyphicon-plus
-              |  Add classified
-      .pull-right
-        ul.nav.nav-pills
-          li
-            a(href='help.html') Help
-          li
-            a(href='contact.html') Contact
-          li
-            a(href='conditions.html') Rules & conditions
-      .clearfix  
-    .pull-right
-      p.text-muted
-        small Copyright © 2013-2014, SenseMedia.cz - All Rights Reserved.
+  section#footer
+    .container
+      .row
+        .left
+          .form-inline
+            h5.form-group.i.fa.fa-copyright.padright.chutrang 
+            h5.form-group.chutrang Copyright by ProCleaner
+        .right.pull-right
+          a.btn.btn-circle-sm.btn-default.marright(href='#')
+            i.fa.fa-facebook
+          a.btn.btn-circle-sm.btn-default.marright(href='#')
+            i.fa.fa-twitter
+          a.btn.btn-circle-sm.btn-default.marright(href='#')
+            i.fa.fa-google-plus
+          a.btn.btn-circle-sm.btn-default.marright(href='#')
+            i.fa.fa-linkedin
     // JS
     script(src='js/jquery-2.1.4.min.js')
     //preload

@@ -90,11 +90,8 @@ md-radio-button{
     background: url(../img/preloader.gif) center no-repeat #fff;
 }
 .logow{
-    width: 200px!important;
+    width: 150px!important;
  }
-body {
-  padding: 10px 20px 10px 20px;
-}
 a {
   color: #777777;
 }
@@ -446,11 +443,90 @@ a.list-subgroup-item:hover, a.list-subgroup-item.active, a.list-subgroup-item.ac
 }
 
 /* Footer */
-
-.footer {
-  margin: 20px 0 20px 0;
+.btn-default {
+    border-color: #fff;
+    color: #222;
+    background-color: #fff;
+    -webkit-transition: all .35s;
+    -moz-transition: all .35s;
+    transition: all .35s;
 }
 
-.footer .well {
-  margin: 0 0 5px 0;
+.btn-default:hover,
+.btn-default:focus,
+.btn-default.focus,
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+    border-color: #02571C;
+    color: #8CC13D;
+    background-color: #02571C;
+}
+
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+    background-image: none;
+}
+
+.btn-default.disabled,
+.btn-default[disabled],
+fieldset[disabled] .btn-default,
+.btn-default.disabled:hover,
+.btn-default[disabled]:hover,
+fieldset[disabled] .btn-default:hover,
+.btn-default.disabled:focus,
+.btn-default[disabled]:focus,
+fieldset[disabled] .btn-default:focus,
+.btn-default.disabled.focus,
+.btn-default[disabled].focus,
+fieldset[disabled] .btn-default.focus,
+.btn-default.disabled:active,
+.btn-default[disabled]:active,
+fieldset[disabled] .btn-default:active,
+.btn-default.disabled.active,
+.btn-default[disabled].active,
+fieldset[disabled] .btn-default.active {
+    border-color: #fff;
+    background-color: #fff;
+}
+
+.btn-default .badge {
+    color: #fff;
+    background-color: #02571C;
+}
+.marright{
+    margin-right: 10px;
+}
+#footer{
+    padding-bottom: 20px!important;
+    padding-top: 20px!important;
+    background-color: #02571C!important;
+}
+.btn-circle-sm {
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  padding: 2px 0;
+  font-size: 20px;
+  line-height: 1.65;
+  border-radius: 30px;
+}
+section {
+    margin-top: 30px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Open Sans',sans-serif;
+    color: #02571C;
+}
+.h5.whitecolor{
+    color: white;
+}
+.ltr{
+  direction: ltr;
 }
