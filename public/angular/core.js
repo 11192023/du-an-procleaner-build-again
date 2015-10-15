@@ -1,16 +1,18 @@
 (function(){
 	//search module
-	var module = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','slickCarousel']);
+	var module = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','slickCarousel','ngRoute']);
 
 	module.config(function($mdThemingProvider, $locationProvider){
 		$mdThemingProvider.theme('default')
 			.primaryPalette('green');
         //routing DOESN'T work without html5Mode
         $locationProvider.html5Mode({
-        	enabled: true
+        	enabled: true,
+        	reloadOnSearch: true
         });
 	});
 	module.controller('timeController', function($scope, $http, $log, $location, $mdDialog){
+		sessionStorage.setItem("Page2Visited", "True");
 		$scope.loading = true;
 		$scope.ngvs = null;
 		$scope.getData = function(ngay, giobd, giokt){
@@ -307,7 +309,9 @@
 	    		return true;
 	    	else return false;
 	    }
-        
+        $scope.chon_ngv = function(cmnd){
+
+        }
 
 		$scope.data = {
 			ngay: $location.search().ngay,
@@ -388,6 +392,7 @@
 	    }
 	});
 	module.controller('indexController', function($scope, $http, $log, $location){
+
 		$scope.data = {
 			quan: $location.search().quan,
 			dichvu: $location.search().dichvu,
@@ -504,5 +509,38 @@
         	]
 		}
 
+	}]);
+	module.controller('chitietController',['$scope', '$http', function($scope, $http){
+		$scope.cmnd = $('#cmnd').val();
+
+		$scope.tinh_tuoi_ngv = function(ngaysinhstr){
+	    	var ngaysinh = new Date(Date.parse(ngaysinhstr));
+	    	var ageDifMs = Date.now() - ngaysinh.getTime();
+			var ageDate = new Date(ageDifMs);
+			return Math.abs(ageDate.getUTCFullYear() - 1970);
+	    }
+		$scope.getData = function(){
+			var q = '?cmnd=' + $scope.cmnd;
+			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q, { cache: false})
+		        .success(function(data) {
+		            $scope.ngvs = data;
+		            console.log(data);
+		        })
+		        .error(function(data) {
+		            console.log('Error: ' + data);
+        		});
+	    }
+	    $scope.numberLoaded = true;
+	    $scope.slickconfig = {
+			lazyLoad: 'ondemand',
+			dots: false,
+	        infinite: true,
+	        speed: 300,
+	        slidesToShow: 1,
+	        slidesToScroll: 1,
+	        rows: 1,
+	        arrows: true
+		}
+	    $scope.getData();
 	}]);
 })();

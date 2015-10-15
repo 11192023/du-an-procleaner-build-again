@@ -5,7 +5,12 @@
  */
 
 (function($) {
+    if (sessionStorage.getItem("Page2Visited")) {
+          sessionStorage.removeItem("Page2Visited");
+          window.location.reload(true); // force refresh page1
+    }
     $(document).ready(function(){
+        
         $('#formTheoNgay').submit(function(ev) {
             ev.preventDefault(); // to stop the form from submitting
             /* Validations go here */

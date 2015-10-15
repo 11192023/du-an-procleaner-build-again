@@ -1,73 +1,53 @@
 extends layout
 block chitiet
-  .container.wrapper
-    .row.content
+
+  base(href='/')
+  .container.wrapper(ng-app='SearchModule')
+    .row.content(ng-controller='chitietController')
+      input#cmnd(type='hidden', name='', value=cmnd)
       .col-lg-3.content-left
         .row
-      .col-lg-9.content-right
+      .col-lg-9.content-right(ng-repeat='ngv in ngvs')
         h4 Thông tin chi tiết
+        cmnd
         .row
           .col-md-4
             a(href='#')
-              img.img-responsive(src='img/placeholder_user.png', alt='')
+              img.img-responsive(src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
+            .rating
+              i.fa.fa-2x.fa-star.xanhnhat
+              i.fa.fa-2x.fa-star.xanhnhat
+              i.fa.fa-2x.fa-star.xanhnhat
+              i.fa.fa-2x.fa-star-o.xanhnhat
+              i.fa.fa-2x.fa-star-o.xanhnhat
           .col-md-8
             table.table.table-condensed.table-hover
               thead
-                th(colspan='2') Thông tin:
-              tbody(style='font-size: 12px;')
+                th(colspan='1') Thông tin:
+              tbody(style='font-size: 15px;')
                 tr
-                  td(width="20%")
+                  td(width="50%")
                     div.form-inline
-                      div.form-group.padright
-                        i.fa.fa-2x.fa-user.xanhnhat
-                      div.form-group
-                        h5.xanhdam Họ tên
-                  td(width="25%")
+                      h3.i.fa.fa-user.padright.xanhnhat 
+                      | {{ngv.hoten}}
+                  td(width="50%")
                     div.form-inline
-                      div.form-group.padright
-                      div.form-group
-                        h5.xanhdam Mr. A
-                  td(width="25%")
-                    div.form-inline
-                      div.form-group.padright
-                        i.fa.fa-2x.fa-venus-mars.xanhnhat
-                      div.form-group
-                        h5.xanhdam Giới tính
-                  td(width="30%")
-                    div.form-inline
-                      div.form-group.padright
-                      div.form-group
-                        h5.xanhdam Nam
+                      h3.i.fa.fa-venus-mars.padright.xanhnhat 
+                      | Nam
                 tr
                   td 
                     div.form-inline
-                      div.form-group.padright
-                        i.fa.fa-2x.fa-clock-o.xanhnhat
-                      div.form-group
-                        h5.xanhdam Tuổi
+                      h3.i.fa.fa-birthday-cake.padright.xanhnhat 
+                      | {{tinh_tuoi_ngv(ngv.ngaysinh)}}
                   td 
                     div.form-inline
-                      div.form-group.padright
-                      div.form-group
-                        h5.xanhdam 30
-                  td 
-                    div.form-inline
-                      div.form-group.padright
-                        i.fa.fa-2x.fa-check-circle-o.xanhnhat
-                      div.form-group
-                        h5.xanhdam Kinh nghiệm
-                  td 
-                    div.form-inline
-                      div.form-group.padright
-                      div.form-group
-                        h5.xanhdam 5 năm
+                      h3.i.fa.fa-clock-o.padright.xanhnhat 
+                      | {{ngv.sonamkinhnghiem}} năm kinh nghiệm
                         
             hr
-            div.form-inline
-              div.form-group.padright
-                i.fa.fa-2x.fa-tags.xanhnhat
-              div.form-group.padright
-                h6.xanhdam Sở trường
+            div.form-inline(style='font-size: 15px;')
+              h3.i.fa.fa-tags.padright.xanhnhat 
+              | Sở trường
               div.form-group
                 input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Coi trẻ')
                 input.btn.btn-danger.btn-xs.tagmargin(type='button' value='Trông người già')
@@ -88,27 +68,38 @@ block chitiet
               |  Thuê người này
         .row
           .col-md-12
-            .card
-              ul.nav.nav-tabs(role='tablist')
-                li.active(role='presentation')
-                  a(href='#home', aria-controls='home', role='tab', data-toggle='tab') Home
-                li(role='presentation')
-                  a(href='#profile', aria-controls='profile', role='tab', data-toggle='tab') Profile
-                li(role='presentation')
-                  a(href='#messages', aria-controls='messages', role='tab', data-toggle='tab') Messages
-                li(role='presentation')
-                  a(href='#settings', aria-controls='settings', role='tab', data-toggle='tab') Settings
-              // Tab panes
-              .tab-content
-                #home.tab-pane.active(role='tabpanel')
-                  | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                #profile.tab-pane(role='tabpanel')
-                  | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-                #messages.tab-pane(role='tabpanel')
-                  | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                #settings.tab-pane(role='tabpanel')
-                  | Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passage..
-
-
+            md-tabs(md-dynamic-height='', md-border-bottom='')
+              md-tab(label='Mô tả kinh nghiệm')
+                md-content.md-padding
+                  h1.md-display-2.center Mô tả kinh nghiệm
+                  p
+                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.
+              md-tab(label='Thông tin chi tiết')
+                md-content.md-padding
+                  h1.md-display-2.center Thông tin chi tiết 
+                  p
+                    | - Cân nặng : xx kg.
+                  p
+                    | - Chiều cao : xx m.
+                  p
+                    | - Dân tộc : Kinh.
+                  p
+                    | - Trình độ học vấn : Đại học.
+                  p
+                    | - Tình trạng hôn nhân : Đã có gia đình.
+                  p
+                    | - Con cái : 3 người con.
+                  p.padleft
+                    | • 3 tuổi
+                  p.padleft
+                    | • 5 tuổi
+                  p.padleft
+                    | • 7 tuổi
+              md-tab(label='Giấy khám sức khỏe')
+                md-content.md-padding
+                  h1.md-display-2.center Giấy khám sức khỏe
+                    slick.slicktest(settings='slickconfig', ng-if='numberLoaded')
+                      div(ng-repeat='gksk in ngv.giaykhamsuckhoe')
+                        img.center(src='{{"img/ngv/" + gksk}}', alt='')
         hr
     // /Content

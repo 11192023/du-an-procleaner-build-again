@@ -3,7 +3,7 @@ extends layout
 block search
   base(href='/')
   .container.wrapper(ng-app='SearchModule')
-    .row.content.vdivide(ng-controller='timeController')
+    .row.content(ng-controller='timeController')
       .col-lg-3.content-left
         md-toolbar.md-whiteframe-2dp
           .md-toolbar-tools
@@ -70,7 +70,7 @@ block search
                       h3.ngv_name {{ngv.hoten}}
                   .row.selected-classifieds
                     .col-md-3
-                      a(href='#')
+                      a(href='#' ng-click='chon_ngv(ngv.cmnd)')
                         img.img-responsive(src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
                       .rating
                         i.fa.fa-2x.fa-star.xanhnhat
@@ -100,7 +100,7 @@ block search
                           br
                           input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
                       .rightfooter
-                        a.btn.btn-danger.pull-right(ng-href='/ngv_chitiet/1' target="_self")
+                        a.btn.btn-danger.pull-right(ng-href='{{"/ngv_chitiet/" + ngv.cmnd}}' target="_self")
                           | Thông tin chi tiết
                           span.glyphicon.glyphicon-chevron-right
     // /Content
