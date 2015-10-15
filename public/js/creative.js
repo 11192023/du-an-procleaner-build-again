@@ -123,7 +123,6 @@
         limitday.setDate(limitday.getDate() + 30);
         $('.dpindex').datepicker({
             language: 'vi',
-            format: 'mm/dd/yyyy',
             startDate: new Date(),
             endDate: limitday
         });

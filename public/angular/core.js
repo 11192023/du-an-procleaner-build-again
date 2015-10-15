@@ -45,7 +45,12 @@
 			var ageDate = new Date(ageDifMs);
 			return Math.abs(ageDate.getUTCFullYear() - 1970);
 	    }
-	    $scope.ngvs = $scope.getData($location.search().ngay,
+	    $scope.doi_ngaysearch = function(ngay){
+	    	var ngayarr = ngay.split('/');
+	    	var ngay_converted = ngayarr[1] + '/' + ngayarr[0] + '/' + ngayarr[2];
+	    	return ngay_converted;
+	    }
+	    $scope.ngvs = $scope.getData($scope.doi_ngaysearch($location.search().ngay),
 	    							 $location.search().giobd1,
 	    							 $location.search().giokt1);
 	    $scope.kinhnghiems = [
@@ -122,16 +127,56 @@
 				id: 1
 			},
 			{
-				ten: 'Quận 12',
+				ten: 'Quận 2',
+				id: 3
+			},
+			{
+				ten: 'Quận 3',
+				id: 4
+			},
+			{
+				ten: 'Quận 4',
+				id: 7
+			},
+			{
+				ten: 'Quận 5',
+				id: 1
+			},
+			{
+				ten: 'Quận 6',
 				id: 2
 			},
 			{
-				ten: 'Quận Thủ đức',
+				ten: 'Quận 7',
+				id: 5
+			},
+			{
+				ten: 'Quận 8',
 				id: 3
 			},
 			{
 				ten: 'Quận 9',
 				id: 4
+			},
+			{
+				ten: 'Quận 10',
+				id: 5
+			},
+			{
+				ten: 'Quận 11',
+				id: 6
+			},
+			{
+				ten: 'Quận 12',
+				id: 2
+			},
+			{
+				ten: 'Quận Bình Tân',
+				id: 4
+			},
+			{
+				ten: 'Quận Thủ đức',
+				id: 3
 			},
 			{
 				ten: 'Quận Gò Vấp',
@@ -152,46 +197,6 @@
 			{
 				ten: 'Quận Phú Nhuận',
 				id: 2
-			},
-			{
-				ten: 'Quận 2',
-				id: 3
-			},
-			{
-				ten: 'Quận 3',
-				id: 4
-			},
-			{
-				ten: 'Quận 10',
-				id: 5
-			},
-			{
-				ten: 'Quận 11',
-				id: 6
-			},
-			{
-				ten: 'Quận 4',
-				id: 7
-			},
-			{
-				ten: 'Quận 5',
-				id: 1
-			},
-			{
-				ten: 'Quận 6',
-				id: 2
-			},
-			{
-				ten: 'Quận 8',
-				id: 3
-			},
-			{
-				ten: 'Quận Bình Tân',
-				id: 4
-			},
-			{
-				ten: 'Quận 7',
-				id: 5
 			}
 		];
 		$scope.sonamekn = [];
@@ -291,7 +296,7 @@
             }
 	    	$scope.loading = true;
 	    	$scope.ngvs = null;
-			$scope.ngvs = $scope.getData($scope.data.ngay, 
+			$scope.ngvs = $scope.getData($scope.doi_ngaysearch($scope.data.ngay), 
 										 $scope.data.giobd1,
 										 $scope.data.giokt1);
 	    }
@@ -313,24 +318,24 @@
 		    giokt1: $location.search().giokt1,
 		    danhsachquan: [
 		    	'Quận 1',
+                'Quận 2',
+                'Quận 3',
+                'Quận 4',
+                'Quận 5',
+                'Quận 6',
+                'Quận 7',
+                'Quận 8',
+                'Quận 9',
+                'Quận 10',
+                'Quận 11',
                 'Quận 12',
                 'Quận Thủ đức',
-                'Quận 9',
                 'Quận Gò Vấp',
                 'Quận Bình Thạnh',
                 'Quận Tân Bình',
                 'Quận Tân Phú',
                 'Quận Phú Nhuận',
-                'Quận 2',
-                'Quận 3',
-                'Quận 10',
-                'Quận 11',
-                'Quận 4',
-                'Quận 5',
-                'Quận 6',
-                'Quận 8',
-                'Quận Bình Tân',
-                'Quận 7'
+                'Quận Bình Tân'
 		    ],
 		    danhsachdichvu: [
 		    	'Chọn tất cả',
