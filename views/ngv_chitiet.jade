@@ -4,6 +4,7 @@ block chitiet
   base(href='/')
   .container.wrapper(ng-app='SearchModule')
     .row.content(ng-controller='chitietController')
+      div.loading(ng-show='loading')
       input#cmnd(type='hidden', name='', value=cmnd)
       .col-lg-3.content-left
         .row

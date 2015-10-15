@@ -512,7 +512,7 @@
 	}]);
 	module.controller('chitietController',['$scope', '$http', function($scope, $http){
 		$scope.cmnd = $('#cmnd').val();
-
+		$scope.loading = true;
 		$scope.tinh_tuoi_ngv = function(ngaysinhstr){
 	    	var ngaysinh = new Date(Date.parse(ngaysinhstr));
 	    	var ageDifMs = Date.now() - ngaysinh.getTime();
@@ -524,7 +524,7 @@
 			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q, { cache: false})
 		        .success(function(data) {
 		            $scope.ngvs = data;
-		            console.log(data);
+		            $scope.loading = false;
 		        })
 		        .error(function(data) {
 		            console.log('Error: ' + data);
