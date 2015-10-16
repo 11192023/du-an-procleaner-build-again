@@ -57,8 +57,7 @@ hr{
   border-top: 1px solid rgba(2,87,28,.2)!important; 
 }
 .loading {
-  background: center no-repeat #fff;
-  height: 50px;
+  height: 600px;
 }
 input[readonly] {
   cursor: pointer !important;

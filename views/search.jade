@@ -109,9 +109,8 @@ block search
                           i.fa.fa-exclamation-circle
                           |  Thông tin chi tiết
     .row.content
-      div(layout="row" layout-align="center center" ng-show='loading')
+      div.loading(layout="row" layout-align="center center" ng-show='loading')
           i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
-      input#cmnd(type='hidden', name='', value=cmnd)
       div(ng-show='isDetail')
         .col-md-9.col-md-push-3.content-right(ng-repeat='ngv in ngvct')
           h4 Thông tin chi tiết
