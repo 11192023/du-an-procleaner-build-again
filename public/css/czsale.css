@@ -1,4 +1,6 @@
-
+.btnchitiet{
+  width: 150px;
+}
 .sm-img-left{
   max-width: 180px!important;
   margin-left: 20px;

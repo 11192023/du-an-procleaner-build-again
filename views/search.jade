@@ -100,9 +100,9 @@ block search
                           br
                           input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
                       .rightfooter
-                        btn.btn-danger.pull-right(ng-click='show_detail(ngv.cmnd)')
-                          | Thông tin chi tiết
-                          span.glyphicon.glyphicon-chevron-right
+                        button.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv.cmnd)')
+                          i.fa.fa-exclamation-circle
+                          |  Thông tin chi tiết
     .row.content(ng-show='isDetail')
       div.loading(ng-show='loading')
       input#cmnd(type='hidden', name='', value=cmnd)
@@ -146,7 +146,7 @@ block search
             hr
             div.form-inline(style='font-size: 15px;')
               h3.i.fa.fa-tags.padright.xanhnhat 
-              | Sở trường
+              | Sở trường  
               div.form-group
                 input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
             hr
@@ -157,38 +157,50 @@ block search
         .row
           .col-md-12
             md-tabs(md-dynamic-height='', md-border-bottom='')
-              md-tab(label='Mô tả kinh nghiệm')
-                md-content.md-padding
-                  h1.md-display-2.center Mô tả kinh nghiệm
-                  p
-                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.
-              md-tab(label='Thông tin chi tiết')
-                md-content.md-padding
-                  h1.md-display-2.center Thông tin chi tiết 
-                  p
-                    | - Cân nặng : xx kg.
-                  p
-                    | - Chiều cao : xx m.
-                  p
-                    | - Dân tộc : Kinh.
-                  p
-                    | - Trình độ học vấn : Đại học.
-                  p
-                    | - Tình trạng hôn nhân : Đã có gia đình.
-                  p
-                    | - Con cái : 3 người con.
-                  p.padleft
-                    | • 3 tuổi
-                  p.padleft
-                    | • 5 tuổi
-                  p.padleft
-                    | • 7 tuổi
-              md-tab(label='Giấy khám sức khỏe')
-                md-content.md-padding
-                  h1.md-display-2.center Giấy khám sức khỏe
-                    slick.slicktest(settings='slickconfig', ng-if='numberLoaded')
-                      div(ng-repeat='gksk in ngv.giaykhamsuckhoe')
-                        img.center(src='{{"img/ngv/" + gksk}}', alt='')
+              md-tab
+                md-tab-label
+                  i.fa.fa-history
+                  |    Mô tả kinh nghiệm
+                md-tab-body
+                  md-content.md-padding
+                    h1.md-display-2.center Mô tả kinh nghiệm
+                    p
+                      | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.
+              md-tab
+                md-tab-label
+                  i.fa.fa-exclamation-circle
+                  |    Thông tin chi tiết
+                md-tab-body
+                  md-content.md-padding
+                    h1.md-display-2.center Thông tin chi tiết 
+                    p
+                      | - Cân nặng : xx kg.
+                    p
+                      | - Chiều cao : xx m.
+                    p
+                      | - Dân tộc : Kinh.
+                    p
+                      | - Trình độ học vấn : Đại học.
+                    p
+                      | - Tình trạng hôn nhân : Đã có gia đình.
+                    p
+                      | - Con cái : 3 người con.
+                    p.padleft
+                      | • 3 tuổi
+                    p.padleft
+                      | • 5 tuổi
+                    p.padleft
+                      | • 7 tuổi
+              md-tab
+                md-tab-label
+                  i.fa.fa-stethoscope
+                  |    Giấy khám sức khỏe
+                md-tab-body
+                  md-content.md-padding
+                    h1.md-display-2.center Giấy khám sức khỏe
+                      slick.slicktest(settings='slickconfig', ng-if='numberLoaded')
+                        div(ng-repeat='gksk in ngv.giaykhamsuckhoe')
+                          img.center(src='{{"img/ngv/" + gksk}}', alt='')
         hr
       .col-md-3.col-md-pull-9.content-left
         h4 Nhân viên tương đồng
