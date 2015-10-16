@@ -59,7 +59,8 @@ block search
                   {{quan.ten}}
       .col-lg-9.content-right
         h3.md-headline Danh sách người giúp việc
-        div.loading(ng-show='loading')
+        div(layout="row" layout-align="center center" ng-show='loading')
+          i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
         div.removedot
           ul
             li(ng-repeat='ngv in ngvs' ng-show='filtering(ngv.sotruong, ngv.sonamkinhnghiem, ngv.diachi.quan)')
@@ -104,9 +105,9 @@ block search
                           i.fa.fa-exclamation-circle
                           |  Thông tin chi tiết
     .row.content(ng-show='isDetail')
-      div.loading(ng-show='loading')
+      div(layout="row" layout-align="center center" ng-show='loading')
+          i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
       input#cmnd(type='hidden', name='', value=cmnd)
-      
       .col-md-9.col-md-push-3.content-right(ng-repeat='ngv in ngvct')
         h4 Thông tin chi tiết
         .row
