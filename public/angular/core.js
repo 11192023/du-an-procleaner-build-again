@@ -12,6 +12,18 @@
         });
 	});
 	module.controller('timeController', function($scope, $http, $log, $location, $mdDialog){
+
+		//
+		$scope.isSearch = true;
+		$scope.isDetail = false;
+		//
+		//show chi tiet ngv
+		$scope.show_detail = function(cmnd){
+			$scope.isSearch = false;
+			$scope.isDetail = true;
+			$scope.getDetail(cmnd);
+		}
+		//
 		sessionStorage.setItem("Page2Visited", "True");
 		$scope.loading = true;
 		$scope.ngvs = null;
@@ -390,6 +402,29 @@
 	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id)
 	    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
 	    }
+		$scope.getDetail = function(cmnd){
+			var q = '?cmnd=' + cmnd;
+			$scope.loading = true;
+			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q, { cache: false})
+		        .success(function(data) {
+		            $scope.ngvct = data;
+		            $scope.loading = false;
+		        })
+		        .error(function(data) {
+		            console.log('Error: ' + data);
+        		});
+	    }
+	    $scope.numberLoaded = true;
+	    $scope.slickconfig = {
+			lazyLoad: 'ondemand',
+			dots: false,
+	        infinite: true,
+	        speed: 300,
+	        slidesToShow: 1,
+	        slidesToScroll: 1,
+	        rows: 1,
+	        arrows: true
+		}
 	});
 	module.controller('indexController', function($scope, $http, $log, $location){
 
@@ -509,38 +544,5 @@
         	]
 		}
 
-	}]);
-	module.controller('chitietController',['$scope', '$http', function($scope, $http){
-		$scope.cmnd = $('#cmnd').val();
-		$scope.loading = true;
-		$scope.tinh_tuoi_ngv = function(ngaysinhstr){
-	    	var ngaysinh = new Date(Date.parse(ngaysinhstr));
-	    	var ageDifMs = Date.now() - ngaysinh.getTime();
-			var ageDate = new Date(ageDifMs);
-			return Math.abs(ageDate.getUTCFullYear() - 1970);
-	    }
-		$scope.getData = function(){
-			var q = '?cmnd=' + $scope.cmnd;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q, { cache: false})
-		        .success(function(data) {
-		            $scope.ngvs = data;
-		            $scope.loading = false;
-		        })
-		        .error(function(data) {
-		            console.log('Error: ' + data);
-        		});
-	    }
-	    $scope.numberLoaded = true;
-	    $scope.slickconfig = {
-			lazyLoad: 'ondemand',
-			dots: false,
-	        infinite: true,
-	        speed: 300,
-	        slidesToShow: 1,
-	        slidesToScroll: 1,
-	        rows: 1,
-	        arrows: true
-		}
-	    $scope.getData();
 	}]);
 })();
