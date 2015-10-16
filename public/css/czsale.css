@@ -554,3 +554,9 @@ h6 {
 .ltr{
   direction: ltr;
 }
+.marbtm{
+  margin-bottom: 10px!important;
+}
+.bgcheckmark{
+  background-color: #8CC13D;
+}

@@ -47,7 +47,7 @@ block search
                 i.fa.fa-tags.padright.xanhnhat 
                 | Dịch vụ
             div(ng-repeat='tieuchi in tieuchis')
-              md-checkbox.md-primary.md-align-top-left(ng-model='tieuchi.data' ng-click='get_filter_dichvu(tieuchi.ten, tieuchi.data)')
+              md-checkbox.md-primary.md-align-top-left(ng-model='tieuchi.data' ng-click='them_filter_dichvu(tieuchi.ten, tieuchi.data)')
                 | {{tieuchi.ten}}
           // Quận ---------------------------------------------------
           div.form-inline
@@ -60,9 +60,21 @@ block search
                 md-radio-button(value='{{quan.ten}}')
                   {{quan.ten}}
       .col-lg-9.content-right
-        h3.md-headline 
-          i.fa.fa-list-alt.xanhnhat
-          |   Danh sách người giúp việc   
+        h3.md-headline
+          div(layout="row" layout-align="center center")
+            div(flex='50' layout="row" layout-align="start center")
+              i.fa.fa-list-alt.xanhdam
+                |   Danh sách người giúp việc   
+              md-button.md-fab.md-primary.chutrang(aria-label='Use Android')
+                md-tooltip
+                  | {{'Bạn đã chọn ' + ngv_selected_arr.length + ' nhân viên!' }}
+                i.fa.fa-user
+                |   {{ngv_selected_arr.length}}
+            div(flex='50' layout="row" layout-align="end center")
+              button.btn.btn-danger.pull-right(type='button')
+                i.fa.fa-shopping-cart
+                |  Yêu cầu giúp việc
+              
         div(layout="row" layout-align="center center" ng-show='loading')
           i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
         div.removedot
@@ -70,13 +82,15 @@ block search
             li(ng-repeat='ngv in ngvs' ng-show='filtering(ngv.sotruong, ngv.sonamkinhnghiem, ngv.diachi.quan)')
               md-card
                 md-card-content
-                  .row.selected-classifieds  
+                  .row.selected-classifieds.marbtm(id='{{ngv.cmnd}}')  
                     .col-md-12
                       h3.ngv_name {{ngv.hoten}}
                   .row.selected-classifieds
                     .col-md-3
                       a(href='#' ng-click='chon_ngv(ngv.cmnd)')
                         img.img-responsive(src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
+                        md-tooltip
+                          | Bấm vào hình để chọn người giúp việc.
                       .rating
                         i.fa.fa-2x.fa-star.xanhnhat
                         i.fa.fa-2x.fa-star.xanhnhat
@@ -156,7 +170,7 @@ block search
                   input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
               hr
 
-              button.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail()')
+              button.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)')
                 i.fa.fa-2x.fa-suitcase
                 |  Thuê người này
           .row
