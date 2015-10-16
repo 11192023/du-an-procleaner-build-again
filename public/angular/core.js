@@ -21,6 +21,18 @@
 		$scope.loading = true;
 		$scope.ngvs = null;
 
+		//-------------phân trang-----------------------------------
+		$scope.totalItems = 64;
+		$scope.currentPage = 4;
+
+		$scope.setPage = function (pageNo) {
+			$scope.currentPage = pageNo;
+		};
+
+		$scope.pageChanged = function() {
+			$log.log('Page changed to: ' + $scope.currentPage);
+		};
+		//-------------end phân trang-------------------------------
 		//-------------bgdu lieu search------------------------------
         $scope.kinhnghiems = [
 	    	{
@@ -343,7 +355,6 @@
 		};
 		$scope.isReverse = false;
 		$scope.showConfirmQuan = function(ev, newVal, oldVal) {
-		// Appending dialog to document.body to cover sidenav in docs app
 			var confirm = $mdDialog.confirm()
 		      .title('Quý khách có muốn xóa hết lượt chọn trước đó?')
 		      .content('Thay đổi quận sẽ xóa hết lượt chọn trước đó!!')
@@ -460,20 +471,25 @@
 	    }
 	    //------------end filter search---------------------------
 
-
-	    //-------------chon ngv-----------------------------------
+	    //-------------Xu ly detail ngv--------------------------------
 	    //mảng chọn ngv để yêu cầu
 	    $scope.ngv_selected_arr = [];
+	    $scope.detail_chon = true;
+	    $scope.detail_huy = false;
 	    //chon ngv ngoai trang search
         $scope.chon_ngv = function(cmnd){
     		var index = $scope.ngv_selected_arr.indexOf(cmnd);
 			if (index !== -1) {
 			    $scope.ngv_selected_arr.splice(index, 1);
 			    $('#'+cmnd).removeClass('bgcheckmark');
+			    $scope.detail_chon = true;
+	    		$scope.detail_huy = false;
 			}
 			else{
 				$scope.ngv_selected_arr.push(cmnd);
         		$('#'+cmnd).addClass('bgcheckmark');
+        		$scope.detail_chon = false;
+	    		$scope.detail_huy = true;
         	}
         }
         //chon ngv trong detail
@@ -484,24 +500,62 @@
 			if (index !== -1) {
 			    $scope.ngv_selected_arr.splice(index, 1);
 			    $('#'+cmnd).removeClass('bgcheckmark');
-			    alert($scope.ngv_selected_arr);
+			    $scope.detail_chon = true;
+	    		$scope.detail_huy = false;
 			}
 			else{
 				$scope.ngv_selected_arr.push(cmnd);
         		$('#'+cmnd).addClass('bgcheckmark');
-        		alert($scope.ngv_selected_arr);
+        		$scope.detail_chon = false;
+	    		$scope.detail_huy = true;
         	}
         }
-        //-------------end chon ngv-----------------------------------
-
-        
-
-	    //-------------Xu ly detail ngv--------------------------------
+	    $scope.getSubDetail = function(ngay, giobd, giokt, cmnd, quan, sotruongs, sonamkn){
+			var q_ngv_trunglich = '?ngaylam=' + ngay +
+				'&giobatdau__lte=' + giokt +
+				'&gioketthuc__gte=' + giobd;
+			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
+		        .success(function(data) {
+		        	var x = '?cmnd__nin=';
+		            for(i=0; i<data.length; i++){
+		            	x += data[i].nguoigiupviec;
+		            	if(i != data.length-1) x += ',';
+		            }
+		            x += ','+cmnd;
+		            x += '&diachi.quan=' + quan;
+		            for(i=0; i<data.length; i++){
+		            	x += '&sotruong__in=' + sotruongs[i];
+		            	if(i != data.length-1) x += ',';
+		            }
+		            x += '&sonamkinhnghiem__gte=' + sonamkn;
+		            x += '&limit=2';
+		            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x, { cache: false})
+				        .success(function(data) {
+				            $scope.ngv_sub = data;
+				            console.log(data);
+				            return data;
+				        })
+				        .error(function(data) {
+				            console.log('Error: ' + data);
+		    			});
+		        })
+		        .error(function(data) {
+		            console.log('Error: ' + data);
+        	});
+	    }
 	    //show chi tiet ngv
+	    $scope.ngv_show_detail = null;
 		$scope.show_detail = function(cmnd){
+			$scope.ngv_show_detail = cmnd;
 			$scope.isSearch = false;
 			$scope.isDetail = true;
 			$scope.getDetail(cmnd);
+			$scope.getSubDetail($scope.doi_ngaysearch($scope.data.ngay), 
+											 $scope.data.giobd1,
+											 $scope.data.giokt1, cmnd,
+											 $scope.data.quan,
+											 $scope.mang_tieuchi,
+											 $scope.data.sonamkn);
 		}
 		//
 		$scope.getDetail = function(cmnd){

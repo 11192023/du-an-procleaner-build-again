@@ -3,6 +3,7 @@ extends layout
 block search
   base(href='/')
   .container.wrapper(ng-app='SearchModule' ng-controller='timeController')
+    uib-pagination(total-items='totalItems', ng-model='currentPage')
     .row.content(ng-show='isSearch')
       .col-lg-3.content-left
         md-toolbar.md-whiteframe-2dp
@@ -170,9 +171,12 @@ block search
                   input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
               hr
 
-              button.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)')
-                i.fa.fa-2x.fa-suitcase
-                |  Thuê người này
+              button.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)' ng-show='detail_chon')
+                i.fa.fa-suitcase
+                |  Chọn nhân viên
+              button.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)' ng-show='detail_huy')
+                i.fa.fa-undo
+                |  Bỏ chọn
           .row
             .col-md-12
               md-tabs(md-dynamic-height='', md-border-bottom='')
@@ -223,39 +227,21 @@ block search
           hr
         .col-md-3.col-md-pull-9.content-left
           h4 Nhân viên tương đồng
-          .row
+          .row(ng-repeat='ngv in ngv_sub')
             .thumbnail.sm-img-left
-              a.center.portfolio-box(href='#')
-                img.img-responsive(src='img/ngv/111222333/avatar.jpg', alt='')
+              a.center.portfolio-box(href='#' ng-click='show_detail(ngv.cmnd)')
+                img.img-responsive(src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
               .caption.center
                 .row
                   .left.padleft
                     h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                    | Nguyễn Minh Tuấn
+                    | {{ngv.hoten}}
                   .right.padrightngv
                 .row
                   .left.padleft
                     h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                    | 2 năm kinh nghiệm
+                    | {{ngv.sonamkinhnghiem + 'năm kinh nghiệm'}}
                 .row
                   .left.padleft
                     h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                    | 40 tuổi
-          .row
-            .thumbnail.sm-img-left
-              a.center.portfolio-box(href='#')
-                img.img-responsive(src='img/ngv/111222333/avatar.jpg', alt='')
-              .caption.center
-                .row
-                  .left.padleft
-                    h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                    | Nguyễn Minh Tuấn
-                  .right.padrightngv
-                .row
-                  .left.padleft
-                    h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                    | 2 năm kinh nghiệm
-                .row
-                  .left.padleft
-                    h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                    | 40 tuổi
+                    | {{tinh_tuoi_ngv(ngv.ngaysinh)}}
