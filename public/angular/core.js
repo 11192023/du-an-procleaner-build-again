@@ -324,7 +324,10 @@
         $scope.chon_ngv = function(cmnd){
 
         }
-
+		$scope.chon_ngv_detail = function(cmnd){
+			$scope.isSearch = true;
+			$scope.isDetail = false;
+        }
 		$scope.data = {
 			ngay: $location.search().ngay,
 			sonamkn: 0,
@@ -405,10 +408,12 @@
 		$scope.getDetail = function(cmnd){
 			var q = '?cmnd=' + cmnd;
 			$scope.loading = true;
+			$scope.isDetail = false;
 			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q, { cache: false})
 		        .success(function(data) {
 		            $scope.ngvct = data;
 		            $scope.loading = false;
+		            $scope.isDetail = true;
 		        })
 		        .error(function(data) {
 		            console.log('Error: ' + data);
