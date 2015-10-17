@@ -7,6 +7,11 @@ html(lang='en')
     meta(name='description', content='')
     meta(name='author', content='')
     base(href='/')
+    script(type='text/javascript').
+      window.history.forward();
+      function noBack() {
+      window.history.forward();
+      }
     title ProCleaner
     // Bootstrap Core CSS
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', type='text/css')
@@ -30,7 +35,7 @@ html(lang='en')
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-  body#page-top(ng-app='SearchModule')
+  body#page-top(ng-app='SearchModule' onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="")
     .se-pre-con
       .sk-folding-cube
         .sk-cube1.sk-cube
@@ -46,7 +51,7 @@ html(lang='en')
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a(href='#')
+          a(href='/')
             img.logow(src='img/logo.png', alt='')
         // Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
