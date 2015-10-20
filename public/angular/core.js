@@ -13,7 +13,7 @@
 	});
 	module.controller('timeController', function($scope, $http, $log, $location, $mdDialog, $cookieStore){
 		
-		
+		$scope.Math = window.Math;
 		//biến ng-show detail và search
 		$scope.isSearch = true;
 		$scope.isDetail = false;
@@ -478,8 +478,11 @@
 			$scope.isDetail = false;
 	    }
 	    //chon ngv ngoai trang search
-	    $scope.ngv_isSelected = function(cmnd){
-	    	var index = $scope.ngv_selected_arr.indexOf(cmnd);
+	    $scope.ngv_isSelected = function(ngv){
+	    	var index = -1;
+	    	for(i=0; i<$scope.ngv_selected_arr.length; i++)
+	    		if(ngv.cmnd == $scope.ngv_selected_arr[i].cmnd)
+	    			index = i;
 			if (index !== -1) {
 			    return {bgcheckmark:true};
 			}
@@ -487,8 +490,11 @@
 				return;
         	}
 	    }
-	    $scope.isSelected = function(cmnd, btn){
-	    	var index = $scope.ngv_selected_arr.indexOf(cmnd);
+	    $scope.isSelected = function(ngv, btn){
+	    	var index = -1;
+	    	for(i=0; i<$scope.ngv_selected_arr.length; i++)
+	    		if(ngv.cmnd == $scope.ngv_selected_arr[i].cmnd)
+	    			index = i;
 			if (index !== -1) {
 				if(btn == 'chon')
 			    	return false;
@@ -502,42 +508,48 @@
 			    	return false;
         	}
 	    }
-        $scope.chon_ngv = function(cmnd){
-    		var index = $scope.ngv_selected_arr.indexOf(cmnd);
+        $scope.chon_ngv = function(ngv){
+    		var index = -1;
+	    	for(i=0; i<$scope.ngv_selected_arr.length; i++)
+	    		if(ngv.cmnd == $scope.ngv_selected_arr[i].cmnd)
+	    			index = i;
 			if (index !== -1) {
 			    $scope.ngv_selected_arr.splice(index, 1);
-			    $('#'+cmnd).removeClass('bgcheckmark');
+			    $('#'+ngv.cmnd).removeClass('bgcheckmark');
 			}
 			else{
-				$scope.ngv_selected_arr.push(cmnd);
-        		$('#'+cmnd).addClass('bgcheckmark');
+				$scope.ngv_selected_arr.push(ngv);
+        		$('#'+ngv.cmnd).addClass('bgcheckmark');
         	}
         }
         //chon ngv trong detail
-		$scope.chon_ngv_detail = function(cmnd){
+		$scope.chon_ngv_detail = function(ngv){
 			$scope.isSearch = true;
 			$scope.isDetail = false;
-			var index = $scope.ngv_selected_arr.indexOf(cmnd);
+			var index = -1;
+	    	for(i=0; i<$scope.ngv_selected_arr.length; i++)
+	    		if(ngv.cmnd == $scope.ngv_selected_arr[i].cmnd)
+	    			index = i;
 			if (index !== -1) {
 			    $scope.ngv_selected_arr.splice(index, 1);
-			    $('#'+cmnd).removeClass('bgcheckmark');
+			    $('#'+ngv.cmnd).removeClass('bgcheckmark');
 			}
 			else{
-				$scope.ngv_selected_arr.push(cmnd);
-        		$('#'+cmnd).addClass('bgcheckmark');
+				$scope.ngv_selected_arr.push(ngv);
+        		$('#'+ngv.cmnd).addClass('bgcheckmark');
         	}
         }
 	    //show chi tiet ngv
 	    $scope.ngv_show_detail = null;
 	    $scope.ngv_sub1 = null;
 		$scope.ngv_sub2 = null;
-		$scope.show_detail = function(cmnd){
-			$scope.ngv_show_detail = cmnd;
+		$scope.show_detail = function(ngv){
+			$scope.ngv_show_detail = ngv.cmnd;
 			$scope.isSearch = false;
 			$scope.isDetail = true;
 			var arr = $scope.ngv_arr_fit;
 			for(i=0; i<arr.length; i++){
-				if(arr[i].cmnd == cmnd)
+				if(arr[i].cmnd == ngv.cmnd)
 					arr.splice(i, 1);
 			}
 			//console.log(ngv_arr_fit);

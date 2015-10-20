@@ -85,7 +85,7 @@ block search
                 md-card-content
                   .row.selected-classifieds
                     .col-md-3
-                      a(href='#' ng-click='chon_ngv(ngv.cmnd)')
+                      a(href='#' ng-click='chon_ngv(ngv)')
                         img.img-responsive(src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
                         md-tooltip
                           | Bấm vào hình để chọn người giúp việc.
@@ -96,7 +96,7 @@ block search
                         i.fa.fa-2x.fa-star-o.xanhnhat
                         i.fa.fa-2x.fa-star-o.xanhnhat
                     .col-md-9
-                      .row.selected-classifieds.marbtm(id='{{ngv.cmnd}}', ng-class='ngv_isSelected(ngv.cmnd)')  
+                      .row.selected-classifieds.marbtm(id='{{ngv.cmnd}}', ng-class='ngv_isSelected(ngv)')  
                         .col-md-12
                           h2.headline.ngv_name {{ngv.hoten}}
                       hr.hrnomargin
@@ -128,8 +128,8 @@ block search
                             input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
                       hr.hrnomargin
                       .rightfooter
-                        button.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv.cmnd)')
-                          i.fa.fa-exclamation-circle
+                        button.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv)')
+                          i.fa.fa-arrow-right
                           |  Thông tin chi tiết
     .row.content
       div(ng-show='isDetail')
@@ -183,14 +183,14 @@ block search
               div(layout="row" layout-align="end start")
                 div
                   button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='return_search()')
-                    i.fa.fa-suitcase
+                    i.fa.fa-arrow-left
                     |  Quay lại
                 div
-                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)' ng-show='isSelected(ngv.cmnd, "chon")')
+                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv)' ng-show='isSelected(ngv, "chon")')
                     i.fa.fa-suitcase
                     |  Chọn nhân viên
                 div
-                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)' ng-show='isSelected(ngv.cmnd, "huy")')
+                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv)' ng-show='isSelected(ngv, "huy")')
                     i.fa.fa-undo
                     |  Bỏ chọn
           .row.tabmartop
@@ -254,7 +254,7 @@ block search
           h4 Nhân viên tương đồng
           .row
             .thumbnail.sm-img-left
-              a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub1.cmnd)')
+              a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub1)')
                 img.img-responsive(src='{{"img/ngv/" + ngv_sub1.hinhanh}}', alt='')
               .caption.center
                 .row
@@ -272,7 +272,7 @@ block search
                     | {{tinh_tuoi_ngv(ngv_sub1.ngaysinh)}}
           .row
             .thumbnail.sm-img-left
-              a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub2.cmnd)')
+              a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub2)')
                 img.img-responsive(src='{{"img/ngv/" + ngv_sub2.hinhanh}}', alt='')
               .caption.center
                 .row
@@ -298,16 +298,26 @@ block search
             md-content(layout-padding='')
               form(name='userForm')
                 div(layout='', layout-sm='column')
-                  md-input-container(style='width:70%')
+                  md-input-container(flex)
                     label 
                       i.fa.fa-user.xanhnhat.padright
                       | Họ tên
                     input()
-                  md-input-container
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:44%')
                     label 
-                      a.i.fa.fa-phone.xanhnhat.padright
+                      i.fa.fa-phone.xanhnhat.padright
                       | Số đtdđ
                     input()
+                  md-input-container(style='width:43%')
+                    label 
+                      a.i.fa.fa-shield.xanhnhat.padright
+                      | Mã xác nhận
+                    input()
+                  md-button.md-fab.md-mini.md-primary.chutrang
+                    md-tooltip
+                      | Lấy mã xác nhận
+                    i.fa.fa-shield
                 div(layout='', layout-sm='column')
                   md-input-container(style='width:87%')
                     label 
@@ -316,8 +326,19 @@ block search
                     input
                   md-button.md-fab.md-mini.md-primary.chutrang
                     md-tooltip
-                      | {{'Lấy địa chỉ hiện tại'}}
+                      | Lấy địa chỉ hiện tại
                     i.fa.fa-map
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:87%')
+                    label
+                      i.fa.fa-map-marker.xanhnhat.padright
+                      | Thành phố
+                    input(value='Tp.Hồ Chí Minh' disabled)
+                  md-input-container(style='width:87%')
+                    label 
+                      i.fa.fa-map-marker.xanhnhat.padright
+                      | Quận
+                    input(value='{{data.quan}}' disabled)
                 div(layout='', layout-sm='column')
                   md-input-container(style='width:50%')
                     label 
@@ -328,12 +349,12 @@ block search
                     label 
                       a.i.fa.fa-clock-o.xanhnhat.padright
                       | Giờ bắt đầu
-                    input(disabled, ng-model='data.giobd1')
+                    input(disabled, value='{{Math.floor(data.giobd1/60)+":"+data.giobd1%60}}')
                   md-input-container(style='width:25%')
                     label 
                       a.i.fa.fa-clock-o.xanhnhat.padright
                       | Giờ kết thúc
-                    input(disabled, ng-model='data.giokt1')
+                    input(disabled, value='{{Math.floor(data.giokt1/60)+":"+data.giokt1%60}}')
                 div(layout='', layout-sm='column')
                   md-input-container(style='width:50%')
                     label 
@@ -350,26 +371,16 @@ block search
                   md-list(ng-cloak, style='width:100%')
                     p Danh sách nhân viên đã chọn.
                     md-divider
-                    md-list-item
-                      img.md-avatar(alt='', ng-src='img/ngv/16457896/avatar.jpg')
-                      p Le van thang
-                      md-button.md-icon-button(aria-label='More')
-                        i.fa.fa-remove.xanhnhat
-                    md-list-item
-                      img.md-avatar(alt='', ng-src='img/ngv/16457896/avatar.jpg')
-                      p Le van thang
-                      md-button.md-icon-button(aria-label='More')
-                        i.fa.fa-remove.xanhnhat
-                    md-list-item
-                      img.md-avatar(alt='', ng-src='img/ngv/16457896/avatar.jpg')
-                      p Le van thang
+                    md-list-item(ng-repeat='ngv in ngv_selected_arr')
+                      img.md-avatar(alt='', ng-src='{{"img/ngv/" + ngv.hinhanh}}')
+                      p {{ngv.hoten}}
                       md-button.md-icon-button(aria-label='More')
                         i.fa.fa-remove.xanhnhat
                     md-divider
           div.modal-footer
-            button.marleft.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv.cmnd)')
+            button.marleft.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv)')
               i.fa.fa-check
               |  Đồng ý
-            button.marleft.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv.cmnd)')
+            button.marleft.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv)')
               i.fa.fa-remove
               |  Hủy
