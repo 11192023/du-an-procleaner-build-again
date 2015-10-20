@@ -80,7 +80,7 @@ block search
           i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
         div.removedot
           ul
-            li(ng-repeat='ngv in ngvs' ng-show='filtering(ngv.sotruong, ngv.sonamkinhnghiem, ngv.diachi.quan)')
+            li(ng-repeat='ngv in ngvs' ng-show='filtering(ngv.sotruong, ngv.sonamkinhnghiem, ngv.diachi.quan, ngv)')
               md-card
                 md-card-content
                   .row.selected-classifieds
@@ -132,10 +132,8 @@ block search
                           i.fa.fa-exclamation-circle
                           |  Thông tin chi tiết
     .row.content
-      div.loading(layout="row" layout-align="center center" ng-show='loading')
-          i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
       div(ng-show='isDetail')
-        .col-md-9.col-md-push-3.content-right(ng-repeat='ngv in ngvct')
+        .col-md-9.col-md-push-3.content-right(ng-repeat='ngv in ngvs', ng-show='checkcmnd(ngv.cmnd)')
           h4 Thông tin chi tiết
           .row
             .col-md-4
@@ -254,24 +252,42 @@ block search
           hr.hrmargin
         .col-md-3.col-md-pull-9.content-left
           h4 Nhân viên tương đồng
-          .row(ng-repeat='ngv in ngv_sub')
+          .row
             .thumbnail.sm-img-left
-              a.center.portfolio-box(href='#' ng-click='show_detail(ngv.cmnd)')
-                img.img-responsive(src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
+              a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub1.cmnd)')
+                img.img-responsive(src='{{"img/ngv/" + ngv_sub1.hinhanh}}', alt='')
               .caption.center
                 .row
                   .left.padleft
                     h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                    | {{ngv.hoten}}
+                    | {{ngv_sub1.hoten}}
                   .right.padrightngv
                 .row
                   .left.padleft
                     h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                    | {{ngv.sonamkinhnghiem + 'năm kinh nghiệm'}}
+                    | {{ngv_sub1.sonamkinhnghiem + 'năm kinh nghiệm'}}
                 .row
                   .left.padleft
                     h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                    | {{tinh_tuoi_ngv(ngv.ngaysinh)}}
+                    | {{tinh_tuoi_ngv(ngv_sub1.ngaysinh)}}
+          .row
+            .thumbnail.sm-img-left
+              a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub2.cmnd)')
+                img.img-responsive(src='{{"img/ngv/" + ngv_sub2.hinhanh}}', alt='')
+              .caption.center
+                .row
+                  .left.padleft
+                    h5.i.fa.fa-user.xanhnhat.marbtm.padright
+                    | {{ngv_sub2.hoten}}
+                  .right.padrightngv
+                .row
+                  .left.padleft
+                    h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
+                    | {{ngv_sub2.sonamkinhnghiem + 'năm kinh nghiệm'}}
+                .row
+                  .left.padleft
+                    h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
+                    | {{tinh_tuoi_ngv(ngv_sub2.ngaysinh)}}
     #thongtinkh.modal.fade(role='dialog')
       div.modal-dialog
         div.modal-content
@@ -307,17 +323,17 @@ block search
                     label 
                       i.fa.fa-calendar.xanhnhat.padright
                       | Ngày
-                    input(disabled)
+                    input(disabled, ng-model='data.ngay')
                   md-input-container(style='width:25%')
                     label 
                       a.i.fa.fa-clock-o.xanhnhat.padright
                       | Giờ bắt đầu
-                    input(disabled)
+                    input(disabled, ng-model='data.giobd1')
                   md-input-container(style='width:25%')
                     label 
                       a.i.fa.fa-clock-o.xanhnhat.padright
                       | Giờ kết thúc
-                    input(disabled)
+                    input(disabled, ng-model='data.giokt1')
                 div(layout='', layout-sm='column')
                   md-input-container(style='width:50%')
                     label 
@@ -351,3 +367,9 @@ block search
                         i.fa.fa-remove.xanhnhat
                     md-divider
           div.modal-footer
+            button.marleft.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv.cmnd)')
+              i.fa.fa-check
+              |  Đồng ý
+            button.marleft.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv.cmnd)')
+              i.fa.fa-remove
+              |  Hủy

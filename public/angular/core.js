@@ -267,7 +267,6 @@
 				        .success(function(data) {
 				        	$scope.loading=false;
 				            $scope.ngvs = data;
-				            return data;
 				        })
 				        .error(function(data) {
 				            console.log('Error: ' + data);
@@ -339,6 +338,7 @@
 				
 			}, function() {
 			  	$scope.ngv_selected_arr = [];
+			  	$scope.ngv_arr_fit = [];
 			  	$scope.filter_ngaygio();
 			});
 		};
@@ -358,6 +358,7 @@
 	    			$('#'+$scope.ngv_selected_arr[i]).removeClass('bgcheckmark');
 	    		}
 			  	$scope.ngv_selected_arr = [];
+			  	$scope.ngv_arr_fit = [];
 			  	$scope.data.quan = newVal;
 			});
 		};
@@ -406,7 +407,7 @@
 	    	else return false;
 	    }
 	    $scope.filter_ngaygio = function(ev){
-	    	if($scope.ngv_selected_arr.length > 0 && scope.settingCookies == false){
+	    	if($scope.ngv_selected_arr.length > 0){
 	    		$scope.showConfirmNgayGio(ev);
 	    	}
 	    	else{
@@ -452,11 +453,19 @@
 											 $scope.data.giokt1);
 			}
 	    }
-	    $scope.filtering = function(sotruongs, sonamkn, quan){
+	    $scope.ngv_arr_fit = [];
+	    $scope.filtering = function(sotruongs, sonamkn, quan, ngv){
 	    	if($scope.filter_dichvu(sotruongs) && 
 	    	   $scope.filter_kinhnghiem(sonamkn) &&
-	    	   $scope.filter_quan(quan))
+	    	   $scope.filter_quan(quan)){
+	    	   	var in_arr = false;
+    	   		for(i=0; i<$scope.ngv_arr_fit.length; i++){
+    	   			if(ngv.cmnd == $scope.ngv_arr_fit[i].cmnd)
+    	   				in_arr = true;
+    	   		}
+    	   		if(!in_arr) $scope.ngv_arr_fit.push(ngv);
 	    		return true;
+	    	}
 	    	else return false;
 	    }
 	    //------------end filter search---------------------------
@@ -518,68 +527,56 @@
         		$('#'+cmnd).addClass('bgcheckmark');
         	}
         }
-	    $scope.getSubDetail = function(ngay, giobd, giokt, cmnd, quan, sotruongs, sonamkn){
-			var q_ngv_trunglich = '?ngaylam=' + ngay +
-				'&giobatdau__lte=' + giokt +
-				'&gioketthuc__gte=' + giobd;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
-		        .success(function(data) {
-		        	var x = '?cmnd__nin=';
-		            for(i=0; i<data.length; i++){
-		            	x += data[i].nguoigiupviec + ',';
-		            }
-		            x += cmnd;
-		            x += '&diachi.quan=' + quan;
-		            for(i=0; i<data.length; i++){
-		            	x += '&sotruong__in=' + sotruongs[i];
-		            	if(i != data.length-1) x += ',';
-		            }
-		            x += '&sonamkinhnghiem__gte=' + sonamkn;
-		            x += '&limit=2';
-		            console.log(x);
-		            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x, { cache: false})
-				        .success(function(data) {
-				            $scope.ngv_sub = data;
-				            console.log(data);
-				            return data;
-				        })
-				        .error(function(data) {
-				            console.log('Error: ' + data);
-		    			});
-		        })
-		        .error(function(data) {
-		            console.log('Error: ' + data);
-        	});
-	    }
 	    //show chi tiet ngv
 	    $scope.ngv_show_detail = null;
+	    $scope.ngv_sub1 = null;
+		$scope.ngv_sub2 = null;
 		$scope.show_detail = function(cmnd){
 			$scope.ngv_show_detail = cmnd;
 			$scope.isSearch = false;
 			$scope.isDetail = true;
-			$scope.getDetail(cmnd);
-			$scope.getSubDetail($scope.doi_ngaysearch($scope.data.ngay), 
-											 $scope.data.giobd1,
-											 $scope.data.giokt1, cmnd,
-											 $scope.data.quan,
-											 $scope.mang_tieuchi,
-											 $scope.data.sonamkn);
+			var arr = $scope.ngv_arr_fit;
+			for(i=0; i<arr.length; i++){
+				if(arr[i].cmnd == cmnd)
+					arr.splice(i, 1);
+			}
+			//console.log(ngv_arr_fit);
+			if(arr.length == 1){
+				console.log('1');
+				$scope.ngv_sub1 = arr[0];
+				return;
+			}
+			if(arr.length == 2){
+				console.log('2');
+				$scope.ngv_sub1 = arr[0];
+				$scope.ngv_sub2 = arr[1];
+				return;
+			}
+			if(arr.length > 2){
+				var min = 0;
+				var max = arr.length-1;
+				var random = [];
+				// and the formula is:
+				var random1 = Math.floor(Math.random() * (max - min + 1)) + min;
+				var random2; 
+				while(true){
+					random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+					if(random2 != random1) break;
+				}
+				$scope.ngv_sub1 = arr[random1];
+				$scope.ngv_sub2 = arr[random2];
+				return;
+			}
 		}
-		//
-		$scope.getDetail = function(cmnd){
-			var q = '?cmnd=' + cmnd;
-			$scope.loading = true;
-			$scope.isDetail = false;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q, { cache: false})
-		        .success(function(data) {
-		            $scope.ngvct = data;
-		            $scope.loading = false;
-		            $scope.isDetail = true;
-		        })
-		        .error(function(data) {
-		            console.log('Error: ' + data);
-        		});
-	    }
+		$scope.checkcmnd = function(cmnd){
+			if(cmnd == $scope.ngv_show_detail)
+				return true;
+			return false;
+		}
+		
+		$scope.check_subngv = function(){
+			return true;
+		}
 	    $scope.numberLoaded = true;
 	    $scope.slickconfig = {
 			lazyLoad: 'ondemand',
@@ -627,11 +624,11 @@
 			$scope.data.giobd1 = $cookieStore.get('giobd1');
 			$scope.data.giokt1 = $cookieStore.get('giokt1');
 			$scope.ngv_selected_arr = $cookieStore.get('ngv_arr');
-
-			for(i=0; i<$scope.mang_tieuchi.length; i++){
-				for(j=0; j<$scope.tieuchis.length; j++){
-					if($scope.tieuchis[j].ten == $scope.mang_tieuchi[i]){
-						$scope.tieuchis[j].data = true;	
+			for(i=0; i<$scope.tieuchis.length; i++){
+				$scope.tieuchis[i].data = false;	
+				for(j=0; j<$scope.mang_tieuchi.length; j++){
+					if($scope.tieuchis[i].ten == $scope.mang_tieuchi[j]){
+						$scope.tieuchis[i].data = true;	
 					}
 				}
 			}

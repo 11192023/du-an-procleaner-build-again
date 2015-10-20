@@ -1,6 +1,18 @@
 md-backdrop.md-select-backdrop {
     z-index:103!important;
 }
+body.modal-open {
+    overflow: auto;
+}
+body.modal-open[style] {
+    padding-right: 0px !important;
+}
+md-input-container.md-default-theme .md-input[disabled],
+ md-input-container .md-input[disabled],
+  md-input-container.md-default-theme .md-input [disabled],
+   md-input-container .md-input [disabled] {
+    color: rgba(0,0,0,0.7)!important;
+}
 .md-select-menu-container {
         z-index: 9999!important;
 }
