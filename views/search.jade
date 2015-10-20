@@ -72,7 +72,7 @@ block search
                 i.fa.fa-user
                 |   {{ngv_selected_arr.length}}
             div(flex='50' layout="row" layout-align="end center")
-              button.btn.btn-danger.pull-right(type='button')
+              button.btn.btn-danger.pull-right(type='button' ng-click='show_yeucau()')
                 i.fa.fa-shopping-cart
                 |  Yêu cầu giúp việc
               
@@ -272,3 +272,82 @@ block search
                   .left.padleft
                     h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
                     | {{tinh_tuoi_ngv(ngv.ngaysinh)}}
+    #thongtinkh.modal.fade(role='dialog')
+      div.modal-dialog
+        div.modal-content
+          div.modal-header.bgxanhdam
+            button.xanhdam.close(type='button', data-dismiss='modal') ×
+            h4.biggerfont.modal-title.xanhdam Thông tin thanh toán
+          div#mypanel.modal-body
+            md-content(layout-padding='')
+              form(name='userForm')
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:70%')
+                    label 
+                      i.fa.fa-user.xanhnhat.padright
+                      | Họ tên
+                    input()
+                  md-input-container
+                    label 
+                      a.i.fa.fa-phone.xanhnhat.padright
+                      | Số đtdđ
+                    input()
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:87%')
+                    label 
+                      i.fa.fa-map-marker.xanhnhat.padright
+                      | Địa chỉ
+                    input
+                  md-button.md-fab.md-mini.md-primary.chutrang
+                    md-tooltip
+                      | {{'Lấy địa chỉ hiện tại'}}
+                    i.fa.fa-map
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:50%')
+                    label 
+                      i.fa.fa-calendar.xanhnhat.padright
+                      | Ngày
+                    input(disabled)
+                  md-input-container(style='width:25%')
+                    label 
+                      a.i.fa.fa-clock-o.xanhnhat.padright
+                      | Giờ bắt đầu
+                    input(disabled)
+                  md-input-container(style='width:25%')
+                    label 
+                      a.i.fa.fa-clock-o.xanhnhat.padright
+                      | Giờ kết thúc
+                    input(disabled)
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:50%')
+                    label 
+                      i.fa.fa-tag.xanhnhat.padright
+                      | Dịch vụ
+                    md-select(ng-model='data.dichvu')
+                      md-option(ng-repeat="dichvu in data.danhsachdichvu", value="{{dichvu}}") {{dichvu}}
+                  md-input-container(style='width:50%')
+                    label 
+                      a.i.fa.fa-money.xanhnhat.padright
+                      | Giá tiền
+                    input(disabled, value='4.000.000 vnd')
+                div(layout='row', layout-sm='column')
+                  md-list(ng-cloak, style='width:100%')
+                    p Danh sách nhân viên đã chọn.
+                    md-divider
+                    md-list-item
+                      img.md-avatar(alt='', ng-src='img/ngv/16457896/avatar.jpg')
+                      p Le van thang
+                      md-button.md-icon-button(aria-label='More')
+                        i.fa.fa-remove.xanhnhat
+                    md-list-item
+                      img.md-avatar(alt='', ng-src='img/ngv/16457896/avatar.jpg')
+                      p Le van thang
+                      md-button.md-icon-button(aria-label='More')
+                        i.fa.fa-remove.xanhnhat
+                    md-list-item
+                      img.md-avatar(alt='', ng-src='img/ngv/16457896/avatar.jpg')
+                      p Le van thang
+                      md-button.md-icon-button(aria-label='More')
+                        i.fa.fa-remove.xanhnhat
+                    md-divider
+          div.modal-footer

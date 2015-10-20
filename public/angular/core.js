@@ -200,7 +200,6 @@
                 'Quận Bình Tân'
 		    ],
 		    danhsachdichvu: [
-		    	'Chọn tất cả',
 		    	'Chăm sóc bé',
                 'Chăm sóc người già',
                 'Chăm sóc sản phụ',
@@ -647,6 +646,11 @@
 			
 	  	}
 	    //end cookies
+	    //modal yeu cau
+	    $scope.show_yeucau = function(){
+	    	$('#thongtinkh').modal({backdrop: 'static', keyboard: false},'show'); 
+	    }
+	    //
 	});
 	module.controller('indexController', function($scope, $http, $log, $location, $mdDialog, $cookieStore){
 		if($cookieStore.get('quan') != null){

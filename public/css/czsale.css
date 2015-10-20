@@ -1,3 +1,9 @@
+md-backdrop.md-select-backdrop {
+    z-index:103!important;
+}
+.md-select-menu-container {
+        z-index: 9999!important;
+}
 .row.vdivide [class*='col-']:not(:last-child):after {
   background: #e0e0e0;
   width: 1px;
