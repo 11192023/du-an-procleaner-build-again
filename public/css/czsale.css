@@ -1,3 +1,43 @@
+.row.vdivide [class*='col-']:not(:last-child):after {
+  background: #e0e0e0;
+  width: 1px;
+  content: "";
+  display:block;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  right: 0;
+  min-height: 70px;
+}
+.paddingrow{
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.detailname{
+  font-size: 24px!important;
+}
+.marleftbtn{
+  margin-left: 10px;
+}
+.tabmartop{
+  margin-top: 25px;
+}
+.hrmargintop{
+  margin-top: 5px!important;
+  margin-bottom: 25px!important;
+}
+.hrmarginbtm{
+  margin-top: 45px!important;
+  margin-bottom: 10px!important;
+}
+.hrnomargin{
+  margin-bottom: 10px!important;
+  margin-top: 10px!important;
+}
+.headline{
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
 .btnchitiet{
   width: 150px;
 }
@@ -34,7 +74,7 @@
   padding-right: 20px;
 }
 .rightbody{
-  min-height: 180px;
+  min-height: 90px;
 }
 .left{
   float: left;

@@ -91,7 +91,6 @@ html(lang='en')
                         input#quannh.form-control.sb.typeahead(type='hidden', name='quan', value='{{data.quan}}')
 
                         select.form-control.sb.fixwdichvu.selectpicker(ng-model="data.dichvu")
-                          option(value='' disabled) Chọn dịch vụ
                           option(ng-repeat="dichvu in data.danhsachdichvu" value="{{dichvu}}"){{dichvu}}
                         input#dichvunh.form-control.sb.typeahead(type='hidden', name='dichvu', value='{{data.dichvu}}')
 
@@ -1030,6 +1029,7 @@ html(lang='en')
           {angular_touch: "//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-touch.min.js"},
           {angular_slider: "js/angular-slider.min.js"},
           {angular_route: "//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js"},
+          {angular_cookies: "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-cookies.js"},
           {angular_aria: "//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.min.js"},
           {angular_material: "//cdn.gitcdn.xyz/cdn/angular/bower-material/8a3c74f8b974b66a4975f551f2b2b815c0a2b40e/angular-material.js"},
           {ui_bootstrap: "//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"},

@@ -61,10 +61,10 @@ block search
                 md-radio-button(value='{{quan.ten}}')
                   {{quan.ten}}
       .col-lg-9.content-right
-        h3.md-headline
+        h3.md-headline.headline
           div(layout="row" layout-align="center center")
             div(flex='50' layout="row" layout-align="start center")
-              i.fa.fa-list-alt.xanhdam
+              i.fa.fa-list.xanhdam
                 |   Danh sách người giúp việc   
               md-button.md-fab.md-primary.chutrang(aria-label='Use Android')
                 md-tooltip
@@ -83,9 +83,6 @@ block search
             li(ng-repeat='ngv in ngvs' ng-show='filtering(ngv.sotruong, ngv.sonamkinhnghiem, ngv.diachi.quan)')
               md-card
                 md-card-content
-                  .row.selected-classifieds.marbtm(id='{{ngv.cmnd}}')  
-                    .col-md-12
-                      h3.ngv_name {{ngv.hoten}}
                   .row.selected-classifieds
                     .col-md-3
                       a(href='#' ng-click='chon_ngv(ngv.cmnd)')
@@ -99,26 +96,37 @@ block search
                         i.fa.fa-2x.fa-star-o.xanhnhat
                         i.fa.fa-2x.fa-star-o.xanhnhat
                     .col-md-9
+                      .row.selected-classifieds.marbtm(id='{{ngv.cmnd}}', ng-class='ngv_isSelected(ngv.cmnd)')  
+                        .col-md-12
+                          h2.headline.ngv_name {{ngv.hoten}}
+                      hr.hrnomargin
                       .rightbody
-                        .row
-                          .itembody.left
-                            h4.i.fa.fa-venus-mars.padright.xanhnhat 
-                            | Nam
-                          .itembody.right 
-                            h4.i.fa.fa-birthday-cake.padright.xanhnhat
-                            | {{tinh_tuoi_ngv(ngv.ngaysinh)}}
-                        .row
-                          .itembody.left 
-                            h4.i.fa.fa-clock-o.padright.xanhnhat
-                            | {{ngv.sonamkinhnghiem + ' năm kinh nghiệm'}}
-                          .itembody.right 
-                            h4.i.fa.fa-map-marker.padright.xanhnhat
-                            | {{ngv.diachi.quan}}
-                        div.form-group
-                          h4.i.fa.fa-tags.padright.xanhnhat
-                          | Sở trường
-                          br
-                          input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
+                        .row.vdivide.paddingrow
+                          .col-md-4
+                            .row
+                              h4.i.fa.fa-paperclip.padright.xanhnhat 
+                              | {{ngv.danhgia}}
+                          .col-md-8
+                            .row
+                              .itembody.left
+                                h4.i.fa.fa-venus-mars.padright.xanhnhat 
+                                | Nam
+                              .itembody.right 
+                                h4.i.fa.fa-birthday-cake.padright.xanhnhat
+                                | {{tinh_tuoi_ngv(ngv.ngaysinh) + ' tuổi'}}
+                            .row
+                              .itembody.left 
+                                h4.i.fa.fa-clock-o.padright.xanhnhat
+                                | {{ngv.sonamkinhnghiem + ' năm kinh nghiệm'}}
+                              .itembody.right 
+                                h4.i.fa.fa-map-marker.padright.xanhnhat
+                                | {{ngv.diachi.quan}}
+                      div.form-group
+                            h4.i.fa.fa-tags.padright.xanhnhat
+                            | Sở trường
+                            br
+                            input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
+                      hr.hrnomargin
                       .rightfooter
                         button.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv.cmnd)')
                           i.fa.fa-exclamation-circle
@@ -140,46 +148,65 @@ block search
                 i.fa.fa-2x.fa-star-o.xanhnhat
                 i.fa.fa-2x.fa-star-o.xanhnhat
             .col-md-8
-              table.table.table-condensed.table-hover
-                thead
-                  th(colspan='1') Thông tin:
-                tbody(style='font-size: 15px;')
-                  tr
-                    td(width="50%")
-                      div.form-inline
-                        h3.i.fa.fa-user.padright.xanhnhat 
-                        | {{ngv.hoten}}
-                    td(width="50%")
-                      div.form-inline
-                        h3.i.fa.fa-venus-mars.padright.xanhnhat 
-                        | Nam
-                  tr
-                    td 
-                      div.form-inline
-                        h3.i.fa.fa-birthday-cake.padright.xanhnhat 
-                        | {{tinh_tuoi_ngv(ngv.ngaysinh)}}
-                    td 
-                      div.form-inline
-                        h3.i.fa.fa-clock-o.padright.xanhnhat 
-                        | {{ngv.sonamkinhnghiem}} năm kinh nghiệm
-                          
-              hr
-              div.form-inline(style='font-size: 15px;')
-                h3.i.fa.fa-tags.padright.xanhnhat 
-                | Sở trường  
-                div.form-group
-                  input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
-              hr
+              .div(layout="row" layout-align="start start")
+                i.fa.fa-user.fa-2x.padright.xanhnhat
+                p.detailname {{' ' + ngv.hoten}}
+              hr.hrmargintop
+              .row
+                .col-md-12
+                  .div(layout="row")
+                    div(flex='30')
+                      h3.i.fa.fa-map-marker.padright.xanhnhat 
+                      | {{ngv.diachi.quan}}
+                    div(flex='50')
+                      h3.i.fa.fa-venus-mars.padright.xanhnhat 
+                      | Nam
+                    div(flex='20')
+                      h3.i.fa.fa-graduation-cap.padright.xanhnhat 
+                      | Đại học
+                  .div(layout="row")
+                    div(flex='30')
+                      h3.i.fa.fa-birthday-cake.padright.xanhnhat 
+                      | {{tinh_tuoi_ngv(ngv.ngaysinh)+' tuổi'}}
+                    div(flex='50')
+                      h3.i.fa.fa-clock-o.padright.xanhnhat 
+                      | {{ngv.sonamkinhnghiem}} năm kinh nghiệm
+                    div(flex='20')
+                      h3.i.fa.fa-heart.padright.xanhnhat 
+                      | Độc thân
+              .row.form-inline(style='font-size: 15px;')
+                .col-md-12
+                  h3.i.fa.fa-tags.padright.xanhnhat 
+                  | Sở trường  
+                  div.form-group
+                    input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in ngv.sotruong' type='button' value='{{st}}')
+              hr.hrmarginbtm
 
-              button.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)' ng-show='detail_chon')
-                i.fa.fa-suitcase
-                |  Chọn nhân viên
-              button.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)' ng-show='detail_huy')
-                i.fa.fa-undo
-                |  Bỏ chọn
-          .row
+              div(layout="row" layout-align="end start")
+                div
+                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='return_search()')
+                    i.fa.fa-suitcase
+                    |  Quay lại
+                div
+                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)' ng-show='isSelected(ngv.cmnd, "chon")')
+                    i.fa.fa-suitcase
+                    |  Chọn nhân viên
+                div
+                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv.cmnd)' ng-show='isSelected(ngv.cmnd, "huy")')
+                    i.fa.fa-undo
+                    |  Bỏ chọn
+          .row.tabmartop
             .col-md-12
               md-tabs(md-dynamic-height='', md-border-bottom='')
+                md-tab
+                  md-tab-label
+                    i.fa.fa-paperclip
+                    |    Đánh giá chung
+                  md-tab-body
+                    md-content.md-padding
+                      h1.md-display-2.center Đánh giá chung
+                      p
+                        | {{ngv.danhgia}}
                 md-tab
                   md-tab-label
                     i.fa.fa-history
@@ -224,7 +251,7 @@ block search
                         slick.slicktest(settings='slickconfig', ng-if='numberLoaded')
                           div(ng-repeat='gksk in ngv.giaykhamsuckhoe')
                             img.center(src='{{"img/ngv/" + gksk}}', alt='')
-          hr
+          hr.hrmargin
         .col-md-3.col-md-pull-9.content-left
           h4 Nhân viên tương đồng
           .row(ng-repeat='ngv in ngv_sub')
