@@ -355,14 +355,16 @@ block search
                       a.i.fa.fa-clock-o.xanhnhat.padright
                       | Giờ kết thúc
                     input(disabled, value='{{Math.floor(data.giokt1/60)+":"+data.giokt1%60}}')
+                div(layout='column', layout-sm='column')
+                  div(layout="row")
+                    i.fa.fa-tag.xanhnhat.padright
+                    | Dịch vụ
+                  div(layout="row", layout-wrap='', flex='')
+                    div(ng-repeat='tieuchi in tieuchis', flex='50')
+                      md-checkbox.md-primary(ng-model='tieuchi.data' ng-click='them_filter_dichvu(tieuchi.ten, tieuchi.data)')
+                        | {{tieuchi.ten}}
                 div(layout='', layout-sm='column')
-                  md-input-container(style='width:50%')
-                    label 
-                      i.fa.fa-tag.xanhnhat.padright
-                      | Dịch vụ
-                    md-select(ng-model='data.dichvu')
-                      md-option(ng-repeat="dichvu in data.danhsachdichvu", value="{{dichvu}}") {{dichvu}}
-                  md-input-container(style='width:50%')
+                  md-input-container(flex)
                     label 
                       a.i.fa.fa-money.xanhnhat.padright
                       | Giá tiền
