@@ -252,7 +252,7 @@ block search
           hr.hrmargin
         .col-md-3.col-md-pull-9.content-left
           h4 Nhân viên tương đồng
-          .row
+          .row(ng-if='ngv_sub1!=null')
             .thumbnail.sm-img-left
               a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub1)')
                 img.img-responsive(src='{{"img/ngv/" + ngv_sub1.hinhanh}}', alt='')
