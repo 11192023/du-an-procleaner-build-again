@@ -1,6 +1,6 @@
 (function(){
 	//search module
-	var module = angular.module('SearchModule', ['ngMaterial','ngMessages','ui.bootstrap','slickCarousel','ngRoute','ngCookies']);
+	var module = angular.module('SearchModule', ['ngMaterial','ui.bootstrap','slickCarousel','ngRoute','ngCookies']);
 
 	module.config(function($mdThemingProvider, $locationProvider){
 		$mdThemingProvider.theme('default')
@@ -11,82 +11,21 @@
         	reloadOnSearch: true
         });
 	});
-	module.factory('ngvFactory', function($http, $q){
-		var service = {};
-		service.layDanhSachNgv = function(ngay, giobd, giokt){
-			var deferred = $q.defer();
-			var q_ngv_trunglich = '?ngaylam=' + ngay +
-				'&giobatdau__lte=' + giokt +
-				'&gioketthuc__gte=' + giobd;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
-		        .success(function(data) {
-		        	var x = '?cmnd__nin=';
-		            for(i=0; i<data.length; i++){
-		            	x += data[i].nguoigiupviec;
-		            	if(i != data.length-1) x += ',';
-		            }
-		            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x, { cache: false})
-				        .success(function(data) {
-				        	deferred.resolve(data);
-				        })
-				        .error(function(data) {
-				            console.log('Error: ' + data);
-		    			});
-		        })
-		        .error(function(data) {
-		            console.log('Error: ' + data);
-        	});
-		    return deferred.promise;
-	    }
-	    service.ngv_isSelected = function(ngv, ngv_selected_arr){
-	    	var index = -1;
-	    	for(i=0; i<ngv_selected_arr.length; i++)
-	    		if(ngv.cmnd == ngv_selected_arr[i].cmnd)
-	    			index = i;
-			if (index !== -1) {
-			    return {bgcheckmark:true};
-			}
-			else{
-				return;
-        	}
-	    }
-	    service.isSelected = function(ngv, btn, ngv_selected_arr){
-	    	var index = -1;
-	    	for(i=0; i<ngv_selected_arr.length; i++)
-	    		if(ngv.cmnd == ngv_selected_arr[i].cmnd)
-	    			index = i;
-			if (index !== -1) {
-				if(btn == 'chon')
-			    	return false;
-			    else
-			    	return true;
-			}
-			else{
-				if(btn == 'chon')
-			    	return true;
-			    else
-			    	return false;
-        	}
-	    }
-	    service.chon_ngv = function(ngv, ngv_selected_arr){
-    		var index = -1;
-	    	for(i=0; i<ngv_selected_arr.length; i++)
-	    		if(ngv.cmnd == ngv_selected_arr[i].cmnd)
-	    			index = i;
-			if (index !== -1) {
-			    ngv_selected_arr.splice(index, 1);
-			    $('#'+ngv.cmnd).removeClass('bgcheckmark');
-			}
-			else{
-				ngv_selected_arr.push(ngv);
-        		$('#'+ngv.cmnd).addClass('bgcheckmark');
-        	}
-        }
-	    return service;
-	});
-	module.factory('filterFactory', function($location, $mdDialog){
-		var service = {};
-		var _kinhnghiems = [
+	module.controller('timeController', function($scope, $http, $log, $location, $mdDialog, $cookieStore){
+		
+		$scope.Math = window.Math;
+		//biến ng-show detail và search
+		$scope.isSearch = true;
+		$scope.isDetail = false;
+		//
+		$scope.loading = true;
+		$scope.ngvs = null;
+
+		//-------------phân trang-----------------------------------
+		
+		//-------------end phân trang-------------------------------
+		//-------------bgdu lieu search------------------------------
+        $scope.kinhnghiems = [
 	    	{
 	    		ten: 'Tất cả',
 				id: 0
@@ -112,7 +51,7 @@
 				id: 5
 			}
 		];
-		var _tieuchis = [
+		$scope.tieuchis = [
 			{
 				ten: 'Chăm sóc bé',
 				id: 1,
@@ -154,7 +93,7 @@
 				data: false
 			}
 		];
-		var _quans = [
+		$scope.quans = [
 			{
 				ten: 'Quận 1',
 				id: 1
@@ -232,9 +171,7 @@
 				id: 2
 			}
 		];
-		var _data = {
-			mang_tieuchi: [],
-			isReverse: false,
+		$scope.data = {
 			ngay: $location.search().ngay,
 			sonamkn: 0,
 			quan: $location.search().quan,
@@ -304,44 +241,75 @@
 			      {id: 1200, name: '20:00 giờ'}
 			    ],
 	    };
-	    service.getDSKinhNghiem = function(){
-	    	return _kinhnghiems;
+	    for(i=0; i<$scope.data.availableOptions.length; i++){
+	    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id)
+	    		$scope.data.giobd1 = $scope.data.availableOptions[i].id;
+	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id)
+	    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
 	    }
-	    service.getDSTieuChi = function(){
-	    	return _tieuchis;
+	    
+	    //-------------end du lieu search------------------------------
+		
+		//------------bg filter search---------------------------
+		//lay dữ liệu ngv phần search
+		$scope.getData = function(ngay, giobd, giokt){
+			var q_ngv_trunglich = '?ngaylam=' + ngay +
+				'&giobatdau__lte=' + giokt +
+				'&gioketthuc__gte=' + giobd;
+			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
+		        .success(function(data) {
+		        	var x = '?cmnd__nin=';
+		            for(i=0; i<data.length; i++){
+		            	x += data[i].nguoigiupviec;
+		            	if(i != data.length-1) x += ',';
+		            }
+		            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x, { cache: false})
+				        .success(function(data) {
+				        	$scope.loading=false;
+				            $scope.ngvs = data;
+				        })
+				        .error(function(data) {
+				            console.log('Error: ' + data);
+		    			});
+		        })
+		        .error(function(data) {
+		            console.log('Error: ' + data);
+        	});
 	    }
-	    service.getDSQuan = function(){
-	    	return _quans;
-	    }
-	    service.getDuLieuPage = function(){
-	    	return _data;
-	    }
-	    //-------đổi ngày sinh sang tuổi---------
-	    service.tinhTuoiNgv = function(ngaysinhstr){
+	    //
+	    //đổi ngày sinh sang tuổi
+	    $scope.tinh_tuoi_ngv = function(ngaysinhstr){
 	    	var ngaysinh = new Date(Date.parse(ngaysinhstr));
 	    	var ageDifMs = Date.now() - ngaysinh.getTime();
 			var ageDate = new Date(ageDifMs);
 			return Math.abs(ageDate.getUTCFullYear() - 1970);
 	    }
-	    //-------đổi dd/mm/yyyy sang mm/dd/yyyy-----------
-	    service.doiNgaySearch = function(ngay){
+	    //
+	    //đổi dd/mm/yyyy sang mm/dd/yyyy
+	    $scope.doi_ngaysearch = function(ngay){
 	    	var ngayarr = ngay.split('/');
 	    	var ngay_converted = ngayarr[1] + '/' + ngayarr[0] + '/' + ngayarr[2];
 	    	return ngay_converted;
 	    }
-	    //-------lấy dịch vụ từ index---------------------
-	    service.getDichVu = function(indexDV, tieuchis){
-			if(indexDV != 'Chọn dịch vụ'){
+	    //
+	    //khởi tạo dữ liệu từ index sang
+	    $scope.ngvs = $scope.getData($scope.doi_ngaysearch($location.search().ngay),
+	    							 $location.search().giobd1,
+	    							 $location.search().giokt1);
+	    //
+	    //xử lý dữ liệu dịch vụ từ index
+		$scope.getDichVu = function(){
+			if($location.search().dichvu != 'Chọn dịch vụ'){
 				var arr = [];
-				arr.push(indexDV);
-				for(i=0; i<tieuchis.length; i++){
-					if(tieuchis[i].ten == indexDV){
-						tieuchis[i].data = true;
+				arr.push($location.search().dichvu);
+				for(i=0; i<$scope.tieuchis.length; i++){
+					if($scope.tieuchis[i].ten == $location.search().dichvu){
+						$scope.tieuchis[i].data = true;
 					}
 				}
 				return arr;
 			}
-			else if(indexDV == 'Chọn dịch vụ'){
+			else if($location.search().dichvu == 'Chọn dịch vụ'){
 				var arr = [
 					'Chăm sóc bé',
 	                'Chăm sóc người già',
@@ -352,209 +320,144 @@
 	                'Nấu ăn',
 	                'Vệ sinh văn phòng'
 				];
-				for(i=0; i<tieuchis.length; i++){
-					tieuchis[i].data = true;
+				for(i=0; i<$scope.tieuchis.length; i++){
+					$scope.tieuchis[i].data = true;
 				}
 				return arr;
 			} 
 		}
-		
-		service.them_filter_dichvu = function(ten_dv, isSelect, data){
-	    	if(isSelect){
-	    		var index = data.mang_tieuchi.indexOf(ten_dv);
+		//
+		$scope.showConfirmNgayGio = function(ev) {
+			var confirm = $mdDialog.confirm()
+		      .title('Quý khách có muốn xóa hết lượt chọn trước đó?')
+		      .content('Thay đổi thời gian sẽ xóa hết lượt chọn trước đó!!')
+		      .targetEvent(ev)
+		      .ok('Hủy')
+		      .cancel('Đồng ý');
+			$mdDialog.show(confirm).then(function() {
+				
+			}, function() {
+			  	$scope.ngv_selected_arr = [];
+			  	$scope.ngv_arr_fit = [];
+			  	$scope.filter_ngaygio();
+			});
+		};
+		$scope.isReverse = false;
+		$scope.showConfirmQuan = function(ev, newVal, oldVal) {
+			var confirm = $mdDialog.confirm()
+		      .title('Quý khách có muốn xóa hết lượt chọn trước đó?')
+		      .content('Thay đổi quận sẽ xóa hết lượt chọn trước đó!!')
+		      .targetEvent(ev)
+		      .ok('Hủy')
+		      .cancel('Đồng ý');
+			$mdDialog.show(confirm).then(function() {
+				$scope.data.quan = oldVal;
+				$scope.isReverse = true;
+			}, function() {
+				for(i=0; i<$scope.ngv_selected_arr.length; i++){
+	    			$('#'+$scope.ngv_selected_arr[i]).removeClass('bgcheckmark');
+	    		}
+			  	$scope.ngv_selected_arr = [];
+			  	$scope.ngv_arr_fit = [];
+			  	$scope.data.quan = newVal;
+			});
+		};
+		$scope.$watch('data.quan', function(newVal, oldVal){
+			if(newVal == oldVal) return;
+			if($scope.ngv_selected_arr.length > 0 &&
+			   $scope.isReverse == false){
+	    		$scope.showConfirmQuan(null, newVal, oldVal);
+	    		return;
+	    	}
+	    	if($scope.isReverse == true)
+	    		$scope.isReverse = false;
+		});
+		//mảng chọn dịch vụ
+	    $scope.mang_tieuchi = $scope.getDichVu();
+	    //
+
+	    $scope.them_filter_dichvu = function(ten_dv, data){
+	    	if(data){
+	    		var index = $scope.mang_tieuchi.indexOf(ten_dv);
 				if (index !== -1) {
-				    data.mang_tieuchi.splice(index, 1);
+				    $scope.mang_tieuchi.splice(index, 1);
 				}
 	    	}
 	    	else{
-	    		data.mang_tieuchi.push(ten_dv);
+	    		$scope.mang_tieuchi.push(ten_dv);
 	    	}
 	    }
-	    service.filter_dichvu = function(sotruongs, data){
+	    $scope.filter_dichvu = function(sotruongs){
 	    	for(i=0; i<sotruongs.length; i++){
-	    		var index = data.mang_tieuchi.indexOf(sotruongs[i]);
+	    		var index = $scope.mang_tieuchi.indexOf(sotruongs[i]);
 				if (index !== -1) {
 				    return true;
 				}
 	    	}
 	    	return false;
 	    }
-	    service.filter_kinhnghiem = function(sonamkn, data){
-	    	if(sonamkn >= data.sonamkn)
+	    $scope.filter_kinhnghiem = function(sonamkn){
+	    	if(sonamkn >= $scope.data.sonamkn)
 	    		return true
 	    	else return false;
 	    }
-	    service.filter_quan = function(quan, data){
-	    	if(quan == data.quan)
+	    $scope.filter_quan = function(quan){
+	    	if(quan == $scope.data.quan)
 	    		return true
 	    	else return false;
 	    }
-	    return service;
-	});
-	module.factory('thanhtoanFactory', function(){
-	});
-	module.controller('timeController', function(filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog, $cookieStore){
-		//session ngăn ko cho quay lại trang chủ
-		sessionStorage.setItem("Page2Visited", "True");
-
-		$scope.Math = window.Math;
-		//biến ng-show detail và search
-		$scope.isSearch = true;
-		$scope.isDetail = false;
-		//
-		$scope.loading = true;
-		$scope.ngvs = null;
-
-		$scope.ngv_selected_arr = [];
-		$scope.ngv_arr_fit = [];
-
-		$scope.ngv_show_detail = null;
-	    $scope.ngv_sub1 = null;
-		$scope.ngv_sub2 = null;
-
-		$scope.khachhang = {
-			sdt: null,
-			hoten: '',
-			diachi: '',
-		};
-		//function
-		$scope.tinh_tuoi_ngv = filterFactory.tinhTuoiNgv;
-		$scope.doi_ngaysearch = filterFactory.doiNgaySearch;
-		$scope.them_filter_dichvu = filterFactory.them_filter_dichvu;
-		$scope.filter_dichvu = filterFactory.filter_dichvu;
-		$scope.filter_kinhnghiem = filterFactory.filter_kinhnghiem;
-		$scope.filter_quan = filterFactory.filter_quan;
-
-		$scope.ngv_isSelected = ngvFactory.ngv_isSelected;
-		$scope.isSelected = ngvFactory.isSelected;
-		$scope.chon_ngv = ngvFactory.chon_ngv;
-		//-------------Lấy dữ liệu-----------------------------------
-		$scope.kinhnghiems = filterFactory.getDSKinhNghiem();
-		$scope.tieuchis = filterFactory.getDSTieuChi();
-		$scope.quans = filterFactory.getDSQuan();
-		$scope.data = filterFactory.getDuLieuPage();
-		$scope.data.mang_tieuchi = filterFactory.getDichVu($location.search().dichvu,
-													  $scope.tieuchis);
-		
-        
-	    for(i=0; i<$scope.data.availableOptions.length; i++){
-	    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id)
-	    		$scope.data.giobd1 = $scope.data.availableOptions[i].id;
-	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id)
-	    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
-	    }
-	    
-	    //-------------end du lieu------------------------------------
-	    //--------------khởi tạo dữ liệu từ index------------------
-	    ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($location.search().ngay),
-	    							 $location.search().giobd1,
-	    							 $location.search().giokt1).then(function(data){
-	    							 	$scope.ngvs = data;
-	    							 	$scope.loading = false;
-	    							 });
-	    //
-		//--------------watch----------------------------
-		$scope.$watch('data.quan', function(newVal, oldVal){
-			if(newVal == oldVal) return;
-			if($scope.ngv_selected_arr.length > 0 &&
-			   $scope.data.isReverse == false){
-	    		var confirm = $mdDialog.confirm()
-			      .title('Quý khách có muốn xóa hết lượt chọn trước đó?')
-			      .parent(angular.element(document.querySelector('body')))
-			      .content('Thay đổi quận sẽ xóa hết lượt chọn trước đó!!')
-			      .targetEvent(null)
-			      .ok('Hủy')
-			      .cancel('Đồng ý');
-				$mdDialog.show(confirm).then(function() {
-					$scope.data.quan = oldVal;
-					$scope.data.isReverse = true;
-				}, function() {
-					for(i=0; i<$scope.ngv_selected_arr.length; i++){
-		    			$('#'+$scope.ngv_selected_arr[i].cmnd).removeClass('bgcheckmark');
-		    		}
-				  	$scope.ngv_selected_arr=[];
-				  	$scope.ngv_arr_fit=[];
-				});
-	    		return;
-	    	}
-	    	if($scope.data.isReverse == true)
-	    		$scope.data.isReverse = false;
-		});
-		//--------------end watch-----------------------
 	    $scope.filter_ngaygio = function(ev){
-	    	var bd1 = Number($scope.data.giobd1);
-            var kt1 = Number($scope.data.giokt1);
-	    	var now = new Date();
-            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
-            var ngayarr = $scope.data.ngay.split('/');
-	    	if(ngayarr[1] == now.getDate() 
-                && ngayarr[0] == now.getMonth()+1 
-                && ngayarr[2] == now.getFullYear()){
-                if(bd1 < sophutht) {
-                	$mdDialog.show(
+	    	if($scope.ngv_selected_arr.length > 0){
+	    		$scope.showConfirmNgayGio(ev);
+	    	}
+	    	else{
+		    	var bd1 = Number($scope.data.giobd1);
+	            var kt1 = Number($scope.data.giokt1);
+		    	var now = new Date();
+	            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
+	            var ngayarr = $scope.data.ngay.split('/');
+		    	if(ngayarr[1] == now.getDate() 
+	                && ngayarr[0] == now.getMonth()+1 
+	                && ngayarr[2] == now.getFullYear()){
+	                if(bd1 < sophutht) {
+	                	$mdDialog.show(
+					      $mdDialog.alert()
+					        .parent(angular.element(document.querySelector('body')))
+					        .clickOutsideToClose(true)
+					        .title('Thông báo')
+					        .content('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
+	                    	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).')
+					        .ok('Đồng ý!')
+					        .targetEvent(ev)
+					    );
+	                    return;
+	                }
+	            }
+	            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
+	            	$mdDialog.show(
 				      $mdDialog.alert()
 				        .parent(angular.element(document.querySelector('body')))
 				        .clickOutsideToClose(true)
 				        .title('Thông báo')
-				        .content('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
-                    	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).')
+				        .content('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.')
 				        .ok('Đồng ý!')
 				        .targetEvent(ev)
 				    );
-                    return;
-                }
-            }
-            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.')
-			        .ok('Đồng ý!')
-			        .targetEvent(ev)
-			    );
-                return;
-            }
-            if($scope.ngv_selected_arr.length > 0){
-    			var confirm = $mdDialog.confirm()
-			      .title('Quý khách có muốn xóa hết lượt chọn trước đó?')
-			      .content('Thay đổi thời gian sẽ xóa hết lượt chọn trước đó!!')
-			      .targetEvent(ev)
-			      .ok('Hủy')
-			      .cancel('Đồng ý');
-				$mdDialog.show(confirm).then(function() {
-					
-				}, function() {
-				  	$scope.ngv_arr_fit = [];
-				  	$scope.ngv_selected_arr = [];
-			    	$scope.loading = true;
-			    	$scope.ngvs = null;
-					ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($scope.data.ngay), 
-												 $scope.data.giobd1,
-												 $scope.data.giokt1).then(function(data){
-												 	$scope.ngvs = data;
-												 	$scope.loading = false;
-												 });
-				});
-				return;
-    		}
-    		$scope.ngv_arr_fit = [];
-		  	$scope.ngv_selected_arr = [];
-	    	$scope.loading = true;
-	    	$scope.ngvs = null;
-			ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($scope.data.ngay), 
-										 $scope.data.giobd1,
-										 $scope.data.giokt1).then(function(data){
-										 	$scope.ngvs = data;
-										 	$scope.loading = false;
-										 });
-            
+	                return;
+	            }
+	            $scope.ngv_selected_arr = [];
+		    	$scope.loading = true;
+		    	$scope.ngvs = null;
+				$scope.ngvs = $scope.getData($scope.doi_ngaysearch($scope.data.ngay), 
+											 $scope.data.giobd1,
+											 $scope.data.giokt1);
+			}
 	    }
-	    $scope.filtering = function(ngv){
-	    	if($scope.filter_dichvu(ngv.sotruong, $scope.data) && 
-	    	   $scope.filter_kinhnghiem(ngv.sonamkinhnghiem, $scope.data) &&
-	    	   $scope.filter_quan(ngv.diachi.quan, $scope.data)){
+	    $scope.ngv_arr_fit = [];
+	    $scope.filtering = function(sotruongs, sonamkn, quan, ngv){
+	    	if($scope.filter_dichvu(sotruongs) && 
+	    	   $scope.filter_kinhnghiem(sonamkn) &&
+	    	   $scope.filter_quan(quan)){
 	    	   	var in_arr = false;
     	   		for(i=0; i<$scope.ngv_arr_fit.length; i++){
     	   			if(ngv.cmnd == $scope.ngv_arr_fit[i].cmnd)
@@ -568,14 +471,57 @@
 	    //------------end filter search---------------------------
 	    
 	    //-------------Xu ly detail ngv--------------------------------
-	    
+	    //mảng chọn ngv để yêu cầu
+	    $scope.ngv_selected_arr = [];
 	    $scope.return_search = function(){
 	    	$scope.isSearch = true;
 			$scope.isDetail = false;
 	    }
-	    
-	    
-        
+	    //chon ngv ngoai trang search
+	    $scope.ngv_isSelected = function(ngv){
+	    	var index = -1;
+	    	for(i=0; i<$scope.ngv_selected_arr.length; i++)
+	    		if(ngv.cmnd == $scope.ngv_selected_arr[i].cmnd)
+	    			index = i;
+			if (index !== -1) {
+			    return {bgcheckmark:true};
+			}
+			else{
+				return;
+        	}
+	    }
+	    $scope.isSelected = function(ngv, btn){
+	    	var index = -1;
+	    	for(i=0; i<$scope.ngv_selected_arr.length; i++)
+	    		if(ngv.cmnd == $scope.ngv_selected_arr[i].cmnd)
+	    			index = i;
+			if (index !== -1) {
+				if(btn == 'chon')
+			    	return false;
+			    else
+			    	return true;
+			}
+			else{
+				if(btn == 'chon')
+			    	return true;
+			    else
+			    	return false;
+        	}
+	    }
+        $scope.chon_ngv = function(ngv){
+    		var index = -1;
+	    	for(i=0; i<$scope.ngv_selected_arr.length; i++)
+	    		if(ngv.cmnd == $scope.ngv_selected_arr[i].cmnd)
+	    			index = i;
+			if (index !== -1) {
+			    $scope.ngv_selected_arr.splice(index, 1);
+			    $('#'+ngv.cmnd).removeClass('bgcheckmark');
+			}
+			else{
+				$scope.ngv_selected_arr.push(ngv);
+        		$('#'+ngv.cmnd).addClass('bgcheckmark');
+        	}
+        }
         //chon ngv trong detail
 		$scope.chon_ngv_detail = function(ngv){
 			$scope.isSearch = true;
@@ -594,7 +540,9 @@
         	}
         }
 	    //show chi tiet ngv
-	    
+	    $scope.ngv_show_detail = null;
+	    $scope.ngv_sub1 = null;
+		$scope.ngv_sub2 = null;
 		$scope.show_detail = function(ngv){
 			$scope.ngv_show_detail = ngv.cmnd;
 			$scope.isSearch = false;
@@ -641,7 +589,6 @@
 		$scope.check_subngv = function(){
 			return true;
 		}
-
 	    $scope.numberLoaded = true;
 	    $scope.slickconfig = {
 			lazyLoad: 'ondemand',
@@ -660,7 +607,7 @@
 		    $(window).on('popstate', function() {
 				$cookieStore.put('quan',$scope.data.quan);
 				$cookieStore.put('ngay',$scope.data.ngay);
-				$cookieStore.put('dichvu',$scope.data.mang_tieuchi);
+				$cookieStore.put('dichvu',$scope.mang_tieuchi);
 				$cookieStore.put('sonamkn',$scope.data.sonamkn);
 				$cookieStore.put('giobd1',$scope.data.giobd1);
 				$cookieStore.put('giokt1',$scope.data.giokt1);
@@ -669,29 +616,30 @@
 	  	}
 	  	window.onbeforeunload = saveCookies;
 
-		function saveCookies(){   		
+		function saveCookies()
+		{   		
 		   	$cookieStore.put('quan',$scope.data.quan);
 			$cookieStore.put('ngay',$scope.data.ngay);
-			$cookieStore.put('dichvu',$scope.data.mang_tieuchi);
+			$cookieStore.put('dichvu',$scope.mang_tieuchi);
 			$cookieStore.put('sonamkn',$scope.data.sonamkn);
 			$cookieStore.put('giobd1',$scope.data.giobd1);
 			$cookieStore.put('giokt1',$scope.data.giokt1);
 			$cookieStore.put('ngv_arr',$scope.ngv_selected_arr);
 		}
-		
+		sessionStorage.setItem("Page2Visited", "True");
 
 	    if($cookieStore.get('quan') != null){
 	  		$scope.data.quan = $cookieStore.get('quan');
 			$scope.data.ngay = $cookieStore.get('ngay');
-			$scope.data.mang_tieuchi = $cookieStore.get('dichvu');
+			$scope.mang_tieuchi = $cookieStore.get('dichvu');
 			$scope.data.sonamkn = $cookieStore.get('sonamkn');
 			$scope.data.giobd1 = $cookieStore.get('giobd1');
 			$scope.data.giokt1 = $cookieStore.get('giokt1');
 			$scope.ngv_selected_arr = $cookieStore.get('ngv_arr');
 			for(i=0; i<$scope.tieuchis.length; i++){
 				$scope.tieuchis[i].data = false;	
-				for(j=0; j<$scope.data.mang_tieuchi.length; j++){
-					if($scope.tieuchis[i].ten == $scope.data.mang_tieuchi[j]){
+				for(j=0; j<$scope.mang_tieuchi.length; j++){
+					if($scope.tieuchis[i].ten == $scope.mang_tieuchi[j]){
 						$scope.tieuchis[i].data = true;	
 					}
 				}
@@ -714,19 +662,7 @@
 	    //----------------------end tính tiền------------------------------
 	    //modal yeu cau
 	    $scope.show_yeucau = function(){
-	    	if($scope.ngv_selected_arr.length > 0)
-	    		$('#thongtinkh').modal({backdrop: 'static', keyboard: false},'show');
-	    	else{
-	    		$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Bạn phải chọn ít nhất 1 nhân viên!!.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-	    	}
+	    	$('#thongtinkh').modal({backdrop: 'static', keyboard: false},'show'); 
 	    }
 	    //
 	});
