@@ -450,6 +450,7 @@
 	    							 $location.search().giobd1,
 	    							 $location.search().giokt1).then(function(data){
 	    							 	$scope.ngvs = data;
+	    							 	$scope.getNgvPhuHop(data, $scope.data.quan);
 	    							 	$scope.loading = false;
 	    							 });
 	    //
@@ -547,20 +548,25 @@
 										 $scope.data.giobd1,
 										 $scope.data.giokt1).then(function(data){
 										 	$scope.ngvs = data;
+										 	$scope.getNgvPhuHop(data, $scope.data.quan);
 										 	$scope.loading = false;
 										 });
             
+	    }
+	    $scope.getNgvPhuHop = function(ngvs, quan){
+	    	for(i=0; i<ngvs.length; i++){
+	    		var in_arr = false;
+		   		for(j=0; j<$scope.ngv_arr_fit.length; j++){
+		   			if(ngvs[i].cmnd == $scope.ngv_arr_fit[j].cmnd)
+		   				in_arr = true;
+		   		}
+		   		if(!in_arr && ngvs[i].diachi.quan == quan) $scope.ngv_arr_fit.push(ngvs[i]);
+	    	}
 	    }
 	    $scope.filtering = function(ngv){
 	    	if($scope.filter_dichvu(ngv.sotruong, $scope.data) && 
 	    	   $scope.filter_kinhnghiem(ngv.sonamkinhnghiem, $scope.data) &&
 	    	   $scope.filter_quan(ngv.diachi.quan, $scope.data)){
-	    	   	var in_arr = false;
-    	   		for(i=0; i<$scope.ngv_arr_fit.length; i++){
-    	   			if(ngv.cmnd == $scope.ngv_arr_fit[i].cmnd)
-    	   				in_arr = true;
-    	   		}
-    	   		if(!in_arr) $scope.ngv_arr_fit.push(ngv);
 	    		return true;
 	    	}
 	    	else return false;
@@ -599,7 +605,7 @@
 			$scope.ngv_show_detail = ngv.cmnd;
 			$scope.isSearch = false;
 			$scope.isDetail = true;
-			var arr = $scope.ngv_arr_fit;
+			var arr = $scope.ngv_arr_fit.slice();
 			for(i=0; i<arr.length; i++){
 				if(arr[i].cmnd == ngv.cmnd)
 					arr.splice(i, 1);
@@ -617,6 +623,7 @@
 				return;
 			}
 			if(arr.length > 2){
+				console.log(arr);
 				var min = 0;
 				var max = arr.length-1;
 				var random = [];
@@ -629,6 +636,8 @@
 				}
 				$scope.ngv_sub1 = arr[random1];
 				$scope.ngv_sub2 = arr[random2];
+				console.log($scope.ngv_sub1);
+				console.log($scope.ngv_sub2);
 				return;
 			}
 		}
