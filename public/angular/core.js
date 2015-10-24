@@ -413,6 +413,7 @@
 	    $scope.ngv_sub1 = null;
 		$scope.ngv_sub2 = null;
 
+
 		$scope.khachhang = {
 			sdt: null,
 			hoten: '',
@@ -439,10 +440,12 @@
 		
         
 	    for(i=0; i<$scope.data.availableOptions.length; i++){
-	    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id)
+	    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id){
 	    		$scope.data.giobd1 = $scope.data.availableOptions[i].id;
-	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id)
+	    	}
+	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id){
 	    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
+	    	}
 	    }
 	    
 	    //-------------end du lieu------------------------------------
@@ -457,29 +460,13 @@
 	    //
 		//--------------watch----------------------------
 		$scope.$watch('data.quan', function(newVal, oldVal){
-			if($scope.ngv_selected_arr.length > 0 &&
-			   $scope.data.isReverse == false){
-	    		var confirm = $mdDialog.confirm()
-			      .title('Quý khách có muốn xóa hết lượt chọn trước đó?')
-			      .parent(angular.element(document.querySelector('body')))
-			      .content('Thay đổi quận sẽ xóa hết lượt chọn trước đó!!')
-			      .targetEvent(null)
-			      .ok('Hủy')
-			      .cancel('Đồng ý');
-				$mdDialog.show(confirm).then(function() {
-					$scope.data.quan = oldVal;
-					$scope.data.isReverse = true;
-				}, function() {
-					for(i=0; i<$scope.ngv_selected_arr.length; i++){
-		    			$('#'+$scope.ngv_selected_arr[i].cmnd).removeClass('bgcheckmark');
-		    		}
-				  	$scope.ngv_selected_arr=[];
-				  	$scope.ngv_arr_fit=[];
-				});
-	    		return;
-	    	}
-	    	if($scope.data.isReverse == true)
-	    		$scope.data.isReverse = false;
+			
+			for(i=0; i<$scope.ngv_selected_arr.length; i++){
+    			$('#'+$scope.ngv_selected_arr[i].cmnd).removeClass('bgcheckmark');
+    		}
+		  	$scope.ngv_selected_arr=[];
+		  	$scope.ngv_arr_fit=[];
+		  	$scope.getNgvPhuHop($scope.ngvs, $scope.data.quan);
 		});
 		$scope.$watch('data.ngay', function(newVal, oldVal){
 			
@@ -519,37 +506,6 @@
 			    $scope.data.ngay = oldVal;
                 return;
             }
-            if($scope.ngv_selected_arr.length > 0 &&
-			   $scope.data.isReverse == false){
-    			var confirm = $mdDialog.confirm()
-				  .parent(angular.element(document.querySelector('body')))
-			      .title('Quý khách có muốn xóa hết lượt chọn trước đó?')
-			      .content('Thay đổi thời gian sẽ xóa hết lượt chọn trước đó!!')
-			      .targetEvent(null)
-			      .ok('Hủy')
-			      .cancel('Đồng ý');
-				$mdDialog.show(confirm).then(function() {
-					$scope.data.ngay = oldVal;
-					$scope.data.isReverse = true;
-					$('.dpindex').datepicker('update', $scope.data.ngay);
-				}, function() {
-				  	$scope.ngv_arr_fit = [];
-				  	$scope.ngv_selected_arr = [];
-			    	$scope.loading = true;
-			    	$scope.ngvs = null;
-					ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($scope.data.ngay), 
-												 $scope.data.giobd1,
-												 $scope.data.giokt1).then(function(data){
-												 	$scope.ngvs = data;
-												 	$scope.loading = false;
-												 });
-				});
-				return;
-    		}
-    		if($scope.data.isReverse == true){
-	    		$scope.data.isReverse = false;
-	    		return;
-    		}
     		$scope.ngv_arr_fit = [];
 		  	$scope.ngv_selected_arr = [];
 	    	$scope.loading = true;
@@ -563,6 +519,10 @@
 										 });
 		});
 		$scope.$watch('data.giobd1', function(newVal, oldVal){
+			if($scope.data.isReverse == true){
+	    		$scope.data.isReverse = false;
+	    		return;
+    		}
 			var bd1 = Number($scope.data.giobd1);
             var kt1 = Number($scope.data.giokt1);
 	    	var now = new Date();
@@ -583,6 +543,7 @@
 				        .targetEvent(null)
 				    );
 				    $scope.data.giobd1 = oldVal;
+				    $scope.data.isReverse = true;
                     return;
                 }
             }
@@ -597,40 +558,10 @@
 			        .targetEvent(null)
 			    );
 			    $scope.data.giobd1 = oldVal;
+			    $scope.data.isReverse = true;
                 return;
             }
-            if($scope.ngv_selected_arr.length > 0 &&
-			   $scope.data.isReverse == false){
-    			var confirm = $mdDialog.confirm()
-    				.parent(angular.element(document.querySelector('body')))
-			      .title('Quý khách có muốn xóa hết lượt chọn trước đó?')
-			      .content('Thay đổi thời gian sẽ xóa hết lượt chọn trước đó!!')
-			      .targetEvent(null)
-			      .ok('Hủy')
-			      .cancel('Đồng ý');
-				$mdDialog.show(confirm).then(function() {
-					$scope.data.giobd1 = oldVal;
-					$scope.data.isReverse = true;
-					return;
-				}, function() {
-				  	$scope.ngv_arr_fit = [];
-				  	$scope.ngv_selected_arr = [];
-			    	$scope.loading = true;
-			    	$scope.ngvs = null;
-					ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($scope.data.ngay), 
-												 $scope.data.giobd1,
-												 $scope.data.giokt1).then(function(data){
-												 	$scope.ngvs = data;
-												 	$scope.loading = false;
-												 });
-					return;
-				});
-				return;
-    		}
-    		if($scope.data.isReverse == true){
-	    		$scope.data.isReverse = false;
-	    		return;
-    		}
+    		
     		$scope.ngv_arr_fit = [];
 		  	$scope.ngv_selected_arr = [];
 	    	$scope.loading = true;
@@ -644,6 +575,10 @@
 										 });
 		});
 		$scope.$watch('data.giokt1', function(newVal, oldVal){
+			if($scope.data.isReverse == true){
+	    		$scope.data.isReverse = false;
+	    		return;
+    		}
 			var bd1 = Number($scope.data.giobd1);
             var kt1 = Number($scope.data.giokt1);
 	    	var now = new Date();
@@ -664,6 +599,7 @@
 				        .targetEvent(null)
 				    );
 				    $scope.data.giokt1 = oldVal;
+				    $scope.data.isReverse = true;
                     return;
                 }
             }
@@ -678,38 +614,10 @@
 			        .targetEvent(null)
 			    );
 			    $scope.data.giokt1 = oldVal;
+			    $scope.data.isReverse = true;
                 return;
             }
-            if($scope.ngv_selected_arr.length > 0 &&
-			   $scope.data.isReverse == false){
-    			var confirm = $mdDialog.confirm()
-    				.parent(angular.element(document.querySelector('body')))
-			      .title('Quý khách có muốn xóa hết lượt chọn trước đó?')
-			      .content('Thay đổi thời gian sẽ xóa hết lượt chọn trước đó!!')
-			      .targetEvent(null)
-			      .ok('Hủy')
-			      .cancel('Đồng ý');
-				$mdDialog.show(confirm).then(function() {
-					$scope.data.giokt1 = oldVal;
-					$scope.data.isReverse = true;
-				}, function() {
-				  	$scope.ngv_arr_fit = [];
-				  	$scope.ngv_selected_arr = [];
-			    	$scope.loading = true;
-			    	$scope.ngvs = null;
-					ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($scope.data.ngay), 
-												 $scope.data.giobd1,
-												 $scope.data.giokt1).then(function(data){
-												 	$scope.ngvs = data;
-												 	$scope.loading = false;
-												 });
-				});
-				return;
-    		}
-    		if($scope.data.isReverse == true){
-	    		$scope.data.isReverse = false;
-	    		return;
-    		}
+    		
     		$scope.ngv_arr_fit = [];
 		  	$scope.ngv_selected_arr = [];
 	    	$scope.loading = true;
@@ -834,59 +742,6 @@
 	        arrows: true
 		}
 		//-------------end Xu ly detail ngv--------------------------------
-		//----------------------------Cookies------------------------------
-		if (window.history && window.history.pushState) {
-			history.pushState("jibberish", null, null);
-		    $(window).on('popstate', function() {
-				$cookieStore.put('quan',$scope.data.quan);
-				$cookieStore.put('ngay',$scope.data.ngay);
-				$cookieStore.put('dichvu',$scope.data.mang_tieuchi);
-				$cookieStore.put('sonamkn',$scope.data.sonamkn);
-				$cookieStore.put('giobd1',$scope.data.giobd1);
-				$cookieStore.put('giokt1',$scope.data.giokt1);
-				$cookieStore.put('ngv_arr',$scope.ngv_selected_arr);
-		    });
-	  	}
-	  	window.onbeforeunload = saveCookies;
-
-		function saveCookies(){   		
-		   	$cookieStore.put('quan',$scope.data.quan);
-			$cookieStore.put('ngay',$scope.data.ngay);
-			$cookieStore.put('dichvu',$scope.data.mang_tieuchi);
-			$cookieStore.put('sonamkn',$scope.data.sonamkn);
-			$cookieStore.put('giobd1',$scope.data.giobd1);
-			$cookieStore.put('giokt1',$scope.data.giokt1);
-			$cookieStore.put('ngv_arr',$scope.ngv_selected_arr);
-		}
-		
-
-	    if($cookieStore.get('quan') != null){
-	  		$scope.data.quan = $cookieStore.get('quan');
-			$scope.data.ngay = $cookieStore.get('ngay');
-			$scope.data.mang_tieuchi = $cookieStore.get('dichvu');
-			$scope.data.sonamkn = $cookieStore.get('sonamkn');
-			$scope.data.giobd1 = $cookieStore.get('giobd1');
-			$scope.data.giokt1 = $cookieStore.get('giokt1');
-			$scope.ngv_selected_arr = $cookieStore.get('ngv_arr');
-			for(i=0; i<$scope.tieuchis.length; i++){
-				$scope.tieuchis[i].data = false;	
-				for(j=0; j<$scope.data.mang_tieuchi.length; j++){
-					if($scope.tieuchis[i].ten == $scope.data.mang_tieuchi[j]){
-						$scope.tieuchis[i].data = true;	
-					}
-				}
-			}
-			$cookieStore.remove('quan');
-			$cookieStore.remove('ngay');
-			$cookieStore.remove('dichvu');
-			$cookieStore.remove('sonamkn');
-			$cookieStore.remove('giobd1');
-			$cookieStore.remove('giokt1');
-			$cookieStore.remove('ngv_arr');
-
-			
-	  	}
-	    //---------------------end cookies---------------------------------
 	    //---------------------luu yeu cau---------------------------------
 	    $scope.luu_yeucau = function(){
 	    	$scope.loading_yeucau = true;
@@ -1214,16 +1069,7 @@
 	    //
 	});
 	module.controller('indexController', function($scope, $http, $log, $location, $mdDialog, $cookieStore){
-		if($cookieStore.get('quan') != null){
-	  		
-			$cookieStore.remove('quan');
-			$cookieStore.remove('ngay');
-			$cookieStore.remove('dichvu');
-			$cookieStore.remove('sonamkn');
-			$cookieStore.remove('giobd1');
-			$cookieStore.remove('giokt1');
-			$cookieStore.remove('ngv_arr');
-	  	}
+
 		$scope.data = {
 			quan: $location.search().quan,
 			dichvu: 'Chọn dịch vụ',

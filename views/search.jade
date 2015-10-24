@@ -16,15 +16,21 @@ block search
             md-subheader
               i.fa.fa-calendar.padright.xanhnhat 
               | Ngày
+              i.fa.fa-warning.pull-right.padright.xanhnhat
+                md-tooltip(md-direction="left")
+                  | Thay đổi ngày sẽ mất các lựa chọn hiện tại
             div
               input#ngay.marleft.form-control.timewidth.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngay')
           div.form-inline.xanhnhat
             md-subheader
               i.fa.fa-clock-o.padright.xanhnhat 
               | Giờ
+              i.fa.fa-warning.pull-right.padright.xanhnhat
+                md-tooltip(md-direction="left")
+                  | Thay đổi giờ sẽ mất các lựa chọn hiện tại
           .form-inline
             .form-group
-              select#giobd_sl.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions")
+              select#giobd_sl.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions" ng-change='change_time_bd(data.giobd1, "{{data.giobd1}}")')
                 option(value='' disabled) Từ giờ
               input#gbdnh.form-control.sb(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
@@ -56,6 +62,9 @@ block search
               md-subheader
                 i.fa.fa-map-marker.padright.xanhnhat 
                 | Quận
+                i.fa.fa-warning.pull-right.padright.xanhnhat
+                  md-tooltip(md-direction="left")
+                    | Thay đổi quận sẽ mất các lựa chọn hiện tại
             md-radio-group(ng-model='data.quan')
               div(ng-repeat='quan in quans')
                 md-radio-button(value='{{quan.ten}}')
@@ -269,7 +278,7 @@ block search
                 .row
                   .left.padleft
                     h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                    | {{tinh_tuoi_ngv(ngv_sub1.ngaysinh)}}
+                    | {{tinh_tuoi_ngv(ngv_sub1.ngaysinh) + ' tuổi'}}
           .row(ng-if='ngv_sub2!=null')
             .thumbnail.sm-img-left
               a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub2)')
@@ -287,7 +296,7 @@ block search
                 .row
                   .left.padleft
                     h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                    | {{tinh_tuoi_ngv(ngv_sub2.ngaysinh)}}
+                    | {{tinh_tuoi_ngv(ngv_sub2.ngaysinh) + ' tuổi'}}
     #thongtinkh.modal.fade(role='dialog')
       div.modal-dialog
         div.modal-content
