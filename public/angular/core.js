@@ -413,6 +413,8 @@
 	    $scope.ngv_sub1 = null;
 		$scope.ngv_sub2 = null;
 
+		$scope.hoanthanh_thanhtoan_nh = false;
+	    $scope.thatbai_thanhtoan_nh = false;
 
 		$scope.khachhang = {
 			sdt: null,
@@ -743,6 +745,7 @@
 		}
 		//-------------end Xu ly detail ngv--------------------------------
 	    //---------------------luu yeu cau---------------------------------
+
 	    $scope.luu_yeucau = function(){
 	    	$scope.loading_yeucau = true;
 	    	var q_ngv_trunglich = '?ngaylam=' + $scope.doi_ngaysearch($location.search().ngay) +
@@ -793,7 +796,6 @@
 					            }
 					            //Lưu yêu cầu
 					            var new_yeucau = JSON.stringify({
-					                id: 0,
 								    ngaydatyeucau: new Date(),
 								    ngayyeucau: new Date(Date.UTC(ngay[2],Number(ngay[1])-1,ngay[0])),
 								    ngayketthuc: new Date(Date.UTC(ngay[2],Number(ngay[1])-1,ngay[0])),
@@ -819,12 +821,11 @@
 						               		
 						               	var gio_kt = Math.floor($scope.data.giokt1/60);
 						               	var phut_kt = $scope.data.giokt1%60;
-						               	var giokt_luuctyc = new Date(Date.UTC(ngay[2], Number(ngay[1])-1, ngay[0], gio_bd, phut_bd, 0));
+						               	var giokt_luuctyc = new Date(Date.UTC(ngay[2], Number(ngay[1])-1, ngay[0], gio_kt, phut_kt, 0));
 						               	
 							            for(i=0; i<$scope.ngv_selected_arr.length; i++){
 								            var ctyc = JSON.stringify({
-							                 	id: data._id,
-											    idyeucau: 0,
+											    idyeucau: data._id,
 											    giobatdau: giobd_luuctyc,
 											    gioketthuc: giokt_luuctyc,
 											    nguoigiupviec: $scope.ngv_selected_arr[i].cmnd,
@@ -845,6 +846,8 @@
 									            });
 							            }
 							            $scope.loading_yeucau = false;
+							            $scope.hoanthanh_thanhtoan_nh = true;
+	   		 							$scope.thatbai_thanhtoan_nh = false;
 							            $scope.loading = true;
 							            ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($location.search().ngay),
 		    							 $location.search().giobd1,
@@ -854,13 +857,14 @@
 		    							 	$scope.loading = false;
 		    							 	$scope.ngv_selected_arr = [];
 											$scope.ngv_arr_fit = [];
-											$cookieStore.remove('ngv_arr');
 											$scope.khachhang.sdt= null;
 											$scope.khachhang.hoten= '';
 											$scope.khachhang.diachi= '';
 		    							 });
 						            }).error(function (data, status, headers, config) {
 						                console.log('Error: ' + data);
+						                $scope.hoanthanh_thanhtoan_nh = false;
+	   		 							$scope.thatbai_thanhtoan_nh = true;
 						            });
 				        	}else{
 				        		//lưu khách hàng
@@ -904,7 +908,6 @@
 					            }
 					            //Lưu yêu cầu
 					            var new_yeucau = JSON.stringify({
-					                id: 0,
 								    ngaydatyeucau: new Date(),
 								    ngayyeucau: new Date(Date.UTC(ngay[2],Number(ngay[1])-1,ngay[0])),
 								    ngayketthuc: new Date(Date.UTC(ngay[2],Number(ngay[1])-1,ngay[0])),
@@ -930,12 +933,11 @@
 						               		
 						               	var gio_kt = Math.floor($scope.data.giokt1/60);
 						               	var phut_kt = $scope.data.giokt1%60;
-						               	var giokt_luuctyc = new Date(Date.UTC(ngay[2], Number(ngay[1])-1, ngay[0], gio_bd, phut_bd, 0));
+						               	var giokt_luuctyc = new Date(Date.UTC(ngay[2], Number(ngay[1])-1, ngay[0], gio_kt, phut_kt, 0));
 						               	
 							            for(i=0; i<$scope.ngv_selected_arr.length; i++){
 								            var ctyc = JSON.stringify({
-							                 	id: data._id,
-											    idyeucau: 0,
+											    idyeucau: data._id,
 											    giobatdau: giobd_luuctyc,
 											    gioketthuc: giokt_luuctyc,
 											    nguoigiupviec: $scope.ngv_selected_arr[i].cmnd,
@@ -957,6 +959,8 @@
 							            }
 							            $scope.loading_yeucau = false;
 							            $scope.loading = true;
+							            $scope.hoanthanh_thanhtoan_nh = true;
+	   		 							$scope.thatbai_thanhtoan_nh = false;
 							            ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($location.search().ngay),
 		    							 $location.search().giobd1,
 		    							 $location.search().giokt1).then(function(data){
@@ -972,6 +976,8 @@
 		    							 });
 						            }).error(function (data, status, headers, config) {
 						                console.log('Error: ' + data);
+						                $scope.hoanthanh_thanhtoan_nh = false;
+	   		 							$scope.thatbai_thanhtoan_nh = true;
 						            });
 				        	}
 				        })
@@ -1065,6 +1071,11 @@
 			        .targetEvent(null)
 			    );
 	    	}
+	    }
+	    $scope.close_thanhtoan = function(){
+	    	$('#thongtinkh').modal('hide');
+	    	$scope.hoanthanh_thanhtoan_nh = false;
+			$scope.thatbai_thanhtoan_nh = false;
 	    }
 	    //
 	});

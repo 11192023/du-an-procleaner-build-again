@@ -302,12 +302,16 @@ block search
         div.modal-content
           form(name='formthanhtoan', novalidate ng-submit='luu_yeucau()')
             div.modal-header.bgxanhdam
-              button.xanhdam.close(type='button', data-dismiss='modal') ×
+              button.xanhdam.close(type='button', ng-click='close_thanhtoan()') ×
               h4.biggerfont.modal-title.xanhdam Thông tin yêu cầu
-            div#mypanel.modal-body
+            div#mypanel.modal-body.modal-thanhtoan-height
               div(layout="row" layout-align="center center" ng-show='loading_yeucau')
                 i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
-              md-content(layout-padding='' ng-show='!loading_yeucau')
+              div(ng-show='hoanthanh_thanhtoan_nh')
+                h3 Yêu cầu của quý khách đã được chấp nhận, chúng tôi sẽ liên hệ trong lịch làm việc gần nhất.
+              div(ng-show='thatbai_thanhtoan_nh')
+                h3 Đã có lỗi trong khi xử lý! quý khách vui lòng thử lại sau.
+              md-content(layout-padding='' ng-show='!(loading_yeucau || hoanthanh_thanhtoan_nh || thatbai_thanhtoan_nh)')
                 div(layout='', layout-sm='column')
                   md-input-container(flex)
                     label 
@@ -404,6 +408,6 @@ block search
               button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
                 i.fa.fa-check
                 |  Đồng ý
-              button.marleft.btn.btn-danger.pull-right(type='button')
+              button.marleft.btn.btn-danger.pull-right(type='button' ng-click='close_thanhtoan()')
                 i.fa.fa-remove
                 |  Hủy
