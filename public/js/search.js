@@ -7,7 +7,11 @@
             startDate: new Date(),
             endDate: limitday
         });
-        $('.selectpicker').selectpicker({
+        $('#giokt_sl').selectpicker({
+              style: 'btn-info',
+              size: 8
+        });
+        $('#giobd_sl').selectpicker({
               style: 'btn-info',
               size: 8
         });
