@@ -304,12 +304,12 @@ block search
             div.modal-header.bgxanhdam
               button.xanhdam.close(type='button', ng-click='close_thanhtoan()') ×
               h4.biggerfont.modal-title.xanhdam Thông tin yêu cầu
-            div#mypanel.modal-body.modal-thanhtoan-height
-              div(layout="row" layout-align="center center" ng-show='loading_yeucau')
+            div#mypanel.modal-body
+              div.modal-thanhtoan-height(layout="row" layout-align="center center" ng-show='loading_yeucau')
                 i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
-              div(ng-show='hoanthanh_thanhtoan_nh')
+              div(layout="row" layout-align="center center" ng-show='hoanthanh_thanhtoan_nh')
                 h3 Yêu cầu của quý khách đã được chấp nhận, chúng tôi sẽ liên hệ trong lịch làm việc gần nhất.
-              div(ng-show='thatbai_thanhtoan_nh')
+              div(layout="row" layout-align="center center" ng-show='thatbai_thanhtoan_nh')
                 h3 Đã có lỗi trong khi xử lý! quý khách vui lòng thử lại sau.
               md-content(layout-padding='' ng-show='!(loading_yeucau || hoanthanh_thanhtoan_nh || thatbai_thanhtoan_nh)')
                 div(layout='', layout-sm='column')
@@ -393,7 +393,7 @@ block search
                     label 
                       a.i.fa.fa-money.xanhnhat.padright
                       | Giá tiền
-                    input(disabled, value='{{tinhtien_nh()+"vnd"}}')
+                    input(disabled, value='{{tinhtien_nh()+"  VNĐ"}}')
                 div(layout='row', layout-sm='column')
                   md-list(ng-cloak, style='width:100%')
                     p Danh sách nhân viên đã chọn.
@@ -401,9 +401,6 @@ block search
                     md-list-item(ng-repeat='ngv in ngv_selected_arr')
                       img.md-avatar(alt='', ng-src='{{"img/ngv/" + ngv.hinhanh}}')
                       p {{ngv.hoten}}
-                      md-button.md-icon-button(aria-label='More')
-                        i.fa.fa-remove.xanhnhat
-                    md-divider
             div.modal-footer
               button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
                 i.fa.fa-check

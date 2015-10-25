@@ -2,7 +2,7 @@ md-backdrop.md-select-backdrop {
     z-index:103!important;
 }
 .modal-thanhtoan-height{
-  min-height: 300px;
+  min-height: 1000px;
 }
 body.modal-open {
     overflow: auto;

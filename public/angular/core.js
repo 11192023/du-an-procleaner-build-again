@@ -1076,6 +1076,9 @@
 	    	$('#thongtinkh').modal('hide');
 	    	$scope.hoanthanh_thanhtoan_nh = false;
 			$scope.thatbai_thanhtoan_nh = false;
+			$scope.khachhang.sdt= null;
+			$scope.khachhang.hoten= '';
+			$scope.khachhang.diachi= '';
 	    }
 	    //
 	});
