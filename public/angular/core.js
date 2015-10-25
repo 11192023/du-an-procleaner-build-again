@@ -1,8 +1,8 @@
 (function(){
 	//search module
-	var module = angular.module('SearchModule', ['ngMaterial','ngMessages','ui.bootstrap','slickCarousel','ngRoute','ui.calendar']);
-
-	module.config(function($mdThemingProvider, $locationProvider){
+	var searchModule = angular.module('SearchModule', ['ngMaterial','ngMessages','ui.bootstrap','slickCarousel','ngRoute','ui.calendar']);
+	var indexModule = angular.module('IndexModule', ['ngMaterial','ngMessages','slickCarousel','ngRoute']);
+	searchModule.config(function($mdThemingProvider, $locationProvider){
 		$mdThemingProvider.theme('default')
 			.primaryPalette('green');
         //routing DOESN'T work without html5Mode
@@ -11,7 +11,7 @@
         	reloadOnSearch: true
         });
 	});
-	module.factory('ngvFactory', function($http, $q){
+	searchModule.factory('ngvFactory', function($http, $q){
 		var service = {};
 		service.layDanhSachNgv = function(ngay, giobd, giokt){
 			var deferred = $q.defer();
@@ -84,7 +84,7 @@
         }
 	    return service;
 	});
-	module.factory('filterFactory', function($location, $mdDialog){
+	searchModule.factory('filterFactory', function($location, $mdDialog){
 		var service = {};
 		var _kinhnghiems = [
 	    	{
@@ -393,9 +393,9 @@
 	    }
 	    return service;
 	});
-	module.factory('thanhtoanFactory', function(){
+	searchModule.factory('thanhtoanFactory', function(){
 	});
-	module.controller('searchnhController', function(filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog){
+	searchModule.controller('searchnhController', function(filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog){
 		
 
 		$scope.Math = window.Math;
@@ -636,6 +636,7 @@
 		//--------------end watch-----------------------
 	    
 	    $scope.getNgvPhuHop = function(ngvs, quan){
+	    	if(ngvs ==  null) return;
 	    	for(i=0; i<ngvs.length; i++){
 	    		var in_arr = false;
 		   		for(j=0; j<$scope.ngv_arr_fit.length; j++){
@@ -1083,7 +1084,7 @@
 	    }
 	    //
 	});
-	module.controller('searchdhController', function(filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog){
+	searchModule.controller('searchdhController', function(filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog){
 		//session ngăn ko cho quay lại trang chủ
 
 		$scope.Math = window.Math;
@@ -1101,13 +1102,15 @@
     	$scope.events=[
         	{
         		title:'ev1',
-            	start:'2015-10-30'
+            	start:'2015-10-30',
+            	stick:true
             }
 		]
     	$scope.addEvent = function(){
     		$scope.events.push({
     			title:'ev2',
-            	start:'2015-10-22'
+            	start:'2015-10-22',
+            	stick: true
     		});
     	}
     	$scope.eventSources=[$scope.events];
@@ -1197,7 +1200,7 @@
 	    //
 		//--------------watch----------------------------
 	});
-	module.controller('indexController', function($scope, $http, $log, $location, $mdDialog){
+	indexModule.controller('indexController', function($scope, $http, $log, $location, $mdDialog){
 
 		$scope.data = {
 			quan: $location.search().quan,
@@ -1489,7 +1492,7 @@
             this.submit();
         });
 	});
-	module.controller('slickController',['$scope', function($scope){
+	indexModule.controller('slickController',['$scope', function($scope){
 		$scope.numberLoaded = true;
 		$scope.slickconfig = {
 			lazyLoad: 'ondemand',
