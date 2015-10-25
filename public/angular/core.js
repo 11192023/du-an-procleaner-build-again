@@ -1,6 +1,6 @@
 (function(){
 	//search module
-	var module = angular.module('SearchModule', ['ngMaterial','ngMessages','ui.bootstrap','slickCarousel','ngRoute','ngCookies']);
+	var module = angular.module('SearchModule', ['ngMaterial','ngMessages','ui.bootstrap','slickCarousel','ngRoute','ui.calendar']);
 
 	module.config(function($mdThemingProvider, $locationProvider){
 		$mdThemingProvider.theme('default')
@@ -236,6 +236,8 @@
 			mang_tieuchi: [],
 			isReverse: false,
 			ngay: $location.search().ngay,
+			ngaybd: $location.search().ngaybd,
+			ngaykt: $location.search().ngaykt,
 			sonamkn: 0,
 			quan: $location.search().quan,
 			dichvu: $location.search().dichvu,
@@ -393,9 +395,8 @@
 	});
 	module.factory('thanhtoanFactory', function(){
 	});
-	module.controller('timeController', function(filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog, $cookieStore){
-		//session ngăn ko cho quay lại trang chủ
-		sessionStorage.setItem("Page2Visited", "True");
+	module.controller('searchnhController', function(filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog){
+		
 
 		$scope.Math = window.Math;
 		//biến ng-show detail và search
@@ -1082,7 +1083,121 @@
 	    }
 	    //
 	});
-	module.controller('indexController', function($scope, $http, $log, $location, $mdDialog, $cookieStore){
+	module.controller('searchdhController', function(filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog){
+		//session ngăn ko cho quay lại trang chủ
+
+		$scope.Math = window.Math;
+		$scope.loading = true;
+		$scope.loading_yeucau = false;
+		$scope.ngvs = null;
+
+		$scope.khachhang = {
+			sdt: null,
+			hoten: '',
+			diachi: '',
+		};
+		//full calendar
+		
+    	$scope.events=[
+        	{
+        		title:'ev1',
+            	start:'2015-10-30'
+            }
+		]
+    	$scope.addEvent = function(){
+    		$scope.events.push({
+    			title:'ev2',
+            	start:'2015-10-22'
+    		});
+    	}
+    	$scope.eventSources=[$scope.events];
+		//function
+		$scope.tinh_tuoi_ngv = filterFactory.tinhTuoiNgv;
+		$scope.doi_ngaysearch = filterFactory.doiNgaySearch;
+		$scope.them_filter_dichvu = filterFactory.them_filter_dichvu;
+		$scope.filter_dichvu = filterFactory.filter_dichvu;
+		$scope.filter_kinhnghiem = filterFactory.filter_kinhnghiem;
+		$scope.filter_quan = filterFactory.filter_quan;
+
+		$scope.ngv_isSelected = ngvFactory.ngv_isSelected;
+		$scope.isSelected = ngvFactory.isSelected;
+		$scope.chon_ngv = ngvFactory.chon_ngv;
+		//-------------Lấy dữ liệu-----------------------------------
+		$scope.kinhnghiems = filterFactory.getDSKinhNghiem();
+		$scope.tieuchis = filterFactory.getDSTieuChi();
+		$scope.quans = filterFactory.getDSQuan();
+		$scope.data = filterFactory.getDuLieuPage();
+		$scope.data.mang_tieuchi = filterFactory.getDichVu($location.search().dichvu,
+													  $scope.tieuchis);
+		
+        
+	    for(i=0; i<$scope.data.availableOptions.length; i++){
+	    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id){
+	    		$scope.data.giobd1 = $scope.data.availableOptions[i].id;
+	    	}
+	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id){
+	    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
+	    	}
+	    }
+	    
+	    //-------------end du lieu------------------------------------
+	    //--------------khởi tạo và xử lý calendar------------------
+	    $scope.uiConfig = {
+			calendar:{
+			height: 600,
+			editable: true,
+			header:{
+				left: 'month basicWeek basicDay',
+				center: 'title',
+				right: 'today, prev,next'
+			},
+				dayClick: $scope.alertEventOnClick,
+				eventDrop: $scope.alertOnDrop,
+				eventResize: $scope.alertOnResize
+			}
+	    };
+	    $scope.initLanguage = function(){
+	    	$scope.uiConfig.calendar.dayNames = [
+	    	"Chủ nhật",
+	    	 	"Thứ 2",
+	    	  	"Thứ 3",
+	    	   	"Thứ 4",
+	    	    "Thứ 5",
+    	     	"Thứ 6",
+    	      	"Thứ 7"];
+	    	$scope.uiConfig.calendar.monthNames = [
+	    		"Tháng 1",
+	    	 	"Tháng 2",
+	    	  	"Tháng 3",
+	    	   	"Tháng 4",
+	    	    "Tháng 5",
+    	     	"Tháng 6",
+    	      	"Tháng 7",
+    	       	"Tháng 8",
+	        	"Tháng 9",
+	         	"Tháng 10",
+	          	"Tháng 11",
+	           	"Tháng 12"];
+	        $scope.uiConfig.calendar.monthNamesShort = [
+	    		"Th1",
+	    	 	"Th2",
+	    	  	"Th3",
+	    	   	"Th4",
+	    	    "Th5",
+    	     	"Th6",
+    	      	"Th7",
+    	       	"Th8",
+	        	"Th9",
+	         	"Th10",
+	          	"Th11",
+	           	"Th12"];
+        	$scope.uiConfig.calendar.dayNamesShort = ["CN", "T2", "T3", "T4", "T5", "T6", "T7"];
+	    }
+
+	    //
+		//--------------watch----------------------------
+	});
+	module.controller('indexController', function($scope, $http, $log, $location, $mdDialog){
 
 		$scope.data = {
 			quan: $location.search().quan,

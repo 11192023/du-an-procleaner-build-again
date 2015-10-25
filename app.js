@@ -36,7 +36,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/search', search);
 app.use('/ngv_chitiet', ngv_chitiet);
-app.use('/search_daihan', search_daihan);
+app.use('/searchdaihan', search_daihan);
 
 
 // catch 404 and forward to error handler

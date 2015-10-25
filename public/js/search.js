@@ -15,5 +15,8 @@
               style: 'btn-info',
               size: 8
         });
+        $('#calendar').fullCalendar({
+        // put your options and callbacks here
+        });
     });
 })(jQuery); // End of use strict

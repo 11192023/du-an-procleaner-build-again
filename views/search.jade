@@ -2,8 +2,7 @@ extends layout
 
 block search
   base(href='/')
-  .container.wrapper(ng-app='SearchModule' ng-controller='timeController')
-    uib-pagination(total-items='totalItems', ng-model='currentPage')
+  .container.wrapper(ng-app='SearchModule' ng-controller='searchnhController')
     .row.content(ng-show='isSearch')
       .col-lg-3.content-left
         md-toolbar.md-whiteframe-2dp
