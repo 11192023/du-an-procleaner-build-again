@@ -20,9 +20,9 @@ block search
                   | Thay đổi ngày sẽ mất các lựa chọn hiện tại
             .form-inline
               .form-group
-                input#ngaybd.marleft.form-control.timewidthhalf.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngaybd')
+                input#ngaybd.marleft.form-control.timewidthhalf.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngaybd' ng-change='changeFilter()')
 
-                input#ngaykt.form-control.timewidthhalf.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngaykt')
+                input#ngaykt.form-control.timewidthhalf.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngaykt' ng-change='changeFilter()')
           div.form-inline.xanhnhat
             md-subheader
               i.fa.fa-clock-o.padright.xanhnhat 
@@ -32,11 +32,11 @@ block search
                   | Thay đổi giờ sẽ mất các lựa chọn hiện tại
           .form-inline
             .form-group
-              select#giobd_sl.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions" ng-change='change_time_bd(data.giobd1, "{{data.giobd1}}")')
+              select#giobd_sl.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions" ng-change='changeFilter()')
                 option(value='' disabled) Từ giờ
               input#gbdnh.form-control.sb(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-              select#giokt_sl.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions")
+              select#giokt_sl.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions" ng-change='changeFilter()')
                 option(value='' disabled) Đến giờ
               input#gktnh.form-control.sb(type='hidden', name='giokt1', value='{{data.giokt1}}')
           // số năm kinh nghiệm ---------------------------------------------------
@@ -67,10 +67,268 @@ block search
                 i.fa.fa-warning.pull-right.padright.xanhnhat
                   md-tooltip(md-direction="left")
                     | Thay đổi quận sẽ mất các lựa chọn hiện tại
-            md-radio-group(ng-model='data.quan')
+            md-radio-group(ng-model='data.quan' ng-change='changeFilter()')
               div(ng-repeat='quan in quans')
                 md-radio-button(value='{{quan.ten}}')
                   {{quan.ten}}
       .col-lg-9.content-right
-        md-button.md-fab.md-primary.chutrang(aria-label='Use Android' ng-click='addEvent()')
-        div.tabmartop(ui-calendar="uiConfig.calendar" ng-model="eventSources" ng-init='initLanguage()')
+        div
+          md-whiteframe.md-whiteframe-2dp(layout='row')
+            md-radio-group(layout='row' layout-align='space-between center' ng-model='data.locdaihan' ng-change='changeFilter()')
+              md-radio-button.martop(ng-repeat='locdh in locdaihan' value='{{locdh.id}}')
+                | {{locdh.ten}}
+            div(flex='30' layout="row" layout-align="end center")
+              button.marright.btn.btn-danger.pull-right(type='button' ng-click='show_yeucau()')
+                i.fa.fa-shopping-cart
+                |  Yêu cầu giúp việc
+          div(layout="row" layout-align="center center" ng-show='loading')
+            i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
+          div.tabmartop(ui-calendar="uiConfig.calendar" ng-model="eventSources" ng-if='!isDetail && !loading')
+        div(ng-if='isDetail')
+          md-toolbar.md-whiteframe-2dp
+            div(layout="row" layout-align="space-between center")
+              .md-toolbar-tools
+                h4.chutrang 
+                  i.fa.fa-search
+                  |   Thông tin chi tiết - ngày dd/mm/yyyy
+              div
+                button.marleftbtn.btn.btn-danger.marright(type='button' ng-click='backToCalendar()')
+                  i.fa.fa-arrow-left
+                  |  Quay lại
+          md-content.md-whiteframe-2dp()
+            .vdivide(layout='row')
+              .div
+                md-sidenav.md-sidenav-left.md-whiteframe-z2(md-is-open='true' md-component-id='left')
+                  md-content
+                    md-list(ng-cloak='')
+                    md-subheader.md-no-sticky Danh sách nhân viên phù hợp
+                    md-divider
+                    md-list-item(ng-repeat='ngvph in detailData.dsNgvPhuHop' ng-show='filtering(ngvph.data)')
+                      md-checkbox(style='margin-left: 0px!important' ng-model='ngvph.selected' ng-change='chonNgvSideNav()')
+                      img.md-avatar(alt='', ng-src='{{ "img/ngv/" + ngvph.data.hinhanh }}')
+                      p {{ngvph.data.hoten}}
+                      md-button.md-fab.md-mini.md-primary.chutrang(ng-click='xemChiTietDh(ngvph.data)')
+                        md-tooltip(md-direction="left")
+                          | Xem chi tiết
+                        i.fa.fa-info
+                      md-divider
+              .div(flex='')
+                md-content.thongtinct-daihan-body
+                  div(layout='row' layout-align="space-between center")
+                    md-subheader.md-no-sticky Chi tiết nhân viên
+                    md-button.md-fab.md-mini.md-primary.chutrang(ng-click='toggleSideNav()')
+                      md-tooltip(md-direction="left" md-visible='true')
+                        | Danh sách nhân viên
+                      i.fa.fa-list
+                  md-divider
+                  div(layout-padding ng-if='detailData.ngvDetail==null')
+                    h3.center Chọn một nhân viên từ danh sách để xem chi tiết.
+                  div(layout-padding ng-if='detailData.ngvDetail!=null')
+                    .row
+                      .col-md-4
+                        a(href='#')
+                          img.img-responsive(src='{{"img/ngv/" + detailData.ngvDetail.hinhanh}}', alt='')
+                        .rating
+                          i.fa.fa-2x.fa-star.xanhnhat
+                          i.fa.fa-2x.fa-star.xanhnhat
+                          i.fa.fa-2x.fa-star.xanhnhat
+                          i.fa.fa-2x.fa-star-o.xanhnhat
+                          i.fa.fa-2x.fa-star-o.xanhnhat
+                      .col-md-8
+                        .div(layout="row" layout-align="start start")
+                          i.fa.fa-user.fa-2x.padright.xanhnhat
+                          p.detailname {{detailData.ngvDetail.hoten}}
+                        md-divider
+                        .row
+                          .col-md-12
+                            .div(layout="row")
+                              div(flex='30')
+                                h3.i.fa.fa-map-marker.padright.xanhnhat 
+                                | {{detailData.ngvDetail.diachi.quan}}
+                              div(flex='40')
+                                h3.i.fa.fa-venus-mars.padright.xanhnhat 
+                                | Nam
+                              div(flex='30')
+                                h3.i.fa.fa-graduation-cap.padright.xanhnhat 
+                                | Đại học
+                            .div(layout="row")
+                              div(flex='30')
+                                h3.i.fa.fa-birthday-cake.padright.xanhnhat 
+                                | {{tinh_tuoi_ngv(detailData.ngvDetail.ngaysinh)+' tuổi'}}
+                              div(flex='40')
+                                h3.i.fa.fa-briefcase.padright.xanhnhat 
+                                | {{detailData.ngvDetail.sonamkinhnghiem+' năm kinh nghiệm'}}
+                              div(flex='30')
+                                h3.i.fa.fa-heart.padright.xanhnhat 
+                                | Độc thân
+                        .row.form-inline(style='font-size: 15px;')
+                          .col-md-12
+                            h3.i.fa.fa-tags.padright.xanhnhat 
+                            | Sở trường  
+                            div.form-group
+                              input.btn.btn-danger.btn-xs.tagmargin(ng-repeat='st in detailData.ngvDetail.sotruong' type='button' value='{{st}}')
+                    .row.tabmartop
+                      .col-md-12
+                        md-tabs(md-dynamic-height='', md-border-bottom='')
+                          md-tab
+                            md-tab-label
+                              i.fa.fa-paperclip
+                              |    Đánh giá chung
+                            md-tab-body
+                              md-content.md-padding
+                                h1.md-display-2.center Đánh giá chung
+                                p
+                                  | {{detailData.ngvDetail.danhgia}}
+                          md-tab
+                            md-tab-label
+                              i.fa.fa-history
+                              |    Mô tả kinh nghiệm
+                            md-tab-body
+                              md-content.md-padding
+                                h1.md-display-2.center Mô tả kinh nghiệm
+                                p
+                                  | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.
+                          md-tab
+                            md-tab-label
+                              i.fa.fa-exclamation-circle
+                              |    Thông tin chi tiết
+                            md-tab-body
+                              md-content.md-padding
+                                h1.md-display-2.center Thông tin chi tiết 
+                                p
+                                  | - Cân nặng : xx kg.
+                                p
+                                  | - Chiều cao : xx m.
+                                p
+                                  | - Dân tộc : Kinh.
+                                p
+                                  | - Trình độ học vấn : Đại học.
+                                p
+                                  | - Tình trạng hôn nhân : Đã có gia đình.
+                                p
+                                  | - Con cái : 3 người con.
+                                p.padleft
+                                  | • 3 tuổi
+                                p.padleft
+                                  | • 5 tuổi
+                                p.padleft
+                                  | • 7 tuổi
+                          md-tab
+                            md-tab-label
+                              i.fa.fa-stethoscope
+                              |    Giấy khám sức khỏe
+                            md-tab-body
+                              md-content.md-padding
+                                h1.md-display-2.center Giấy khám sức khỏe
+                                  slick.slicktest(settings='slickconfig', ng-if='numberLoaded')
+                                    div(ng-repeat='gksk in detailData.ngvDetail.giaykhamsuckhoe')
+                                      img.center(src='{{"img/ngv/" + gksk}}', alt='')
+    #thongtinkh.modal.fade(role='dialog')
+      div.modal-dialog
+        div.modal-content
+          form(name='formthanhtoan', novalidate ng-submit='luu_yeucau()')
+            div.modal-header.bgxanhdam
+              button.xanhdam.close(type='button', ng-click='close_thanhtoan()') ×
+              h4.biggerfont.modal-title.xanhdam Thông tin yêu cầu
+            div#mypanel.modal-body
+              div.modal-thanhtoan-height(layout="row" layout-align="center center" ng-show='loading_yeucau')
+                i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
+              div(layout="row" layout-align="center center" ng-show='hoanthanh_thanhtoan_nh')
+                h3 Yêu cầu của quý khách đã được chấp nhận, chúng tôi sẽ liên hệ trong lịch làm việc gần nhất.
+              div(layout="row" layout-align="center center" ng-show='thatbai_thanhtoan_nh')
+                h3 Đã có lỗi trong khi xử lý! quý khách vui lòng thử lại sau.
+              md-content(layout-padding='' ng-show='!(loading_yeucau || hoanthanh_thanhtoan_nh || thatbai_thanhtoan_nh)')
+                div(layout='', layout-sm='column')
+                  md-input-container(flex)
+                    label 
+                      i.fa.fa-user.xanhnhat.padright
+                      | Họ tên
+                    input(md-maxlength="30", required, name="hoten", ng-model='khachhang.hoten' autocomplete='off')
+                    div(ng-messages='formthanhtoan.hoten.$error')
+                      div(ng-message='required') Thông tin bắt buộc.
+                      div(ng-message='md-maxlength') Tên không được quá 30 ký tự.
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:44%')
+                    label 
+                      i.fa.fa-phone.xanhnhat.padright
+                      | Số đtdđ
+                    input(md-maxlength="15", ng-pattern="/^[0-9]+$/", required, name="sdt", ng-model='khachhang.sdt' autocomplete='off')
+                    div(ng-messages='formthanhtoan.sdt.$error')
+                      div(ng-message='pattern') Số điện thoại không đúng quy định(số từ 1-9).
+                      div(ng-message='required') Thông tin bắt buộc.
+                      div(ng-message='md-maxlength') Số điện thoại không được nhiều hơn 30 ký tự.
+                  md-input-container(style='width:43%')
+                    label 
+                      a.i.fa.fa-shield.xanhnhat.padright
+                      | Mã xác nhận
+                    input(autocomplete='off')
+                  md-button.md-fab.md-mini.md-primary.chutrang
+                    md-tooltip
+                      | Lấy mã xác nhận
+                    i.fa.fa-shield
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:87%')
+                    label 
+                      i.fa.fa-map-marker.xanhnhat.padright
+                      | Địa chỉ
+                    input(md-maxlength="50", required, name="diachi", ng-model='khachhang.diachi' autocomplete='off')
+                    div(ng-messages='formthanhtoan.diachi.$error')
+                      div(ng-message='required') Thông tin bắt buộc.
+                      div(ng-message='md-maxlength') Địa chỉ không được nhiều hơn 50 ký tự.
+                  md-button.md-fab.md-mini.md-primary.chutrang
+                    md-tooltip
+                      | Lấy địa chỉ hiện tại
+                    i.fa.fa-map
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:87%')
+                    label
+                      i.fa.fa-map-marker.xanhnhat.padright
+                      | Thành phố
+                    input(value='Tp.Hồ Chí Minh' disabled)
+                  md-input-container(style='width:87%')
+                    label 
+                      i.fa.fa-map-marker.xanhnhat.padright
+                      | Quận
+                    input(value='{{data.quan}}' disabled)
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:25%')
+                    label 
+                      i.fa.fa-calendar.xanhnhat.padright
+                      | Ngày
+                    input(disabled, ng-model='data.ngaybd')
+                  md-input-container(style='width:25%')
+                    label 
+                      i.fa.fa-calendar.xanhnhat.padright
+                      | Ngày
+                    input(disabled, ng-model='data.ngaykt')
+                  md-input-container(style='width:25%')
+                    label 
+                      a.i.fa.fa-clock-o.xanhnhat.padright
+                      | Giờ bắt đầu
+                    input(disabled, value='{{Math.floor(data.giobd1/60)+":"+data.giobd1%60}}')
+                  md-input-container(style='width:25%')
+                    label 
+                      a.i.fa.fa-clock-o.xanhnhat.padright
+                      | Giờ kết thúc
+                    input(disabled, value='{{Math.floor(data.giokt1/60)+":"+data.giokt1%60}}')
+                div(layout='column', layout-sm='column')
+                  div(layout="row")
+                    i.fa.fa-tag.xanhnhat.padright
+                    | Dịch vụ
+                  div(layout="row", layout-wrap='', flex='')
+                    div(ng-repeat='tieuchi in tieuchis', flex='50')
+                      md-checkbox.md-primary(ng-model='tieuchi.data' ng-click='them_filter_dichvu(tieuchi.ten, tieuchi.data, data)')
+                        | {{tieuchi.ten}}
+                div(layout='', layout-sm='column')
+                  md-input-container(flex)
+                    label 
+                      a.i.fa.fa-money.xanhnhat.padright
+                      | Giá tiền
+                    input(disabled, value='{{tinhtien_dh()+"  VNĐ"}}')
+            div.modal-footer
+              button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
+                i.fa.fa-check
+                |  Đồng ý
+              button.marleft.btn.btn-danger.pull-right(type='button' ng-click='close_thanhtoan()')
+                i.fa.fa-remove
+                |  Hủy

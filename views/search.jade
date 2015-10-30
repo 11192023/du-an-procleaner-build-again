@@ -3,7 +3,7 @@ extends layout
 block search
   base(href='/')
   .container.wrapper(ng-app='SearchModule' ng-controller='searchnhController')
-    .row.content(ng-show='isSearch')
+    .row.content(ng-if='isSearch')
       .col-lg-3.content-left
         md-toolbar.md-whiteframe-2dp
           .md-toolbar-tools
@@ -84,11 +84,11 @@ block search
                 i.fa.fa-shopping-cart
                 |  Yêu cầu giúp việc
               
-        div(layout="row" layout-align="center center" ng-show='loading')
+        div(layout="row" layout-align="center center" ng-if='loading')
           i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
         div.removedot
           ul
-            li(ng-repeat='ngv in ngvs' ng-show='filtering(ngv)')
+            li(ng-repeat='ngv in ngvs' ng-if='filtering(ngv)')
               md-card
                 md-card-content
                   .row.selected-classifieds
@@ -140,8 +140,8 @@ block search
                           i.fa.fa-arrow-right
                           |  Thông tin chi tiết
     .row.content
-      div(ng-show='isDetail')
-        .col-md-9.col-md-push-3.content-right(ng-repeat='ngv in ngvs', ng-show='checkcmnd(ngv.cmnd)')
+      div(ng-if='isDetail')
+        .col-md-9.col-md-push-3.content-right(ng-repeat='ngv in ngvs', ng-if='checkcmnd(ngv.cmnd)')
           h4 Thông tin chi tiết
           .row
             .col-md-4
@@ -194,11 +194,11 @@ block search
                     i.fa.fa-arrow-left
                     |  Quay lại
                 div
-                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv)' ng-show='isSelected(ngv, "chon", ngv_selected_arr)')
+                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv)' ng-if='isSelected(ngv, "chon", ngv_selected_arr)')
                     i.fa.fa-suitcase
                     |  Chọn nhân viên
                 div
-                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv)' ng-show='isSelected(ngv, "huy", ngv_selected_arr)')
+                  button.marleftbtn.btn.btn-danger.pull-right(type='button' ng-click='chon_ngv_detail(ngv)' ng-if='isSelected(ngv, "huy", ngv_selected_arr)')
                     i.fa.fa-undo
                     |  Bỏ chọn
           .row.tabmartop
@@ -304,13 +304,13 @@ block search
               button.xanhdam.close(type='button', ng-click='close_thanhtoan()') ×
               h4.biggerfont.modal-title.xanhdam Thông tin yêu cầu
             div#mypanel.modal-body
-              div.modal-thanhtoan-height(layout="row" layout-align="center center" ng-show='loading_yeucau')
+              div.modal-thanhtoan-height(layout="row" layout-align="center center" ng-if='loading_yeucau')
                 i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
-              div(layout="row" layout-align="center center" ng-show='hoanthanh_thanhtoan_nh')
+              div(layout="row" layout-align="center center" ng-if='hoanthanh_thanhtoan_nh')
                 h3 Yêu cầu của quý khách đã được chấp nhận, chúng tôi sẽ liên hệ trong lịch làm việc gần nhất.
-              div(layout="row" layout-align="center center" ng-show='thatbai_thanhtoan_nh')
+              div(layout="row" layout-align="center center" ng-if='thatbai_thanhtoan_nh')
                 h3 Đã có lỗi trong khi xử lý! quý khách vui lòng thử lại sau.
-              md-content(layout-padding='' ng-show='!(loading_yeucau || hoanthanh_thanhtoan_nh || thatbai_thanhtoan_nh)')
+              md-content(layout-padding='' ng-if='!(loading_yeucau || hoanthanh_thanhtoan_nh || thatbai_thanhtoan_nh)')
                 div(layout='', layout-sm='column')
                   md-input-container(flex)
                     label 

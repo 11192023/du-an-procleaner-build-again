@@ -4,6 +4,16 @@ md-backdrop.md-select-backdrop {
 .modal-thanhtoan-height{
   min-height: 1000px;
 }
+.fc-time {
+    display:none!important;
+}
+.thongtinct-daihan-body{
+  min-height: 1517px;
+  max-height: 1517px;
+}
+.martop{
+  margin-top: 10px!important;
+}
 body.modal-open {
     overflow: auto;
 }
