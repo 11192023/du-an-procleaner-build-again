@@ -1,8 +1,37 @@
+
+.fitcontent{
+  width: 100%!important;
+  margin-left: 0px!important;
+  margin-right: 0px!important;
+  padding-left: 0px!important;
+  padding-right: 0px!important;
+  margin-top: 0px!important;
+  margin-bottom: 0px!important;
+  padding-top: 0px!important;
+  padding-bottom: 0px!important;
+}
+.userimg{
+  padding-left: 6px;
+  padding-right: 6px;
+  padding-top: 6px;
+}
+.modal-header .close {
+    margin-top: -12px!important;
+}
+md-tabs md-tabs-wrapper md-tabs-canvas md-tab-item.md-tab {
+    max-width: inherit !important;
+}
+.topboxfilter{
+  min-height: 65px;
+}
 md-backdrop.md-select-backdrop {
     z-index:103!important;
 }
 .modal-thanhtoan-height{
-  min-height: 1000px;
+  min-height: 600px;
+}
+.user-page-height{
+  min-height: 800px;
 }
 .fc-time {
     display:none!important;
@@ -194,6 +223,9 @@ a:hover {
 
 .xanhdam {
   color: #02571C!important;
+}
+.bgxanhdam{
+  background-color: #02571C!important;
 }
 .xanhnhat {
   color: #8CC13D!important;

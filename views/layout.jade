@@ -1,6 +1,7 @@
 doctype html
 html
   head
+    base(href='/')
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='description', content='...')
@@ -19,7 +20,7 @@ html
     link(rel='stylesheet', href='css/bootstrap-datepicker3.standalone.min.css', type='text/css')
     link(rel='stylesheet', href='css/bootstrap-select.min.css', type='text/css')
     link(rel='stylesheet', href='css/preload.css', type='text/css')
-  body
+  body(ng-app='SearchModule')
     .se-pre-con
       .sk-folding-cube
         .sk-cube1.sk-cube
@@ -27,25 +28,144 @@ html
         .sk-cube4.sk-cube
         .sk-cube3.sk-cube
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
-      .container
+      .container(ng-controller='loginController')
         .navbar-header
           button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
             span.sr-only Toggle navigation
             span.icon-bar
             span.icon-bar
             span.icon-bar
-          a(href='/')
-            img.logow(src='img/logo.png', alt='')
-        #navbar.navbar-collapse.collapse
-          ul.nav.navbar-nav.navbar-right
-            li
-            li
-            li
+        #navbar.navbar-collapse.collapse(ng-init='checkCookies()')
+          div(layout="row" layout-align="space-between center")
+            a(ng-href='/' target="_self")
+              img.logow(src='img/logo.png', alt='')
+            div(ng-if='!registed')
+              button.marright.btn.btn-danger(type='button' ng-click='showDangKy()')
+                |  Đăng ký
+              button.marright.btn.btn-danger(type='button' ng-click='showDangNhap()')
+                |  Đăng Nhập
+            div(ng-show='registed')
+              md-list-item
+                img.md-avatar(alt='', ng-src='{{ "img/NGV.jpg"  }}')
+                .btn-group 
+                  button.btn.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                    | {{khachhang.hoten}}
+                    i.fa.fa-chevron-down.marleft
+                  ul.dropdown-menu
+                    li
+                      a(ng-href='/taikhoan?tab=tttk' target="_self") Thông tin tài khoản
+                    li
+                      a(ng-href='/taikhoan?&tab=lsdh' target="_self") Lịch sử đơn hàng
+                    li.divider(role='separator')
+                    li
+                      a(href='#', ng-click='DangXuat()') thoát
         // /.nav-collapse
-  
+        #DangKyForm.modal.fade(role='dialog')
+          div.modal-dialog
+            div.modal-content
+              form(name='formthanhtoan', novalidate ng-submit='DangKy()')
+                div.modal-header.bgxanhdam
+                  button.chutrang.close(type='button', ng-click='closeDangKy()') ×
+                  h4.biggerfont.modal-title.chutrang Đăng ký
+                div#mypanel.modal-body
+                  div(ng-show='sdtTonTai' layout="row" layout-align="center center")
+                    p Số điện thoại này đã được đăng ký!
+                  div(ng-show='dangkyThanhCong' layout="row" layout-align="center center")
+                    p Đăng ký thành công
+                  div(layout="row" layout-align="center center" ng-show='loadingDangKy')
+                        i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
+                  md-content(layout-padding='')
+                    div(layout='', layout-sm='column')
+                      md-input-container(flex)
+                        label 
+                          i.fa.fa-user.xanhnhat.padright
+                          | Họ tên
+                        input(md-maxlength="30", required, name="hoten", ng-model='khachhang.hoten' autocomplete='off')
+                        div(ng-messages='formthanhtoan.hoten.$error')
+                          div(ng-message='required') Thông tin bắt buộc.
+                          div(ng-message='md-maxlength') Tên không được quá 30 ký tự.
+                    div(layout='', layout-sm='column')
+                      md-input-container(style='width:44%')
+                        label 
+                          i.fa.fa-phone.xanhnhat.padright
+                          | Số đtdđ
+                        input(md-maxlength="15", ng-pattern="/^[0-9]+$/", required, name="sdt", ng-model='khachhang.sdt' autocomplete='off')
+                        div(ng-messages='formthanhtoan.sdt.$error')
+                          div(ng-message='pattern') Số điện thoại không đúng quy định(số từ 1-9).
+                          div(ng-message='required') Thông tin bắt buộc.
+                          div(ng-message='md-maxlength') Số điện thoại không được nhiều hơn 30 ký tự.
+                      md-input-container(style='width:43%')
+                        label 
+                          a.i.fa.fa-shield.xanhnhat.padright
+                          | Mã xác nhận
+                        input(autocomplete='off')
+                      md-button.md-fab.md-mini.md-primary.chutrang
+                        md-tooltip
+                          | Lấy mã xác nhận
+                        i.fa.fa-shield
+                    div(layout='', layout-sm='column')
+                      md-input-container(style='width:87%')
+                        label 
+                          i.fa.fa-map-marker.xanhnhat.padright
+                          | Địa chỉ
+                        input(md-maxlength="50", required, name="diachi", ng-model='khachhang.diachi' autocomplete='off')
+                        div(ng-messages='formthanhtoan.diachi.$error')
+                          div(ng-message='required') Thông tin bắt buộc.
+                          div(ng-message='md-maxlength') Địa chỉ không được nhiều hơn 50 ký tự.
+                      md-button.md-fab.md-mini.md-primary.chutrang
+                        md-tooltip
+                          | Lấy địa chỉ hiện tại
+                        i.fa.fa-map
+                div.modal-footer
+                  button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
+                    i.fa.fa-check
+                    |  Đồng ý
+                  button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangKy()')
+                    i.fa.fa-remove
+                    |  Hủy
+        #DangNhapForm.modal.fade(role='dialog')
+          div.modal-dialog
+            div.modal-content
+              form(name='formthanhtoan', novalidate ng-submit='DangNhap()')
+                div.modal-header.bgxanhdam
+                  button.chutrang.close(type='button', ng-click='closeDangNhap()') ×
+                  h4.biggerfont.modal-title.chutrang Đăng Nhập
+                div#mypanel.modal-body
+                  div(ng-show='sdtKhongTonTai' layout="row" layout-align="center center")
+                    p Số điện thoại này không tồn tại!
+                  div(layout="row" layout-align="center center" ng-show='loadingDangNhap')
+                        i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
+                  md-content(layout-padding='')
+                    md-input-container
+                      label 
+                        i.fa.fa-phone.xanhnhat.padright
+                        | Số đtdđ
+                      input(md-maxlength="15", ng-pattern="/^[0-9]+$/", required, name="sdt", ng-model='khachhang.sdt' autocomplete='off')
+                      div(ng-messages='formthanhtoan.sdt.$error')
+                        div(ng-message='pattern') Số điện thoại không đúng quy định(số từ 1-9).
+                        div(ng-message='required') Thông tin bắt buộc.
+                        div(ng-message='md-maxlength') Số điện thoại không được nhiều hơn 30 ký tự.
+                    div(layout='', layout-sm='column')
+                      md-input-container(style='width:95%')
+                        label 
+                          a.i.fa.fa-shield.xanhnhat.padright
+                          | Mã xác nhận
+                        input(autocomplete='off')
+                      md-button.md-fab.md-mini.md-primary.chutrang
+                        md-tooltip(md-direction="left")
+                          | Lấy mã xác nhận
+                        i.fa.fa-shield
+                div.modal-footer
+                  button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
+                    i.fa.fa-check
+                    |  Đồng ý
+                  button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangNhap()')
+                    i.fa.fa-remove
+                    |  Hủy
     block search
     block chitiet
     block content
+    block taikhoan
       
   section#footer
     .container
@@ -63,6 +183,9 @@ html
             i.fa.fa-google-plus
           a.btn.btn-circle-sm.btn-default.marright(href='#')
             i.fa.fa-linkedin
+    
+
+          
     // JS
     script(src='js/jquery-2.1.4.min.js')
     //preload
@@ -90,6 +213,9 @@ html
     script(src='js/bootstrap-datepicker.min.js')
     script(src='locales/bootstrap-datepicker.vi.min.js')
     
+    script(src='js/cancelableq.js')
+
+
     script(src='js/bootstrap-select.min.js')
     script(src='angular/core.js')
     script(src='js/search.js')

@@ -1,0 +1,134 @@
+extends layout
+
+block taikhoan
+  base(href='/')
+  .container.wrapper.user-page-height(ng-controller='userController')
+    .row.content
+      .col-lg-3
+        div.md-whiteframe-2dp
+          md-button.fitcontent(flex='', ng-click='showTTTK()')
+            | Thông tin tài khoản
+          md-button.fitcontent(flex='', ng-click='showLSYC()')
+            | Lịch sử yêu cầu
+      .col-lg-9
+        div(ng-init='initData()' ng-show='khachhang.sdt!=null')
+          .col-lg-1
+          .col-lg-10.md-whiteframe-2dp
+            div(layout="row" layout-align="center center" ng-if='loading')
+              i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
+            md-content(ng-show='isThongTinTk')
+              h3.center Thông tin tài khoản
+              div(layout='', layout-sm='column')
+                md-input-container(flex)
+                  label 
+                    i.fa.fa-user.xanhnhat.padright
+                    | Họ tên
+                  input(md-maxlength="30", required, name="hoten", ng-model='khachhang.hoten' autocomplete='off', disabled)
+              div(layout='', layout-sm='column')
+                md-input-container(flex)
+                  label 
+                    i.fa.fa-phone.xanhnhat.padright
+                    | Số đtdđ
+                  input(md-maxlength="15", ng-pattern="/^[0-9]+$/", required, name="sdt", ng-model='khachhang.sdt' autocomplete='off', disabled)
+              div(layout='', layout-sm='column')
+                md-input-container(flex)
+                  label 
+                    i.fa.fa-map-marker.xanhnhat.padright
+                    | Địa chỉ
+                  input(md-maxlength="50", required, name="diachi", ng-model='khachhang.diachi' autocomplete='off', disabled)
+            md-content(ng-show='isLichSuYc')
+              h3.center Lịch sử yêu cầu
+              md-tabs(md-dynamic-height='', md-border-bottom='', md-stretch-tabs='always')
+                md-tab
+                  md-tab-label
+                    i.fa.fa-paperclip
+                    |    Ngắn hạn
+                  md-tab-body
+                    md-content.md-padding
+                      md-list-item.ng-scope
+                        div(layout='row', flex='25')
+                          p Ngày yêu cầu
+                        div(layout='row', flex='25')
+                          p Ngày làm
+                        div(layout='row', flex='25')
+                          p Giá tiền
+                        div(layout='row', flex='25')
+                          p Trạng thái
+                        md-divider
+                      md-list-item(ng-repeat='yc in yeucauNh', ng-click='xemChiTietYc(yc._id)')
+                        div(layout='row', flex='25')
+                          p {{yc.ngaydatyeucau | date:'dd-MM-yyyy'}}
+                        div(layout='row', flex='25')
+                          p {{yc.ngayyeucau | date:'dd-MM-yyyy'}}
+                        div(layout='row', flex='25')
+                          p {{yc.chiphi}}
+                        div(layout='row', flex='25')
+                          p {{yc.trangthai}}
+                        md-divider
+                md-tab
+                  md-tab-label
+                    i.fa.fa-history
+                    |    Dài hạn
+                  md-tab-body
+                    md-content.md-padding
+                      md-list-item.ng-scope
+                        div(layout='row', flex='20')
+                          p Ngày yêu cầu
+                        div(layout='row', flex='20')
+                          p Từ ngày
+                        div(layout='row', flex='20')
+                          p Đến ngày
+                        div(layout='row', flex='20')
+                          p Giá tiền
+                        div(layout='row', flex='20')
+                          p Trạng thái
+                        md-divider
+                      md-list-item(ng-repeat='yc in yeucauDh', ng-click='xemChiTietYc(yc._id)')
+                        div(layout='row', flex='20')
+                          p {{yc.ngaydatyeucau | date:'dd-MM-yyyy'}}
+                        div(layout='row', flex='20')
+                          p {{yc.ngayyeucau | date:'dd-MM-yyyy'}}
+                        div(layout='row', flex='20')
+                          p {{yc.ngayketthuc | date:'dd-MM-yyyy'}}
+                        div(layout='row', flex='20')
+                          p {{yc.chiphi}}
+                        div(layout='row', flex='20')
+                          p {{yc.trangthai}}
+                        md-divider
+            md-content(ng-show='isChitietYc')
+              h3.center Chi tiết yêu cầu
+              md-content.md-padding
+                md-list-item.ng-scope
+                  div(layout='row', flex='25')
+                    p Ngày làm
+                  div(layout='row', flex='25')
+                    p Từ giờ
+                  div(layout='row', flex='25')
+                    p Đến giờ
+                  div(layout='row', flex='25')
+                    p Nhân viên
+                  md-divider
+                md-list-item(ng-repeat='ctyc in chitietyeucau', ng-init='layNgvChiTiet(ctyc.nguoigiupviec)', ng-click='showDanhgiaCtyc(ctyc)')
+                  div(layout='row', flex='25')
+                    p {{ctyc.giobatdau | date:'dd-MM-yyyy'}}
+                  div(layout='row', flex='25')
+                    p {{ctyc.giobatdau | date:'HH:mm'}}
+                  div(layout='row', flex='25')
+                    p {{ctyc.gioketthuc | date:'HH:mm'}}
+                  div(layout='row', flex='25')
+                    p {{layTenNgv(ctyc.nguoigiupviec)}}
+                  md-divider
+          .col-lg-1
+    #nhanxet.modal.fade(role='dialog')
+      div.modal-dialog
+        div.modal-content
+          div.modal-header.bgxanhdam
+            button.chutrang.close(type='button', data-dismiss='modal') ×
+            h4.biggerfont.modal-title.chutrang {{'Nhận xét nhân viên '+ngvChiTiet.hoten}}
+          div#mypanel.modal-body
+            md-input-container.md-block
+              label Nhận xét
+              textarea(ng-model='nhanxet', columns='5', md-maxlength='150')
+          div.modal-footer
+            md-button(ng-click='luuNhanXet()')
+              | Lưu nhận xét

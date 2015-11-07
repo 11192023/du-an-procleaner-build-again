@@ -4,11 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var search = require('./routes/search');
 var search_daihan = require('./routes/search_daihan');
 var ngv_chitiet = require('./routes/ngv_chitiet');
+var user = require('./routes/user')
+
 var app = express();
 var fs = require('fs');
 var User = require('./models/user.js');
@@ -33,11 +35,10 @@ app.all(/^\/ngv_chitiet$/, function(req, res) { res.redirect('/ngv_chitiet/'); }
 app.use('/ngv_chitiet/',express.static(__dirname+'/public'));
 
 app.use('/', routes);
-app.use('/users', users);
 app.use('/search', search);
 app.use('/ngv_chitiet', ngv_chitiet);
 app.use('/searchdaihan', search_daihan);
-
+app.use('/taikhoan', user)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

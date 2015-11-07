@@ -2,8 +2,8 @@ extends layout
 
 block search
   base(href='/')
-  .container.wrapper(ng-app='SearchModule' ng-controller='searchnhController')
-    .row.content(ng-if='isSearch')
+  .container.wrapper(ng-controller='searchnhController')
+    .row.content(ng-show='isSearch')
       .col-lg-3.content-left
         md-toolbar.md-whiteframe-2dp
           .md-toolbar-tools
@@ -52,6 +52,8 @@ block search
               md-subheader
                 i.fa.fa-tags.padright.xanhnhat 
                 | Dịch vụ
+            div(layout="row" layout-align="center center" ng-if='loading_dichvu')
+              i.fa.fa-2x.fa-cog.fa-spin.xanhnhat
             div(ng-repeat='tieuchi in tieuchis')
               md-checkbox.md-primary.md-align-top-left(ng-model='tieuchi.data' ng-click='them_filter_dichvu(tieuchi.ten, tieuchi.data, data)')
                 | {{tieuchi.ten}}
@@ -139,8 +141,8 @@ block search
                         button.btn.btn-danger.pull-right(type='button' ng-click='show_detail(ngv)')
                           i.fa.fa-arrow-right
                           |  Thông tin chi tiết
-    .row.content
-      div(ng-if='isDetail')
+    .row.content(ng-if='isDetail')
+      div
         .col-md-9.col-md-push-3.content-right(ng-repeat='ngv in ngvs', ng-if='checkcmnd(ngv.cmnd)')
           h4 Thông tin chi tiết
           .row
@@ -296,21 +298,19 @@ block search
                   .left.padleft
                     h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
                     | {{tinh_tuoi_ngv(ngv_sub2.ngaysinh) + ' tuổi'}}
-    #thongtinkh.modal.fade(role='dialog')
-      div.modal-dialog
-        div.modal-content
+    .row.content(ng-if='isThanhToan')
+      .col-lg-2
+      .col-lg-8
+        div.md-whiteframe-5dp
           form(name='formthanhtoan', novalidate ng-submit='luu_yeucau()')
-            div.modal-header.bgxanhdam
-              button.xanhdam.close(type='button', ng-click='close_thanhtoan()') ×
-              h4.biggerfont.modal-title.xanhdam Thông tin yêu cầu
+            div.modal-header
+              h4.biggerfont.modal-title.xanhdam.center Thông tin yêu cầu
             div#mypanel.modal-body
               div.modal-thanhtoan-height(layout="row" layout-align="center center" ng-if='loading_yeucau')
                 i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
-              div(layout="row" layout-align="center center" ng-if='hoanthanh_thanhtoan_nh')
+              div.modal-thanhtoan-height(layout="row" layout-align="center center" ng-if='hoanthanh_thanhtoan_nh')
                 h3 Yêu cầu của quý khách đã được chấp nhận, chúng tôi sẽ liên hệ trong lịch làm việc gần nhất.
-              div(layout="row" layout-align="center center" ng-if='thatbai_thanhtoan_nh')
-                h3 Đã có lỗi trong khi xử lý! quý khách vui lòng thử lại sau.
-              md-content(layout-padding='' ng-if='!(loading_yeucau || hoanthanh_thanhtoan_nh || thatbai_thanhtoan_nh)')
+              md-content(layout-padding='' ng-if='!(loading_yeucau || hoanthanh_thanhtoan_nh)')
                 div(layout='', layout-sm='column')
                   md-input-container(flex)
                     label 
@@ -336,7 +336,7 @@ block search
                       | Mã xác nhận
                     input(autocomplete='off')
                   md-button.md-fab.md-mini.md-primary.chutrang
-                    md-tooltip
+                    md-tooltip(md-direction="left")
                       | Lấy mã xác nhận
                     i.fa.fa-shield
                 div(layout='', layout-sm='column')
@@ -349,7 +349,7 @@ block search
                       div(ng-message='required') Thông tin bắt buộc.
                       div(ng-message='md-maxlength') Địa chỉ không được nhiều hơn 50 ký tự.
                   md-button.md-fab.md-mini.md-primary.chutrang
-                    md-tooltip
+                    md-tooltip(md-direction="left")
                       | Lấy địa chỉ hiện tại
                     i.fa.fa-map
                 div(layout='', layout-sm='column')
@@ -400,10 +400,16 @@ block search
                     md-list-item(ng-repeat='ngv in ngv_selected_arr')
                       img.md-avatar(alt='', ng-src='{{"img/ngv/" + ngv.hinhanh}}')
                       p {{ngv.hoten}}
-            div.modal-footer
+            div.modal-footer(ng-if='!loading_yeucau && !hoanthanh_thanhtoan_nh')
               button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
                 i.fa.fa-check
                 |  Đồng ý
               button.marleft.btn.btn-danger.pull-right(type='button' ng-click='close_thanhtoan()')
                 i.fa.fa-remove
                 |  Hủy
+            div.modal-footer(ng-if='hoanthanh_thanhtoan_nh')
+              button.marleft.btn.btn-danger.pull-right(type="button" ng-click='hoanthanh_thanhtoan()')
+                i.fa.fa-check
+                |  Đồng ý
+      .col-lg-2
+      
