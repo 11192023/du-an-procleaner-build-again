@@ -31,8 +31,6 @@ app.use(methodOverride());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.all(/^\/ngv_chitiet$/, function(req, res) { res.redirect('/ngv_chitiet/'); });
-app.use('/ngv_chitiet/',express.static(__dirname+'/public'));
 
 app.use('/', routes);
 app.use('/search', search);

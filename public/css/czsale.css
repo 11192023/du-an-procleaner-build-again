@@ -1,4 +1,9 @@
-
+.red{
+  color:red;
+}
+.ttmartop{
+  margin-top: 5px;
+}
 .fitcontent{
   width: 100%!important;
   margin-left: 0px!important;

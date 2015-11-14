@@ -10,6 +10,9 @@ block taikhoan
             | Thông tin tài khoản
           md-button.fitcontent(flex='', ng-click='showLSYC()')
             | Lịch sử yêu cầu
+        div.martop.md-whiteframe-2dp
+          md-button.fitcontent(flex='')
+            | {{'Số tiền còn nợ : ' + tienno}}
       .col-lg-9
         div(ng-init='initData()' ng-show='khachhang.sdt!=null')
           .col-lg-1
@@ -47,15 +50,15 @@ block taikhoan
                     md-content.md-padding
                       md-list-item.ng-scope
                         div(layout='row', flex='25')
-                          p Ngày yêu cầu
+                          p.xanhnhat Ngày yêu cầu
                         div(layout='row', flex='25')
-                          p Ngày làm
+                          p.xanhnhat Ngày làm
                         div(layout='row', flex='25')
-                          p Giá tiền
+                          p.xanhnhat Giá tiền
                         div(layout='row', flex='25')
-                          p Trạng thái
+                          p.xanhnhat Trạng thái
                         md-divider
-                      md-list-item(ng-repeat='yc in yeucauNh', ng-click='xemChiTietYc(yc._id)')
+                      md-list-item(ng-repeat='yc in yeucauNh', ng-click='xemChiTietYc(yc)')
                         div(layout='row', flex='25')
                           p {{yc.ngaydatyeucau | date:'dd-MM-yyyy'}}
                         div(layout='row', flex='25')
@@ -73,15 +76,15 @@ block taikhoan
                     md-content.md-padding
                       md-list-item.ng-scope
                         div(layout='row', flex='20')
-                          p Ngày yêu cầu
+                          p.xanhnhat Ngày yêu cầu
                         div(layout='row', flex='20')
-                          p Từ ngày
+                          p.xanhnhat Từ ngày
                         div(layout='row', flex='20')
-                          p Đến ngày
+                          p.xanhnhat Đến ngày
                         div(layout='row', flex='20')
-                          p Giá tiền
+                          p.xanhnhat Giá tiền
                         div(layout='row', flex='20')
-                          p Trạng thái
+                          p.xanhnhat Trạng thái
                         md-divider
                       md-list-item(ng-repeat='yc in yeucauDh', ng-click='xemChiTietYc(yc._id)')
                         div(layout='row', flex='20')
@@ -100,13 +103,13 @@ block taikhoan
               md-content.md-padding
                 md-list-item.ng-scope
                   div(layout='row', flex='25')
-                    p Ngày làm
+                    p.xanhnhat Ngày làm
                   div(layout='row', flex='25')
-                    p Từ giờ
+                    p.xanhnhat Từ giờ
                   div(layout='row', flex='25')
-                    p Đến giờ
+                    p.xanhnhat Đến giờ
                   div(layout='row', flex='25')
-                    p Nhân viên
+                    p.xanhnhat Nhân viên
                   md-divider
                 md-list-item(ng-repeat='ctyc in chitietyeucau', ng-init='layNgvChiTiet(ctyc.nguoigiupviec)', ng-click='showDanhgiaCtyc(ctyc)')
                   div(layout='row', flex='25')

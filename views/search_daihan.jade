@@ -20,9 +20,9 @@ block search
                   | Thay đổi ngày sẽ mất các lựa chọn hiện tại
             .form-inline
               .form-group
-                input#ngaybd.marleft.form-control.timewidthhalf.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngaybd' ng-change='changeFilter()')
+                input#ngaybd.marleft.form-control.timewidthhalf.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngaybd')
 
-                input#ngaykt.form-control.timewidthhalf.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngaykt' ng-change='changeFilter()')
+                input#ngaykt.form-control.timewidthhalf.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngaykt')
           div.form-inline.xanhnhat
             md-subheader
               i.fa.fa-clock-o.padright.xanhnhat 
@@ -127,7 +127,7 @@ block search
                     .row
                       .col-md-4
                         a(href='#')
-                          img.img-responsive(src='{{"img/ngv/" + detailData.ngvDetail.hinhanh}}', alt='')
+                          img.img-responsive(ng-src='{{"img/ngv/" + detailData.ngvDetail.hinhanh}}', alt='')
                         .rating
                           i.fa.fa-2x.fa-star.xanhnhat
                           i.fa.fa-2x.fa-star.xanhnhat
@@ -222,7 +222,7 @@ block search
                                 h1.md-display-2.center Giấy khám sức khỏe
                                   slick.slicktest(settings='slickconfig', ng-if='numberLoaded')
                                     div(ng-repeat='gksk in detailData.ngvDetail.giaykhamsuckhoe')
-                                      img.center(src='{{"img/ngv/" + gksk}}', alt='')
+                                      img.center(ng-src='{{"img/ngv/" + gksk}}', alt='')
     .row.content(ng-show='isThanhToan')
       .col-lg-2
       .col-lg-8

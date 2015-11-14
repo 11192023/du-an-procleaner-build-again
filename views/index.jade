@@ -35,13 +35,143 @@ html(lang='en')
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-  body#page-top(ng-app='IndexModule' onload="noBack();" onpageshow="if (event.persisted) noBack();" onunload="")
+    
+  body#page-top(ng-app='SearchModule')
     .se-pre-con
       .sk-folding-cube
         .sk-cube1.sk-cube
         .sk-cube2.sk-cube
         .sk-cube4.sk-cube
         .sk-cube3.sk-cube
+    div(ng-controller='loginController', ng-init='checkCookies()')
+      .lock-size.mystyle(layout='row', layout-align='center center')
+        md-fab-speed-dial.md-fling(md-open='false', md-direction='left')
+          md-fab-trigger
+            md-button.md-fab.md-primary(aria-label='menu')
+              i.fa.fa-list.xanhdam
+          md-fab-actions
+            div(ng-show='!registed')
+              button.marright.btn.btn-danger(type='button' ng-click='showDangKy()')
+                |  Đăng ký
+              button.marright.btn.btn-danger(type='button' ng-click='showDangNhap()')
+                |  Đăng Nhập
+            div(ng-show='registed')
+              md-list-item
+                img.md-avatar(alt='', ng-src='{{ "img/NGV.jpg"  }}')
+                .btn-group.dropup
+                  button.btn.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                    | {{khachhang.hoten}}
+                    i.fa.fa-chevron-down.marleft
+                  ul.dropdown-menu
+                    li
+                      a(ng-href='/taikhoan?tab=tttk' target="_self") Thông tin tài khoản
+                    li
+                      a(ng-href='/taikhoan?&tab=lsdh' target="_self") Lịch sử đơn hàng
+                    li.divider(role='separator')
+                    li
+                      a(href='#', ng-click='DangXuat()') thoát
+      #DangKyForm.modal.fade(role='dialog')
+        div.modal-dialog
+          div.modal-content
+            form(name='formthanhtoan', novalidate ng-submit='DangKy()')
+              div.modal-header.bgxanhdam
+                button.chutrang.close(type='button', ng-click='closeDangKy()') ×
+                h4.biggerfont.modal-title.chutrang Đăng ký
+              div#mypanel.modal-body
+                div(ng-show='sdtTonTai' layout="row" layout-align="center center")
+                  p Số điện thoại này đã được đăng ký!
+                div(ng-show='dangkyThanhCong' layout="row" layout-align="center center")
+                  p Đăng ký thành công
+                div(layout="row" layout-align="center center" ng-show='loadingDangKy')
+                      i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
+                md-content(layout-padding='')
+                  div(layout='', layout-sm='column')
+                    md-input-container(flex)
+                      label 
+                        i.fa.fa-user.xanhnhat.padright
+                        | Họ tên
+                      input(md-maxlength="30", required, name="hoten", ng-model='khachhang.hoten' autocomplete='off')
+                      div(ng-messages='formthanhtoan.hoten.$error')
+                        div(ng-message='required') Thông tin bắt buộc.
+                        div(ng-message='md-maxlength') Tên không được quá 30 ký tự.
+                  div(layout='', layout-sm='column')
+                    md-input-container(style='width:44%')
+                      label 
+                        i.fa.fa-phone.xanhnhat.padright
+                        | Số đtdđ
+                      input(md-maxlength="15", ng-pattern="/^[0-9]+$/", required, name="sdt", ng-model='khachhang.sdt' autocomplete='off')
+                      div(ng-messages='formthanhtoan.sdt.$error')
+                        div(ng-message='pattern') Số điện thoại không đúng quy định(số từ 1-9).
+                        div(ng-message='required') Thông tin bắt buộc.
+                        div(ng-message='md-maxlength') Số điện thoại không được nhiều hơn 30 ký tự.
+                    md-input-container(style='width:43%')
+                      label 
+                        a.i.fa.fa-shield.xanhnhat.padright
+                        | Mã xác nhận
+                      input(autocomplete='off')
+                    md-button.md-fab.md-mini.md-primary.chutrang
+                      md-tooltip
+                        | Lấy mã xác nhận
+                      i.fa.fa-shield
+                  div(layout='', layout-sm='column')
+                    md-input-container(style='width:87%')
+                      label 
+                        i.fa.fa-map-marker.xanhnhat.padright
+                        | Địa chỉ
+                      input(md-maxlength="50", required, name="diachi", ng-model='khachhang.diachi' autocomplete='off')
+                      div(ng-messages='formthanhtoan.diachi.$error')
+                        div(ng-message='required') Thông tin bắt buộc.
+                        div(ng-message='md-maxlength') Địa chỉ không được nhiều hơn 50 ký tự.
+                    md-button.md-fab.md-mini.md-primary.chutrang
+                      md-tooltip
+                        | Lấy địa chỉ hiện tại
+                      i.fa.fa-map
+              div.modal-footer
+                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
+                  i.fa.fa-check
+                  |  Đồng ý
+                button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangKy()')
+                  i.fa.fa-remove
+                  |  Hủy
+      #DangNhapForm.modal.fade(role='dialog')
+        div.modal-dialog
+          div.modal-content
+            form(name='formthanhtoan', novalidate ng-submit='DangNhap()')
+              div.modal-header.bgxanhdam
+                button.chutrang.close(type='button', ng-click='closeDangNhap()') ×
+                h4.biggerfont.modal-title.chutrang Đăng Nhập
+              div#mypanel.modal-body
+                div(ng-show='sdtKhongTonTai' layout="row" layout-align="center center")
+                  p Số điện thoại này không tồn tại!
+                div(layout="row" layout-align="center center" ng-show='loadingDangNhap')
+                      i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
+                md-content(layout-padding='')
+                  md-input-container
+                    label 
+                      i.fa.fa-phone.xanhnhat.padright
+                      | Số đtdđ
+                    input(md-maxlength="15", ng-pattern="/^[0-9]+$/", required, name="sdt", ng-model='khachhang.sdt' autocomplete='off')
+                    div(ng-messages='formthanhtoan.sdt.$error')
+                      div(ng-message='pattern') Số điện thoại không đúng quy định(số từ 1-9).
+                      div(ng-message='required') Thông tin bắt buộc.
+                      div(ng-message='md-maxlength') Số điện thoại không được nhiều hơn 30 ký tự.
+                  div(layout='', layout-sm='column')
+                    md-input-container(style='width:95%')
+                      label 
+                        a.i.fa.fa-shield.xanhnhat.padright
+                        | Mã xác nhận
+                      input(autocomplete='off')
+                    md-button.md-fab.md-mini.md-primary.chutrang
+                      md-tooltip(md-direction="left")
+                        | Lấy mã xác nhận
+                      i.fa.fa-shield
+              div.modal-footer
+                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
+                  i.fa.fa-check
+                  |  Đồng ý
+                button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangNhap()')
+                  i.fa.fa-remove
+                  |  Hủy
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
       .container-fluid
         // Brand and toggle get grouped for better mobile display
@@ -199,13 +329,20 @@ html(lang='en')
               p.text-muted.justify Vệ sinh trần, sàn; giặt thảm, ghế sofa; lau chùi cửa, kính, bàn ghế, tủ hồ sơ; vệ sinh văn phòng, công ty, nhà xưởng...
 
     section#portfolio.no-padding
+      .container
+        .row
+          .col-lg-12.text-center
+            h2.section-heading Danh sách nhân viên
+            hr.primary
       .container-fluid(ng-controller='slickController')
         .row.no-gutter
-          slick.slicktest(settings='slickconfig', ng-if='numberLoaded')
-            .col-xs-6.col-sm-3
+          div(layout="row" layout-align="center center" ng-show='loadingSlick')
+              i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
+          slick.slicktest(settings='slickconfig', ng-if='!loadingSlick')
+            .col-xs-6.col-sm-3(ng-repeat='ngv in dsNgv | orderBy: "-sonamkinhnghiem"')
               .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
+                a.portfolio-box(ng-href='{{"/ngv_chitiet?id="+ngv._id}}', target="_self")
+                  img.img-responsive(ng-src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
@@ -216,360 +353,16 @@ html(lang='en')
                   .row
                     .left.padleftngv
                       h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
+                      | {{ngv.hoten}}
                     .right.padrightngv
                   .row
                     .left.padleftngv
                       h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
+                      | {{ngv.sonamkinhnghiem + ' năm kinh nghiệm'}}
                     .right.padrightngv
                       h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
-            .col-xs-6.col-sm-3
-              .thumbnail.center-block
-                a.portfolio-box(href='#')
-                  img.img-responsive(data-lazy='img/NGV.jpg', alt='')
-                  .portfolio-box-caption
-                    .portfolio-box-caption-content
-                      .project-category.text-faded
-                        | 
-                      .project-name
-                        | Xem thông tin chi tiết
-                .caption
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-user.xanhnhat.marbtm.padright
-                      | Nguyễn Minh Tuấn
-                    .right.padrightngv
-                  .row
-                    .left.padleftngv
-                      h5.i.fa.fa-clock-o.xanhnhat.marbtm.padright
-                      | 2 năm kinh nghiệm
-                    .right.padrightngv
-                      h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
-                      | 40 tuổi
+                      | {{tinhTuoiNgv(ngv.ngaysinh) + ' tuổi'}}
+            
     section#contact.contactbg
       .container
         .col-md-6.pull-left
@@ -1037,6 +830,8 @@ html(lang='en')
           {slick: "slick/slick.min.js"},
           {angular_slick: "slick/angular/angular-slick.min.js"},
           {datepicker: "js/bootstrap-datepicker.min.js"},
+          {full_calendar: "fullcalendar/angular_full_calendar.js"},
+          {cancellableq: "js/cancelableq.js"},
           {dpvn: "locales/bootstrap-datepicker.vi.min.js"},
           {custom_index: "js/creative.js"},
           {custom_angular: "angular/core.js"}

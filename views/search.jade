@@ -96,7 +96,7 @@ block search
                   .row.selected-classifieds
                     .col-md-3
                       a(href='#' ng-click='chon_ngv(ngv, ngv_selected_arr)')
-                        img.img-responsive(src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
+                        img.img-responsive(ng-src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
                         md-tooltip
                           | Bấm vào hình để chọn người giúp việc.
                       .rating
@@ -148,7 +148,7 @@ block search
           .row
             .col-md-4
               a(href='#')
-                img.img-responsive(src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
+                img.img-responsive(ng-src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
               .rating
                 i.fa.fa-2x.fa-star.xanhnhat
                 i.fa.fa-2x.fa-star.xanhnhat
@@ -258,14 +258,14 @@ block search
                       h1.md-display-2.center Giấy khám sức khỏe
                         slick.slicktest(settings='slickconfig', ng-if='numberLoaded')
                           div(ng-repeat='gksk in ngv.giaykhamsuckhoe')
-                            img.center(src='{{"img/ngv/" + gksk}}', alt='')
+                            img.center(ng-src='{{"img/ngv/" + gksk}}', alt='')
           hr.hrmargin
         .col-md-3.col-md-pull-9.content-left
           h4 Nhân viên tương đồng
           .row(ng-if='ngv_sub1!=null')
             .thumbnail.sm-img-left
               a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub1)')
-                img.img-responsive(src='{{"img/ngv/" + ngv_sub1.hinhanh}}', alt='')
+                img.img-responsive(ng-src='{{"img/ngv/" + ngv_sub1.hinhanh}}', alt='')
               .caption.center
                 .row
                   .left.padleft
@@ -283,7 +283,7 @@ block search
           .row(ng-if='ngv_sub2!=null')
             .thumbnail.sm-img-left
               a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub2)')
-                img.img-responsive(src='{{"img/ngv/" + ngv_sub2.hinhanh}}', alt='')
+                img.img-responsive(ng-src='{{"img/ngv/" + ngv_sub2.hinhanh}}', alt='')
               .caption.center
                 .row
                   .left.padleft
