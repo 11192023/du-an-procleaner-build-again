@@ -1433,7 +1433,12 @@
 		
 		//load and close modal
 		
-
+		$scope.firstload = {
+			ngaybd: true,
+			ngaykt: true,
+			giobd: true,
+			giokt: true
+		};
 		$scope.Math = window.Math;
 		$scope.loading = false;
 		$scope.loading_yeucau = false;
@@ -1466,7 +1471,7 @@
     		$timeout(function(){
     			$scope.detailData.ngvDetail = ngv;
     			$scope.toggleSideNav();
-    		},700);
+    		},500);
     		
     	}
 		//full calendar
@@ -1708,9 +1713,10 @@
 				})(i);
 			}
 			$q.all($scope.promises).then(function(){
+				console.log('done');
 				$scope.promises = [];
 				$scope.loading = false;
-			})
+			});
 			$scope.initLanguage();
 		}
 
@@ -1785,6 +1791,14 @@
 	    //--------------watch----------------------------
 		
 		$scope.changeFilter = function(){
+			for(i=0; i<$scope.promises.length; i++){
+				$scope.promises[i].cancel();
+			}
+			$scope.promises = [];
+			$timeout(function(){
+				initData($scope.data.locdaihan);
+			},300);
+			
 			/*
 			for(i=0; i<$scope.promises.length; i++){
 				$scope.promises[i].cancel();
@@ -1803,6 +1817,10 @@
 		$scope.isReverse1 = false;
 		$scope.isReverse2 = false;
 		$scope.$watch('data.ngaybd', function(newVal, oldVal){
+			if($scope.firstload.ngaybd == true) {
+				$scope.firstload.ngaybd = false;
+				return;
+			}
 			if($scope.isReverse1 == true){
 	    		$scope.isReverse1 = false;
 	    		return;
@@ -1867,12 +1885,13 @@
             	$scope.data.ngaybd = oldVal;
 			    return;
             }
-            for(i=0; i<$scope.promises.length; i++){
-				$scope.promises[i].cancel();
-			}
-			initData($scope.data.locdaihan);
+            $scope.changeFilter();
 		});
 		$scope.$watch('data.ngaykt', function(newVal, oldVal){
+			if($scope.firstload.ngaykt == true) {
+				$scope.firstload.ngaykt = false;
+				return;
+			}
 			if($scope.isReverse1 == true){
 	    		$scope.isReverse1 = false;
 	    		return;
@@ -1938,14 +1957,15 @@
             	$scope.data.ngaykt = oldVal;
 			    return;
             }
-            for(i=0; i<$scope.promises.length; i++){
-				$scope.promises[i].cancel();
-			}
-			initData($scope.data.locdaihan);
+            $scope.changeFilter();
 		});
 		
 		
 		$scope.$watch('data.giobd1', function(newVal, oldVal){
+			if($scope.firstload.giobd == true) {
+				$scope.firstload.giobd = false;
+				return;
+			}
 			if($scope.isReverse == true){
 				console.log('adsa');
 	    		$scope.isReverse = false;
@@ -1970,13 +1990,14 @@
 			    
                 return;
             }
-            for(i=0; i<$scope.promises.length; i++){
-				$scope.promises[i].cancel();
-			}
-			initData($scope.data.locdaihan);
+            $scope.changeFilter();
     		
 		});
 		$scope.$watch('data.giokt1', function(newVal, oldVal){
+			if($scope.firstload.giokt == true) {
+				$scope.firstload.giokt = false;
+				return;
+			}
 			if($scope.isReverse == true){
 	    		$scope.isReverse = false;
 	    		return;
@@ -2000,10 +2021,7 @@
 			    
                 return;
             }
-            for(i=0; i<$scope.promises.length; i++){
-				$scope.promises[i].cancel();
-			}
-			initData($scope.data.locdaihan);
+            $scope.changeFilter();
     		
 		});
 		//modal yeu cau
@@ -2035,6 +2053,7 @@
 	    	return 'Chưa tiến hành';
 	    }
 	    $scope.show_yeucau = function(){
+	    	console.log($scope.loading);
 	    	if($scope.loading == true){
 	    		$mdDialog.show(
 			      $mdDialog.alert()

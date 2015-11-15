@@ -32,11 +32,11 @@ block search
                   | Thay đổi giờ sẽ mất các lựa chọn hiện tại
           .form-inline
             .form-group
-              select#giobd_sl.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions" ng-change='changeFilter()')
+              select#giobd_sl.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions")
                 option(value='' disabled) Từ giờ
               input#gbdnh.form-control.sb(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-              select#giokt_sl.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions" ng-change='changeFilter()')
+              select#giokt_sl.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions")
                 option(value='' disabled) Đến giờ
               input#gktnh.form-control.sb(type='hidden', name='giokt1', value='{{data.giokt1}}')
           // số năm kinh nghiệm ---------------------------------------------------
@@ -69,7 +69,7 @@ block search
                 i.fa.fa-warning.pull-right.padright.xanhnhat
                   md-tooltip(md-direction="left")
                     | Thay đổi quận sẽ mất các lựa chọn hiện tại
-            md-radio-group(ng-model='data.quan' ng-change='changeFilter()')
+            md-radio-group(ng-model='data.quan')
               div(ng-repeat='quan in quans')
                 md-radio-button(value='{{quan.ten}}')
                   {{quan.ten}}
