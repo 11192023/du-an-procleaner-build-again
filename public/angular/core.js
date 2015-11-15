@@ -747,7 +747,7 @@
 		service.layDiaChiGoogleMapApi = function(lat, lng){
 			var deferred = $q.defer();
 			$http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + 
-				lat + ',' + lng + '&key=AIzaSyCILGAm6yuGJ_T4mxRP2YGz6WY7Yn5WPUs', { cache: false})
+				lat + ',' + lng + '&key=AIzaSyAeHdGJNuQbztJP9zfVTX60dJG2Uiyk1pg', { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -821,7 +821,8 @@
 
 	});
 	searchModule.controller('searchnhController',
-	 	function(thanhtoanFactory,
+	 	function(khachhangFactory,
+	 		    thanhtoanFactory,
 			  	filterFactory,
 			   	ngvFactory,
 			    $scope,
@@ -1084,6 +1085,33 @@
 										 	$scope.loading = false;
 										 });
 		});
+		//--------------lay dia chi google map
+		$scope.layDiaChi = function(){
+			if(navigator.geolocation) {
+			    navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+					khachhangFactory.layDiaChiGoogleMapApi(pos.lat, pos.lng).then(function(data){
+						$scope.khachhang.diachi = data.results[0].formatted_address;
+					})
+					
+				});
+			}
+			// Browser doesn't support Geolocation
+			else {
+				$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Trình duyệt không hỗ trợ chức năng này!!')
+			        .ok('Đồng ý!')
+			        .targetEvent(ev)
+			    );
+			}
+		}
 		//--------------end watch-----------------------
 	    
 	    var getNgvPhuHop = function(ngvs, quan){
@@ -1387,7 +1415,8 @@
 	    //
 	});
 	searchModule.controller('searchdhController', 
-		function(thanhtoanFactory,
+		function(khachhangFactory,
+				  thanhtoanFactory,
 				  filterFactory,
 				  ngvFactory,
 				  $scope,
@@ -1726,6 +1755,33 @@
 	    
 	    initData($scope.data.locdaihan);
 	    //
+	    //--------------lay dia chi google map-----------
+	    $scope.layDiaChi = function(){
+			if(navigator.geolocation) {
+			    navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+					khachhangFactory.layDiaChiGoogleMapApi(pos.lat, pos.lng).then(function(data){
+						$scope.khachhang.diachi = data.results[0].formatted_address;
+					})
+					
+				});
+			}
+			// Browser doesn't support Geolocation
+			else {
+				$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Trình duyệt không hỗ trợ chức năng này!!')
+			        .ok('Đồng ý!')
+			        .targetEvent(ev)
+			    );
+			}
+		}
 	    //--------------watch----------------------------
 		
 		$scope.changeFilter = function(){
@@ -2268,6 +2324,32 @@
 					},5000)
 				}
 			});
+		}
+		$scope.layDiaChi = function(){
+			if(navigator.geolocation) {
+			    navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+					khachhangFactory.layDiaChiGoogleMapApi(pos.lat, pos.lng).then(function(data){
+						$scope.khachhang.diachi = data.results[0].formatted_address;
+					})
+					
+				});
+			}
+			// Browser doesn't support Geolocation
+			else {
+				$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Trình duyệt không hỗ trợ chức năng này!!')
+			        .ok('Đồng ý!')
+			        .targetEvent(ev)
+			    );
+			}
 		}
 		$scope.showDangNhap = function(){
 			$('#DangNhapForm').modal({backdrop: 'static', keyboard: false},'show');
@@ -2851,17 +2933,22 @@
 						lng: position.coords.longitude
 					};
 					khachhangFactory.layDiaChiGoogleMapApi(pos.lat, pos.lng).then(function(data){
-						$scope.khachhang.diachi = pos.lat + ' ' + pos.lng;
-						console.log(data);
+						$scope.khachhang.diachi = data.results[0].formatted_address;
 					})
 					
 				});
-
 			}
 			// Browser doesn't support Geolocation
 			else {
-				browserSupportFlag = false;
-				handleNoGeolocation(browserSupportFlag);
+				$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Trình duyệt không hỗ trợ chức năng này!!')
+			        .ok('Đồng ý!')
+			        .targetEvent(ev)
+			    );
 			}
 		}
 		$scope.close_thanhtoan = function(){

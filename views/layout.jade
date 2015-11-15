@@ -63,7 +63,7 @@ html
         #DangKyForm.modal.fade(role='dialog')
           div.modal-dialog
             div.modal-content
-              form(name='formthanhtoan', novalidate ng-submit='DangKy()')
+              form(name='formthanhtoan', novalidate)
                 div.modal-header.bgxanhdam
                   button.chutrang.close(type='button', ng-click='closeDangKy()') ×
                   h4.biggerfont.modal-title.chutrang Đăng ký
@@ -108,16 +108,16 @@ html
                         label 
                           i.fa.fa-map-marker.xanhnhat.padright
                           | Địa chỉ
-                        input(md-maxlength="50", required, name="diachi", ng-model='khachhang.diachi' autocomplete='off')
+                        input(md-maxlength="150", required, name="diachi", ng-model='khachhang.diachi' autocomplete='off')
                         div(ng-messages='formthanhtoan.diachi.$error')
                           div(ng-message='required') Thông tin bắt buộc.
-                          div(ng-message='md-maxlength') Địa chỉ không được nhiều hơn 50 ký tự.
-                      md-button.md-fab.md-mini.md-primary.chutrang
+                          div(ng-message='md-maxlength') Địa chỉ không được nhiều hơn 150 ký tự.
+                      md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layDiaChi()')
                         md-tooltip
                           | Lấy địa chỉ hiện tại
                         i.fa.fa-map
                 div.modal-footer
-                  button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
+                  button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid", ng-click='DangKy()')
                     i.fa.fa-check
                     |  Đồng ý
                   button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangKy()')
