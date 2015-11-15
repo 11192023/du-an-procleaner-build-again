@@ -744,6 +744,18 @@
 			_khachhang.sdt = khachhang.sdt;
 			_khachhang.diachi = khachhang.diachi;
 		}
+		service.layDiaChiGoogleMapApi = function(lat, lng){
+			var deferred = $q.defer();
+			$http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + 
+				lat + ',' + lng + '&key=AIzaSyCILGAm6yuGJ_T4mxRP2YGz6WY7Yn5WPUs', { cache: false})
+		        .success(function(data) {
+		        	deferred.resolve(data);
+		        })
+		        .error(function(data) {
+		            console.log('Error: ' + data);
+        	});
+		    return deferred.promise;
+		}
 		service.getYeuCauNh = function(sdt){
 			var deferred = $q.defer();
 			var q = '?sdtkhachhang=' + sdt + '&loaiyeucau=Ngắn hạn';
@@ -2774,7 +2786,7 @@
 		$scope.tinhTuoiNgv = ngvFactory.tinhTuoiNgv;
 	});
 	
-	searchModule.controller('chitietController', function(thanhtoanFactory, filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog, $q){
+	searchModule.controller('chitietController', function(khachhangFactory, thanhtoanFactory, filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog, $q){
 		$scope.ngvDcChon = null;
 		$scope.loading = true;
 		$scope.isThanhToan = false;
@@ -2831,6 +2843,27 @@
 	    	diachi: null,
 	    }
 		$scope.tinhTuoiNgv = filterFactory.tinhTuoiNgv;
+		$scope.layDiaChi = function(){
+			if(navigator.geolocation) {
+			    navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = {
+						lat: position.coords.latitude,
+						lng: position.coords.longitude
+					};
+					khachhangFactory.layDiaChiGoogleMapApi(pos.lat, pos.lng).then(function(data){
+						$scope.khachhang.diachi = pos.lat + ' ' + pos.lng;
+						console.log(data);
+					})
+					
+				});
+
+			}
+			// Browser doesn't support Geolocation
+			else {
+				browserSupportFlag = false;
+				handleNoGeolocation(browserSupportFlag);
+			}
+		}
 		$scope.close_thanhtoan = function(){
 			$scope.isThanhToan = false;
 		}

@@ -302,7 +302,7 @@ block search
       .col-lg-2
       .col-lg-8
         div.md-whiteframe-5dp
-          form(name='formthanhtoan', novalidate ng-submit='luu_yeucau()')
+          form(name='formthanhtoan', novalidate)
             div.modal-header
               h4.biggerfont.modal-title.xanhdam.center Thông tin yêu cầu
             div#mypanel.modal-body
@@ -401,7 +401,7 @@ block search
                       img.md-avatar(alt='', ng-src='{{"img/ngv/" + ngv.hinhanh}}')
                       p {{ngv.hoten}}
             div.modal-footer(ng-if='!loading_yeucau && !hoanthanh_thanhtoan_nh')
-              button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
+              button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid", ng-click='luu_yeucau()')
                 i.fa.fa-check
                 |  Đồng ý
               button.marleft.btn.btn-danger.pull-right(type='button' ng-click='close_thanhtoan()')
