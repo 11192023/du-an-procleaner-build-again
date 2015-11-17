@@ -553,7 +553,7 @@
 			    nguoigiupviec: cmnd,
 			    ngaylam: new Date(Date.UTC(ngay_arr[2],Number(ngay_arr[1])-1,ngay_arr[0])),
 			    giobatdau: giobd,
-			    gioketthuc: giokt,
+			    gioketthuc: giokt+1,
 			    khachhang: sdtkh
    		 	});
     		$http({url: 'https://serene-stream-9747.herokuapp.com/api/lichlamviec',
@@ -575,7 +575,7 @@
 			    nguoigiupviec: cmnd,
 			    ngaylam: ngay,
 			    giobatdau: giobd,
-			    gioketthuc: giokt,
+			    gioketthuc: giokt+1,
 			    khachhang: sdtkh
    		 	});
     		$http({url: 'https://serene-stream-9747.herokuapp.com/api/lichlamviec',
@@ -590,7 +590,7 @@
             return deferred.promise;
 		}
 		//lưu yêu cầu
-		service.luuYeuCau = function(ngaybd, ngaykt, chiphi, sdtkhachhang, diachikh, quan, trangthai){
+		service.luuYeuCau = function(ngaybd, ngaykt, chiphi, sdtkhachhang, diachikh, quan, trangthai, mangdichvu){
 			var deferred = $q.defer();
 			var ngaybd_arr = ngaybd.split('/');
 			var ngaykt_arr = ngaykt.split('/');
@@ -604,7 +604,7 @@
 			    loaiyeucau: "Ngắn hạn",
 			    trangthai: trangthai,
 			    diachi: diachikh + '/' +quan,
-			    loaidichvu: "Vệ sinh văn phòng"
+			    loaidichvu: mangdichvu
    		 	});
     		$http({url: 'https://serene-stream-9747.herokuapp.com/api/yeucau',
 	            method: "POST",
@@ -618,7 +618,7 @@
 	        return deferred.promise;
 		}
 		//lưu yêu cầu dài hạn
-		service.luuYeuCauDh = function(ngaybd, ngaykt, chiphi, sdtkhachhang, diachikh, quan, trangthai){
+		service.luuYeuCauDh = function(ngaybd, ngaykt, chiphi, sdtkhachhang, diachikh, quan, trangthai, mangdichvu){
 			var deferred = $q.defer();
 			var ngaybd_arr = ngaybd.split('/');
 			var ngaykt_arr = ngaykt.split('/');
@@ -632,7 +632,7 @@
 			    loaiyeucau: "Dài hạn",
 			    trangthai: trangthai,
 			    diachi: diachikh + '/' +quan,
-			    loaidichvu: "Vệ sinh văn phòng"
+			    loaidichvu: mangdichvu
    		 	});
     		$http({url: 'https://serene-stream-9747.herokuapp.com/api/yeucau',
 	            method: "POST",
@@ -1112,6 +1112,14 @@
 	    	}
 	    	return 'Chưa tiến hành';
 	    }
+	    var layDanhSachDichVu = function(){
+	    	var result = [];
+	    	for(i=0; i<$scope.tieuchis.length; i++){
+	    		if($scope.tieuchis[i].data == true)
+	    			result.push($scope.tieuchis[i].ten);
+	    	}
+	    	return result;
+	    }
 	    $scope.promises = [];
 	    $scope.luu_yeucau = function(){
 	    	$scope.loading_yeucau = true;
@@ -1141,6 +1149,7 @@
 		            $http.get('https://serene-stream-9747.herokuapp.com/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
 				        .success(function(data) {
 				        	var trangthaiyc = getTrangThaiYeuCau($scope.data.mang_tieuchi);
+				        	var mangdichvu = layDanhSachDichVu();
 				        	if(data.length>0){
 					            //Lưu yêu cầu
 					            thanhtoanFactory.luuYeuCau(
@@ -1150,7 +1159,8 @@
         						    $scope.khachhang.sdt,
         						    $scope.khachhang.diachi,
         						    $scope.data.quan,
-        						    trangthaiyc).then(function(data){
+        						    trangthaiyc,
+        						    mangdichvu).then(function(data){
         						   		for(i=0; i<$scope.ngv_selected_arr.length; i++){
         						   			(function(i) {
         						   				var promise = thanhtoanFactory.luuChiTietYeuCau($scope.ngv_selected_arr[i].cmnd,
@@ -1183,7 +1193,8 @@
         						    $scope.khachhang.sdt,
         						    $scope.khachhang.diachi,
         						    $scope.data.quan,
-        						    trangthaiyc).then(function(data){
+        						    trangthaiyc,
+        						    mangdichvu).then(function(data){
         						   		for(i=0; i<$scope.ngv_selected_arr.length; i++){
         						   			(function(i) {
         						   				var promise = thanhtoanFactory.luuChiTietYeuCau($scope.ngv_selected_arr[i],
@@ -1843,7 +1854,14 @@
 	    		return false;
 	    }
 	    //---------------------luu yeu cau---------------------------------
-	    
+	    var layDanhSachDichVu = function(){
+	    	var result = [];
+	    	for(i=0; i<$scope.tieuchis.length; i++){
+	    		if($scope.tieuchis[i].data == true)
+	    			result.push($scope.tieuchis[i].ten);
+	    	}
+	    	return result;
+	    }
 	    $scope.llvpromises = [];
 	    $scope.ctycpromises = [];
 	    $scope.luu_yeucau = function(){
@@ -1880,6 +1898,7 @@
 	    			$http.get('https://serene-stream-9747.herokuapp.com/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
 				        .success(function(data) {
 				        	var trangthaiyc = getTrangThaiYeuCau($scope.data.mang_tieuchi);
+				        	var mangdichvu = layDanhSachDichVu();
 				        	if(data.length>0){
 					            //Lưu yêu cầu
 					            thanhtoanFactory.luuYeuCauDh(
@@ -1889,7 +1908,8 @@
         						    data[0].sdt,
         						    data[0].diachi,
         						    $scope.data.quan,
-        						    trangthaiyc).then(function(data){
+        						    trangthaiyc,
+        						    mangdichvu).then(function(data){
         						    	for(i=0; i<$scope.data.lichdaihan.length; i++){
 						            		for(j=0; j<$scope.data.lichdaihan[i].dsNgvPhuHop.length; j++){
 					            				if($scope.data.lichdaihan[i].dsNgvPhuHop[j].selected == true){
@@ -1932,7 +1952,8 @@
         						    data[0].sdt,
         						    data[0].diachi,
         						    $scope.data.quan,
-        						    trangthaiyc).then(function(data){
+        						    trangthaiyc,
+        						    mangdichvu).then(function(data){
         						    	for(i=0; i<$scope.data.lichdaihan.length; i++){
 						            		for(j=0; j<$scope.data.lichdaihan[i].dsNgvPhuHop.length; j++){
 					            				if($scope.data.lichdaihan[i].dsNgvPhuHop[j].selected == true){
@@ -2291,7 +2312,7 @@
 			}
 			if($scope.ycDangXem.trangthai == 'Hoàn thành')
 				$('#nhanxet').modal({backdrop: 'static', keyboard: false},'show');
-			*else
+			else
 				$mdDialog.show(
 			      $mdDialog.alert()
 			        .parent(angular.element(document.querySelector('body')))
@@ -2882,11 +2903,20 @@
 	    }
 	    //-------------------------------------------------------
 	    //--------------------luu yeu cau------------------------
+	    var layDanhSachDichVu = function(){
+	    	var result = [];
+	    	for(i=0; i<$scope.tieuchis.length; i++){
+	    		if($scope.tieuchis[i].data == true)
+	    			result.push($scope.tieuchis[i].ten);
+	    	}
+	    	return result;
+	    }
 	    $scope.luu_yeucau = function(){
 	    	$scope.loading_yeucau = true;
             $http.get('https://serene-stream-9747.herokuapp.com/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
 		        .success(function(data) {
 		        	var trangthaiyc = getTrangThaiYeuCau($scope.tieuchis);
+		        	var mangdichvu = layDanhSachDichVu();
 		        	if(data.length>0){
 			            //Lưu yêu cầu
 			            thanhtoanFactory.luuYeuCau(
@@ -2896,7 +2926,8 @@
 						    $scope.khachhang.sdt,
 						    $scope.khachhang.diachi,
 						    $scope.data.quan,
-						    trangthaiyc).then(function(data){
+						    trangthaiyc,
+						    mangdichvu).then(function(data){
 				   				thanhtoanFactory.luuChiTietYeuCau($scope.ngvDcChon.cmnd,
 				   											  $scope.data.ngay,
 				   											  $scope.data.giobd1,
@@ -2925,7 +2956,8 @@
 						    $scope.khachhang.sdt,
 						    $scope.khachhang.diachi,
 						    $scope.data.quan,
-						    trangthaiyc).then(function(data){
+						    trangthaiyc,
+						    mangdichvu).then(function(data){
 				   				thanhtoanFactory.luuChiTietYeuCau($scope.ngvDcChon.cmnd,
 				   											  $scope.data.ngay,
 				   											  $scope.data.giobd1,
