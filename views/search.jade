@@ -2,7 +2,7 @@ extends layout
 
 block search
   base(href='/')
-  .container.wrapper(ng-controller='searchnhController')
+  .container.wrapper(ng-controller='searchnhController', ng-init='initData()')
     .row.content(ng-show='isSearch')
       .col-lg-3.content-left
         md-toolbar.md-whiteframe-2dp
@@ -19,7 +19,9 @@ block search
                 md-tooltip(md-direction="left")
                   | Thay đổi ngày sẽ mất các lựa chọn hiện tại
             div
-              input#ngay.marleft.form-control.timewidth.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngay')
+              input#ngay.marleft.form-control.timewidth.dpindex(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off', ng-model='data.ngay', ng-change='initData()')
+            div
+              p.red {{thongbaongay}}
           div.form-inline.xanhnhat
             md-subheader
               i.fa.fa-clock-o.padright.xanhnhat 
@@ -29,13 +31,15 @@ block search
                   | Thay đổi giờ sẽ mất các lựa chọn hiện tại
           .form-inline
             .form-group
-              select#giobd_sl.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions" ng-change='change_time_bd(data.giobd1, "{{data.giobd1}}")')
+              select#giobd_sl.timewidthhalf.form-control.marleft.sb.fixWTime.selectpicker(ng-model="data.giobd1" ng-options="obj.id as obj.name for obj in data.availableOptions", ng-change='initData()')
                 option(value='' disabled) Từ giờ
               input#gbdnh.form-control.sb(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-              select#giokt_sl.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions")
+              select#giokt_sl.timewidthhalf.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1" ng-options="obj.id as obj.name for obj in data.availableOptions", ng-change='initData()')
                 option(value='' disabled) Đến giờ
               input#gktnh.form-control.sb(type='hidden', name='giokt1', value='{{data.giokt1}}')
+            div
+              p.red {{thongbaogio}}
           // số năm kinh nghiệm ---------------------------------------------------
           div.form-inline
             div.xanhnhat

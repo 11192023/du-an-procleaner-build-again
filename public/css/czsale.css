@@ -1,3 +1,25 @@
+.nhanxet {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+  font-size: 30px;
+}
+.nhanxet i.star:hover {
+  cursor: pointer;
+}
+.nhanxet i.star:before {
+  content: "\f006";
+  padding-right: 5px;
+  color: #777777;
+}
+.nhanxet i.star:hover:before,
+.nhanxet i.star:hover ~ i.star:before {
+  content: "\f005";
+  color: #8CC13D;
+}
+.ratingstar{
+  content: "\f005";
+  color: #8CC13D;
+}
 .red{
   color:red;
 }

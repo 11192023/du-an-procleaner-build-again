@@ -1,9 +1,9 @@
 (function(){
 	//search module
-	var searchModule = angular.module('SearchModule', ['ngMaterial','ngMessages','ui.bootstrap','slickCarousel','ngRoute','ui.calendar','cancelable-q','ngCookies']);
+	var module = angular.module('SearchModule', ['ngMaterial','ngMessages','ui.bootstrap','slickCarousel','ngRoute','ui.calendar','cancelable-q','ngCookies']);
 	
 	//var chitietModule = angular.module('ChitietModule', ['ngMaterial','ngMessages','slickCarousel','ngRoute']);
-	searchModule.config(function($mdThemingProvider, $locationProvider){
+	module.config(function($mdThemingProvider, $locationProvider){
 		$mdThemingProvider.theme('default')
 			.primaryPalette('green');
         //routing DOESN'T work without html5Mode
@@ -12,7 +12,7 @@
         	reloadOnSearch: true
         });
 	});
-	searchModule.factory('ngvFactory', function($http, $q){
+	module.factory('ngvFactory', function($http, $q){
 		var service = {};
 		service.layDanhSachNgvAll = function(){
 			var deferred = $q.defer();
@@ -172,7 +172,7 @@
 	    }
 	    return service;
 	});
-	searchModule.factory('filterFactory', function($location, $mdDialog, $q, $http){
+	module.factory('filterFactory', function($location, $mdDialog, $q, $http){
 		var service = {};
 		var _kinhnghiems = [
 	    	{
@@ -345,6 +345,7 @@
 		var _data = {
 			mang_tieuchi: [],
 			isReverse: false,
+			isReverse2: false,
 			ngay: $location.search().ngay,
 			ngaybd: $location.search().ngaybd,
 			ngaykt: $location.search().ngaykt,
@@ -508,7 +509,7 @@
 	    }
 	    return service;
 	});
-	searchModule.factory('thanhtoanFactory', function($http, $q){
+	module.factory('thanhtoanFactory', function($http, $q){
 		var service = {};
 		//lưu khách hàng
 		service.timKhachHang = function(sdt){
@@ -729,7 +730,7 @@
 		}
 		return service;
 	});
-	searchModule.factory('khachhangFactory', function($http, $q){
+	module.factory('khachhangFactory', function($http, $q){
 		var service = {};
 		var _khachhang = {
 			hoten: null,
@@ -792,7 +793,11 @@
         	});
 		    return deferred.promise;
 		}
-		service.luuNhanXet = function(ctyc, nhanxet){
+		service.luuNhanXet = function(ctyc, nhanxet, hudo, matdo){
+			var _hudo = 'Không';
+			var _matdo = 'Không';
+			if(hudo == true) _hudo = 'Có';
+			if(matdo == true) _matdo = 'Có';
 			var deferred = $q.defer();
 			var id = ctyc._id
 			var ctyc = JSON.stringify({
@@ -802,9 +807,9 @@
 			    nguoigiupviec: ctyc.nguoigiupviec,
 			    nhanxet: nhanxet,
 			    trangthai: ctyc.trangthai,
-			    hudo: ctyc.hudo,
-			    matdo: ctyc.matdo,
-			    lienlac: ctyc.lienlac
+			    hudo: _hudo,
+			    matdo: _matdo,
+			    lienlac: 'Có'
 		 	});
 			$http({url: 'https://serene-stream-9747.herokuapp.com/api/chitietyeucau/'+id,
 	            method: "PUT",
@@ -820,7 +825,7 @@
 		return service;
 
 	});
-	searchModule.controller('searchnhController',
+	module.controller('searchnhController',
 	 	function(khachhangFactory,
 	 		    thanhtoanFactory,
 			  	filterFactory,
@@ -835,6 +840,9 @@
 
 
 		$scope.Math = window.Math;
+		//thong bao ngay gio
+		$scope.thongbaongay = '';
+		$scope.thongbaogio = '';
 		//biến ng-show detail và search
 		$scope.isSearch = true;
 		$scope.isDetail = false;
@@ -905,63 +913,27 @@
 	    
 	    //-------------end du lieu------------------------------------
 	    //--------------khởi tạo dữ liệu từ index------------------
-	    ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($location.search().ngay),
-    							 $location.search().giobd1,
-    							 $location.search().giokt1).then(function(data){
-    							 	$scope.ngvs = data;
-    							 	getNgvPhuHop(data, $scope.data.quan);
-    							 	$scope.loading = false;
-    							 });
-	    //
-		//--------------watch----------------------------
-		$scope.$watch('data.quan', function(newVal, oldVal){
-			
-			for(i=0; i<$scope.ngv_selected_arr.length; i++){
-    			$('#'+$scope.ngv_selected_arr[i].cmnd).removeClass('bgcheckmark');
-    		}
-		  	$scope.ngv_selected_arr=[];
-		  	$scope.ngv_arr_fit=[];
-		  	getNgvPhuHop($scope.ngvs, $scope.data.quan);
-		});
-		$scope.$watch('data.ngay', function(newVal, oldVal){
-			
+	    $scope.initData = function(){
 			var bd1 = Number($scope.data.giobd1);
             var kt1 = Number($scope.data.giokt1);
 	    	var now = new Date();
             var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
             var ngayarr = $scope.data.ngay.split('/');
-	    	if(ngayarr[1] == now.getDate() 
-                && ngayarr[0] == now.getMonth()+1 
+            if(ngayarr[0] == now.getDate() 
+                && ngayarr[1] == now.getMonth()+1 
                 && ngayarr[2] == now.getFullYear()){
                 if(bd1 < sophutht) {
-                	$mdDialog.show(
-				      $mdDialog.alert()
-				        .parent(angular.element(document.querySelector('body')))
-				        .clickOutsideToClose(true)
-				        .title('Thông báo')
-				        .content('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
-                    	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).')
-				        .ok('Đồng ý!')
-				        .targetEvent(null)
-				    );
-				    $scope.data.ngay = oldVal;
+                	$scope.thongbaogio = 'Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
+                    	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).';
                     return;
                 }
             }
             if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    $scope.data.ngay = oldVal;
+            	$scope.thongbaogio = 'Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.';
                 return;
             }
-    		$scope.ngv_arr_fit = [];
+            $scope.thongbaogio = '';
+	    	$scope.ngv_arr_fit = [];
 		  	$scope.ngv_selected_arr = [];
 	    	$scope.loading = true;
 	    	$scope.ngvs = null;
@@ -972,118 +944,17 @@
 									 	getNgvPhuHop(data, $scope.data.quan);
 									 	$scope.loading = false;
 									 });
-		});
-		$scope.$watch('data.giobd1', function(newVal, oldVal){
-			if($scope.data.isReverse == true){
-	    		$scope.data.isReverse = false;
-	    		return;
+		}
+	    //
+
+		//--------------watch----------------------------
+		$scope.$watch('data.quan', function(newVal, oldVal){
+			for(i=0; i<$scope.ngv_selected_arr.length; i++){
+    			$('#'+$scope.ngv_selected_arr[i].cmnd).removeClass('bgcheckmark');
     		}
-			var bd1 = Number($scope.data.giobd1);
-            var kt1 = Number($scope.data.giokt1);
-	    	var now = new Date();
-            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
-            var ngayarr = $scope.data.ngay.split('/');
-	    	if(ngayarr[1] == now.getDate() 
-                && ngayarr[0] == now.getMonth()+1 
-                && ngayarr[2] == now.getFullYear()){
-                if(bd1 < sophutht) {
-                	$mdDialog.show(
-				      $mdDialog.alert()
-				        .parent(angular.element(document.querySelector('body')))
-				        .clickOutsideToClose(true)
-				        .title('Thông báo')
-				        .content('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
-                    	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).')
-				        .ok('Đồng ý!')
-				        .targetEvent(null)
-				    );
-				    $scope.data.giobd1 = oldVal;
-				    $scope.data.isReverse = true;
-                    return;
-                }
-            }
-            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    $scope.data.giobd1 = oldVal;
-			    $scope.data.isReverse = true;
-                return;
-            }
-    		
-    		$scope.ngv_arr_fit = [];
-		  	$scope.ngv_selected_arr = [];
-	    	$scope.loading = true;
-	    	$scope.ngvs = null;
-			ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($scope.data.ngay), 
-										 $scope.data.giobd1,
-										 $scope.data.giokt1).then(function(data){
-										 	$scope.ngvs = data;
-										 	getNgvPhuHop(data, $scope.data.quan);
-										 	$scope.loading = false;
-										 });
-		});
-		$scope.$watch('data.giokt1', function(newVal, oldVal){
-			if($scope.data.isReverse == true){
-	    		$scope.data.isReverse = false;
-	    		return;
-    		}
-			var bd1 = Number($scope.data.giobd1);
-            var kt1 = Number($scope.data.giokt1);
-	    	var now = new Date();
-            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
-            var ngayarr = $scope.data.ngay.split('/');
-	    	if(ngayarr[1] == now.getDate() 
-                && ngayarr[0] == now.getMonth()+1 
-                && ngayarr[2] == now.getFullYear()){
-                if(bd1 < sophutht) {
-                	$mdDialog.show(
-				      $mdDialog.alert()
-				        .parent(angular.element(document.querySelector('body')))
-				        .clickOutsideToClose(true)
-				        .title('Thông báo')
-				        .content('Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
-                    	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).')
-				        .ok('Đồng ý!')
-				        .targetEvent(null)
-				    );
-				    $scope.data.giokt1 = oldVal;
-				    $scope.data.isReverse = true;
-                    return;
-                }
-            }
-            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    $scope.data.giokt1 = oldVal;
-			    $scope.data.isReverse = true;
-                return;
-            }
-    		
-    		$scope.ngv_arr_fit = [];
-		  	$scope.ngv_selected_arr = [];
-	    	$scope.loading = true;
-	    	$scope.ngvs = null;
-			ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($scope.data.ngay), 
-										 $scope.data.giobd1,
-										 $scope.data.giokt1).then(function(data){
-										 	$scope.ngvs = data;
-										 	getNgvPhuHop(data, $scope.data.quan);
-										 	$scope.loading = false;
-										 });
+		  	$scope.ngv_selected_arr=[];
+		  	$scope.ngv_arr_fit=[];
+		  	getNgvPhuHop($scope.ngvs, $scope.data.quan);
 		});
 		//--------------lay dia chi google map
 		$scope.layDiaChi = function(){
@@ -1414,7 +1285,7 @@
 		}
 	    //
 	});
-	searchModule.controller('searchdhController', 
+	module.controller('searchdhController', 
 		function(khachhangFactory,
 				  thanhtoanFactory,
 				  filterFactory,
@@ -1444,6 +1315,8 @@
 		$scope.loading_yeucau = false;
 		$scope.loading_dichvu = true;
 		$scope.hoanthanh_thanhtoan_dh = false;
+		$scope.thongbaongay = '';
+		$scope.thongbaogio = '';
 		$scope.ngvs = null;
 		$scope.isDetail = false;
 		$scope.khachhang = {
@@ -1789,22 +1662,6 @@
 			}
 		}
 	    //--------------watch----------------------------
-		
-		$scope.changeFilter = function(){
-			for(i=0; i<$scope.promises.length; i++){
-				$scope.promises[i].cancel();
-			}
-			$scope.promises = [];
-			$timeout(function(){
-				initData($scope.data.locdaihan);
-			},300);
-			
-			/*
-			for(i=0; i<$scope.promises.length; i++){
-				$scope.promises[i].cancel();
-			}
-			initData($scope.data.locdaihan);*/
-		}
 		function parseDate(str) {
 		    var mdy = str.split('/')
 		    return new Date(mdy[2], mdy[1]-1, mdy[0]);
@@ -1813,217 +1670,47 @@
 		function daydiff(first, second) {
 		    return Math.round((second-first)/(1000*60*60*24));
 		}
-		$scope.isReverse = false;
-		$scope.isReverse1 = false;
-		$scope.isReverse2 = false;
-		$scope.$watch('data.ngaybd', function(newVal, oldVal){
-			if($scope.firstload.ngaybd == true) {
-				$scope.firstload.ngaybd = false;
-				return;
-			}
-			if($scope.isReverse1 == true){
-	    		$scope.isReverse1 = false;
-	    		return;
-    		}
-    		if($scope.isReverse2 == true){
-    			$scope.data.ngaybd = oldVal;
-	    		$scope.isReverse2 = false;
-	    		return;
-    		}
-	    	var now = new Date();
+		$scope.changeFilter = function(){
+			var now = new Date();
             var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
             var ngaybdarr = $scope.data.ngaybd.split('/');
             var ngayktarr = $scope.data.ngaykt.split('/');
+            var bd1 = Number($scope.data.giobd1);
+            var kt1 = Number($scope.data.giokt1);
+
             if(ngaybdarr[0] == now.getDate() 
                 && ngaybdarr[1] == now.getMonth()+1 
                 && ngaybdarr[2] == now.getFullYear()){
-                $mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Ngày bắt đầu không được là ngày hiện tại!!')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-            	$scope.isReverse1 = true;
-				$scope.isReverse2 = true;
-            	$scope.data.ngaybd = oldVal;
-			    
-                return;
+                $scope.thongbaongay = 'Ngày bắt đầu không được là ngày hiện tại!!';
+            	return;
             }
             if(ngaybdarr[1] == ngayktarr[1] 
                 && ngaybdarr[0] == ngayktarr[0] 
                 && ngaybdarr[2] == ngayktarr[2]){
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Ngày bắt đầu không được trùng với ngày kết thúc.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-            	$scope.isReverse1 = true;
-				$scope.isReverse2 = true;
-            	$scope.data.ngaybd = oldVal;
+            	$scope.thongbaongay = 'Ngày bắt đầu không được trùng với ngày kết thúc.';
                 return;
             }
             //kiem tra ngay bd và ngay kt
             if(daydiff(parseDate($scope.data.ngaybd), parseDate($scope.data.ngaykt)) <0){
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Ngày bắt đầu không được lớn hơn ngày kết thúc.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    $scope.isReverse1 = true;
-				$scope.isReverse2 = true;
-            	$scope.data.ngaybd = oldVal;
+            	$scope.thongbaongay = 'Ngày bắt đầu không được lớn hơn ngày kết thúc.';
 			    return;
             }
-            $scope.changeFilter();
-		});
-		$scope.$watch('data.ngaykt', function(newVal, oldVal){
-			if($scope.firstload.ngaykt == true) {
-				$scope.firstload.ngaykt = false;
-				return;
-			}
-			if($scope.isReverse1 == true){
-	    		$scope.isReverse1 = false;
-	    		return;
-    		}
-    		if($scope.isReverse2 == true){
-    			$scope.data.ngaykt = oldVal;
-	    		$scope.isReverse2 = false;
-	    		return;
-    		}
-	    	var now = new Date();
-            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
-            var ngaybdarr = $scope.data.ngaybd.split('/');
-            var ngayktarr = $scope.data.ngaykt.split('/');
-            if(ngaybdarr[0] == now.getDate() 
-                && ngaybdarr[1] == now.getMonth()+1 
-                && ngaybdarr[2] == now.getFullYear()){
-                $mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Ngày bắt đầu không được là ngày hiện tại!!')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-            	$scope.isReverse1 = true;
-				$scope.isReverse2 = true;
-            	$scope.data.ngaykt = oldVal;
-			    
-                return;
-            }
-            if(ngaybdarr[1] == ngayktarr[1] 
-                && ngaybdarr[0] == ngayktarr[0] 
-                && ngaybdarr[2] == ngayktarr[2]){
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Ngày bắt đầu không được trùng với ngày kết thúc.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-            	$scope.isReverse1 = true;
-				$scope.isReverse2 = true;
-            	$scope.data.ngaykt = oldVal;
+            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
+            	$scope.thongbaogio = 'Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.';
                 return;
             }
 
-            //kiem tra ngay bd và ngay kt
-            if(daydiff(parseDate($scope.data.ngaybd), parseDate($scope.data.ngaykt)) <0){
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Ngày bắt đầu không được lớn hơn ngày kết thúc.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    $scope.isReverse1 = true;
-				$scope.isReverse2 = true;
-            	$scope.data.ngaykt = oldVal;
-			    return;
-            }
-            $scope.changeFilter();
-		});
-		
-		
-		$scope.$watch('data.giobd1', function(newVal, oldVal){
-			if($scope.firstload.giobd == true) {
-				$scope.firstload.giobd = false;
-				return;
+            $scope.thongbaogio = '';
+            $scope.thongbaongay = '';
+
+			for(i=0; i<$scope.promises.length; i++){
+				$scope.promises[i].cancel();
 			}
-			if($scope.isReverse == true){
-				console.log('adsa');
-	    		$scope.isReverse = false;
-	    		return;
-    		}
-			var bd1 = Number($scope.data.giobd1);
-            var kt1 = Number($scope.data.giokt1);
-	    	var now = new Date();
-            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
-            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    $scope.isReverse = true;
-			    $scope.data.giobd1 = oldVal;
-			    
-                return;
-            }
-            $scope.changeFilter();
-    		
-		});
-		$scope.$watch('data.giokt1', function(newVal, oldVal){
-			if($scope.firstload.giokt == true) {
-				$scope.firstload.giokt = false;
-				return;
-			}
-			if($scope.isReverse == true){
-	    		$scope.isReverse = false;
-	    		return;
-    		}
-			var bd1 = Number($scope.data.giobd1);
-            var kt1 = Number($scope.data.giokt1);
-	    	var now = new Date();
-            var sophutht = now.getHours() * 60 + now.getMinutes() + 180;
-            if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
-            	$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    $scope.isReverse = true;
-			    $scope.data.giokt1 = oldVal;
-			    
-                return;
-            }
-            $scope.changeFilter();
-    		
-		});
+			$scope.promises = [];
+			$timeout(function(){
+				initData($scope.data.locdaihan);
+			},300);
+		}
 		//modal yeu cau
 		$scope.isSearch = true;
 		$scope.isThanhToan = false;
@@ -2301,7 +1988,7 @@
 	        arrows: true
 		};
 	});
-	searchModule.controller('loginController', function(khachhangFactory, thanhtoanFactory, $scope, $timeout, $cookies, $location){
+	module.controller('loginController', function(khachhangFactory, thanhtoanFactory, $scope, $timeout, $cookies, $location){
 		$scope.registed = false;
 		$scope.khachhang = {};
 		$scope.sdtTonTai = false;
@@ -2408,12 +2095,14 @@
 			
 		}
 	});
-	searchModule.controller('userController', 
+	module.controller('userController', 
 	function(ngvFactory, khachhangFactory, $scope,$http, $log, $location, $mdDialog, $q, $cookies){
 
 		$scope.Math = window.Math;
 		$scope.loading = false;
 		$scope.khachhang = {};
+		$scope.hudo = false;
+		$scope.matdo = false;
 		$scope.yeucauNh = [];
 		$scope.yeucauDh = [];
 		$scope.chitietyeucau = [];
@@ -2495,17 +2184,114 @@
 				}
 			}
 		}
+		$scope.danhgiaCtyc = function(mucdg){
+			if(mucdg == 0){
+				$scope.nhanxet = 'Tệ';
+				$('#star1').addClass('fa-star');
+				$('#star2').removeClass('fa-star');
+				$('#star3').removeClass('fa-star');
+				$('#star4').removeClass('fa-star');
+				$('#star5').removeClass('fa-star');
+
+				$('#star1').removeClass('fa-star-o');
+				$('#star2').addClass('fa-star-o');
+				$('#star3').addClass('fa-star-o');
+				$('#star4').addClass('fa-star-o');
+				$('#star5').addClass('fa-star-o');
+			}
+			if(mucdg == 1){
+				$scope.nhanxet = 'Không tốt';
+				$('#star1').addClass('fa-star');
+				$('#star2').addClass('fa-star');
+				$('#star3').removeClass('fa-star');
+				$('#star4').removeClass('fa-star');
+				$('#star5').removeClass('fa-star');
+
+				$('#star1').removeClass('fa-star-o');
+				$('#star2').removeClass('fa-star-o');
+				$('#star3').addClass('fa-star-o');
+				$('#star4').addClass('fa-star-o');
+				$('#star5').addClass('fa-star-o');
+			}
+			if(mucdg == 2){
+				$scope.nhanxet = 'Trung bình';
+				$('#star1').addClass('fa-star');
+				$('#star2').addClass('fa-star');
+				$('#star3').addClass('fa-star');
+				$('#star4').removeClass('fa-star');
+				$('#star5').removeClass('fa-star');
+
+				$('#star1').removeClass('fa-star-o');
+				$('#star2').removeClass('fa-star-o');
+				$('#star3').removeClass('fa-star-o');
+				$('#star4').addClass('fa-star-o');
+				$('#star5').addClass('fa-star-o');
+			}
+			if(mucdg == 3){
+				$scope.nhanxet = 'Khá';
+				$('#star1').addClass('fa-star');
+				$('#star2').addClass('fa-star');
+				$('#star3').addClass('fa-star');
+				$('#star4').addClass('fa-star');
+				$('#star5').removeClass('fa-star');
+
+				$('#star1').removeClass('fa-star-o');
+				$('#star2').removeClass('fa-star-o');
+				$('#star3').removeClass('fa-star-o');
+				$('#star4').removeClass('fa-star-o');
+				$('#star5').addClass('fa-star-o');
+			}
+			if(mucdg == 4){
+				$scope.nhanxet = 'Tốt';
+				$('#star1').addClass('fa-star');
+				$('#star2').addClass('fa-star');
+				$('#star3').addClass('fa-star');
+				$('#star4').addClass('fa-star');
+				$('#star5').addClass('fa-star');
+
+				$('#star1').removeClass('fa-star-o');
+				$('#star2').removeClass('fa-star-o');
+				$('#star3').removeClass('fa-star-o');
+				$('#star4').removeClass('fa-star-o');
+				$('#star5').removeClass('fa-star-o');
+			}
+		}
+		var resetNhanXetCtyc = function(){
+			$('#star1').removeClass('fa-star');
+			$('#star2').removeClass('fa-star');
+			$('#star3').removeClass('fa-star');
+			$('#star4').removeClass('fa-star');
+			$('#star5').removeClass('fa-star');
+
+			$('#star1').addClass('fa-star-o');
+			$('#star2').addClass('fa-star-o');
+			$('#star3').addClass('fa-star-o');
+			$('#star4').addClass('fa-star-o');
+			$('#star5').addClass('fa-star-o');
+			$scope.hudo = false;
+			$scope.matdo = false;
+		}
 		$scope.showDanhgiaCtyc = function(ctyc){
 			for(i=0; i<$scope.dsNgvChiTiet.length; i++){
 				if($scope.dsNgvChiTiet[i].cmnd == ctyc.nguoigiupviec){
 					$scope.ngvChiTiet = $scope.dsNgvChiTiet[i];
 					$scope.ctycDangXem = ctyc;
 					$scope.nhanxet = ctyc.nhanxet;
+					
+					resetNhanXetCtyc();
+
+					if($scope.nhanxet == 'Tệ') $scope.danhgiaCtyc(0);
+					if($scope.nhanxet == 'Không tốt') $scope.danhgiaCtyc(1);
+					if($scope.nhanxet == 'Trung bình') $scope.danhgiaCtyc(2);
+					if($scope.nhanxet == 'Khá') $scope.danhgiaCtyc(3);
+					if($scope.nhanxet == 'Tốt') $scope.danhgiaCtyc(4);
+					if(ctyc.hudo == 'Có') $scope.hudo = true;
+					if(ctyc.matdo == 'Có') $scope.matdo = true;
 				}
 			}
 			if($scope.ycDangXem.trangthai == 'Hoàn thành')
 				$('#nhanxet').modal({backdrop: 'static', keyboard: false},'show');
-			else
+			*else
 				$mdDialog.show(
 			      $mdDialog.alert()
 			        .parent(angular.element(document.querySelector('body')))
@@ -2517,12 +2303,13 @@
 			    );
 		}
 		$scope.luuNhanXet = function(){
-			khachhangFactory.luuNhanXet($scope.ctycDangXem, $scope.nhanxet).then(function(data){
+			khachhangFactory.luuNhanXet($scope.ctycDangXem, $scope.nhanxet, $scope.hudo, $scope.matdo).then(function(data){				
 				$('#nhanxet').modal('hide');
+				$scope.xemChiTietYc($scope.ycDangXem);
 			})
 		}
 	});
-	searchModule.controller('indexController', function(ngvFactory, $scope, $http, $log, $location, $mdDialog){
+	module.controller('indexController', function(ngvFactory, $scope, $http, $log, $location, $mdDialog){
 
 		
 		$scope.data = {
@@ -2839,7 +2626,7 @@
 
 		
 	});
-	searchModule.controller('slickController', function(ngvFactory, $scope, $http, $log, $location, $mdDialog){
+	module.controller('slickController', function(ngvFactory, filterFactory, $scope, $http, $log, $location, $mdDialog){
 		$scope.dsNgv = [];
 		$scope.loadingSlick = true;
 		$scope.slickconfig = {
@@ -2884,10 +2671,10 @@
 			$scope.loadingSlick = false;
 			console.log($scope.dsNgv);
 		})
-		$scope.tinhTuoiNgv = ngvFactory.tinhTuoiNgv;
+		$scope.tinhTuoiNgv = filterFactory.tinhTuoiNgv;
 	});
 	
-	searchModule.controller('chitietController', function(khachhangFactory, thanhtoanFactory, filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog, $q){
+	module.controller('chitietController', function(khachhangFactory, thanhtoanFactory, filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog, $q){
 		$scope.ngvDcChon = null;
 		$scope.loading = true;
 		$scope.isThanhToan = false;

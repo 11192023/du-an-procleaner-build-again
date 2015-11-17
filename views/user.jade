@@ -130,8 +130,19 @@ block taikhoan
             h4.biggerfont.modal-title.chutrang {{'Nhận xét nhân viên '+ngvChiTiet.hoten}}
           div#mypanel.modal-body
             md-input-container.md-block
-              label Nhận xét
-              textarea(ng-model='nhanxet', columns='5', md-maxlength='150')
+              div(layout='row', layout-align="space-between center")
+                h4 Đánh giá
+                .nhanxet.marright
+                  i#star5.fa.fa-star-o.xanhnhat(ng-click='danhgiaCtyc(4)')
+                  i#star4.fa.fa-star-o.xanhnhat(ng-click='danhgiaCtyc(3)')
+                  i#star3.fa.fa-star-o.xanhnhat(ng-click='danhgiaCtyc(2)')
+                  i#star2.fa.fa-star-o.xanhnhat(ng-click='danhgiaCtyc(1)')
+                  i#star1.fa.fa-star-o.xanhnhat(ng-click='danhgiaCtyc(0)')
+              md-radio-group()
+                md-checkbox.md-primary.md-align-top-left(ng-model='hudo')
+                  {{'Hư đồ'}}
+                md-checkbox.md-primary.md-align-top-left(ng-model='matdo')
+                  {{'Mất đồ'}}
           div.modal-footer
             md-button(ng-click='luuNhanXet()')
               | Lưu nhận xét
