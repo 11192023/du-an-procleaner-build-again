@@ -60,9 +60,9 @@ block taikhoan
                         md-divider
                       md-list-item(ng-repeat='yc in yeucauNh', ng-click='xemChiTietYc(yc)')
                         div(layout='row', flex='25')
-                          p {{yc.ngaydatyeucau | date:'dd-MM-yyyy'}}
+                          p {{yc.ngaydatyeucau | date:'dd/MM/yyyy'}}
                         div(layout='row', flex='25')
-                          p {{yc.ngayyeucau | date:'dd-MM-yyyy'}}
+                          p {{yc.ngayyeucau | date:'dd/MM/yyyy'}}
                         div(layout='row', flex='25')
                           p {{yc.chiphi}}
                         div(layout='row', flex='25')

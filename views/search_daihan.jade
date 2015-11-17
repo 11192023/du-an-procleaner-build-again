@@ -94,7 +94,7 @@ block search
               .md-toolbar-tools
                 h4.chutrang 
                   i.fa.fa-search
-                  |   Thông tin chi tiết - ngày dd/mm/yyyy
+                  |   Thông tin chi tiết - ngày {{detailData.ngaythuchien | date:'dd/MM/yyyy'}}
               div
                 button.marleftbtn.btn.btn-danger.marright(type='button' ng-click='backToCalendar()')
                   i.fa.fa-arrow-left
