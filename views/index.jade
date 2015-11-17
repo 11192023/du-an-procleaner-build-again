@@ -49,10 +49,10 @@ html(lang='en')
           |  Đăng ký
         button.marright.btn.btn-danger(type='button' ng-click='showDangNhap()')
           |  Đăng Nhập
-      div(ng-show='registed')
+      div.mystyle(ng-show='registed')
         md-list-item
           img.md-avatar(alt='', ng-src='{{ "img/NGV.jpg"  }}')
-          .btn-group.dropup
+          .btn-group.pull-right
             button.btn.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
               | {{khachhang.hoten}}
               i.fa.fa-chevron-down.marleft
