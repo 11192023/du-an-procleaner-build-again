@@ -604,7 +604,8 @@
 			    loaiyeucau: "Ngắn hạn",
 			    trangthai: trangthai,
 			    diachi: diachikh + '/' +quan,
-			    loaidichvu: mangdichvu
+			    loaidichvu: mangdichvu,
+			    quan: quan
    		 	});
     		$http({url: 'https://serene-stream-9747.herokuapp.com/api/yeucau',
 	            method: "POST",
@@ -632,7 +633,8 @@
 			    loaiyeucau: "Dài hạn",
 			    trangthai: trangthai,
 			    diachi: diachikh + '/' +quan,
-			    loaidichvu: mangdichvu
+			    loaidichvu: mangdichvu,
+			    quan: quan
    		 	});
     		$http({url: 'https://serene-stream-9747.herokuapp.com/api/yeucau',
 	            method: "POST",
@@ -757,6 +759,32 @@
         	});
 		    return deferred.promise;
 		}
+		service.layMaXacNhan = function(maxacnhan, sdtkhachhang){
+			
+			var deferred = $q.defer();
+			var tinnhan = '<RQST>'+
+								'<APIKEY>15D1B3AE730591D0FAC35DDAEEE32A</APIKEY>'+
+								'<SECRETKEY>7229F4A47F864FEA33D91DC247C5A5</SECRETKEY>'+ 
+								'<SMSTYPE>7</SMSTYPE>'+
+								'<CONTENT>Ma xac nhan cua ban la ' +maxacnhan+ '</CONTENT>'+
+								'<CONTACTS>'+
+									'<CUSTOMER>'+
+						     			'<PHONE>'+sdtkhachhang+'</PHONE>'+
+									'</CUSTOMER>'+
+								'</CONTACTS>'+
+							'</RQST>';
+			console.log(tinnhan);
+			$http({url: 'http://api.esms.vn/MainService.svc/xml/SendMultipleMessage_V4/',
+	            method: "POST",
+	            data: tinnhan,
+	            headers: {'Content-Type': 'application/raw;charset=UTF-8'}
+	        }).success(function (data, status, headers, config) {
+	        		deferred.resolve(data);
+	            }).error(function (data, status, headers, config) {
+	                console.log('Error: ' + data);
+	            });
+			return;
+		}
 		service.getYeuCauNh = function(sdt){
 			var deferred = $q.defer();
 			var q = '?sdtkhachhang=' + sdt + '&loaiyeucau=Ngắn hạn';
@@ -861,7 +889,10 @@
 		$scope.ngv_sub2 = null;
 
 		$scope.hoanthanh_thanhtoan_nh = false;
-
+		$scope.maxacnhan = {
+	    	nguoidung: null,
+	    	hethong: null
+	    };
 		$scope.khachhang = {
 			sdt: null,
 			hoten: '',
@@ -1120,8 +1151,47 @@
 	    	}
 	    	return result;
 	    }
+
+	    $scope.layMaXacNhan = function(){
+			var min = 1;
+			var max = 99999;
+			var random = Math.floor(Math.random() * (max - min + 1)) + min;
+
+			if($scope.khachhang.sdt == null)
+				$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Xin nhập số điện thoại')
+			        .ok('Đồng ý!')
+			        .targetEvent(ev)
+			    );
+			else{
+				//if($scope.solanxacnhan == 3){
+
+				//}
+				//$scope.solanxacnhan++;
+				$scope.maxacnhan.hethong = random;
+				khachhangFactory.layMaXacNhan(random, $scope.khachhang.sdt);
+			}
+		}
+
 	    $scope.promises = [];
 	    $scope.luu_yeucau = function(){
+	    	if($scope.maxacnhan.nguoidung != $scope.maxacnhan.hethong &&
+	    		$scope.maxacnhan.nguoidung != null){
+	    		$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Mã xác nhận chưa đúng!!')
+			        .ok('Đồng ý!')
+			        .targetEvent(null)
+			    );
+			    return;
+	    	}
 	    	$scope.loading_yeucau = true;
 	    	var q_ngv_trunglich = '?ngaylam=' + $scope.doi_ngaysearch($scope.data.ngay) +
 				'&giobatdau__lte=' + $scope.data.giokt1 +
@@ -1330,6 +1400,10 @@
 		$scope.thongbaogio = '';
 		$scope.ngvs = null;
 		$scope.isDetail = false;
+		$scope.maxacnhan = {
+	    	nguoidung: null,
+	    	hethong: null
+	    };
 		$scope.khachhang = {
 			sdt: null,
 			hoten: '',
@@ -1862,9 +1936,46 @@
 	    	}
 	    	return result;
 	    }
+	    $scope.layMaXacNhan = function(){
+			var min = 1;
+			var max = 99999;
+			var random = Math.floor(Math.random() * (max - min + 1)) + min;
+
+			if($scope.khachhang.sdt == null)
+				$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Xin nhập số điện thoại')
+			        .ok('Đồng ý!')
+			        .targetEvent(ev)
+			    );
+			else{
+				//if($scope.solanxacnhan == 3){
+
+				//}
+				//$scope.solanxacnhan++;
+				$scope.maxacnhan.hethong = random;
+				khachhangFactory.layMaXacNhan(random, $scope.khachhang.sdt);
+			}
+		}
 	    $scope.llvpromises = [];
 	    $scope.ctycpromises = [];
 	    $scope.luu_yeucau = function(){
+	    	if($scope.maxacnhan.nguoidung != $scope.maxacnhan.hethong &&
+	    		$scope.maxacnhan.nguoidung != null){
+	    		$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Mã xác nhận chưa đúng!!')
+			        .ok('Đồng ý!')
+			        .targetEvent(null)
+			    );
+			    return;
+	    	}
 	    	$scope.loading_yeucau = true;
 	    	var promises = [];
 	    	for(i=0; i<$scope.data.lichdaihan; i++){
@@ -2009,7 +2120,7 @@
 	        arrows: true
 		};
 	});
-	module.controller('loginController', function(khachhangFactory, thanhtoanFactory, $scope, $timeout, $cookies, $location){
+	module.controller('loginController', function(khachhangFactory, thanhtoanFactory, $scope, $timeout, $cookies, $location, $cookies){
 		$scope.registed = false;
 		$scope.khachhang = {};
 		$scope.sdtTonTai = false;
@@ -2017,6 +2128,15 @@
 		$scope.dangkyThanhCong = false;
 		$scope.loadingDangKy = false;
 		$scope.loadingDangNhap = false;
+		$scope.maxacnhan = {
+	    	nguoidung: null,
+	    	hethong: null
+	    };
+		$scope.solanxacnhan = 0;
+		$scope.thongbaomaxacnhan = '';
+		$scope.daxacnhansdt = false;
+		$scope.thongbaosdt = '';
+		$scope.tamdungxacnhan = null;
 		//check cookies
 		$scope.checkCookies = function(){
 			if($cookies.get('khachhang') != null){
@@ -2031,7 +2151,38 @@
 		$scope.closeDangKy = function(){
 			$('#DangKyForm').modal('hide');
 		}
+		$scope.kiemtraFormDangKy = function(){
+			if($scope.daxacnhansdt == true)
+				return false;
+			else
+				return true;
+		}
+		$scope.$watch('khachhang.sdt', function(newVal, oldVal){
+			if(newVal == null) return;
+			if(newVal.toString().length < 7) {
+				$scope.thongbaosdt = 'Số điện thoại phải từ 10 số';
+				$scope.daxacnhansdt = false;
+			}
+			else {
+				thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(data){
+					if(data.length > 0){
+						thanhtoanFactory.luuKhachHang($scope.khachhang).then(function(data){
+							$scope.thongbaosdt = 'số này đã được đăng ký!!'
+							$scope.daxacnhansdt = false;
+						});
+					}else{
+						$scope.thongbaosdt = 'Có thế sử dụng số này';
+						$scope.daxacnhansdt = true;
+					}
+				});
+			}
+		});
 		$scope.DangKy = function(){
+			if($scope.maxacnhan.hethong != $scope.maxacnhan.hethong){
+				$scope.thongbaomaxacnhan = 'Mã xác nhận không đúng';
+				return;
+			}
+			$scope.thongbaomaxacnhan = '';
 			$scope.loadingDangKy = true;
 			thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(data){
 				if(!data.length > 0){
@@ -2051,6 +2202,26 @@
 					},5000)
 				}
 			});
+		}
+		$scope.layMaXacNhan = function(){
+			if($scope.daxacnhansdt == false){
+				$scope.thongbaomaxacnhan = 'Số điện thoại không phù hợp';
+				return;
+			}
+			var min = 1;
+			var max = 99999;
+			var random = Math.floor(Math.random() * (max - min + 1)) + min;
+
+			if($scope.khachhang.sdt == null)
+				$scope.thongbaomaxacnhan = 'Xin nhập số điện thoại';
+			else{
+				//if($scope.solanxacnhan == 3){
+
+				//}
+				//$scope.solanxacnhan++;
+				$scope.maxacnhan.hethong = random;
+				khachhangFactory.layMaXacNhan(random, $scope.khachhang.sdt);
+			}
 		}
 		$scope.layDiaChi = function(){
 			if(navigator.geolocation) {
@@ -2746,11 +2917,16 @@
 			      {id: 1200, name: '20:00 giờ'}
 		    ],
 	    };
+	    $scope.maxacnhan = {
+	    	nguoidung: null,
+	    	hethong: null
+	    };
+		
 	    $scope.khachhang = {
 	    	sdt: null,
 	    	hoten: null,
 	    	diachi: null,
-	    }
+	    };
 		$scope.tinhTuoiNgv = filterFactory.tinhTuoiNgv;
 		$scope.layDiaChi = function(){
 			if(navigator.geolocation) {
@@ -2776,6 +2952,30 @@
 			        .ok('Đồng ý!')
 			        .targetEvent(ev)
 			    );
+			}
+		}
+		$scope.layMaXacNhan = function(){
+			var min = 1;
+			var max = 99999;
+			var random = Math.floor(Math.random() * (max - min + 1)) + min;
+
+			if($scope.khachhang.sdt == null)
+				$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Xin nhập số điện thoại')
+			        .ok('Đồng ý!')
+			        .targetEvent(ev)
+			    );
+			else{
+				//if($scope.solanxacnhan == 3){
+
+				//}
+				//$scope.solanxacnhan++;
+				$scope.maxacnhan.hethong = random;
+				khachhangFactory.layMaXacNhan(random, $scope.khachhang.sdt);
 			}
 		}
 		$scope.close_thanhtoan = function(){
@@ -2912,6 +3112,19 @@
 	    	return result;
 	    }
 	    $scope.luu_yeucau = function(){
+	    	if($scope.maxacnhan.nguoidung != $scope.maxacnhan.hethong &&
+	    		$scope.maxacnhan.nguoidung != null){
+	    		$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Mã xác nhận chưa đúng!!')
+			        .ok('Đồng ý!')
+			        .targetEvent(null)
+			    );
+			    return;
+	    	}
 	    	$scope.loading_yeucau = true;
             $http.get('https://serene-stream-9747.herokuapp.com/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
 		        .success(function(data) {

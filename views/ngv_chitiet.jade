@@ -175,8 +175,8 @@ block chitiet
                     label 
                       a.i.fa.fa-shield.xanhnhat.padright
                       | Mã xác nhận
-                    input(autocomplete='off')
-                  md-button.md-fab.md-mini.md-primary.chutrang
+                    input(ng-model='maxacnhan.nguoidung', autocomplete='off')
+                  md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan()')
                     md-tooltip(md-direction="left")
                       | Lấy mã xác nhận
                     i.fa.fa-shield

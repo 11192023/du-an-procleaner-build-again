@@ -67,7 +67,7 @@ html(lang='en')
       #DangKyForm.modal.fade(role='dialog')
         div.modal-dialog
           div.modal-content
-            form(name='formthanhtoan', novalidate)
+            form(name='formdangky', novalidate)
               div.modal-header.bgxanhdam
                 button.chutrang.close(type='button', ng-click='closeDangKy()') ×
                 h4.biggerfont.modal-title.chutrang Đăng ký
@@ -85,7 +85,7 @@ html(lang='en')
                         i.fa.fa-user.xanhnhat.padright
                         | Họ tên
                       input(md-maxlength="30", required, name="hoten", ng-model='khachhang.hoten' autocomplete='off')
-                      div(ng-messages='formthanhtoan.hoten.$error')
+                      div(ng-messages='formdangky.hoten.$error')
                         div(ng-message='required') Thông tin bắt buộc.
                         div(ng-message='md-maxlength') Tên không được quá 30 ký tự.
                   div(layout='', layout-sm='column')
@@ -94,16 +94,19 @@ html(lang='en')
                         i.fa.fa-phone.xanhnhat.padright
                         | Số đtdđ
                       input(md-maxlength="15", ng-pattern="/^[0-9]+$/", required, name="sdt", ng-model='khachhang.sdt' autocomplete='off')
-                      div(ng-messages='formthanhtoan.sdt.$error')
+                      div(ng-messages='formdangky.sdt.$error')
                         div(ng-message='pattern') Số điện thoại không đúng quy định(số từ 1-9).
                         div(ng-message='required') Thông tin bắt buộc.
                         div(ng-message='md-maxlength') Số điện thoại không được nhiều hơn 30 ký tự.
+                      div
+                        p {{thongbaosdt}}
                     md-input-container(style='width:43%')
                       label 
                         a.i.fa.fa-shield.xanhnhat.padright
                         | Mã xác nhận
-                      input(autocomplete='off')
-                    md-button.md-fab.md-mini.md-primary.chutrang
+                      input(autocomplete='off', ng-model='maxacnhan.nguoidung')
+                      p {{thongbaomaxacnhan}}
+                    md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan()')
                       md-tooltip
                         | Lấy mã xác nhận
                       i.fa.fa-shield
@@ -113,7 +116,7 @@ html(lang='en')
                         i.fa.fa-map-marker.xanhnhat.padright
                         | Địa chỉ
                       input(md-maxlength="150", required, name="diachi", ng-model='khachhang.diachi' autocomplete='off')
-                      div(ng-messages='formthanhtoan.diachi.$error')
+                      div(ng-messages='formdangky.diachi.$error')
                         div(ng-message='required') Thông tin bắt buộc.
                         div(ng-message='md-maxlength') Địa chỉ không được nhiều hơn 150 ký tự.
                     md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layDiaChi()')
@@ -121,7 +124,7 @@ html(lang='en')
                         | Lấy địa chỉ hiện tại
                       i.fa.fa-map
               div.modal-footer
-                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid", ng-click='DangKy()')
+                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formdangky.$invalid || kiemtraFormDangKy()", ng-click='DangKy()')
                   i.fa.fa-check
                   |  Đồng ý
                 button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangKy()')
@@ -130,7 +133,7 @@ html(lang='en')
       #DangNhapForm.modal.fade(role='dialog')
         div.modal-dialog
           div.modal-content
-            form(name='formthanhtoan', novalidate ng-submit='DangNhap()')
+            form(name='formdangnhap', novalidate ng-submit='DangNhap()')
               div.modal-header.bgxanhdam
                 button.chutrang.close(type='button', ng-click='closeDangNhap()') ×
                 h4.biggerfont.modal-title.chutrang Đăng Nhập
@@ -145,7 +148,7 @@ html(lang='en')
                       i.fa.fa-phone.xanhnhat.padright
                       | Số đtdđ
                     input(md-maxlength="15", ng-pattern="/^[0-9]+$/", required, name="sdt", ng-model='khachhang.sdt' autocomplete='off')
-                    div(ng-messages='formthanhtoan.sdt.$error')
+                    div(ng-messages='formdangnhap.sdt.$error')
                       div(ng-message='pattern') Số điện thoại không đúng quy định(số từ 1-9).
                       div(ng-message='required') Thông tin bắt buộc.
                       div(ng-message='md-maxlength') Số điện thoại không được nhiều hơn 30 ký tự.
@@ -160,7 +163,7 @@ html(lang='en')
                         | Lấy mã xác nhận
                       i.fa.fa-shield
               div.modal-footer
-                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid")
+                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formdangnhap.$invalid")
                   i.fa.fa-check
                   |  Đồng ý
                 button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangNhap()')

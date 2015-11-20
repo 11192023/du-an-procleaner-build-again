@@ -281,8 +281,8 @@ block search
                           label 
                             a.i.fa.fa-shield.xanhnhat.padright
                             | Mã xác nhận
-                          input(autocomplete='off')
-                        md-button.md-fab.md-mini.md-primary.chutrang
+                          input(autocomplete='off', ng-model='maxacnhan.nguoidung')
+                        md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan()')
                           md-tooltip
                             | Lấy mã xác nhận
                           i.fa.fa-shield
