@@ -1,4 +1,4 @@
-doctype html
+﻿doctype html
 html(lang='en')
   head
     meta(charset='utf-8')
@@ -6,23 +6,23 @@ html(lang='en')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     meta(name='description', content='')
     meta(name='author', content='')
+
+    meta(name="google-site-verification" content="2vmBJlkAVCxNm1To_QmUH6uyrzP-b-rBn5UDsRUn4T8")
+    meta(name="keywords" content="Giúp việc theo giờ, Giúp việc chuyên nghiệp, Chăm sóc bé, Chăm sóc người già, Chăm sóc sản phụ, Nuôi bệnh, Dọn dẹp vệ sinh, Đưa đón bé đi học, Nấu ăn, Vệ sinh văn phòng")
+    meta(name="description" content="Chúng tôi đảm bảo cung cấp đội ngũ nhân viên giúp việc chuyên nghiệp, có kỹ năng làm việc và phẩm chất đạo đức tốt, đủ sức khỏe và lý lịch rõ ràng. Đặc biệt, đội ngũ nhân viên được chúng tôi chọn lựa, huấn luyện và kiểm tra trước khi phục vụ quý khách hàng. Bên cạnh đó, những đánh giá, góp ý của quý khách hàng sẽ là cơ sở và tiêu chí để chất lượng phục vụ của đội ngũ nhân viên chúng tôi ngày một được nâng cao nhằm thỏa mãn mọi yêu cầu của quý khách hàng.")
     base(href='/')
-    script(type='text/javascript').
-      window.history.forward();
-      function noBack() {
-      window.history.forward();
-      }
-    title ProCleaner
+    title ProCleaner - Tìm kiếm người giúp việc theo giờ trong TP.HCM
     // Bootstrap Core CSS
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css', type='text/css')
     // Angular-material
-    link(rel='stylesheet', href='//cdn.gitcdn.xyz/cdn/angular/bower-material/8a3c74f8b974b66a4975f551f2b2b815c0a2b40e/angular-material.css')
+    link(rel='stylesheet', href='//ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.css')
     // Custom Fonts
     link(href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800 | Merriweather:400,300,300italic,400italic,700,700italic,900,900italic', rel='stylesheet', type='text/css')
     link(rel='stylesheet', href='//maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css', type='text/css')
     // Plugin CSS
     link(rel='stylesheet', href='css/animate.min.css', type='text/css')
     link(rel='stylesheet', href='css/bootstrap-select.min.css', type='text/css')
+    link(rel='stylesheet', href='css/vegas.min.css', type='text/css')
     // Custom CSS
     link(rel='stylesheet', href='slick/slick.css', type='text/css')
     link(rel='stylesheet', href='slick/slick-theme.css', type='text/css')
@@ -35,35 +35,21 @@ html(lang='en')
     //if lt IE 9
     script(src='https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js')
     script(src='https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js')
-    
+    script.
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-43439791-2', 'auto');
+      ga('send', 'pageview');
+    script.
+      function disableBack() { window.history.forward() }
+      window.onload = disableBack();
+      window.onpageshow = function(evt) { if (evt.persisted) disableBack() };
   body#page-top(ng-app='SearchModule')
     .se-pre-con
-      .sk-folding-cube
-        .sk-cube1.sk-cube
-        .sk-cube2.sk-cube
-        .sk-cube4.sk-cube
-        .sk-cube3.sk-cube
     div(ng-controller='loginController', ng-init='checkCookies()')
-      div.mystyle(ng-show='!registed')
-        button.marright.btn.btn-danger(type='button' ng-click='showDangKy()')
-          |  Đăng ký
-        button.marright.btn.btn-danger(type='button' ng-click='showDangNhap()')
-          |  Đăng Nhập
-      div.mystyle(ng-show='registed')
-        md-list-item
-          img.md-avatar(alt='', ng-src='{{ "img/NGV.jpg"  }}')
-          .btn-group.pull-right
-            button.btn.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
-              | {{khachhang.hoten}}
-              i.fa.fa-chevron-down.marleft
-            ul.dropdown-menu
-              li
-                a(ng-href='/taikhoan?tab=tttk' target="_self") Thông tin tài khoản
-              li
-                a(ng-href='/taikhoan?&tab=lsdh' target="_self") Lịch sử đơn hàng
-              li.divider(role='separator')
-              li
-                a(href='#', ng-click='DangXuat()') thoát
+      
       #DangKyForm.modal.fade(role='dialog')
         div.modal-dialog
           div.modal-content
@@ -71,7 +57,7 @@ html(lang='en')
               div.modal-header.bgxanhdam
                 button.chutrang.close(type='button', ng-click='closeDangKy()') ×
                 h4.biggerfont.modal-title.chutrang Đăng ký
-              div#mypanel.modal-body
+              div#mypanel.modal-body.modal-no-padding
                 div(ng-show='sdtTonTai' layout="row" layout-align="center center")
                   p Số điện thoại này đã được đăng ký!
                 div(ng-show='dangkyThanhCong' layout="row" layout-align="center center")
@@ -88,30 +74,31 @@ html(lang='en')
                       div(ng-messages='formdangky.hoten.$error')
                         div(ng-message='required') Thông tin bắt buộc.
                         div(ng-message='md-maxlength') Tên không được quá 30 ký tự.
-                  div(layout='', layout-sm='column')
-                    md-input-container(style='width:44%')
+                  div(layout='', layout-sm='row')
+                    md-input-container(style='width:40%')
                       label 
                         i.fa.fa-phone.xanhnhat.padright
                         | Số đtdđ
                       input(md-maxlength="15", ng-pattern="/^[0-9]+$/", required, name="sdt", ng-model='khachhang.sdt' autocomplete='off')
                       div(ng-messages='formdangky.sdt.$error')
                         div(ng-message='pattern') Số điện thoại không đúng quy định(số từ 1-9).
-                        div(ng-message='required') Thông tin bắt buộc.
+                        div(ng-message='required')
                         div(ng-message='md-maxlength') Số điện thoại không được nhiều hơn 30 ký tự.
-                      div
-                        p {{thongbaosdt}}
-                    md-input-container(style='width:43%')
+                    md-input-container(style='width:40%')
                       label 
                         a.i.fa.fa-shield.xanhnhat.padright
                         | Mã xác nhận
                       input(autocomplete='off', ng-model='maxacnhan.nguoidung')
-                      p {{thongbaomaxacnhan}}
-                    md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan()')
+                    md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan(0)', ng-disabled='dalayMXNDK')
                       md-tooltip
                         | Lấy mã xác nhận
                       i.fa.fa-shield
-                  div(layout='', layout-sm='column')
-                    md-input-container(style='width:87%')
+                  
+                  div(layout='', layout-sm='column', layout-align="space-between center")
+                    p {{thongbaosdt.dangky}}
+                    p {{thongbaomaxacnhan}}
+                  div(layout='', layout-sm='row')
+                    md-input-container(style='width:80%')
                       label 
                         i.fa.fa-map-marker.xanhnhat.padright
                         | Địa chỉ
@@ -123,8 +110,10 @@ html(lang='en')
                       md-tooltip
                         | Lấy địa chỉ hiện tại
                       i.fa.fa-map
+                  md-checkbox(ng-model='dongySuDung')
+                    | Đồng ý điều khoản sử dụng của ProCleaner
               div.modal-footer
-                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formdangky.$invalid || kiemtraFormDangKy()", ng-click='DangKy()')
+                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formdangky.$invalid || kiemtraFormDangKy() || !dongySuDung", ng-click='DangKy()')
                   i.fa.fa-check
                   |  Đồng ý
                 button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangKy()')
@@ -133,7 +122,7 @@ html(lang='en')
       #DangNhapForm.modal.fade(role='dialog')
         div.modal-dialog
           div.modal-content
-            form(name='formdangnhap', novalidate ng-submit='DangNhap()')
+            form(name='formdangnhap', novalidate)
               div.modal-header.bgxanhdam
                 button.chutrang.close(type='button', ng-click='closeDangNhap()') ×
                 h4.biggerfont.modal-title.chutrang Đăng Nhập
@@ -157,124 +146,175 @@ html(lang='en')
                       label 
                         a.i.fa.fa-shield.xanhnhat.padright
                         | Mã xác nhận
-                      input(autocomplete='off')
-                    md-button.md-fab.md-mini.md-primary.chutrang
+                      input(autocomplete='off', ng-model='maxacnhan.nguoidung')
+                    md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan(1)' ng-disabled='dalayMXNDN')
                       md-tooltip(md-direction="left")
                         | Lấy mã xác nhận
                       i.fa.fa-shield
+                  div(layout='', layout-sm='column', layout-align="space-between center")
+                    p {{thongbaosdt.dangnhap}}
+                    p {{thongbaomaxacnhan}}
               div.modal-footer
-                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formdangnhap.$invalid")
+                button.marright.btn.btn-danger(type='button' ng-click='showDangKy()')
+                  |  Đăng ký
+                button.marleft.btn.btn-danger.pull-right(type="button", ng-disabled="formdangnhap.$invalid || kiemtraFormDangNhap()", ng-click='DangNhap(1)')
                   i.fa.fa-check
                   |  Đồng ý
                 button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangNhap()')
                   i.fa.fa-remove
                   |  Hủy
-    nav#mainNav.navbar.navbar-default.navbar-fixed-top
-      .container-fluid
-        // Brand and toggle get grouped for better mobile display
-        .navbar-header
-          button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
-            span.sr-only Toggle navigation
-            span.icon-bar
-            span.icon-bar
-            span.icon-bar
-          a(href='/')
-            img.logow(src='img/logo.png', alt='')
-        // Collect the nav links, forms, and other content for toggling
-        #bs-example-navbar-collapse-1.collapse.navbar-collapse
-          ul.nav.navbar-nav.navbar-right
-            li
-              a.page-scroll(href='#about') Giới thiệu
-            li
-              a.page-scroll(href='#services') Dịch vụ
-            li
-              a.page-scroll(href='#portfolio') Người giúp việc
-            li
-              a.page-scroll(href='#', data-toggle='modal', data-target='#banggia') Bảng giá
-            li
-              a.page-scroll(href='#', data-toggle='modal', data-target='#hoidap') Hỏi đáp
-            li
-              a.page-scroll(href='#', data-toggle='modal', data-target='#chinhsach') Chính sách
-            li
-              a.page-scroll(href='#contact') Liên hệ
-    header(popover-close exclude-class="exclude")
-      .header-content(ng-controller='indexController')
-        .header-content-inner
-          h1.smallerh1 GIÚP VIỆC CHUYÊN NGHIỆP
-          h2 Tìm người giúp việc trong TP.HCM
-          div
-            .form-group
-              input#btntheongay.btn.btn-danger.form-control.sb.longBtn.active(type='button', value='Theo ngày')
-              input#btndaihan.btn.btn-danger.form-control.sb.longBtn(type='button', value='Dài hạn')
-            div#theongay
-              form#formTheoNgay.form-inline.removedot(action='/search')
-                input.form-control.sb.typeahead(type='hidden', name='typesearch', value='nh')
-                ul#nhlist
-                  li
-                    .form-group
-                        select.form-control.sb.fixwquan.selectpicker(ng-model="data.quan")
-                          option(value='' disabled) Chọn Quận
-                          option(ng-repeat="quan in data.danhsachquan" value="{{quan}}"){{quan}}
-                        input#quannh.form-control.sb.typeahead(type='hidden', name='quan', value='{{data.quan}}')
+      nav#mainNav.navbar.navbar-default.navbar-fixed-top
+        .container-fluid
+          // Brand and toggle get grouped for better mobile display
+          .navbar-header
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a(href='javascript:window.location.href=window.location.href')
+              img.logow(src='img/logo.png', alt='Logo công ty')
+          // Collect the nav links, forms, and other content for toggling
+          #bs-example-navbar-collapse-1.menuID.collapse.navbar-collapse
+            ul.nav.navbar-nav.navbar-right.alignmiddle
+              li
+                a.page-scroll(href='#about') Giới thiệu
+              li
+                a.page-scroll(href='#services') Dịch vụ
+              li
+                a.page-scroll(href='#portfolio') Người giúp việc
+              li
+                a.page-scroll(href='#', data-toggle='modal', data-target='#banggia') Bảng giá
+              li
+                a.page-scroll(href='#', data-toggle='modal', data-target='#hoidap') Hỏi đáp
+              li
+                a.page-scroll(href='#', data-toggle='modal', data-target='#chinhsach') Chính sách
+              li
+                a.page-scroll(href='#contact') Liên hệ
+              li
+                a(ng-href='/blog' target="_self") Blog
+              li
+                div(ng-show='!registed', style='padding-top:9px')
+                  button.marright.btn.btn-danger(type='button' ng-click='showDangNhap()')
+                    |  Đăng Nhập
+                div(ng-show='registed', style='margin-top:-5px')
+                  md-list-item
+                    img.md-avatar(alt='Ảnh đại diện', ng-src='{{ "img/NGV.jpg"  }}')
+                    .btn-group.pull-right.btnlogin 
+                      button.btn.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                        | {{khachhang.hoten}}
+                        i.fa.fa-chevron-down.marleft
+                      ul.dropdown-menu
+                        li
+                          a(ng-href='/taikhoan?tab=tttk' target="_self") Thông tin tài khoản
+                        li
+                          a(ng-href='/taikhoan?&tab=lsdh' target="_self") Lịch sử đơn hàng
+                        li.divider(role='separator')
+                        li
+                          a(href='#', ng-click='DangXuat()') Thoát
+    div.searchComponentParent(style='width:inherit;height:inherit')
+      div(style='width:inherit; height:inherit')
+        header#mainSlider(popover-close exclude-class="exclude")
+      div.searchComponent(style='width:inherit; top: 36%; position: absolute')
+        .header-content(ng-controller='indexController', style='text-align:center')
+          .header-content-inner
+            h2(style="font-weight:600") ĐẶT DỊCH VỤ GIÚP VIỆC
+            div#searchContent
+              .form-group
+                input#btntheongay.btn.btn-danger.form-control.sb.longBtn.active(type='button', value='Theo ngày')
+                input#btndaihan.btn.btn-danger.form-control.sb.longBtn(type='button', value='Dài hạn')
+              div#theongay
+                form#formTheoNgay.form-inline.removedot(action='/search')
+                  input.form-control.sb.typeahead(type='hidden', name='typesearch', value='nh')
+                  ul#nhlist
+                    li
+                      .form-group
+                          select.form-control.sb.fixwquan.nya-selectpicker(ng-model="data.quan" data-size="7")
+                            option(value='', disabled) Chọn Quận
+                            option(ng-repeat="quan in data.danhsachquan" value="{{quan}}"){{quan}}
+                          input#quannh.form-control.sb.typeahead(type='hidden', name='quan', value='{{data.quan}}')
 
-                        select.form-control.sb.fixwdichvu.selectpicker(ng-model="data.dichvu")
-                          option(ng-repeat="dichvu in data.danhsachdichvu" value="{{dichvu}}"){{dichvu}}
-                        input#dichvunh.form-control.sb.typeahead(type='hidden', name='dichvu', value='{{data.dichvu}}')
+                          select.form-control.sb.fixwdichvu.nya-selectpicker(ng-model="data.dichvu" multiple data-size="7")
+                            option(ng-repeat="dichvu in data.danhsachdichvu" value="{{dichvu.ten}}"){{dichvu.ten}}
+                          input#dichvunh.form-control.sb.typeahead(type='hidden', name='dichvu', value='{{data.dichvu}}')
 
-                        input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
-                    .form-group
-                        select.form-control.sb.fixWTime.selectpicker(ng-model="data.giobd1")
-                          option(value='' disabled) Từ giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input#gbdnh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
+                          input.form-control.sb.dpindex.fixWTimeNH(type='text', name='ngay', placeholder='Chọn ngày', readonly='readonly', autocomplete='off')
+                      .form-group
+                          select.form-control.sb.fixWTime.nya-selectpicker(ng-model="data.giobd1" data-size="7")
+                            option(value='', disabled) Từ giờ
+                            option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
+                          input#gbdnh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-                        select.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1")
-                          option(value='' disabled) Đến giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input#gktnh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
+                          select.form-control.sb.fixWTime.nya-selectpicker(ng-model="data.giokt1" data-size="7")
+                            option(value='', disabled) Đến giờ
+                            option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
+                          input#gktnh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
 
-                      input.form-control.sb.btn.btn-danger(id='submitnh1' type='submit', value='Tìm kiếm')
-                  
-            div#daihan.hide
-              form#formDaiHan.form-inline.removedot(action='/searchdaihan')
-                input.form-control.sb.typeahead(type='hidden', name='typesearch', value='dh')
-                ul#dhlist
-                  li
-                    .form-group
-                        select.form-control.sb.fixwquan.selectpicker(ng-model="data.quan")
-                          option(value='' disabled) Chọn Quận
-                          option(ng-repeat="quan in data.danhsachquan" value="{{quan}}"){{quan}}
-                        input#quandh.form-control.sb.typeahead(type='hidden', name='quan', value='{{data.quan}}')
+                        input.form-control.sb.btn.btn-danger(id='submitnh1' type='submit', value='Tìm kiếm')
+                    
+              div#daihan.hide
+                form#formDaiHan.form-inline.removedot(action='/searchdaihan')
+                  input.form-control.sb.typeahead(type='hidden', name='typesearch', value='dh')
+                  ul#dhlist
+                    li
+                      .form-group
+                          select.form-control.sb.fixwquan.nya-selectpicker(ng-model="data.quan" data-size="7")
+                            option(value='', disabled) Chọn Quận
+                            option(ng-repeat="quan in data.danhsachquan" value="{{quan}}"){{quan}}
+                          input#quandh.form-control.sb.typeahead(type='hidden', name='quan', value='{{data.quan}}')
 
-                        select.form-control.sb.fixwdichvu.selectpicker(ng-model="data.dichvu")
-                          option(ng-repeat="dichvu in data.danhsachdichvu" value="{{dichvu}}"){{dichvu}}
-                        input#dichvudh.form-control.sb.typeahead(type='hidden', name='dichvu', value='{{data.dichvu}}')
+                          select.form-control.sb.fixwdichvu.nya-selectpicker(ng-model="data.dichvu" multiple data-size="7")
+                            option(ng-repeat="dichvu in data.danhsachdichvu" value="{{dichvu.ten}}"){{dichvu.ten}}
+                          input#dichvudh.form-control.sb.typeahead(type='hidden', name='dichvu', value='{{data.dichvu}}')
 
-                        input.form-control.sb.dpindex.fixWTime(type='text', name='ngaybd', placeholder='Từ ngày', readonly='readonly', autocomplete='off')
-                        input.form-control.sb.dpindex.fixWTime(type='text', name='ngaykt', placeholder='Đến ngày', readonly='readonly', autocomplete='off')
+                          input.form-control.sb.dpindex.fixWTime(type='text', name='ngaybd', placeholder='Từ ngày', readonly='readonly', autocomplete='off')
+                          input.form-control.sb.dpindex.fixWTime(type='text', name='ngaykt', placeholder='Đến ngày', readonly='readonly', autocomplete='off')
 
-                    .form-group
-                        select.form-control.sb.fixWTime.selectpicker(ng-model="data.giobd1")
-                          option(value='' disabled) Từ giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input#gbddh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
+                      .form-group
+                          select.form-control.sb.fixWTime.nya-selectpicker(ng-model="data.giobd1" data-size="7")
+                            option(value='', disabled) Từ giờ
+                            option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
+                          input#gbddh.form-control.sb.typeahead(type='hidden', name='giobd1', value='{{data.giobd1}}')
 
-                        select.form-control.sb.fixWTime.selectpicker(ng-model="data.giokt1")
-                          option(value='' disabled) Đến giờ
-                          option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
-                        input#gktdh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
+                          select.form-control.sb.fixWTime.nya-selectpicker(ng-model="data.giokt1" data-size="7")
+                            option(value='', disabled) Đến giờ
+                            option(ng-repeat="option in data.availableOptions" value="{{option.id}}"){{option.name}}
+                          input#gktdh.form-control.sb.typeahead(type='hidden', name='giokt1', value='{{data.giokt1}}')
 
-                      input.form-control.sb.btn.btn-danger(id='submitdh1' type='submit', value='Tìm kiếm')
+                        input.form-control.sb.btn.btn-danger(id='submitdh1' type='submit', value='Tìm kiếm')
                   
     section#about.bg-primary
       .container
         .row
-          .col-lg-8.col-lg-offset-2.text-center
+          .col-lg-12.text-center
             h2.section-heading Tất cả vì sự hài lòng của quý khách hàng
             hr
-            p.text-faded
-              | Chúng tôi đảm bảo cung cấp đội ngũ nhân viên giúp việc chuyên nghiệp, có kỹ năng làm việc và phẩm chất đạo đức tốt, đủ sức khỏe và lý lịch rõ ràng. Đặc biệt. đội ngũ nhân viên được chúng tôi chọn lựa, huấn luyện và kiểm tra trước khi phục vụ quý khách hàng. Bên cạnh đó, những đánh giá, góp ý của quý khách hàng sẽ là cơ sở và tiêu chí để chất lượng phục vụ của đội ngũ nhân viên chúng tôi ngày một được nâng cao nhằm thỏa mãn mọi yêu cầu của quý khách hàng.
-            a.btn.btn-danger.btn-xl(href='#') Tìm người giúp việc bằng Smartphone!
+            p.text-faded.justify
+              | Chúng tôi, Procleaner, là tập hợp những cá nhân xuất thân từ thực tế cuộc sống của những người giúp việc, được sự chắp cánh của những cộng sự am hiểu công nghệ và giàu kinh nghiệm quản lý.Procleaner mong muốn đem đến cho Quý khách hàng những dịch vụ tốt nhất với những con người được huấn luyện theo quy trình công nghiệp.<br/><br/>Đội ngũ nhân viên giúp việc của Procleaner được trang bị những kỹ năng làm việc chuyên nghiệp, phẩm chất đạo đức tốt, lý lịch rõ ràng và sức khỏe đầy đủ. Bên cạnh đó, được sự hỗ trợ của những công nghệ tiên tiến nhất hiện nay, chúng tôi đã sẵn sàng mang đến cho Quý khách hàng những dịch vụ chuyên nghiệp với phương châm “Tất cả vì sự hài lòng của Quý khách hàng”.
+
+            a.marleft(href='https://play.google.com/store/apps/details?id=phong.com.nguoigiupviec&hl=en', target="_blank")
+              img(style="padding-bottom:5px" src='img/app_button/google_app_new.png', alt='Ứng dụng di động trên Google store')
+            a.marleft(href='/')
+              img(style="padding-bottom:5px" src='img/app_button/apple_app_new.png', alt='Ứng dụng di động trên Apple store')
+        .row.process
+          .col-md-10.col-md-offset-1
+            h2.title.text-center Các bước đặt dịch vụ
+            .col-md-3.text-center
+              .media-icon
+                span.icon 1
+              h3.media-title Đặt dịch vụ
+            .col-md-3.text-center
+              .media-icon
+                span.icon 2
+              h3.media-title Xác nhận, Tư vấn
+            .col-md-3.text-center
+              .media-icon
+                span.icon 3
+              h3.media-title Thực hiện công việc
+            .col-md-3.text-center
+              .media-icon
+                span.icon 4
+              h3.media-title Đánh giá người giúp việc
     section#services
       .container
         .row
@@ -332,14 +372,16 @@ html(lang='en')
             h2.section-heading Danh sách nhân viên
             hr.primary
       .container-fluid(ng-controller='slickController')
+        form#xemchitietngvform(name='xemchitietngvform', novalidate, action='/nguoi_giup_viec', ng-show='false', method='post')
+          input(type='hidden', name='idngv', value='{{idngv}}')
         .row.no-gutter
           div(layout="row" layout-align="center center" ng-show='loadingSlick')
               i.fa.fa-4x.fa-cog.fa-spin.xanhnhat
           slick.slicktest(settings='slickconfig', ng-if='!loadingSlick')
             .col-xs-6.col-sm-3(ng-repeat='ngv in dsNgv | orderBy: "-sonamkinhnghiem"')
               .thumbnail.center-block
-                a.portfolio-box(ng-href='{{"/ngv_chitiet?id="+ngv._id}}', target="_self")
-                  img.img-responsive(ng-src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
+                a.portfolio-box(data-ng-if="!refreshing" ng-click='xemChiTietNgv(ngv._id)' ng-href='#')
+                  img.img-responsive(ng-src='{{"http://procleaner.vn:3000/public/images/ngv/" + ngv.hinhanh}}', alt='Ảnh đại diện')
                   .portfolio-box-caption
                     .portfolio-box-caption-content
                       .project-category.text-faded
@@ -359,22 +401,36 @@ html(lang='en')
                     .right.padrightngv
                       h5.i.fa.fa-birthday-cake.xanhnhat.marbtm.padright
                       | {{tinhTuoiNgv(ngv.ngaysinh) + ' tuổi'}}
-            
-    section#contact.contactbg
-      .container
+    .container
+      .row
+        .col-lg-12.text-center
+          h2.section-heading Khách Hàng
+          hr.primary
+    .container-fluid(ng-controller='doitacController')
+      .row.no-gutter()
+        slick.slicktest(settings='slickconfig')
+          .col-xs-6.col-sm-2(ng-repeat='dt in doitac')
+            img.img-responsive(ng-src='{{dt.url}}', alt='Ảnh đại diện')        
+    section#contact.contactbg()
+      .container(ng-controller='contactController')
         .col-md-6.pull-left
           .row
             h2.section-heading.chutrang.pull-left ProCleaner
           br
           .row
             .left
-              h5.i.fa.fa-phone.marbtm.padright.chutrang
-              | 123-456-6789
+              h5.i.fa.fa-map-marker.marbtm.padright.chutrang
+              | 216 Nguyễn Thị Minh Khai, P. 6, Quận 3, TP. HCM
           br
           .row
             .left
               h5.i.fa.fa-envelope.marbtm.padright.chutrang
-              | procleaner@gmail.com.vn
+              | cs@procleaner.vn
+          br
+          .row
+            .left
+              h5.i.fa.fa-phone.marbtm.padright.chutrang
+              | 08 3930 5057 - 08 3930 5058
         .col-md-6
           .row.center-block
             h2.section-heading.chutrang Liên Hệ
@@ -385,46 +441,46 @@ html(lang='en')
                 .row
                   .col-xs-6
                     div.form-group
-                      input#name.form-control(type='text', placeholder='Tên *', required='', data-validation-required-message='Please enter your name.')
+                      input#name.form-control(ng-model='contact.ten', type='text', placeholder='Tên *', required='', data-validation-required-message='Please enter your name.')
                       p.help-block.text-danger
                   .col-xs-6
                     div.form-group
-                      input#phone.form-control(type='tel', placeholder='Số điện thoại *', required='', data-validation-required-message='Please enter your phone number.')
+                      input#phone.form-control(ng-model='contact.sdt', type='tel', placeholder='Số điện thoại *', required='', data-validation-required-message='Please enter your phone number.')
                       p.help-block.text-danger
                 br
                 .row
                   .col-xs-12
                     .form-group
-                      input#email.form-control(type='email', placeholder='Email *', required='', data-validation-required-message='Please enter your email address.')
+                      input#email.form-control(ng-model='contact.email', type='email', placeholder='Email *', required='', data-validation-required-message='Please enter your email address.')
                       p.help-block.text-danger
                 br
                 .row
                   .col-xs-12
                     .form-group
-                      textarea#message.form-control(placeholder='Nội dung *', required='', data-validation-required-message='Please enter a message.')
+                      textarea#message.form-control(ng-model='contact.noidung', placeholder='Nội dung *', required='', data-validation-required-message='Please enter a message.')
                       p.help-block.text-danger
                   .clearfix
-                .row
+                .row.rowBtnMessage
                   #success
-                  button.btn.btn-danger.btn-xl(type='submit') Send Message
+                  button.btn.btn-danger.btn-xl(type='button', ng-click='guiEmail()') Gửi tin
     section#footer.bg-dark
       .container
         .row
           .left
             h5.i.fa.fa-copyright.marbtm.padright.chutrang
             | Copyright by ProCleaner
-          .right.pull-right
-            a.btn.btn-circle-sm.btn-default.marright(href='#')
+          .right.pull-right(style='padding-right:250px')
+            a.btn.btn-circle-sm.btn-default.marright(href='https://www.facebook.com/ProCleaner-974379042625190/?fref=ts')
               i.fa.fa-facebook
-            a.btn.btn-circle-sm.btn-default.marright(href='#')
+            a.btn.btn-circle-sm.btn-default.marright(href='https://twitter.com/CleanerCs')
               i.fa.fa-twitter
-            a.btn.btn-circle-sm.btn-default.marright(href='#')
+            a.btn.btn-circle-sm.btn-default.marright(href='https://plus.google.com/u/0/101578701371129383526/about?hl=vi')
               i.fa.fa-google-plus
-            a.btn.btn-circle-sm.btn-default.marright(href='#')
+            a.btn.btn-circle-sm.btn-default.marright(href='https://www.linkedin.com/in/ng%C6%B0%E1%BB%9Di-gi%C3%BAp-vi%E1%BB%87c-procleaner-74b01b113?trk=nav_responsive_tab_profile_pic')
               i.fa.fa-linkedin
-<script type='text/javascript'>window._sbzq||function(e){e._sbzq=[];var t=e._sbzq;t.push(["_setAccount",30947]);var n=e.location.protocol=="https:"?"https:":"http:";var r=document.createElement("script");r.type="text/javascript";r.async=true;r.src=n+"//static.subiz.com/public/js/loader.js";var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)}(window);</script>            
+<script type='text/javascript'>window._sbzq||function(e){e._sbzq=[];var t=e._sbzq;t.push(["_setAccount",32700]);var n=e.location.protocol=="https:"?"https:":"http:";var r=document.createElement("script");r.type="text/javascript";r.async=true;r.src=n+"//static.subiz.com/public/js/loader.js";var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)}(window);</script>          
 // modal
-#banggia.modal.fade(role='dialog')
+#banggia.modal.fade(role='dialog', ng-app='SearchModule', ng-controller='banggiaController')
   .modal-dialog.modal-lg
     // Modal content
     .modal-content
@@ -433,178 +489,28 @@ html(lang='en')
         h4.biggerfont.modal-title.chutrang Bảng giá
       .modal-body
         table.table-bordered.tablebg
-          h4 Bảng giá của một giờ làm việc (đơn vị tính: VNĐ)
+          h4 Bảng giá cho một người giúp việc
           thead
             tr
-              th Ngày/tháng
-              th Ngày/tuần
-              th 2 giờ/ngày
-              th 3 giờ/ngày
-              th 4 giờ/ngày
-              th 5 giờ/ngày
-              th 6 giờ/ngày
-              th 7 giờ/ngày
-              th 8 giờ/ngày
+              th Dịch vụ
+              th Phí cơ bản(VNĐ/Giờ)
+              th Phụ phí
+              th Phí ngoài giờ
           tbody
-            tr
-              td 4
-              td 1
-              td 65.000
-              td 62.000
-              td 59.000
-              td 56.000
-              td 53.000
-              td 50.000
-              td 48.000
-            tr
-              td 8
-              td 2
-              td 55.000
-              td 52.000
-              td 50.000
-              td 48.000
-              td 46.000
-              td 42.000
-              td 39.000
-            tr
-              td 12
-              td 3
-              td 51.000
-              td 48.000
-              td 45.000
-              td 42.000
-              td 38.000
-              td 35.000
-              td 33.000
-            tr
-              td 16
-              td 4
-              td 49.000
-              td 45.000
-              td 42.000
-              td 40.000
-              td 35.000
-              td 33.000
-              td 30.000
-            tr
-              td 20
-              td 5
-              td 45.000
-              td 43.000
-              td 40.000
-              td 35.000
-              td 31.000
-              td 29.000
-              td 27.000
-            tr
-              td 24
-              td 6
-              td 45.000
-              td 42.000
-              td 35.000
-              td 33.000
-              td 29.000
-              td 27.000
-              td 25.000
-            tr
-              td 28
-              td 7
-              td 45.000
-              td 42.000
-              td 34.000
-              td 30.000
-              td 27.000
-              td 25.000
-              td 24.000
+            tr(ng-repeat='tc in tieuchi')
+              td {{tc.tentieuchi}}
+              td {{tc.giachuan | currency:'VNĐ':0}}
+              td {{tc.phuphi}}
+              td {{tc.phingoaigiokh + '%'}}
         br
-        table.table-bordered.tablebg
-          h4 Bảng giá theo tháng (đơn vị tính: VNĐ)
-          thead
-            tr
-              th Ngày/tháng
-              th Ngày/tuần
-              th 2 giờ/ngày
-              th 3 giờ/ngày
-              th 4 giờ/ngày
-              th 5 giờ/ngày
-              th 6 giờ/ngày
-              th 7 giờ/ngày
-              th 8 giờ/ngày
-          tbody
-            tr
-              td 4
-              td 1
-              td 520.000
-              td 744.000
-              td 944.000
-              td 1.120.000
-              td 1.272.000
-              td 1.400.000
-              td 1.536.000
-            tr
-              td 8
-              td 2
-              td 880.000
-              td 1.248.000
-              td 1.600.000
-              td 1.920.000
-              td 2.208.000
-              td 2.352.000
-              td 2.496.000
-            tr
-              td 12
-              td 3
-              td 1.224.000
-              td 1.728.000
-              td 2.160.000
-              td 2.520.000
-              td 2.736.000
-              td 2.940.000
-              td 3.168.000
-            tr
-              td 16
-              td 4
-              td 1.568.000
-              td 2.160.000
-              td 2.688.000
-              td 3.200.000
-              td 3.360.000
-              td 3.696.000
-              td 3.840.000
-            tr
-              td 20
-              td 5
-              td 1.800.000
-              td 2.580.000
-              td 3.200.000
-              td 3.500.000
-              td 3.720.000
-              td 4.060.000
-              td 4.320.000
-            tr
-              td 24
-              td 6
-              td 2.160.000
-              td 3.024.000
-              td 3.360.000
-              td 3.960.000
-              td 4.176.000
-              td 4.536.000
-              td 4.800.000
-            tr
-              td 28
-              td 7
-              td 2.520.000
-              td 3.528.000
-              td 3.808.000
-              td 4.200.000
-              td 4.536.000
-              td 4.900.000
-              td 5.376.000
+        h4 Ghi Chú
+        p.padleft.justify  • Phụ phí: là phí tính cho những dịch vụ mà khách hàng có những yêu cầu thêm nhưng chưa được xác định trước. Phụ phí này sẽ được nhân viên công ty tư vấn cho quý khách hàng ứng với từng trường hợp cụ thể.
+        p.padleft.justify  • Phí ngoài giờ: là % phí cơ bản, tính cho những dịch vụ mà khách hàng yêu cầu được phục vụ ngoài khung giờ chuẩn. Khung giờ chuẩn của công ty là từ 8 giờ sáng đến 6 giờ chiều.
         br
-        h5.padleft  • Đối với gói Chăm sóc em bé, người già, sản phụ và nuôi bệnh cộng thêm mỗi giờ làm việc 5.000 đồng.
-        h5.padleft  • Giúp việc cho người nước ngoài cộng thêm mỗi giờ làm việc 10.000 đồng.
-        h5.padleft  • Mức giá trên tính cho một người giúp việc.
+        h4 Chính sách đặc biệt về giá
+        p.padleft.justify  • Trường hợp quý khách hàng đặt đơn hàng có thời hạn từ 7 đến 15 ngày, quý khách hàng được giảm giá 5% tổng chi phí cho cả đơn hàng.
+        p.padleft.justify  • Trường hợp quý khách hàng đặt đơn hàng có thời hạn hơn 15 ngày, quý khách hàng được giảm giá 10% tổng chi phí cho cả đơn hàng.
+        p.padleft.justify  • Ngoài ra, công ty còn có những mã khuyến mãi sẽ được gửi trực tiếp đến quý khách hàng cho những dịp đặc biệt và/hoặc những khách hàng thân thiết.
 
       .modal-footer
 #hoidap.modal.fade(role='dialog')
@@ -636,7 +542,7 @@ html(lang='en')
                     | 2.  Liên hệ với Procleaner như thế nào?
               #cau2.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd2')
                 .panel-body
-                  p.justify Vui lòng gọi 19000000 hoặc gửi email đến contact@procleaner.vn
+                  p.justify Vui lòng gọi số: 08.3930.5057 08.3930.5058 hoặc gửi email đến địa chỉ: cs@procleaner.vn
             .panel.panel-default
               .panel-heading(role='tab', id='hd3')
                 h3.panel-title
@@ -660,7 +566,7 @@ html(lang='en')
                     | 4.  Tại sao phải đánh giá người giúp việc?
               #cau4.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd4')
                 .panel-body
-                  p.justify .....
+                  p.justify Đánh giá người giúp việc vừa là quyền lợi vừa là trách nhiệm của Quý khách hàng. Việc này giúp cho Công ty đánh giá chính xác hơn về chất lượng công việc mà nhân viên chúng tôi đang mang đến phục vụ Quý khách, đồng thời giúp chúng tôi có cơ sở để xác nhận với Quý khách hàng rằng chúng tôi đã mang đến cho Quý khách một dịch vụ đúng như cam kết.
             .panel.panel-default
               .panel-heading(role='tab', id='hd5')
                 h3.panel-title
@@ -670,101 +576,83 @@ html(lang='en')
                 .panel-body
                   p.justify •  Đặt yêu cầu trực tiếp hoặc bằng ứng dụng ProCleaner trên smartphone hoặc thông qua website ProCleaner.vn.
                   p.justify •  Liên hệ với chúng tôi:
-                  h5.padleft    Hotline: 190000000000000
-                  h5.padleft    Email: sales@procleaner.vn
-                  h5.padleft    Đến Trụ sở: ………………………….., Quận 7, Tp.HCM
+                  h5.justify.padleft    Điện thoại: 08.3930.5057 08.3930.5058
+                  h5.justify.padleft    Email: cs@procleaner.vn
+                  h5.justify.padleft    Đến Trụ sở: 216 Nguyễn Thị Minh Khai, Phường 6, Quận 3, TP. HCM
             .panel.panel-default
               .panel-heading(role='tab', id='hd6')
                 h3.panel-title
                   a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau6', aria-expanded='false', aria-controls='cau6')
-                    | 6.  Hình thức thanh toán như thế nào? Theo từng sự vụ thì sao, dài hạn thì sao? Thời điểm thu như thế nào? Ai thu? Mẫu phiếu thu?
+                    | 6.  Hình thức thanh toán phí sử dụng dịch vụ như thế nào?
               #cau6.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd6')
                 .panel-body
-                  p.justify Quý khách hàng có thể lựa chọn một trong các phương cách sau:
-                  h5.padleft    - Chuyển khoản qua ATM
-                  h5.padleft    - Thanh toán trực tiếp tại Trụ sở Công ty
-                  h5.padleft    - Nhân viên của Chúng tôi đến thu tận nhà 
+                  p.justify • Quý khách hàng thanh toán tiền phí sử dụng dịch theo từng tháng nếu là hợp đồng dài hạn hoặc ngay khi kết thúc thời gian sử dụng dịch vụ nếu là hợp đồng ngắn hạn (dưới một tháng).
+                  p.justify • Quý khách hàng thanh toán bằng tiền mặt cho nhân viên do Công ty chỉ định theo giấy giới thiệu của Công ty.
             .panel.panel-default
               .panel-heading(role='tab', id='hd7')
                 h3.panel-title
                   a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau7', aria-expanded='false', aria-controls='cau7')
-                    | 7.  Hợp đồng giúp việc sẽ như thế nào? Mẫu hợp đồng – đặt yêu cầu qua ứng dụng (hoặc web) thì có cần hợp đồng không? Tổng quát hơn thì trường hợp nào thì cần có hợp đồng và trường hợp nào thì không. Cách thức ký hợp đồng thế nào? Có tạm ứng không?
+                    | 7.  Có cần phải ký hợp đồng giúp việc không?
               #cau7.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd7')
                 .panel-body
-                  p.justify Công ty chúng tôi thu phí đặt cọc là 50% của tháng hợp đồng đầu tiên. Sự "ràng buộc" này nhằm đảm bảo rằng chúng tôi luôn cố gắng đảm bảo quyền lợi của khách hàng khi thực hiện theo đúng những điều khoản trong hợp đồng. Quý khách hàng sẽ được an tâm và tin tưởng trong quá trình sử dụng dịch vụ của chúng tôi
+                  p.justify • Để thuận tiện cho Quý khách hàng, chúng tôi đã ghi sẵn các điều khoản trong mục “CHÍNH SÁCH” trên website Công ty (ProCleaner.vn). Khi Quý khách hàng đặt yêu cầu sử dụng dịch vụ của Công ty, thì mặc nhiên là đã đọc và đồng ý tất cả các điều khoản này.
+                  p.justify • Nếu Quý khách hàng cần ký hợp đồng, Công ty chúng tôi sẽ tư vấn và gửi đến Quý khách hàng từng hợp đồng riêng cho từng trường hợp cụ thể.
             .panel.panel-default
               .panel-heading(role='tab', id='hd8')
                 h3.panel-title
                   a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau8', aria-expanded='false', aria-controls='cau8')
-                    | 8.  Nếu muốn chấm dứt hợp đồng phải làm thế nào?
+                    | 8.  Có được đổi người giúp việc không?
               #cau8.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd8')
                 .panel-body
-                  p.justify - Nếu Quý khách hàng muốn chấm dứt hợp đồng trước thời hạn thì cần thông báo trước cho chúng tôi 15 ngày, khi đó Công ty chúng tôi sẽ hoàn trả 50% tiền đặt cọc cho khách hàng.
-                  p.justify - Trường hợp đơn phương chấm dứt hợp đồng trước thời hạn và không thông báo trước thì sẽ không được hoàn tiền cọc và thanh toán số tiền  =  Tổng số giờ làm việc tháng đó  x Đơn giá
+                  p.justify Quý khách có toàn quyền yêu cầu thay đổi người giúp việc nhưng phải báo trước cho Công ty trước 24h của buổi làm đó.
             .panel.panel-default
               .panel-heading(role='tab', id='hd9')
                 h3.panel-title
                   a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau9', aria-expanded='false', aria-controls='cau9')
-                    | 9.  Có được đổi người giúp việc không?
+                    | 9.  Người giúp việc có thu tiền mặt của khách hàng không?
               #cau9.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd9')
                 .panel-body
-                  h4 .......
+                  p.justify Việc thu tiền sẽ do nhân viên có giấy giới thiệu của Công ty đến thu. Người giúp việc sẽ không được phép thu tiền mặt của Quý khách hàng ngoại trừ đơn hàng yêu cầu dịch vụ dưới 1 tuần. Khi đó Người giúp việc cũng phải có giấy giới thiệu của Công ty thì mới được phép thu tiền của Quý khách hàng.
             .panel.panel-default
               .panel-heading(role='tab', id='hd10')
                 h3.panel-title
                   a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau10', aria-expanded='false', aria-controls='cau10')
-                    | 10. Người giúp việc có thu tiền mặt của khách hàng không?
+                    | 10. Thời gian từ lúc đặt yêu cầu đến lúc có người giúp việc tối thiểu là bao lâu?
               #cau10.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd10')
                 .panel-body
-                  h4 .......
+                  p.justify Để chúng tôi có thể sắp xếp Người giúp việc cho Quý khách hàng một cách thuận lợi, thời gian mà Người giúp việc của Công ty có thể đến phục vụ yêu cầu của Quý khách tối thiểu là 03 (ba) giờ đồng hồ kể từ lúc Quý khách đặt yêu cầu.
             .panel.panel-default
               .panel-heading(role='tab', id='hd11')
                 h3.panel-title
                   a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau11', aria-expanded='false', aria-controls='cau11')
-                    | 11. Thời gian từ lúc đặt yêu cầu đến lúc có người giúp việc tối thiểu là bao lâu?
+                    | 11. Thời gian phục vụ của người giúp việc bắt đầu và kết thúc khi nào?
               #cau11.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd11')
                 .panel-body
-                  h4 .......
+                  p.justify Việc thu tiền sẽ do nhân viên có giấy giới thiệu của Công ty đến thu. Người giúp việc sẽ không được phép thu tiền mặt của Quý khách hàng ngoại trừ đơn hàng yêu cầu dịch vụ dưới 1 tuần. Khi đó Người giúp việc cũng phải có giấy giới thiệu của Công ty thì mới được phép thu tiền của Quý khách hàng.
             .panel.panel-default
               .panel-heading(role='tab', id='hd12')
                 h3.panel-title
                   a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau12', aria-expanded='false', aria-controls='cau12')
-                    | 12. Thời gian phục vụ của người giúp việc bắt đầu và kết thúc khi nào?
+                    | 12. Giá dịch vụ có tăng trong thời điểm Tết hay không?
               #cau12.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd12')
                 .panel-body
-                  h4 .......
+                  p.justify Việc Đối với những ngày thường hay ngày Tết lượng Khách hàng đăng ký sử dụng dịch vụ đang tăng lên rất nhanh nhưng với phương châm phục vụ Khách hàng đặt chất lượng lên hàng đầu, trở thành Khách hàng thường xuyên và gắn bó với Công ty thì ProCleaner vẫn giữ giá dịch vụ như cũ đối với tất cả các dịch vụ. Trừ những Khách hàng có nhu cầu sử dụng trong khoảng thời gian Công ty nghỉ Tết Nguyên Đán bắt đâu từ 30 Tết – hết mùng 4 Tết thì giá dịch vụ sẽ tính 300% so với ngày thường theo quy định Luật lao động của Việt Nam.
             .panel.panel-default
               .panel-heading(role='tab', id='hd13')
                 h3.panel-title
                   a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau13', aria-expanded='false', aria-controls='cau13')
-                    | 13. Giá dịch vụ có tăng trong thời điểm Tết hay không?
+                    | 13. ProCleaner cung cấp dịch vụ ở những nơi nào?
               #cau13.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd13')
                 .panel-body
-                  p.justify Đối với những ngày thường hay ngày Tết lượng Khách hàng đăng ký sử dụng dịch vụ đang tăng lên rất nhanh nhưng với phương châm phục vụ Khách hàng đặt chất lượng lên hàng đầu, trở thành Khách hàng thường xuyên và gắn bó với Công ty thì ProCleaner vẫn giữ giá dịch vụ như cũ đối với tất cả các dịch vụ. Trừ những Khách hàng có nhu cầu sử dụng trong khoảng thời gian Công ty nghỉ Tết Nguyên Đán bắt đâu từ 30 Tết – hết mùng 4 Tết thì giá dịch vụ sẽ tính 300% so với ngày thường theo quy định Luật lao động của Việt Nam.
+                  p.justify Công ty chúng tôi cung cấp dịch vụ ở tất cả các Quận trong địa bàn Thành phố Hồ Chí Minh.
             .panel.panel-default
               .panel-heading(role='tab', id='hd14')
                 h3.panel-title
                   a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau14', aria-expanded='false', aria-controls='cau14')
-                    | 14. ProCleaner cung cấp dịch vụ ở những nơi nào?
+                    | 14. Chất lượng người giúp việc của ProCleaner được đảm bảo như thế nào?
               #cau14.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd14')
                 .panel-body
-                  h4 .......
-            .panel.panel-default
-              .panel-heading(role='tab', id='hd15')
-                h3.panel-title
-                  a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau15', aria-expanded='false', aria-controls='cau15')
-                    | 15. Chất lượng người giúp việc của ProCleaner được đảm bảo như thế nào?
-              #cau15.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd15')
-                .panel-body
-                  h4 .......
-            .panel.panel-default
-              .panel-heading(role='tab', id='hd16')
-                h3.panel-title
-                  a.collapsed(data-toggle='collapse', data-parent='#accordion', href='#cau16', aria-expanded='false', aria-controls='cau16')
-                    | 16. Mã giới thiệu để làm gì và được lợi ích như thế nào?
-              #cau16.panel-collapse.collapse(role='tabpanel', aria-labelledby='hd16')
-                .panel-body
-                  h4 .......
+                  p.justify Chúng tôi có một quy trình tuyển dùng và đạo tạo người giúp việc chuyên nhiệp từ khâu tìm kiếm nguồn lực người giúp việc, lựa chọn tuyển dùng và đào tạo đến khâu điều phối người giúp việc phù hợp với từng đối tượng khách hàng. Điều đó giúp chúng tôi có thể tự tin để mang để cho Quý khách hàng những dịch vụ với chất lượng cao nhất. Ngoải ra, chúng tôi cũng thiết kế các kênh liên lạc một cách linh động nhất để Quý khách có thể trao đổi trực tiếp với Công ty về chất lượng dịch vụ và con người mà Công ty chúng tôi đang mang đến cho Quý khách. Điều này giúp chúng tôi có thể lắng nghe phản ánh của Quý khách một cách nhanh chóng, chính xác và đầy đủ nhất để có thể ngày một nâng cao chất lượng dịch vụ mà chúng tôi mong muốn mang đến cho Quý khách, làm cho cuộc sống của Quý khách ngày càng tiện lợi hơn.
       div.modal-footer
 #chinhsach.modal.fade(role='dialog')
   div.modal-dialog.modal-lg
@@ -774,30 +662,32 @@ html(lang='en')
         h4.biggerfont.modal-title.chutrang Chính sách
       div.modal-body
         p Hai bên đồng ý cung cấp và sử dụng dịch vụ theo các điều khoản sau:
+
         p.boldp 1. Quyền và nghĩa vụ của Khách hàng
-        p.justify.padleftdk - Đảm bảo môi trường làm việc tốt, an toàn và lành mạnh cho nhân viên Công ty (không có hoá chất độc hại, không bị ô nhiễm, không có các hành vi quấy rối, xâm hại đến tính mạng, danh dự, nhân phẩm, thân thể của nhân viên Công ty).
-        p.justify.padleftdk - Tự bảo quản và chịu trách nhiệm trong việc quản lý tài sản của mình trong mọi trường hợp; Trường hợp Khách hàng giao chìa khóa cho nhân viên của Công ty để thực hiện công việc, Khách hàng cam kết hành vi này của Khách hàng không tạo ra quan hệ gửi giữ tài sản giữa Khách hàng và Công ty.
-        p.justify.padleftdk - Hủy buổi làm việc: để đảm bảo lịch làm việc ổn định cho nhân viên Công ty, Khách hàng sẽ không được quyền hủy buổi làm việc. Trong trường hợp Khách hàng cần hủy buổi làm việc thì buổi làm việc đó sẽ được Công ty sắp xếp nhân viên làm bù buổi làm bị hủy cho Khách hàng. Buổi làm bù này sẽ được thực hiện trong thời gian tối đa là 01 (một) tuần tính từ ngày Khách hàng đăng kí dịch vụ. Sau thời gian này, nếu các bên không sắp xếp được thời gian để làm bù thì Công ty sẽ không có trách nhiệm làm bù cho Khách hàng nữa.
-        p.justify.padleftdk - Trong trường hợp Khách hàng muốn thay đổi lịch làm việc, Khách hàng cần thông báo cho Công ty trước 24h của buổi làm đó, nếu Khách hàng không thông báo trước thời gian 24h, Khách hàng sẽ phải chịu 100% phí dịch vụ của buổi làm việc đó.
-        p.justify.padleftdk - Không nhận nhân viên Công ty vào làm việc trực tiếp bằng bất kỳ hình thức nào trong thời gian sử dụng dịch vụ hoặc trong vòng 3 tháng kể từ ngày đăng kí ở trên; nếu vi phạm sẽ phải bồi thường chi phí tuyển dụng và đào tạo nhân viên đó cho Công ty, chi phí do Công ty xác định nhưng sẽ không thấp hơn 5.000.000 đồng (bằng chữ: năm triệu đồng) một nhân viên. Công ty có quyền công khai thông tin cá nhân của Khách hàng và nội dung các vi phạm của Khách hàng (nếu có) trên các phương tiện truyền thông của Công ty nếu Khách hàng vi phạm điều khoản này.
-        p.justify.padleftdk - Có trách nhiệm theo dõi, xác nhận thời gian làm việc và các thông tin khác vào “Bảng đánh giá” của nhân viên Công ty. Giờ làm việc phát sinh ngoài thời gian đã đăng ký sẽ được tính thêm phí.
-        p.justify.padleftdk - Kịp thời thông báo cho Công ty trong vòng 24 giờ nếu phát hiện những hành vi tiêu cực từ phía nhân viên Công ty để hai bên cùng phối hợp xử lý.
-        p.justify.padleftdk - Trong trường hợp Khách hàng không hài lòng với chất lượng công việc hoặc phát hiện mất, hoặc hư hỏng tài sản trong thời gian nhân viên Công ty đang làm việc cho Khách hàng thì Khách hàng phải ghi nhận vào "Bảng đánh giá”, thông báo ngay cho đại diện của Công ty, giữ chân Nhân viên của Công ty đến khi đại diện của Công ty có mặt.
-        p.justify.padleftdk - Trong trường hợp nghi ngờ nhân viên Công ty có hành vi trộm cắp tài sản hoặc làm hư hỏng tài sản của Khách hàng nhưng chưa có kết luận của cơ quan điều tra, Khách hàng không được cung cấp thông tin cho bất kỳ cá nhân, tổ chức nào làm ảnh hưởng đến uy tín, thương hiệu của Công ty. Nếu vi phạm, Khách hàng phải thanh toán cho Công ty một khoản tiền bồi thường, khoản tiền này sẽ do Công ty xác định.
+
+        p.justify.padleftdk - Đảm bảo môi trường làm việc tốt, an toàn và lành mạnh cho nhân viên Công ty (không có hoá chất độc hại, không bị ô nhiễm, không có các hành vi quấy rối, xâm hại đến tính mạng, danh dự, nhân phẩm, thân thể của nhân viên Công ty);
+        p.justify.padleftdk - Tự bảo quản và chịu trách nhiệm trong việc quản lý tài sản của mình trong mọi trường hợp; Trường hợp Khách hàng giao chìa khóa cho nhân viên của Công ty để thực hiện công việc, Khách hàng cam kết hành vi này của Khách hàng không tạo ra quan hệ gửi giữ tài sản giữa Khách hàng và Công ty;
+        p.justify.padleftdk - Hủy buổi làm việc: để đảm bảo lịch làm việc ổn định cho nhân viên Công ty, Khách hàng sẽ không được quyền hủy buổi làm việc. Trong trường hợp Khách hàng cần hủy buổi làm việc thì buổi làm việc đó sẽ được Công ty sắp xếp nhân viên làm bù buổi làm bị hủy cho Khách hàng. Buổi làm bù này sẽ được thực hiện trong thời gian tối đa là 01 (một) tuần tính từ ngày Khách hàng đăng ký dịch vụ. Sau thời gian này, nếu các bên không sắp xếp được thời gian để làm bù thì Công ty sẽ không có trách nhiệm làm bù cho Khách hàng nữa;
+        p.justify.padleftdk - Trong trường hợp Khách hàng muốn thay đổi lịch làm việc, Khách hàng cần thông báo cho Công ty trước 24h của buổi làm đó, nếu Khách hàng không thông báo trước thời gian 24h, Khách hàng sẽ phải chịu 100% phí dịch vụ của buổi làm việc đó;
+        p.justify.padleftdk - Không nhận nhân viên Công ty vào làm việc trực tiếp bằng bất kỳ hình thức nào trong thời gian sử dụng dịch vụ hoặc trong vòng 3 tháng kể từ ngày đăng ký dịch vụ của Công ty; nếu vi phạm sẽ phải bồi thường chi phí tuyển dụng và đào tạo nhân viên đó cho Công ty, chi phí do Công ty xác định nhưng sẽ không thấp hơn 5.000.000 đồng (bằng chữ: năm triệu đồng) một nhân viên. Công ty có quyền công khai thông tin cá nhân của Khách hàng và nội dung các vi phạm của Khách hàng (nếu có) trên các phương tiện truyền thông của Công ty nếu Khách hàng vi phạm điều khoản này;
+        p.justify.padleftdk - Có trách nhiệm theo dõi, xác nhận thời gian làm việc và các thông tin khác vào “Bảng đánh giá” của nhân viên Công ty. Giờ làm việc phát sinh ngoài thời gian đã đăng ký sẽ được tính thêm phí;
+        p.justify.padleftdk - Kịp thời thông báo cho Công ty trong vòng 24 giờ nếu phát hiện những hành vi tiêu cực từ phía nhân viên Công ty để hai bên cùng phối hợp xử lý;
+        p.justify.padleftdk - Trong trường hợp Khách hàng không hài lòng với chất lượng công việc hoặc phát hiện mất, hoặc hư hỏng tài sản trong thời gian nhân viên Công ty đang làm việc cho Khách hàng thì Khách hàng phải ghi nhận vào "Bảng đánh giá”, thông báo ngay cho đại diện của Công ty, giữ chân Nhân viên của Công ty đến khi đại diện của Công ty có mặt;
+        p.justify.padleftdk - Trong trường hợp nghi ngờ nhân viên Công ty có hành vi trộm cắp tài sản hoặc làm hư hỏng tài sản của Khách hàng nhưng chưa có kết luận của cơ quan điều tra, Khách hàng không được cung cấp thông tin cho bất kỳ cá nhân, tổ chức nào làm ảnh hưởng đến uy tín, thương hiệu của Công ty. Nếu vi phạm, Khách hàng phải thanh toán cho Công ty một khoản tiền bồi thường, khoản tiền này sẽ do Công ty xác định;
         p.justify.padleftdk - Không tự ý thoả thuận với nhân viên Công ty để thay đổi, làm sai khác các nội dung đã thống nhất trong văn bản này.
+
         p.boldp 2. Quyền và nghĩa vụ của Công ty
-        p.justify.padleftdk - Cung cấp nhân viên giúp việc cho Khách hàng đảm bảo lý lịch, nguồn gốc rõ ràng và có xác nhận của chính quyền địa phương, đã được đào tạo về nghiệp vụ giúp việc gia đình theo tiêu chuẩn của Công ty.
+        
+        p.justify.padleftdk - Cung cấp nhân viên giúp việc cho Khách hàng đảm bảo lý lịch, nguồn gốc rõ ràng và có xác nhận của chính quyền địa phương, đã được đào tạo về nghiệp vụ giúp việc gia đình theo tiêu chuẩn của Công ty;
         p.justify.padleftdk - Thường xuyên trao đổi và tiếp nhận thông tin phản hồi từ Khách hàng về chất lượng dịch vụ; cung cấp lại dịch vụ cho phần việc xảy ra do lỗi của nhân viên Công ty làm Khách hàng chưa hài lòng, thể hiện trên “Bảng đánh giá” của nhân viên.
+        
         p.boldp 3. Giải quyết tranh chấp và khiếu nại
+        
         p.justify.padleftdk Khi xảy ra mâu thuẫn, tranh chấp, hai bên sẽ ưu tiên tiến hành giải quyết công việc thông qua việc tự thương lượng, hoà giải, trên tinh thần hỗ trợ lẫn nhau. Nếu không, mọi mâu thuẫn, tranh chấp sẽ được đưa ra giải quyết tại Toà án Nhân dân có thẩm quyền.
+       
         p.justify.boldp 4. Thanh toán phí dịch vụ
-        p.justify.padleftdk Khách hàng có nghĩa vụ thanh toán tiền phí sử dụng dịch vụ trước ngày bắt đầu sử dụng dịch vụ, bằng hình thức:
-        p.justify.padleftdk a) Chuyển khoản qua tài khoản:
-        p.justify.padleft -  Tên tài khoản: .......
-        p.justify.padleft -  Số tài khoản:  .......
-        p.justify.padleft -  Ngân hàng:     .......
-        p.justify.padleftdk b) Thanh toán trực tiếp qua website của Công ty tại địa chỉ: ………………
-        p.justify.padleftdk c) Thanh toán bằng tiền mặt cho nhân viên do Công ty chỉ định theo giấy giới thiệu của Công ty.
+        p.justify.padleftdk - Khách hàng có nghĩa vụ thanh toán tiền phí sử dụng dịch theo từng tháng nếu là hợp đồng dài hạn hoặc ngay khi kết thúc thời gian sử dụng dịch vụ nếu là hợp đồng ngắn hạn (dưới một tháng).
+        p.justify.padleftdk - Khách hàng thanh toán bằng tiền mặt cho nhân viên do Công ty chỉ định theo giấy giới thiệu của Công ty.
       div.modal-footer
 
     // head loading js
@@ -811,55 +701,29 @@ html(lang='en')
           {jesing: "js/jquery.easing.min.compress.js"},
           {jfittext: "js/jquery.fittext_compress.js"},
           {wow: "js/wow.min.js"},
+          {slidermain: "js/vegas.min.js"},
           {angular: "//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"},
           {locatevn: "//code.angularjs.org/1.0.8/i18n/angular-locale_vi-vn.js"},
           {angular_animate: "//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js"},
           {angular_sanitize: "//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-sanitize.min.js"},
-          {angular_touch: "//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-touch.min.js"},
+          {angular_touch: "//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-touch.min.js"},
           {angular_slider: "js/angular-slider.min.js"},
           {angular_route: "//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js"},
           {angular_cookies: "//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular-cookies.js"},
           {angular_aria: "//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.min.js"},
           {angular_aria: "//code.angularjs.org/1.4.4/angular-messages.js"},
-          {angular_material: "//cdn.gitcdn.xyz/cdn/angular/bower-material/8a3c74f8b974b66a4975f551f2b2b815c0a2b40e/angular-material.js"},
+          {angular_material: "//ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc1/angular-material.min.js"},
           {ui_bootstrap: "//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.min.js"},
           {bootstrap_select: "js/bootstrap-select.min.js"},
-          {slick: "slick/slick.min.js"},
+          {a_bootstrap_select: "js/nya-bootstrap-select.js"},
+          {slick: "slick/slick.js"},
           {angular_slick: "slick/angular/angular-slick.min.js"},
           {datepicker: "js/bootstrap-datepicker.min.js"},
           {full_calendar: "fullcalendar/angular_full_calendar.js"},
           {cancellableq: "js/cancelableq.js"},
           {dpvn: "locales/bootstrap-datepicker.vi.min.js"},
           {custom_index: "js/creative.js"},
-          {custom_angular: "angular/core.js"}
+          {custom_angular: "angular/core.js"},
+          {custom_change: "js/change.js"}
       );
-    // jQuery------------------------------------------------------------------------------
-    //script(src='js/jquery-2.1.4.min.js')
-    //preload------------------------------------------------------------------------------
-    //script(src='js/preload.js')
-    // Bootstrap Core JavaScript
-    //script(src='js/bootstrap.min.js')
-    // Plugin JavaScript------------------------------------------------------------------------------
-    //script(src='js/respond.min.js')
-    //script(src='js/jquery.easing.min.js')
-    //script(src='js/jquery.fittext.js')
-    //script(src='js/wow.min.js')
-    // angular------------------------------------------------------------------------------
-    //script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js')
-    //script(src='//code.angularjs.org/1.0.8/i18n/angular-locale_vi-vn.js')
-    //script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-animate.min.js')
-    //script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-sanitize.min.js')
-    //script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular-touch.min.js')
-    //script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js')
-    //script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-aria.min.js')
-    //script(src='//gitcdn.xyz/repo/angular/bower-material/v0.11.0-rc1/angular-material.js')
-    //script(src='js/ui-bootstrap-tpls-0.13.4.min.js')
-    // Custom Theme JavaScript------------------------------------------------------------------------------
-    //script(src='slick/slick.min.js')
-    //script(src='slick/angular/angular-slick.min.js')
-    //script(src='js/bootstrap-datepicker.min.js')
-    //script(src='locales/bootstrap-datepicker.vi.min.js')
-    
-    //script(src='js/creative.js')
-    //script(src='angular/core.js')
     

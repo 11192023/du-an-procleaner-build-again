@@ -1,7 +1,20 @@
+.dongySuDung{
+  margin-left: 0px!important;
+}
+.btnThongTinTK{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.fontnho{
+  font-size: 12px!important;
+}
 .nhanxet {
   unicode-bidi: bidi-override;
   direction: rtl;
   font-size: 30px;
+}
+md-input-container [ng-messages] :not(.md-char-counter){
+  color: rgb(212, 212, 212)!important;
 }
 .nhanxet i.star:hover {
   cursor: pointer;
@@ -21,7 +34,7 @@
   color: #8CC13D;
 }
 .red{
-  color:red;
+  color: rgb(212, 212, 212)!important;
 }
 .ttmartop{
   margin-top: 5px;
@@ -55,7 +68,7 @@ md-backdrop.md-select-backdrop {
     z-index:103!important;
 }
 .modal-thanhtoan-height{
-  min-height: 600px;
+  min-height: 500px;
 }
 .user-page-height{
   min-height: 800px;
@@ -225,17 +238,6 @@ md-radio-button{
 }
 .marleft{
   margin-left: 25px!important;
-}
-.no-js #loader { display: none;  }
-.js #loader { display: block; position: absolute; left: 100px; top: 0; }
-.se-pre-con {
-    position: fixed;
-    left: 0px;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    background: url(../img/preloader.gif) center no-repeat #fff;
 }
 .logow{
     width: 150px!important;

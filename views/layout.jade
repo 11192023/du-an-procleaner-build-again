@@ -1,4 +1,4 @@
-doctype html
+﻿doctype html
 html
   head
     base(href='/')
@@ -22,11 +22,6 @@ html
     link(rel='stylesheet', href='css/preload.css', type='text/css')
   body(ng-app='SearchModule')
     .se-pre-con
-      .sk-folding-cube
-        .sk-cube1.sk-cube
-        .sk-cube2.sk-cube
-        .sk-cube4.sk-cube
-        .sk-cube3.sk-cube
     nav#mainNav.navbar.navbar-default.navbar-fixed-top
       .container(ng-controller='loginController')
         .navbar-header
@@ -38,7 +33,7 @@ html
         #navbar.navbar-collapse.collapse(ng-init='checkCookies()')
           div(layout="row" layout-align="space-between center")
             a(ng-href='/' target="_self")
-              img.logow(src='img/logo.png', alt='')
+              img.logow(src='img/logo.png', alt='logo Công Ty')
             div(ng-if='!registed')
               button.marright.btn.btn-danger(type='button' ng-click='showDangKy()')
                 |  Đăng ký
@@ -46,7 +41,7 @@ html
                 |  Đăng Nhập
             div(ng-show='registed')
               md-list-item
-                img.md-avatar(alt='', ng-src='{{ "img/NGV.jpg"  }}')
+                img.md-avatar(alt='user', ng-src='{{ "img/NGV.jpg"  }}')
                 .btn-group 
                   button.btn.btn-danger.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
                     | {{khachhang.hoten}}
@@ -58,7 +53,7 @@ html
                       a(ng-href='/taikhoan?&tab=lsdh' target="_self") Lịch sử đơn hàng
                     li.divider(role='separator')
                     li
-                      a(href='#', ng-click='DangXuat()') thoát
+                      a(href='#', ng-click='DangXuat()') Thoát
         // /.nav-collapse
         #DangKyForm.modal.fade(role='dialog')
           div.modal-dialog
@@ -94,18 +89,18 @@ html
                           div(ng-message='pattern') Số điện thoại không đúng quy định(số từ 1-9).
                           div(ng-message='required') Thông tin bắt buộc.
                           div(ng-message='md-maxlength') Số điện thoại không được nhiều hơn 30 ký tự.
-                        div
-                          p {{thongbaosdt}}
                       md-input-container(style='width:43%')
                         label 
                           a.i.fa.fa-shield.xanhnhat.padright
                           | Mã xác nhận
                         input(autocomplete='off', ng-model='maxacnhan.nguoidung')
-                        p {{thongbaomaxacnhan}}
-                      md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan()')
+                      md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan(0)', ng-disabled='dalayMXNDK')
                         md-tooltip
                           | Lấy mã xác nhận
                         i.fa.fa-shield
+                    div(layout='', layout-sm='column', layout-align="space-between center")
+                      p {{thongbaosdt.dangky}}
+                      p {{thongbaomaxacnhan}}
                     div(layout='', layout-sm='column')
                       md-input-container(style='width:87%')
                         label 
@@ -119,17 +114,19 @@ html
                         md-tooltip
                           | Lấy địa chỉ hiện tại
                         i.fa.fa-map
-              div.modal-footer
-                button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formdangky.$invalid || kiemtraFormDangKy()", ng-click='DangKy()')
-                  i.fa.fa-check
-                  |  Đồng ý
-                button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangKy()')
-                  i.fa.fa-remove
-                  |  Hủy
+                    md-checkbox.dongySuDung(ng-model='dongySuDung')
+                      | Đồng ý điều khoản sử dụng của ProCleaner
+                div.modal-footer
+                  button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formdangky.$invalid || kiemtraFormDangKy() || !dongySuDung", ng-click='DangKy()')
+                    i.fa.fa-check
+                    |  Đồng ý
+                  button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangKy()')
+                    i.fa.fa-remove
+                    |  Hủy
         #DangNhapForm.modal.fade(role='dialog')
           div.modal-dialog
             div.modal-content
-              form(name='formdangnhap', novalidate ng-submit='DangNhap()')
+              form(name='formdangnhap', novalidate)
                 div.modal-header.bgxanhdam
                   button.chutrang.close(type='button', ng-click='closeDangNhap()') ×
                   h4.biggerfont.modal-title.chutrang Đăng Nhập
@@ -153,13 +150,16 @@ html
                         label 
                           a.i.fa.fa-shield.xanhnhat.padright
                           | Mã xác nhận
-                        input(autocomplete='off')
-                      md-button.md-fab.md-mini.md-primary.chutrang
+                        input(autocomplete='off', ng-model='maxacnhan.nguoidung')
+                      md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan(1)', ng-disabled='dalayMXNDN')
                         md-tooltip(md-direction="left")
                           | Lấy mã xác nhận
                         i.fa.fa-shield
+                    div(layout='', layout-sm='column', layout-align="space-between center")
+                      p {{thongbaosdt.dangnhap}}
+                      p {{thongbaomaxacnhan}}
                 div.modal-footer
-                  button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formdangnhap.$invalid")
+                  button.marleft.btn.btn-danger.pull-right(type="button", ng-disabled="formdangnhap.$invalid || kiemtraFormDangNhap()", ng-click='DangNhap(1)')
                     i.fa.fa-check
                     |  Đồng ý
                   button.marleft.btn.btn-danger.pull-right(type='button' ng-click='closeDangNhap()')
@@ -169,7 +169,7 @@ html
     block chitiet
     block content
     block taikhoan
-  <script type='text/javascript'>window._sbzq||function(e){e._sbzq=[];var t=e._sbzq;t.push(["_setAccount",30947]);var n=e.location.protocol=="https:"?"https:":"http:";var r=document.createElement("script");r.type="text/javascript";r.async=true;r.src=n+"//static.subiz.com/public/js/loader.js";var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)}(window);</script>     
+  <script type='text/javascript'>window._sbzq||function(e){e._sbzq=[];var t=e._sbzq;t.push(["_setAccount",32700]);var n=e.location.protocol=="https:"?"https:":"http:";var r=document.createElement("script");r.type="text/javascript";r.async=true;r.src=n+"//static.subiz.com/public/js/loader.js";var i=document.getElementsByTagName("script")[0];i.parentNode.insertBefore(r,i)}(window);</script>
   section#footer
     .container
       .row
@@ -219,6 +219,7 @@ html
 
 
     script(src='js/bootstrap-select.min.js')
+    script(src='js/nya-bootstrap-select.js')
     script(src='angular/core.js')
     script(src='js/search.js')
 

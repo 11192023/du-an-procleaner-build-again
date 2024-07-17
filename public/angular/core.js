@@ -1,6 +1,7 @@
-(function(){
+﻿(function(){
 	//search module
-	var module = angular.module('SearchModule', ['ngMaterial','ngMessages','ui.bootstrap','slickCarousel','ngRoute','ui.calendar','cancelable-q','ngCookies']);
+	var module = angular.module('SearchModule',
+	 ['ngMaterial','ngMessages','ui.bootstrap','slickCarousel','ngRoute','ui.calendar','cancelable-q','ngCookies','nya.bootstrap.select']);
 	
 	//var chitietModule = angular.module('ChitietModule', ['ngMaterial','ngMessages','slickCarousel','ngRoute']);
 	module.config(function($mdThemingProvider, $locationProvider){
@@ -12,11 +13,12 @@
         	reloadOnSearch: true
         });
 	});
-	module.factory('ngvFactory', function($http, $q){
+	module.factory('doitacFactory', function($http, $q){
 		var service = {};
-		service.layDanhSachNgvAll = function(){
+		var api_url = 'http://procleaner.vn:4444/api';
+		service.layDoiTac = function(){
 			var deferred = $q.defer();
-			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec', { cache: false})
+			$http.get(api_url+'/doitac', { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        }).error(function(data) {
@@ -24,21 +26,55 @@
         		});
 		    return deferred.promise;
 		}
-		service.layDanhSachNgv = function(ngay, giobd, giokt){
+		return service;
+	})
+	module.factory('ngvFactory', function($http, $q){
+		var service = {};
+		var api_url = 'http://procleaner.vn:4444/api';
+		service.layDanhSachNgvAll = function(){
 			var deferred = $q.defer();
-			var q_ngv_trunglich = '?ngaylam=' + ngay +
+			$http.get(api_url+'/nguoigiupviec?sort=hoten', { cache: false})
+		        .success(function(data) {
+		        	deferred.resolve(data);
+		        }).error(function(data) {
+		            console.log('Error: ' + data);
+        		});
+		    return deferred.promise;
+		}
+		service.layDanhSachNgv = function(ngay, giobd, giokt, chuoiquan){
+			var deferred = $q.defer();
+			var x = '';
+			var q_ngv_trunglich = '?sort=hoten&ngaylam=' + ngay +
 				'&giobatdau__lte=' + giokt +
 				'&gioketthuc__gte=' + giobd;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
+			var q_ngv_ban = '?ngay=' + ngay +
+				'&giobd__lte=' + giokt +
+				'&giokt__gte=' + giobd;
+			$http.get(api_url+'/lichlamviec'+q_ngv_trunglich, { cache: false})
 		        .success(function(data) {
-		        	var x = '?cmnd__nin=';
+		        	x = '?cmnd__nin=';
+		        	var flag = false;
 		            for(i=0; i<data.length; i++){
+		            	flag = true;
 		            	x += data[i].nguoigiupviec;
 		            	if(i != data.length-1) x += ',';
 		            }
-		            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x, { cache: false})
+		            $http.get(api_url+'/ngvban'+q_ngv_ban, { cache: false})
 				        .success(function(data) {
-				        	deferred.resolve(data);
+				        	for(i=0; i<data.length; i++){
+				        		if(flag == true) x += ',';
+				            	x += data[i].cmnd;
+				            	if(i != data.length-1) x += ',';
+				            }
+				            x += '&diachi.quan__in=' + chuoiquan;
+				            x += '&sort=-sonamkinhnghiem';
+				        	$http.get(api_url+'/nguoigiupviec'+x, { cache: false})
+						        .success(function(data) {
+						        	deferred.resolve(data);
+						        })
+						        .error(function(data) {
+						            console.log('Error: ' + data);
+				    			});
 				        })
 				        .error(function(data) {
 				            console.log('Error: ' + data);
@@ -49,26 +85,50 @@
         	});
 		    return deferred.promise;
 	    }
-	    service.layDanhSachNgvDaiHan = function(ngay, giobd, giokt, quan){
+	    service.layDanhSachNgvDaiHan = function(ngay, giobd, giokt, chuoiquan, dichvu){
 			var deferred = $q.defer();
-			var q_ngv_trunglich = '?ngaylam=' + ngay +
+			var x = '';
+			var q_ngv_trunglich = '?sort=hoten&ngaylam=' + ngay +
 				'&giobatdau__lte=' + giokt +
 				'&gioketthuc__gte=' + giobd;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
+			var q_ngv_ban = '?ngay=' + ngay +
+				'&giobd__lte=' + giokt +
+				'&giokt__gte=' + giobd;
+			$http.get(api_url+'/lichlamviec'+q_ngv_trunglich, { cache: false})
 		        .success(function(data) {
-		        	var x = '?cmnd__nin=';
+		        	x = '?cmnd__nin=';
+		        	var flag = false;
 		            for(i=0; i<data.length; i++){
+		            	flag = true;
 		            	x += data[i].nguoigiupviec;
 		            	if(i != data.length-1) x += ',';
 		            }
-		            x += '&diachi.quan=' + quan;
-		            $http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+x, { cache: false})
+		            $http.get(api_url+'/ngvban'+q_ngv_ban, { cache: false})
 				        .success(function(data) {
-				        	deferred.resolve(data);
+				        	for(i=0; i<data.length; i++){
+				        		if(flag==true) x += ',';
+				            	x += data[i].cmnd;
+				            	if(i != data.length-1) x += ',';
+				            }
+				        	x += '&diachi.quan__in=' + chuoiquan;
+			        		x += '&sotruong__in=';
+			        		for(i=0; i<dichvu.length; i++){
+				        		x+= dichvu[i];
+				        		if(i != dichvu.length-1) x += ',';
+				        	}
+				        	x += '&sort=-sonamkinhnghiem';
+				            $http.get(api_url+'/nguoigiupviec'+x, { cache: false})
+						        .success(function(data) {
+						        	deferred.resolve(data);
+						        })
+						        .error(function(data) {
+						            console.log('Error: ' + data);
+				    			});
 				        })
 				        .error(function(data) {
 				            console.log('Error: ' + data);
 		    			});
+		            
 		        })
 		        .error(function(data) {
 		            console.log('Error: ' + data);
@@ -78,7 +138,7 @@
 	    service.layNgvTheoCmnd = function(cmnd){
 	    	var deferred = $q.defer();
 			var q = '?cmnd=' + cmnd;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q, { cache: false})
+			$http.get(api_url+'/nguoigiupviec'+q, { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -90,7 +150,7 @@
 	    service.layNgvTheoId = function(id){
 	    	var deferred = $q.defer();
 			var q = '?_id=' + id;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q, { cache: false})
+			$http.get(api_url+'/nguoigiupviec'+q, { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -102,7 +162,7 @@
 	    service.layDanhSachNgvSub = function(id){
 	    	var deferred = $q.defer();
 			var q = '?_id__nin=' + id;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/nguoigiupviec'+q, { cache: false})
+			$http.get(api_url+'/nguoigiupviec'+q, { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -161,7 +221,21 @@
 				'&giobatdau__lte=' + giokt +
 				'&gioketthuc__gte=' + giobd +
 				'&nguoigiupviec=' + id;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
+			$http.get(api_url+'/lichlamviec'+q_ngv_trunglich, { cache: false})
+		        .success(function(data) {
+		        	deferred.resolve(data);
+		        })
+		        .error(function(data) {
+		            console.log('Error: ' + data);
+        	});
+		    return deferred.promise;
+	    }
+	    service.kiemtraLichBan = function(id, ngay, giobd, giokt){
+			var deferred = $q.defer();
+			var q_ngv_ban = '?ngay=' + ngay +
+				'&giobd__lte=' + giokt +
+				'&giokt__gte=' + giobd + '&cmnd=' + id;
+        	$http.get(api_url+'/ngvban'+q_ngv_ban, { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -174,6 +248,7 @@
 	});
 	module.factory('filterFactory', function($location, $mdDialog, $q, $http){
 		var service = {};
+		var api_url = 'http://procleaner.vn:4444/api';
 		var _kinhnghiems = [
 	    	{
 	    		ten: 'Tất cả',
@@ -424,7 +499,7 @@
 	    }
 	    service.getDSTieuChi = function(){
 	    	var deferred = $q.defer();
-			$http.get('https://serene-stream-9747.herokuapp.com/api/tieuchi', { cache: false})
+			$http.get(api_url+'/tieuchi', { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -434,8 +509,55 @@
 		    return deferred.promise;
 	    }
 	    service.getDSQuan = function(){
-	    	return _quans;
+	    	var deferred = $q.defer();
+			$http.get(api_url+'/quan?sort=tenquan', { cache: false})
+		        .success(function(data) {
+		        	deferred.resolve(data);
+		        })
+		        .error(function(data) {
+		            console.log('Error: ' + data);
+        	});
+		    return deferred.promise;
 	    }
+	    var kiemtraDsKhuVuc = function(dsKhuVuc, tenKhuVuc){
+	    	if(dsKhuVuc.length == 0) return -1;
+	    	for(j=0; j<dsKhuVuc.length; j++){
+	    		if(dsKhuVuc[j].tenkv == tenKhuVuc)
+	    			return j;
+	    	}
+	    	return -1;
+	    }
+	    service.layTenKhuVuc = function(tenquan, dsQuan, dsKhuVuc){
+	    	var tenkv;
+	    	for(i=0; i<dsQuan.length; i++){
+	    		if(dsQuan[i].ten == tenquan){
+	    			tenkv = dsQuan[i].khuvuc;
+	    			break;
+	    		}
+	    	}
+	    	for(i=0; i<dsKhuVuc.length; i++){
+	    		if(dsKhuVuc[i].tenkv == tenkv){
+	    			return dsKhuVuc[i].chuoiquan;
+	    		}
+	    	}
+	    	return '';
+	    }
+	    service.taoDanhSachKhuVuc = function(dsQuan){
+	    	var dsKhuVuc = [];
+	    	for(i=0; i<dsQuan.length; i++){
+	    		var vitri = kiemtraDsKhuVuc(dsKhuVuc, dsQuan[i].khuvuc);
+	    		if(dsKhuVuc.length == 0 || (vitri == -1)){
+	    			dsKhuVuc.push({
+	    				tenkv: dsQuan[i].khuvuc,
+	    				chuoiquan: dsQuan[i].tenquan
+	    			})
+	    		}else{
+	    			dsKhuVuc[vitri].chuoiquan += ','+dsQuan[i].tenquan;
+	    		}
+	    	}
+	    	return dsKhuVuc;
+	    }
+	    
 	    service.getDuLieuPage = function(){
 	    	return _data;
 	    }
@@ -452,29 +574,31 @@
 	    //-------đổi dd/mm/yyyy sang mm/dd/yyyy-----------
 	    service.doiNgaySearch = function(ngay){
 	    	var ngayarr = ngay.split('/');
-	    	var ngay_converted = ngayarr[1] + '/' + ngayarr[0] + '/' + ngayarr[2];
+	    	var ngay_converted = ngayarr[2] + '-' + ngayarr[1] + '-' + ngayarr[0];
 	    	return ngay_converted;
 	    }
 	    //-------lấy dịch vụ từ index---------------------
 	    service.getDichVu = function(indexDV, tieuchis){
-			if(indexDV != 'Chọn dịch vụ'){
-				var arr = [];
-				arr.push(indexDV);
-				for(i=0; i<tieuchis.length; i++){
-					if(tieuchis[i].ten == indexDV){
-						tieuchis[i].data = true;
+	    	var arr = [];
+	    	var indexDVarr = JSON.parse(indexDV);
+	    	if(indexDVarr.length == 0){
+				for(j=0; j<tieuchis.length; j++){
+						arr.push(tieuchis[j].ten);
+						tieuchis[j].data = true;
+				}
+	    	}else{
+	    		for(i=0;i<indexDVarr.length;i++){
+					for(j=0; j<tieuchis.length; j++){
+						if(indexDVarr[i] == tieuchis[j].ten){
+							arr.push(tieuchis[j].ten);
+							tieuchis[j].data = true;
+						}
 					}
-				}
-				return arr;
-			}
-			else if(indexDV == 'Chọn dịch vụ'){
-				var arr = [];
-				for(i=0; i<tieuchis.length; i++){
-					arr.push(tieuchis[i].ten);
-					tieuchis[i].data = true;
-				}
-				return arr;
-			} 
+					
+		    	}
+	    	}
+	    	
+	    	return arr;
 		}
 		
 		service.them_filter_dichvu = function(ten_dv, isSelect, data){
@@ -511,11 +635,12 @@
 	});
 	module.factory('thanhtoanFactory', function($http, $q){
 		var service = {};
+		var api_url = 'http://procleaner.vn:4444/api';
 		//lưu khách hàng
 		service.timKhachHang = function(sdt){
 			var deferred = $q.defer();
 			var q = '?sdt=' + sdt;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/khachhang'+q, { cache: false})
+			$http.get(api_url+'/khachhang'+q, { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -533,7 +658,7 @@
 			    diachi: khachhang.diachi,
 			    email: "kocoemail",
 		 	});
-			$http({url: 'https://serene-stream-9747.herokuapp.com/api/khachhang',
+			$http({url: api_url+'/khachhang',
 	            method: "POST",
 	            data: new_khachhang,
 	            headers: {'Content-Type': 'application/json'}
@@ -544,184 +669,14 @@
 	            });
 	        return deferred.promise;
 		}
-        //lưu lịch làm việc
-		service.luuLichLamViec = function(cmnd, ngay, giobd, giokt, sdtkh, idctyc){
-			var deferred = $q.defer();
-			var ngay_arr = ngay.split('/');
-            var data1 = JSON.stringify({
-                idchitietyc: idctyc,
-			    nguoigiupviec: cmnd,
-			    ngaylam: new Date(Date.UTC(ngay_arr[2],Number(ngay_arr[1])-1,ngay_arr[0])),
-			    giobatdau: giobd,
-			    gioketthuc: giokt+1,
-			    khachhang: sdtkh
-   		 	});
-    		$http({url: 'https://serene-stream-9747.herokuapp.com/api/lichlamviec',
-	            method: "POST",
-	            data: data1,
-	            headers: {'Content-Type': 'application/json'}
-	        }).success(function (data, status, headers, config) {
-	        		deferred.resolve(data);
-	            }).error(function (data, status, headers, config) {
-	                console.log('Error: ' + data);
-	            });
-            return deferred.promise;
-		}
-		//lưu lịch làm việc dài hạn
-		service.luuLichLamViecDh = function(cmnd, ngay, giobd, giokt, sdtkh, idctyc){
-			var deferred = $q.defer();
-            var data1 = JSON.stringify({
-                idchitietyc: idctyc,
-			    nguoigiupviec: cmnd,
-			    ngaylam: ngay,
-			    giobatdau: giobd,
-			    gioketthuc: giokt+1,
-			    khachhang: sdtkh
-   		 	});
-    		$http({url: 'https://serene-stream-9747.herokuapp.com/api/lichlamviec',
-	            method: "POST",
-	            data: data1,
-	            headers: {'Content-Type': 'application/json'}
-	        }).success(function (data, status, headers, config) {
-	        		deferred.resolve(data);
-	            }).error(function (data, status, headers, config) {
-	                console.log('Error: ' + data);
-	            });
-            return deferred.promise;
-		}
-		//lưu yêu cầu
-		service.luuYeuCau = function(ngaybd, ngaykt, chiphi, sdtkhachhang, diachikh, quan, trangthai, mangdichvu){
-			var deferred = $q.defer();
-			var ngaybd_arr = ngaybd.split('/');
-			var ngaykt_arr = ngaykt.split('/');
-            var new_yeucau = JSON.stringify({
-			    ngaydatyeucau: new Date(),
-			    ngayyeucau: new Date(Date.UTC(ngaybd_arr[2],Number(ngaybd_arr[1])-1,ngaybd_arr[0])),
-			    ngayketthuc: new Date(Date.UTC(ngaykt_arr[2],Number(ngaykt_arr[1])-1,ngaykt_arr[0])),
-			    chiphi: chiphi,
-			    nhanvienxuly: 0,
-			    sdtkhachhang: sdtkhachhang,
-			    loaiyeucau: "Ngắn hạn",
-			    trangthai: trangthai,
-			    diachi: diachikh + '/' +quan,
-			    loaidichvu: mangdichvu,
-			    quan: quan
-   		 	});
-    		$http({url: 'https://serene-stream-9747.herokuapp.com/api/yeucau',
-	            method: "POST",
-	            data: new_yeucau,
-	            headers: {'Content-Type': 'application/json'}
-	        }).success(function (data, status, headers, config) {
-	        		deferred.resolve(data);
-	            }).error(function (data, status, headers, config) {
-	                console.log('Error: ' + data);
-	            });
-	        return deferred.promise;
-		}
-		//lưu yêu cầu dài hạn
-		service.luuYeuCauDh = function(ngaybd, ngaykt, chiphi, sdtkhachhang, diachikh, quan, trangthai, mangdichvu){
-			var deferred = $q.defer();
-			var ngaybd_arr = ngaybd.split('/');
-			var ngaykt_arr = ngaykt.split('/');
-            var new_yeucau = JSON.stringify({
-			    ngaydatyeucau: new Date(),
-			    ngayyeucau: new Date(Date.UTC(ngaybd_arr[2],Number(ngaybd_arr[1])-1,ngaybd_arr[0])),
-			    ngayketthuc: new Date(Date.UTC(ngaykt_arr[2],Number(ngaykt_arr[1])-1,ngaykt_arr[0])),
-			    chiphi: chiphi,
-			    nhanvienxuly: 0,
-			    sdtkhachhang: sdtkhachhang,
-			    loaiyeucau: "Dài hạn",
-			    trangthai: trangthai,
-			    diachi: diachikh + '/' +quan,
-			    loaidichvu: mangdichvu,
-			    quan: quan
-   		 	});
-    		$http({url: 'https://serene-stream-9747.herokuapp.com/api/yeucau',
-	            method: "POST",
-	            data: new_yeucau,
-	            headers: {'Content-Type': 'application/json'}
-	        }).success(function (data, status, headers, config) {
-	        		deferred.resolve(data);
-	            }).error(function (data, status, headers, config) {
-	                console.log('Error: ' + data);
-	            });
-	        return deferred.promise;
-		}
-		//lưu chi tiết yêu cầu
-		service.luuChiTietYeuCau = function(cmnd, ngay, giobd, giokt, yeucauid){
-			var deferred = $q.defer();
-			var ngay_arr = ngay.split('/');
-           	var gio_bd = Math.floor(giobd/60);
-           	var phut_bd = giobd%60;
-           	var giobd_luuctyc = new Date(Date.UTC(ngay_arr[2], Number(ngay_arr[1])-1, ngay_arr[0], gio_bd, phut_bd, 0));
-           		
-           	var gio_kt = Math.floor(giokt/60);
-           	var phut_kt = giokt%60;
-           	var giokt_luuctyc = new Date(Date.UTC(ngay_arr[2], Number(ngay_arr[1])-1, ngay_arr[0], gio_kt, phut_kt, 0));           	
-            
-            var ctyc = JSON.stringify({
-			    idyeucau: yeucauid,
-			    giobatdau: giobd_luuctyc,
-			    gioketthuc: giokt_luuctyc,
-			    nguoigiupviec: cmnd,
-			    nhanxet: "",
-			    trangthai: "Chưa giao",
-			    hudo: "Không",
-			    matdo: "Không",
-			    lienlac: "Có"
-   		 	});
-    		$http({url: 'https://serene-stream-9747.herokuapp.com/api/chitietyeucau',
-	            method: "POST",
-	            data: ctyc,
-	            headers: {'Content-Type': 'application/json'}
-	        }).success(function (data, status, headers, config) {
-	        		deferred.resolve(data);
-	            }).error(function (data, status, headers, config) {
-	                console.log('Error: ' + data);
-	            });
-	        return deferred.promise;
-		}
-		//lưu chi tiết yêu cầu dài hạn
-		service.luuChiTietYeuCauDh = function(cmnd, ngay, giobd, giokt, yeucauid){
-			var deferred = $q.defer();
-           	var gio_bd = Math.floor(giobd/60);
-           	var phut_bd = giobd%60;
-           	var giobd_luuctyc = ngay.setHours(gio_bd+7, phut_bd)
-           		
-           	var gio_kt = Math.floor(giokt/60);
-           	var phut_kt = giokt%60;
-           	var giokt_luuctyc = ngay.setHours(gio_kt+7, phut_kt)           	
-            
-            var ctyc = JSON.stringify({
-			    idyeucau: yeucauid,
-			    giobatdau: giobd_luuctyc,
-			    gioketthuc: giokt_luuctyc,
-			    nguoigiupviec: cmnd,
-			    nhanxet: "",
-			    trangthai: "Chưa giao",
-			    hudo: "Không",
-			    matdo: "Không",
-			    lienlac: "Có"
-   		 	});
-    		$http({url: 'https://serene-stream-9747.herokuapp.com/api/chitietyeucau',
-	            method: "POST",
-	            data: ctyc,
-	            headers: {'Content-Type': 'application/json'}
-	        }).success(function (data, status, headers, config) {
-	        		deferred.resolve(data);
-	            }).error(function (data, status, headers, config) {
-	                console.log('Error: ' + data);
-	            });
-	        return deferred.promise;
-		}
-		//lưu chi tiết yêu cầu
+        
 		service.LayLichLvKhiLuu = function(ngay, giobd, giokt, cmnd){
 			var deferred = $q.defer();
 			var q_ngv_trunglich = '?ngaylam=' + ngay +
 				'&giobatdau__lte=' + giokt +
 				'&gioketthuc__gte=' + giobd +
 				'&cmnd=' + cmnd;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
+			$http.get(api_url+'/lichlamviec'+q_ngv_trunglich, { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -730,10 +685,110 @@
         	});
 	        return deferred.promise;
 		}
+		service.tinhSoGioNgoaiGioCtyc = function(giobd1, giokt1){
+	    	var tgngoaigio_sang = 0;
+	    	var tgngoaigio_toi = 0;
+	    	if(giobd1 < 480)
+	    		tgngoaigio_sang = 480 - giobd1;
+	    	if(giokt1 > 1080)
+	    		tgngoaigio_toi = giokt1 - 1080;
+	    	return ((tgngoaigio_toi+tgngoaigio_sang)/60);
+	    }
+		service.tinhSoGioNgoaiGioYc = function(giobd1, giokt1, SoNgv){
+	    	var tgngoaigio_sang = 0;
+	    	var tgngoaigio_toi = 0;
+	    	if(giobd1 < 480)
+	    		tgngoaigio_sang = 480 - giobd1;
+	    	if(giokt1 > 1080)
+	    		tgngoaigio_toi = giokt1 - 1080;
+	    	return ((tgngoaigio_toi+tgngoaigio_sang)/60)*SoNgv;
+	    }
+	    service.tinhPhiNgoaiGioCtyc = function(SoGio, phingoaigiolonnhat, phicobanlonnhat){
+	    	return (phicobanlonnhat*SoGio*phingoaigiolonnhat)/100;
+	    }
+	    service.tinhPhiNgoaiGioYc = function(SoGio, phingoaigiolonnhat, phicobanlonnhat){
+	    	return (phicobanlonnhat*SoGio*phingoaigiolonnhat)/100;
+	    }
+	    service.tinhGiaChuanCtyc = function(GioBd, GioKt, phicobanlonnhat){
+	    	var SoGio = (GioKt - GioBd)/60;
+	    	return phicobanlonnhat*SoGio;
+	    }
+	    service.tinhGiaChuanYc = function(GioBd, GioKt, phicobanlonnhat, SoNgv){
+	    	var SoGio = (GioKt - GioBd)/60;
+	    	return phicobanlonnhat*SoGio*SoNgv;
+	    }
+	    service.tinhChiPhiTongCtyc = function(PhiNgoaiGio, PhiChuan){
+	    	return PhiNgoaiGio+PhiChuan;
+	    }
+	    service.tinhChiPhiTongYc = function(SoNgv, TongPhiCtyc){
+	    	return SoNgv*TongPhiCtyc;
+	    }
+	    service.doiChuoiTienTe = function(SoTien){
+	    	var giatien_str = '';
+	    	var giatien_arr = SoTien.toString().split('');
+	    	var dem = 1;
+	    	for(i=giatien_arr.length-1; i>=0; i--){
+	    		giatien_str += giatien_arr[i];
+	    		if(dem%3==0 && i!=0) giatien_str += '.';
+	    		dem++;
+	    	}
+	    	return giatien_str.split('').reverse().join('');
+	    }
+		service.getPhiCoBanLonNhat = function(mangtieuchi){
+	    	var max = 0;
+			for(i=0; i<mangtieuchi.length; i++){
+	    		if(mangtieuchi[i].data == true){
+	    			if(max < mangtieuchi[i].giachuan)
+	    				max = mangtieuchi[i].giachuan;
+	    		}
+	    	}
+	    	return max;
+	    }
+		service.getPhiNgoaiGioLonNhat = function(mangtieuchi){
+	    	var max = 0;
+			for(i=0; i<mangtieuchi.length; i++){
+	    		if(mangtieuchi[i].data == true){
+	    			if(max < mangtieuchi[i].phingoaigiokh)
+	    				max = mangtieuchi[i].phingoaigiokh;
+	    		}
+	    	}
+	    	return max;
+	    }
+	    service.getPhiNgoaiGioLonNhatNgv = function(mangtieuchi){
+	    	var max = 0;
+			for(i=0; i<mangtieuchi.length; i++){
+	    		if(mangtieuchi[i].data == true){
+	    			if(max < mangtieuchi[i].phingoaigiongv)
+	    				max = mangtieuchi[i].phingoaigiongv;
+	    		}
+	    	}
+	    	return max;
+	    }
+	    /*
+		service.getPhuPhi1LonNhat = function(mangtieuchi){
+			var max = 0;
+			for(i=0; i<mangtieuchi.length; i++){
+	    		if(mangtieuchi[i].data == true){
+	    			if(max < mangtieuchi[i].phuphi1)
+	    				max = mangtieuchi[i].phuphi1;
+	    		}
+	    	}
+	    	return max;
+		}*/
+		service.getTrangThaiYeuCau = function(mangtieuchi){
+	    	for(i=0; i<mangtieuchi.length; i++){
+	    		if(mangtieuchi[i].data == true){
+	    			if(mangtieuchi[i].phuphi == 'Có')
+	    				return 'Chờ thỏa thuận';
+	    		}
+	    	}
+	    	return 'Chưa tiến hành';
+	    }
 		return service;
 	});
 	module.factory('khachhangFactory', function($http, $q){
 		var service = {};
+		var api_url = 'http://procleaner.vn:4444/api';
 		var _khachhang = {
 			hoten: null,
 			sdt: null,
@@ -747,48 +802,55 @@
 			_khachhang.sdt = khachhang.sdt;
 			_khachhang.diachi = khachhang.diachi;
 		}
-		service.layDiaChiGoogleMapApi = function(lat, lng){
+		service.suaThongTinTK = function(id, hoten, diachi){
 			var deferred = $q.defer();
-			$http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + 
-				lat + ',' + lng + '&key=AIzaSyAeHdGJNuQbztJP9zfVTX60dJG2Uiyk1pg', { cache: false})
-		        .success(function(data) {
-		        	deferred.resolve(data);
-		        })
-		        .error(function(data) {
-		            console.log('Error: ' + data);
-        	});
-		    return deferred.promise;
-		}
-		service.layMaXacNhan = function(maxacnhan, sdtkhachhang){
-			
-			var deferred = $q.defer();
-			var tinnhan = '<RQST>'+
-								'<APIKEY>15D1B3AE730591D0FAC35DDAEEE32A</APIKEY>'+
-								'<SECRETKEY>7229F4A47F864FEA33D91DC247C5A5</SECRETKEY>'+ 
-								'<SMSTYPE>7</SMSTYPE>'+
-								'<CONTENT>Ma xac nhan cua ban la ' +maxacnhan+ '</CONTENT>'+
-								'<CONTACTS>'+
-									'<CUSTOMER>'+
-						     			'<PHONE>'+sdtkhachhang+'</PHONE>'+
-									'</CUSTOMER>'+
-								'</CONTACTS>'+
-							'</RQST>';
-			console.log(tinnhan);
-			$http({url: 'http://api.esms.vn/MainService.svc/xml/SendMultipleMessage_V4/',
-	            method: "POST",
-	            data: tinnhan,
-	            headers: {'Content-Type': 'application/raw;charset=UTF-8'}
+			var kh = JSON.stringify({
+			    hoten: hoten,
+			    diachi: diachi
+		 	});
+			$http({url: api_url+'/khachhang/'+id,
+	            method: "PUT",
+	            data: kh,
+	            headers: {'Content-Type': 'application/json;charset=UTF-8'}
 	        }).success(function (data, status, headers, config) {
 	        		deferred.resolve(data);
 	            }).error(function (data, status, headers, config) {
 	                console.log('Error: ' + data);
 	            });
+	        return deferred.promise;
+		}
+		service.layDiaChiGoogleMapApi = function(lat, lng){
+			var deferred = $q.defer();
+			var toado = {
+				lat: lat,
+				lng: lng
+			}
+			$http.post('/layDiaChiGoogleApi', toado)
+		        .success(function(data) {
+	        		deferred.resolve(data);
+		        }).error(function(data) {
+		            console.log('Error: ' + data);
+        		});
+		    return deferred.promise;
+		}
+		service.layMaXacNhan = function(sdtkhachhang){
+			
+			var deferred = $q.defer();
+			var tinnhan = {
+				sdt: sdtkhachhang
+			}
+			$http.post('/layTinNhanXacNhan', tinnhan)
+		        .success(function(data) {
+	        		deferred.resolve(data);
+		        }).error(function(data) {
+		            console.log('Error: ' + data);
+        		});
 			return;
 		}
 		service.getYeuCauNh = function(sdt){
 			var deferred = $q.defer();
-			var q = '?sdtkhachhang=' + sdt + '&loaiyeucau=Ngắn hạn';
-			$http.get('https://serene-stream-9747.herokuapp.com/api/yeucau'+q, { cache: false})
+			var q = '?sdtkhachhang=0' + sdt + '&loaiyeucau=Ngắn hạn';
+			$http.get(api_url+'/yeucau'+q, { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -799,8 +861,8 @@
 		}
 		service.getYeuCauDh = function(sdt){
 			var deferred = $q.defer();
-			var q = '?sdtkhachhang=' + sdt + '&loaiyeucau=Dài hạn';
-			$http.get('https://serene-stream-9747.herokuapp.com/api/yeucau'+q, { cache: false})
+			var q = '?sdtkhachhang=0' + sdt + '&loaiyeucau=Dài hạn';
+			$http.get(api_url+'/yeucau'+q, { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -812,7 +874,7 @@
 		service.getChiTietYeuCau = function(id){
 			var deferred = $q.defer();
 			var q = '?idyeucau=' + id;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/chitietyeucau'+q, { cache: false})
+			$http.get(api_url+'/chitietyeucau'+q, { cache: false})
 		        .success(function(data) {
 		        	deferred.resolve(data);
 		        })
@@ -828,20 +890,20 @@
 			if(matdo == true) _matdo = 'Có';
 			var deferred = $q.defer();
 			var id = ctyc._id
-			var ctyc = JSON.stringify({
+			var nhanxet = JSON.stringify({
 			    idyeucau: ctyc.idyeucau,
 			    giobatdau: ctyc.giobatdau,
 			    gioketthuc: ctyc.gioketthuc,
 			    nguoigiupviec: ctyc.nguoigiupviec,
 			    nhanxet: nhanxet,
-			    trangthai: ctyc.trangthai,
+			    trangthai: 'Hoàn thành',
 			    hudo: _hudo,
 			    matdo: _matdo,
 			    lienlac: 'Có'
 		 	});
-			$http({url: 'https://serene-stream-9747.herokuapp.com/api/chitietyeucau/'+id,
+			$http({url: api_url+'/chitietyeucau/'+id,
 	            method: "PUT",
-	            data: ctyc,
+	            data: nhanxet,
 	            headers: {'Content-Type': 'application/json;charset=UTF-8'}
 	        }).success(function (data, status, headers, config) {
 	        		deferred.resolve(data);
@@ -849,6 +911,52 @@
 	                console.log('Error: ' + data);
 	            });
 	        return deferred.promise;
+		}
+		service.hoanthanhYeuCau = function(id){
+			var deferred = $q.defer();
+			var yc = JSON.stringify({
+			    trangthai: 'Đã hoàn thành'
+		 	});
+			$http({url: api_url+'/yeucau/'+id,
+	            method: "PUT",
+	            data: yc,
+	            headers: {'Content-Type': 'application/json;charset=UTF-8'}
+	        }).success(function (data, status, headers, config) {
+	        		deferred.resolve(data);
+	            }).error(function (data, status, headers, config) {
+	                console.log('Error: ' + data);
+	            });
+	        return deferred.promise;
+		}
+		service.tienhanhYeuCau = function(id){
+			var deferred = $q.defer();
+			var yc = JSON.stringify({
+			    trangthai: 'Đang tiến hành'
+		 	});
+			$http({url: api_url+'/yeucau/'+id,
+	            method: "PUT",
+	            data: yc,
+	            headers: {'Content-Type': 'application/json;charset=UTF-8'}
+	        }).success(function (data, status, headers, config) {
+	        		deferred.resolve(data);
+	            }).error(function (data, status, headers, config) {
+	                console.log('Error: ' + data);
+	            });
+	        return deferred.promise;
+		}
+		service.xacthucThongTin = function(sdtkhachhang, maxacnhan){
+			var deferred = $q.defer();
+			var thongtinkh = {
+				sdt: sdtkhachhang,
+				maxacnhan: maxacnhan
+			}
+			$http.post('/xacthuc', thongtinkh)
+		        .success(function(data) {
+	        		deferred.resolve(data);
+		        }).error(function(data) {
+		            console.log('Error: ' + data);
+        		});
+		    return deferred.promise;
 		}
 		return service;
 
@@ -863,7 +971,9 @@
 			    $log,
 			    $location,
 			    $mdDialog,
-			    $q){
+			    $q,
+			    $timeout,
+			    $cookies){
 
 
 
@@ -890,9 +1000,9 @@
 
 		$scope.hoanthanh_thanhtoan_nh = false;
 		$scope.maxacnhan = {
-	    	nguoidung: null,
-	    	hethong: null
+	    	nguoidung: null
 	    };
+	    $scope.dalayMXN = false;
 		$scope.khachhang = {
 			sdt: null,
 			hoten: '',
@@ -911,37 +1021,51 @@
 		$scope.chon_ngv = ngvFactory.chon_ngv;
 		//-------------Lấy dữ liệu-----------------------------------
 		$scope.kinhnghiems = filterFactory.getDSKinhNghiem();
-		$scope.quans = filterFactory.getDSQuan();
+		$scope.quans =[];
+		$scope.khuvuc = [];
 		$scope.data = filterFactory.getDuLieuPage();
 		$scope.tieuchis = [];
-		filterFactory.getDSTieuChi().then(function(data){
-			for(i=0; i<data.length; i++){
-				$scope.tieuchis.push({
-					ten: data[i].tentieuchi,
-					id: i,
-					data: false,
-					giachuan: data[i].giachuan,
-					phuphi1: data[i].phuphi1,
-					phuphi2: data[i].phuphi2,
-					phingoaigiongv: data[i].phingoaigiongv,
-					phingoaigiokh: data[i].phingoaigiokh,
-				});
-			}
-			$scope.data.mang_tieuchi = filterFactory.getDichVu($location.search().dichvu,
-													  $scope.tieuchis);
-			$scope.loading_dichvu = false;
-		});
+		$scope.initDataFirstTime = function(){
+			var q1 = filterFactory.getDSQuan().then(function(data){
+				$scope.khuvuc = filterFactory.taoDanhSachKhuVuc(data);
+				for(i=0; i<data.length; i++){
+					$scope.quans.push({
+						ten: data[i].tenquan,
+						khuvuc: data[i].khuvuc,
+						id: i
+					});
+				}
+			})
+			var q2 = filterFactory.getDSTieuChi().then(function(data){
+				for(i=0; i<data.length; i++){
+					$scope.tieuchis.push({
+						ten: data[i].tentieuchi,
+						id: i,
+						data: false,
+						giachuan: data[i].giachuan,
+						phuphi: data[i].phuphi,
+						phingoaigiokh: data[i].phingoaigiokh,
+						phingoaigiongv: data[i].phingoaigiongv
+					});
+				}
+				$scope.data.mang_tieuchi = filterFactory.getDichVu($location.search().dichvu,
+														  $scope.tieuchis);
+				$scope.loading_dichvu = false;
+			});
+			$q.all([q1, q2]).then(function(){
+				$scope.initData();
+			})
+		    for(i=0; i<$scope.data.availableOptions.length; i++){
+		    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id){
+		    		$scope.data.giobd1 = $scope.data.availableOptions[i].id;
+		    	}
+		    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id){
+		    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
+		    	}
+		    }
+		}
 		
-        
-	    for(i=0; i<$scope.data.availableOptions.length; i++){
-	    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id){
-	    		$scope.data.giobd1 = $scope.data.availableOptions[i].id;
-	    	}
-	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id){
-	    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
-	    	}
-	    }
-	    
+
 	    //-------------end du lieu------------------------------------
 	    //--------------khởi tạo dữ liệu từ index------------------
 	    $scope.initData = function(){
@@ -963,14 +1087,20 @@
             	$scope.thongbaogio = 'Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.';
                 return;
             }
+            if(((kt1-bd1)%60)!=0  && bd1 != 0 && kt1 != 0) {
+            	$scope.thongbaogio = 'Khoảng cách thời gian phải từ 2,3,4,5.. tiếng.';
+                return;
+            }
             $scope.thongbaogio = '';
 	    	$scope.ngv_arr_fit = [];
 		  	$scope.ngv_selected_arr = [];
 	    	$scope.loading = true;
 	    	$scope.ngvs = null;
+	    	var chuoiquan = filterFactory.layTenKhuVuc($scope.data.quan, $scope.quans, $scope.khuvuc);
 			ngvFactory.layDanhSachNgv($scope.doi_ngaysearch($scope.data.ngay), 
 									 $scope.data.giobd1,
-									 $scope.data.giokt1).then(function(data){
+									 $scope.data.giokt1,
+									 chuoiquan).then(function(data){
 									 	$scope.ngvs = data;
 									 	getNgvPhuHop(data, $scope.data.quan);
 									 	$scope.loading = false;
@@ -979,6 +1109,20 @@
 	    //
 
 		//--------------watch----------------------------
+		$scope.$watch('khachhang.sdt', function(newVal, oldVal){
+			if(newVal == null) return;
+			if(newVal.toString().length < 7) {
+				return;
+			}
+			else {
+				thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(data){
+					if(data.length > 0){
+						$scope.khachhang.hoten = data[0].hoten;
+						$scope.khachhang.diachi = data[0].diachi
+					}
+				});
+			}
+		});
 		$scope.$watch('data.quan', function(newVal, oldVal){
 			for(i=0; i<$scope.ngv_selected_arr.length; i++){
     			$('#'+$scope.ngv_selected_arr[i].cmnd).removeClass('bgcheckmark');
@@ -1028,12 +1172,26 @@
 	    	}
 	    }
 	    $scope.filtering = function(ngv){
+	    	var index = -1;
+	    	for(i=0; i<$scope.ngv_selected_arr.length; i++)
+	    		if(ngv.cmnd == $scope.ngv_selected_arr[i].cmnd)
+	    			index = i;
+	    	kiemtraDSDcChon();
+	    	if(index!=-1 && $scope.filter_dichvu(ngv.sotruong, $scope.data)) return true;
 	    	if($scope.filter_dichvu(ngv.sotruong, $scope.data) && 
-	    	   $scope.filter_kinhnghiem(ngv.sonamkinhnghiem, $scope.data) &&
-	    	   $scope.filter_quan(ngv.diachi.quan, $scope.data)){
+	    	   $scope.filter_kinhnghiem(ngv.sonamkinhnghiem, $scope.data)){
 	    		return true;
 	    	}
 	    	else return false;
+	    }
+	    var kiemtraDSDcChon = function(){
+	    	for(j=0; j<$scope.ngv_selected_arr.length; j++){
+	    		
+	    		if(!($scope.filter_dichvu($scope.ngv_selected_arr[j].sotruong, $scope.data))){
+	    			$scope.ngv_selected_arr.splice(j,1);
+	    		}
+	    	}
+	    		
 	    }
 	    //------------end filter search---------------------------
 	    
@@ -1113,36 +1271,20 @@
             $scope.hoanthanh_thanhtoan_nh = true;
             $scope.loading_yeucau = false;
 		}
-	    $scope.hoanthanh_thanhtoan = function(){
-	    	location.reload();
+	    $scope.hoanthanh_thanhtoan = function(i){
+	    	if(i==1){
+	    		var expireDate = new Date();
+				expireDate.setDate(expireDate.getDate() + 1);
+				$cookies.remove('khachhang');
+				$cookies.put('khachhang', $scope.khachhang.sdt, {'expires': expireDate});
+	    		window.location.href = "/taikhoan?tab=lsdh";
+	    	}
+	    	else{
+	    		window.location.href = "/";
+	    	}
 	    }
 		//-------------end Xu ly detail ngv--------------------------------
 	    //---------------------luu yeu cau---------------------------------
-	    var getPhuPhi1LonNhat = function(mangtieuchi){
-			var max = 0;
-			for(i=0; i<mangtieuchi.length; i++){
-	    		for(j=0; j<$scope.tieuchis.length; j++){
-	    			if(mangtieuchi[i] == $scope.tieuchis[j].ten){
-	    				if($scope.tieuchis[j].phuphi1 > max){
-	    					max = $scope.tieuchis[j].phuphi1;
-	    				}
-	    			}
-	    		}
-	    	}
-	    	return max;
-		}
-		var getTrangThaiYeuCau = function(mangtieuchi){
-	    	for(i=0; i<mangtieuchi.length; i++){
-	    		for(j=0; j<$scope.tieuchis.length; j++){
-	    			if(mangtieuchi[i] == $scope.tieuchis[j].ten){
-	    				if($scope.tieuchis[j].phuphi2 == 'Có'){
-	    					return 'Chờ thỏa thuận';
-	    				}
-	    			}
-	    		}
-	    	}
-	    	return 'Chưa tiến hành';
-	    }
 	    var layDanhSachDichVu = function(){
 	    	var result = [];
 	    	for(i=0; i<$scope.tieuchis.length; i++){
@@ -1151,11 +1293,8 @@
 	    	}
 	    	return result;
 	    }
-
+	
 	    $scope.layMaXacNhan = function(){
-			var min = 1;
-			var max = 99999;
-			var random = Math.floor(Math.random() * (max - min + 1)) + min;
 
 			if($scope.khachhang.sdt == null)
 				$mdDialog.show(
@@ -1165,38 +1304,24 @@
 			        .title('Thông báo')
 			        .content('Xin nhập số điện thoại')
 			        .ok('Đồng ý!')
-			        .targetEvent(ev)
+			        .targetEvent(null)
 			    );
 			else{
-				//if($scope.solanxacnhan == 3){
-
-				//}
-				//$scope.solanxacnhan++;
-				$scope.maxacnhan.hethong = random;
-				khachhangFactory.layMaXacNhan(random, $scope.khachhang.sdt);
+				$scope.dalayMXN = true;
+				$timeout(function(){
+					$scope.dalayMXN = false;
+				}, 180000);
+				khachhangFactory.layMaXacNhan($scope.khachhang.sdt);
 			}
 		}
 
 	    $scope.promises = [];
-	    $scope.luu_yeucau = function(){
-	    	if($scope.maxacnhan.nguoidung != $scope.maxacnhan.hethong &&
-	    		$scope.maxacnhan.nguoidung != null){
-	    		$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Mã xác nhận chưa đúng!!')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    return;
-	    	}
+	    var luu_yeucau_b2 = function(){
 	    	$scope.loading_yeucau = true;
 	    	var q_ngv_trunglich = '?ngaylam=' + $scope.doi_ngaysearch($scope.data.ngay) +
 				'&giobatdau__lte=' + $scope.data.giokt1 +
 				'&gioketthuc__gte=' + $scope.data.giobd1;
-			$http.get('https://serene-stream-9747.herokuapp.com/api/lichlamviec'+q_ngv_trunglich, { cache: false})
+			$http.get('http://procleaner.vn:4444/api/lichlamviec'+q_ngv_trunglich, { cache: false})
 		        .success(function(data) {
 		        	if(data.length > 0){
 			            for(i=0; i<data.length; i++){
@@ -1216,77 +1341,66 @@
 			        		}
 			            }
 		        	}
-		            $http.get('https://serene-stream-9747.herokuapp.com/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
+		            $http.get('http://procleaner.vn:4444/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
 				        .success(function(data) {
-				        	var trangthaiyc = getTrangThaiYeuCau($scope.data.mang_tieuchi);
+				        	var trangthaiyc = thanhtoanFactory.getTrangThaiYeuCau($scope.tieuchis);
 				        	var mangdichvu = layDanhSachDichVu();
+
+				        	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    					var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+	    					var phingoaigiolonnhatNgv = thanhtoanFactory.getPhiNgoaiGioLonNhatNgv($scope.tieuchis);
+
+	    					var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+				        															 $scope.data.giokt1);
+				        	var chiphingoaigioCtyc = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+				        															phingoaigiolonnhat,
+				        															phicobanlonnhat);
+				        	var sogiongoaigioYc = thanhtoanFactory.tinhSoGioNgoaiGioYc($scope.data.giobd1,
+				        															 $scope.data.giokt1,
+				        															 $scope.ngv_selected_arr.length);
+				        	var chiphingoaigioYc = thanhtoanFactory.tinhPhiNgoaiGioYc(sogiongoaigioYc,
+				        															phingoaigiolonnhat,
+				        															phicobanlonnhat);
+
+				        	var dulieu_luuyeucau = {
+					        		trangthaiyc: trangthaiyc,
+					        		mangdichvu: mangdichvu,
+					        		ngay: $scope.data.ngay,
+					        		chiphi: thanhtoanFactory.tinhGiaChuanYc($scope.data.giobd1,
+					        		 									    $scope.data.giokt1, 
+					        		 									    phicobanlonnhat,
+					        		 									    $scope.ngv_selected_arr.length),
+					        		khachhang: $scope.khachhang,
+					        		quan: $scope.data.quan,
+					        		mang_ngv_dcchon: $scope.ngv_selected_arr,
+					        		giobd1: $scope.data.giobd1,
+					        		giokt1: $scope.data.giokt1,
+					        		phicobanlonnhat: phicobanlonnhat,
+					        		sogiongoaigioYc: sogiongoaigioYc,
+					        		chiphingoaigioYc: chiphingoaigioYc,
+					        		sogiongoaigioCtyc: sogiongoaigioCtyc,
+					        		chiphingoaigioCtyc: chiphingoaigioCtyc,
+					        		phingoaigio: phingoaigiolonnhat,
+					        		phingoaigiongv: phingoaigiolonnhatNgv
+					        	};
 				        	if(data.length>0){
-					            //Lưu yêu cầu
-					            thanhtoanFactory.luuYeuCau(
-				            		$scope.data.ngay,
-        						    $scope.data.ngay,
-        						    $scope.tinhtien_nh_luudb(),
-        						    $scope.khachhang.sdt,
-        						    $scope.khachhang.diachi,
-        						    $scope.data.quan,
-        						    trangthaiyc,
-        						    mangdichvu).then(function(data){
-        						   		for(i=0; i<$scope.ngv_selected_arr.length; i++){
-        						   			(function(i) {
-        						   				var promise = thanhtoanFactory.luuChiTietYeuCau($scope.ngv_selected_arr[i].cmnd,
-        						   											  $scope.data.ngay,
-        						   											  $scope.data.giobd1,
-        						   											  $scope.data.giokt1,
-        						   											  data._id).then(function(data){
-        						   											  	thanhtoanFactory.luuLichLamViec(data.nguoigiupviec,
-												            									$scope.data.ngay,
-												            									$scope.data.giobd1,
-												            									$scope.data.giokt1,
-												            									$scope.khachhang.sdt,
-												            									data._id);
-        						   											  });
-        						   				$scope.promises.push(promise);
-        						   			})(i)
-        						   		}
-        						   		$q.all($scope.promises).then(function(){
-											reloadDataSauHoaDon();
-										})
-        						   })
+					        	$http.post('/luuyeucau_nh', dulieu_luuyeucau)
+							        .success(function(data) {
+							        	if(data = 'done')
+							        		reloadDataSauHoaDon();
+							        }).error(function(data) {
+							            console.log('Error: ' + data);
+					        		});
 				        	}else{
 				        		//lưu khách hàng
-					            thanhtoanFactory.luuKhachHang($scope.khachhang);					            
-					            //Lưu yêu cầu
-					            thanhtoanFactory.luuYeuCau(
-				            		$scope.data.ngay,
-        						    $scope.data.ngay,
-        						    $scope.tinhtien_nh_luudb(),
-        						    $scope.khachhang.sdt,
-        						    $scope.khachhang.diachi,
-        						    $scope.data.quan,
-        						    trangthaiyc,
-        						    mangdichvu).then(function(data){
-        						   		for(i=0; i<$scope.ngv_selected_arr.length; i++){
-        						   			(function(i) {
-        						   				var promise = thanhtoanFactory.luuChiTietYeuCau($scope.ngv_selected_arr[i],
-        						   					                          $scope.data.ngay,
-        						   											  $scope.data.giobd1,
-        						   											  $scope.data.giokt1,
-        						   											  data._id).then(function(){
-        						   											  	thanhtoanFactory.luuLichLamViec(data.nguoigiupviec,
-												            									$scope.data.ngay,
-												            									$scope.data.giobd1,
-												            									$scope.data.giokt1,
-												            									$scope.khachhang.sdt,
-												            									data._id);
-        						   											  });
-        						   				$scope.promises.push(promise);
-        						   			})(i)
-        						   			
-        						   		}
-        						   		$q.all($scope.promises).then(function(){
-											reloadDataSauHoaDon();
-										})
-        						   })
+					            thanhtoanFactory.luuKhachHang($scope.khachhang);	
+					        	$http.post('/luuyeucau_nh', dulieu_luuyeucau)
+							        .success(function(data) {
+							        	if(data = 'done')
+							        		reloadDataSauHoaDon();
+							        }).error(function(data) {
+							            console.log('Error: ' + data);
+					        		});
 				        	}
 				        })
 				        .error(function(data) {
@@ -1300,34 +1414,91 @@
 		            console.log('Error: ' + data);
         	});
 	    }
+	    $scope.luu_yeucau = function(){
+	    	khachhangFactory.xacthucThongTin(
+				$scope.khachhang.sdt, $scope.maxacnhan.nguoidung).then(function(data){
+					if(data == 'true'){
+						luu_yeucau_b2();
+					}else{
+						$mdDialog.show(
+					      $mdDialog.alert()
+					        .parent(angular.element(document.querySelector('body')))
+					        .clickOutsideToClose(true)
+					        .title('Thông báo')
+					        .content('Mã xác nhận chưa đúng!!')
+					        .ok('Đồng ý!')
+					        .targetEvent(null)
+					    );
+					    return;
+					}
+			})
+	    	
+	    }
 	    //---------------------end-----------------------------------------
 	    //----------------------tính tiền----------------------------------
 	    $scope.tinhtien_nh = function(){
-	    	var giatien = $scope.tieuchis[0].giachuan*(($scope.data.giokt1-$scope.data.giobd1)/60);
-	    	giatien = giatien + (giatien*getPhuPhi1LonNhat($scope.data.mang_tieuchi))/100;
-	    	giatien = Math.floor(giatien);
-	    	giatien *= $scope.ngv_selected_arr.length;
-	    	var giatien_str = '';
-	    	var giatien_arr = giatien.toString().split('');
-	    	var dem = 1;
-	    	for(i=giatien_arr.length-1; i>=0; i--){
-	    		giatien_str += giatien_arr[i];
-	    		if(dem%3==0) giatien_str += '.';
-	    		dem++;
-	    	}
-	    	return giatien_str.split('').reverse().join('');
+	    	var sogiongoaigioYc = thanhtoanFactory.tinhSoGioNgoaiGioYc($scope.data.giobd1,
+        															   $scope.data.giokt1,
+        															   $scope.ngv_selected_arr.length); 
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+			var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+
+	    	var phichuan = thanhtoanFactory.tinhGiaChuanYc($scope.data.giobd1,
+	        		 									    $scope.data.giokt1, 
+	        		 									    phicobanlonnhat,
+	        		 									    $scope.ngv_selected_arr.length)
+	    	var phingoaigio = thanhtoanFactory.tinhPhiNgoaiGioYc(sogiongoaigioYc,
+    															phingoaigiolonnhat,
+    															phicobanlonnhat,
+    															$scope.ngv_selected_arr.length);
+	    	return thanhtoanFactory.doiChuoiTienTe(phichuan + phingoaigio);
 	    }
-	    $scope.tinhtien_nh_luudb = function(){
-	    	var giatien = $scope.tieuchis[0].giachuan*(($scope.data.giokt1-$scope.data.giobd1)/60);
-	    	giatien = giatien + (giatien*getPhuPhi1LonNhat($scope.data.mang_tieuchi))/100;
-	    	giatien = Math.floor(giatien);
-	    	giatien *= $scope.ngv_selected_arr.length;
-	    	return giatien;
+	    $scope.showTrangThaiYc = function(){
+	    	var tt = thanhtoanFactory.getTrangThaiYeuCau($scope.tieuchis);
+	    	if(tt == 'Chưa tiến hành')
+	    		return 'Không có phụ phí';
+	    	else return 'Có phụ phí';
+	    }
+	    $scope.showPhiNgoaiGio = function(){
+	    	var sogiongoaigioYc = thanhtoanFactory.tinhSoGioNgoaiGioYc($scope.data.giobd1,
+        															   $scope.data.giokt1,
+        															   $scope.ngv_selected_arr.length); 
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    	var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+	    	var phingoaigio = thanhtoanFactory.tinhPhiNgoaiGioYc(sogiongoaigioYc,
+    															phingoaigiolonnhat,
+    															phicobanlonnhat,
+    															$scope.ngv_selected_arr.length);
+	    	return thanhtoanFactory.doiChuoiTienTe(phingoaigio);
+	    }
+	    $scope.showPhiCoBan = function(){
+	    	var sogiongoaigioYc = thanhtoanFactory.tinhSoGioNgoaiGioYc($scope.data.giobd1,
+        															   $scope.data.giokt1,
+        															   $scope.ngv_selected_arr.length); 
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+			var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+	    	var phichuan = thanhtoanFactory.tinhGiaChuanYc($scope.data.giobd1,
+	        		 									    $scope.data.giokt1, 
+	        		 									    phicobanlonnhat,
+	        		 									    $scope.ngv_selected_arr.length)
+	    	return thanhtoanFactory.doiChuoiTienTe(phichuan);
 	    }
 	    //----------------------end tính tiền------------------------------
 
 	    //modal yeu cau
 	    $scope.show_yeucau = function(){
+	    	if($scope.thongbaogio != ''){
+	    		$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Xin chọn lại thời gian!')
+			        .ok('Đồng ý!')
+			        .targetEvent(null)
+			    );
+			    return;
+	    	}
 	    	if($scope.ngv_selected_arr.length > 0){
 	    		//$('#thongtinkh').modal({backdrop: 'static', keyboard: false},'show');
 	    		$scope.isSearch = false;
@@ -1380,6 +1551,7 @@
 				  $compile,
 				  $mdSidenav,
 				  $timeout,
+				  $cookies,
 				  cancelableQ){
 		//session ngăn ko cho quay lại trang chủ
 		
@@ -1401,9 +1573,9 @@
 		$scope.ngvs = null;
 		$scope.isDetail = false;
 		$scope.maxacnhan = {
-	    	nguoidung: null,
-	    	hethong: null
+	    	nguoidung: null
 	    };
+	    $scope.dalayMXN = false;
 		$scope.khachhang = {
 			sdt: null,
 			hoten: '',
@@ -1487,12 +1659,21 @@
 	    }
 	    
     	$scope.events=[];
-    	$scope.addEvent = function(soluong, ngaythuchien){
-    		$scope.events.push({
-    			title: 'Đã chọn '+soluong+' nhân viên!',
-            	start: ngaythuchien,
-            	stick: true
-    		});
+    	$scope.addEvent = function(soluong, ngaythuchien, trangthai){
+    		if(trangthai == 1){
+	    		$scope.events.push({
+	    			title: soluong+' nhân viên',
+	            	start: ngaythuchien,
+	            	stick: true
+	    		});
+	    	}
+	    	else{
+	    		$scope.events.push({
+	    			title: soluong,
+	            	start: ngaythuchien,
+	            	stick: true
+	    		});
+	    	}
     	}
     	$scope.chonNgvSideNav = function(){
     		var soluong = 0;
@@ -1506,7 +1687,7 @@
         	}
     		for(i=0; i<$scope.events.length; i++){
         		if($scope.events[i].start.getTime() == $scope.detailData.ngaythuchien.getTime()){
-        			$scope.events[i].title = 'Đã chọn '+soluong+' nhân viên!';
+        			$scope.events[i].title = soluong+' nhân viên';
         			return;
         		}
         	}
@@ -1520,10 +1701,10 @@
 		$scope.filter_kinhnghiem = filterFactory.filter_kinhnghiem;
 		$scope.filter_quan = filterFactory.filter_quan;
 
-		$scope.filtering = function(ngv){
+		$scope.filtering = function(ngv, selected){
+			if(selected) return true;
 	    	if($scope.filter_dichvu(ngv.sotruong, $scope.data) && 
-	    	   $scope.filter_kinhnghiem(ngv.sonamkinhnghiem, $scope.data) &&
-	    	   $scope.filter_quan(ngv.diachi.quan, $scope.data)){
+	    	   $scope.filter_kinhnghiem(ngv.sonamkinhnghiem, $scope.data)){
 	    		return true;
 	    	}
 	    	else return false;
@@ -1577,7 +1758,7 @@
 			}
 	    }
 	    $scope.promises = [];
-		var initData = function(initOption){
+		var initData = function(initOption, dichvu){
 			$scope.loading = true;
 			var days = ['cn','t2','t3','t4','t5','t6','t7'];
 			$scope.events.splice(0,$scope.events.length);
@@ -1585,7 +1766,7 @@
 			var dayrange = daydiff(parseDate($scope.data.ngaybd),
 								   parseDate($scope.data.ngaykt));
 			var ngaythuchien_arr = [];
-			
+			var chuoiquan = filterFactory.layTenKhuVuc($scope.data.quan, $scope.quans, $scope.khuvuc);
 			
 			for(i=0; i<=dayrange; i++){
 				var ngaybatdau_arr = $scope.data.ngaybd.split('/');
@@ -1599,7 +1780,8 @@
 					var promise = ngvFactory.layDanhSachNgvDaiHan(ngaythuchien_arr[i],
 						 $scope.data.giobd1,
 						 $scope.data.giokt1,
-						 $scope.data.quan);
+						 chuoiquan,
+						 dichvu);
 					var cancelp = cancelableQ.wrap(promise);
 					cancelp.then(function(data){
 						 	if(data.length>0){
@@ -1656,13 +1838,13 @@
 							 		ngay: ngaythuchien_arr[i],
 							 		dsNgvPhuHop: _dsNgvPhuHop
 							 	});
-							 	$scope.addEvent(soluong, ngaythuchien_arr[i]);
+							 	$scope.addEvent(soluong, ngaythuchien_arr[i], 1);
 						 	}else{
 						 		$scope.data.lichdaihan.push({
 							 		ngay: ngaythuchien_arr[i],
 							 		dsNgvPhuHop: []
 							 	});
-							 	$scope.addEvent('hiện tại chưa có nhân viên!!', ngaythuchien_arr[i]);
+							 	$scope.addEvent('Chưa có nhân viên', ngaythuchien_arr[i], 0);
 						 	}
 						 }, function(reason){
 						 	console.log('rejected with reason: ', reason);
@@ -1671,53 +1853,70 @@
 				})(i);
 			}
 			$q.all($scope.promises).then(function(){
-				console.log('done');
 				$scope.promises = [];
 				$scope.loading = false;
 			});
 			$scope.initLanguage();
 		}
-
+		var layMangDichVu = function(){
+			var arr = [];
+			for(i=0; i<$scope.tieuchis; i++){
+				if($scope.tieuchis[i].data)
+					arr.push($scope.tieuchis[i].ten);
+			}
+			return arr;
+		}
 		//-------------Lấy dữ liệu-----------------------------------
 		$scope.kinhnghiems = filterFactory.getDSKinhNghiem();
 		$scope.tieuchis = [];
-		filterFactory.getDSTieuChi().then(function(data){
-			for(i=0; i<data.length; i++){
-				$scope.tieuchis.push({
-					ten: data[i].tentieuchi,
-					id: i,
-					data: false,
-					giachuan: data[i].giachuan,
-					phuphi1: data[i].phuphi1,
-					phuphi2: data[i].phuphi2,
-					phingoaigiongv: data[i].phingoaigiongv,
-					phingoaigiokh: data[i].phingoaigiokh,
-				});
-			}
-			$scope.data.mang_tieuchi = filterFactory.getDichVu($location.search().dichvu,
-													  $scope.tieuchis);
-			$scope.loading_dichvu = false;
-		});
-		$scope.quans = filterFactory.getDSQuan();
+		$scope.khuvuc = [];
+		$scope.quans=[];
+		$scope.initDataFirstTime = function(){
+			var q1 = filterFactory.getDSQuan().then(function(data){
+				$scope.khuvuc = filterFactory.taoDanhSachKhuVuc(data);
+				for(i=0; i<data.length; i++){
+					$scope.quans.push({
+						ten: data[i].tenquan,
+						khuvuc: data[i].khuvuc,
+						id: i
+					});
+				}
+			})
+			var q2 = filterFactory.getDSTieuChi().then(function(data){
+				for(i=0; i<data.length; i++){
+					$scope.tieuchis.push({
+						ten: data[i].tentieuchi,
+						id: i,
+						data: false,
+						giachuan: data[i].giachuan,
+						phuphi: data[i].phuphi,
+						phingoaigiokh: data[i].phingoaigiokh,
+						phingoaigiongv: data[i].phingoaigiongv
+					});
+				}
+				$scope.data.mang_tieuchi = filterFactory.getDichVu($location.search().dichvu,
+														  $scope.tieuchis);
+				$scope.loading_dichvu = false;
+			});
+			$q.all([q1, q2]).then(function(){
+				initData($scope.data.locdaihan, $scope.data.mang_tieuchi);
+			})
+		    for(i=0; i<$scope.data.availableOptions.length; i++){
+		    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id){
+		    		$scope.data.giobd1 = $scope.data.availableOptions[i].id;
+		    	}
+		    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id){
+		    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
+		    	}
+		    }
+		}
 		$scope.data = filterFactory.getDuLieuPage();
 		$scope.locdaihan = filterFactory.getDSLocDaiHan();
-		
-		
-		
-        
-	    for(i=0; i<$scope.data.availableOptions.length; i++){
-	    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id){
-	    		$scope.data.giobd1 = $scope.data.availableOptions[i].id;
-	    	}
-	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id){
-	    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
-	    	}
-	    }
 	    
 	    //-------------end du lieu------------------------------------
 	    //--------------khởi tạo và xử lý calendar------------------
 	    
-	    initData($scope.data.locdaihan);
+	    
 	    //
 	    //--------------lay dia chi google map-----------
 	    $scope.layDiaChi = function(){
@@ -1747,6 +1946,20 @@
 			}
 		}
 	    //--------------watch----------------------------
+	    $scope.$watch('khachhang.sdt', function(newVal, oldVal){
+			if(newVal == null) return;
+			if(newVal.toString().length < 7) {
+				return;
+			}
+			else {
+				thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(data){
+					if(data.length > 0){
+						$scope.khachhang.hoten = data[0].hoten;
+						$scope.khachhang.diachi = data[0].diachi
+					}
+				});
+			}
+		});
 		function parseDate(str) {
 		    var mdy = str.split('/')
 		    return new Date(mdy[2], mdy[1]-1, mdy[0]);
@@ -1784,48 +1997,42 @@
             	$scope.thongbaogio = 'Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.';
                 return;
             }
-
+            if(((kt1-bd1)%60)!=0  && bd1 != 0 && kt1 != 0) {
+            	$scope.thongbaogio = 'Khoảng cách thời gian phải từ 2,3,4,5.. tiếng.';
+                return;
+            }
             $scope.thongbaogio = '';
             $scope.thongbaongay = '';
 
 			for(i=0; i<$scope.promises.length; i++){
 				$scope.promises[i].cancel();
 			}
+			$scope.isDetail = false;
 			$scope.promises = [];
 			$timeout(function(){
-				initData($scope.data.locdaihan);
+				initData($scope.data.locdaihan, $scope.data.mang_tieuchi);
 			},300);
+			
+			
 		}
+		
 		//modal yeu cau
 		$scope.isSearch = true;
 		$scope.isThanhToan = false;
-		var getPhuPhi1LonNhat = function(mangtieuchi){
-			var max = 0;
-			for(i=0; i<mangtieuchi.length; i++){
-	    		for(j=0; j<$scope.tieuchis.length; j++){
-	    			if(mangtieuchi[i] == $scope.tieuchis[j].ten){
-	    				if($scope.tieuchis[j].phuphi1 > max){
-	    					max = $scope.tieuchis[j].phuphi1;
-	    				}
-	    			}
-	    		}
-	    	}
-	    	return max;
-		}
-		var getTrangThaiYeuCau = function(mangtieuchi){
-	    	for(i=0; i<mangtieuchi.length; i++){
-	    		for(j=0; j<$scope.tieuchis.length; j++){
-	    			if(mangtieuchi[i] == $scope.tieuchis[j].ten){
-	    				if($scope.tieuchis[j].phuphi2 == 'Có'){
-	    					return 'Chờ thỏa thuận';
-	    				}
-	    			}
-	    		}
-	    	}
-	    	return 'Chưa tiến hành';
-	    }
+		
 	    $scope.show_yeucau = function(){
-	    	console.log($scope.loading);
+	    	if($scope.thongbaogio != '' || $scope.thongbaongay != ''){
+	    		$mdDialog.show(
+			      $mdDialog.alert()
+			        .parent(angular.element(document.querySelector('body')))
+			        .clickOutsideToClose(true)
+			        .title('Thông báo')
+			        .content('Xin chọn lại thời gian!')
+			        .ok('Đồng ý!')
+			        .targetEvent(null)
+			    );
+			    return;
+	    	}
 	    	if($scope.loading == true){
 	    		$mdDialog.show(
 			      $mdDialog.alert()
@@ -1867,62 +2074,96 @@
 			$scope.khachhang.diachi= '';
 	    }
 	    //tinh tien
-	    $scope.tinhtiendhTungNgay = function(){
-	    	var giatien = $scope.tieuchis[0].giachuan*(($scope.data.giokt1-$scope.data.giobd1)/60);
-	    	giatien = giatien + (giatien*getPhuPhi1LonNhat($scope.data.mang_tieuchi))/100;
-	    	giatien = Math.floor(giatien);
-	    	var giatien_str = '';
-	    	var giatien_arr = giatien.toString().split('');
-	    	var dem = 1;
-	    	for(i=giatien_arr.length-1; i>=0; i--){
-	    		giatien_str += giatien_arr[i];
-	    		if(dem%3==0 && i!=0) giatien_str += '.';
-	    		dem++;
+	    var tongSoLuongNgv = function(){
+	    	var soluongngv = 0;
+
+	    	for(i=0; i<$scope.data.lichdaihan.length; i++){
+    			for(j=0; j<$scope.data.lichdaihan[i].dsNgvPhuHop.length; j++){
+    				if($scope.data.lichdaihan[i].dsNgvPhuHop[j].selected == true){
+
+    					soluongngv++;
+    				}
+    			}
 	    	}
-	    	return giatien_str.split('').reverse().join('');
+	    	return soluongngv;
+	    }
+	    $scope.tinhtiendhTungNgay = function(){
+
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    	var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+
+	    	var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+        															   $scope.data.giokt1); 
+
+	    	var phichuan = thanhtoanFactory.tinhGiaChuanCtyc($scope.data.giobd1,
+	        		 									    $scope.data.giokt1, 
+	        		 									    phicobanlonnhat);
+
+	    	var phingoaigio = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+    															phingoaigiolonnhat,
+    															phicobanlonnhat);
+
+	    	return thanhtoanFactory.doiChuoiTienTe(phichuan + phingoaigio);
 	    }
 	    $scope.tinhtien_dh = function(){
-	    	if($scope.loading_dichvu == true)
-	    		return;
-	    	var soluongngv = 0;
-	    	for(i=0; i<$scope.data.lichdaihan.length; i++){
-    			for(j=0; j<$scope.data.lichdaihan[i].dsNgvPhuHop.length; j++){
-    				if($scope.data.lichdaihan[i].dsNgvPhuHop[j].selected == true){
-    					soluongngv++;
-    				}
-    			}
-	    	}
-	    	var giatien = $scope.tieuchis[0].giachuan*(($scope.data.giokt1-$scope.data.giobd1)/60);
-	    	giatien = giatien + (giatien*getPhuPhi1LonNhat($scope.data.mang_tieuchi))/100;
-	    	giatien = Math.floor(giatien);
-	    	giatien *= soluongngv;
-	    	var giatien_str = '';
-	    	var giatien_arr = giatien.toString().split('');
-	    	var dem = 1;
-	    	for(i=giatien_arr.length-1; i>=0; i--){
-	    		giatien_str += giatien_arr[i];
-	    		if(dem%3==0 && i!=0) giatien_str += '.';
-	    		dem++;
-	    	}
-	    	return giatien_str.split('').reverse().join('');
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    	var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+
+	    	var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+        															   $scope.data.giokt1); 
+
+	    	var phichuan = thanhtoanFactory.tinhGiaChuanCtyc($scope.data.giobd1,
+	        		 									    $scope.data.giokt1, 
+	        		 									    phicobanlonnhat);
+
+	    	var phingoaigio = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+    															phingoaigiolonnhat,
+    															phicobanlonnhat);
+
+	    	return thanhtoanFactory.doiChuoiTienTe((phichuan+phingoaigio)*tongSoLuongNgv());
 	    }
-	    $scope.tinhtien_dh_luudb = function(){
-	    	var soluongngv = 0;
-	    	for(i=0; i<$scope.data.lichdaihan.length; i++){
-    			for(j=0; j<$scope.data.lichdaihan[i].dsNgvPhuHop.length; j++){
-    				if($scope.data.lichdaihan[i].dsNgvPhuHop[j].selected == true){
-    					soluongngv++;
-    				}
-    			}
-	    	}
-	    	var giatien = 60000*(($scope.data.giokt1-$scope.data.giobd1)/60);
-	    	giatien = giatien + (giatien*getPhuPhi1LonNhat($scope.data.mang_tieuchi))/100;
-	    	giatien = Math.floor(giatien);
-	    	giatien *= soluongngv;
-	    	return giatien;
+	    $scope.showTrangThaiYc = function(){
+	    	var tt = thanhtoanFactory.getTrangThaiYeuCau($scope.tieuchis);
+	    	if(tt == 'Chưa tiến hành')
+	    		return 'Không có phụ phí';
+	    	else return 'Có phụ phí';
+	    }
+	    $scope.showPhiNgoaiGio = function(){
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    	var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+	    	
+	    	var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+        															   $scope.data.giokt1); 
+
+	    	var phichuan = thanhtoanFactory.tinhGiaChuanCtyc($scope.data.giobd1,
+	        		 									    $scope.data.giokt1, 
+	        		 									    phicobanlonnhat);
+
+	    	var phingoaigio = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+    															phingoaigiolonnhat,
+    															phicobanlonnhat);
+
+	    	return thanhtoanFactory.doiChuoiTienTe(phingoaigio*tongSoLuongNgv());
+	    }
+	    $scope.showPhiCoBan = function(){
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    	var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+
+	    	var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+        															   $scope.data.giokt1); 
+
+	    	var phichuan = thanhtoanFactory.tinhGiaChuanCtyc($scope.data.giobd1,
+	        		 									    $scope.data.giokt1, 
+	        		 									    phicobanlonnhat);
+
+	    	var phingoaigio = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+    															phingoaigiolonnhat,
+    															phicobanlonnhat);
+
+	    	return thanhtoanFactory.doiChuoiTienTe((phichuan)*tongSoLuongNgv());
 	    }
 	    var daChonNgv = function(){
-	    	if($scope.tinhtien_dh_luudb() > 0)
+	    	if(tongSoLuongNgv() > 0)
 	    		return true;
 	    	else
 	    		return false;
@@ -1937,9 +2178,6 @@
 	    	return result;
 	    }
 	    $scope.layMaXacNhan = function(){
-			var min = 1;
-			var max = 99999;
-			var random = Math.floor(Math.random() * (max - min + 1)) + min;
 
 			if($scope.khachhang.sdt == null)
 				$mdDialog.show(
@@ -1949,33 +2187,19 @@
 			        .title('Thông báo')
 			        .content('Xin nhập số điện thoại')
 			        .ok('Đồng ý!')
-			        .targetEvent(ev)
+			        .targetEvent(null)
 			    );
 			else{
-				//if($scope.solanxacnhan == 3){
-
-				//}
-				//$scope.solanxacnhan++;
-				$scope.maxacnhan.hethong = random;
-				khachhangFactory.layMaXacNhan(random, $scope.khachhang.sdt);
+				$scope.dalayMXN = true;
+				$timeout(function(){
+					$scope.dalayMXN = false;
+				}, 180000);
+				khachhangFactory.layMaXacNhan($scope.khachhang.sdt);
 			}
 		}
 	    $scope.llvpromises = [];
 	    $scope.ctycpromises = [];
-	    $scope.luu_yeucau = function(){
-	    	if($scope.maxacnhan.nguoidung != $scope.maxacnhan.hethong &&
-	    		$scope.maxacnhan.nguoidung != null){
-	    		$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Mã xác nhận chưa đúng!!')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    return;
-	    	}
+	    var luu_yeucau_b2 = function(){
 	    	$scope.loading_yeucau = true;
 	    	var promises = [];
 	    	for(i=0; i<$scope.data.lichdaihan; i++){
@@ -2006,95 +2230,75 @@
 			    	);
 	    		}
 	    		else{
-	    			$http.get('https://serene-stream-9747.herokuapp.com/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
+	    			$http.get('http://procleaner.vn:4444/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
 				        .success(function(data) {
-				        	var trangthaiyc = getTrangThaiYeuCau($scope.data.mang_tieuchi);
+
+				        	var trangthaiyc = thanhtoanFactory.getTrangThaiYeuCau($scope.tieuchis);
 				        	var mangdichvu = layDanhSachDichVu();
+
+				        	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    					var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+	    					var phingoaigiolonnhatNgv = thanhtoanFactory.getPhiNgoaiGioLonNhatNgv($scope.tieuchis);
+
+				        	var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+				        															 $scope.data.giokt1);
+				        	var chiphingoaigioCtyc = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+				        															phingoaigiolonnhat,
+				        															phicobanlonnhat);
+				        	var sogiongoaigioYc = thanhtoanFactory.tinhSoGioNgoaiGioYc($scope.data.giobd1,
+				        															 $scope.data.giokt1,
+				        															 tongSoLuongNgv());
+				        	var chiphingoaigioYc = thanhtoanFactory.tinhPhiNgoaiGioYc(sogiongoaigioYc,
+				        															phingoaigiolonnhat,
+				        															phicobanlonnhat,
+				        															tongSoLuongNgv());
+
+					        var dulieu_luuyeucau = {
+					        		trangthaiyc: trangthaiyc,
+					        		mangdichvu: mangdichvu,
+					        		ngaybd: $scope.data.ngaybd,
+					        		ngaykt: $scope.data.ngaykt,
+					        		chiphi: thanhtoanFactory.tinhGiaChuanYc($scope.data.giobd1,
+					        		 									    $scope.data.giokt1, 
+					        		 									    phicobanlonnhat,
+					        		 									    tongSoLuongNgv()),
+					        		khachhang: $scope.khachhang,
+					        		quan: $scope.data.quan,
+					        		giobd1: $scope.data.giobd1,
+					        		giokt1: $scope.data.giokt1,
+					        		lichdaihan: $scope.data.lichdaihan,
+					        		phicobanlonnhat: phicobanlonnhat,
+					        		sogiongoaigioYc: sogiongoaigioYc,
+					        		chiphingoaigioYc: chiphingoaigioYc,
+					        		sogiongoaigioCtyc: sogiongoaigioCtyc,
+					        		chiphingoaigioCtyc: chiphingoaigioCtyc,
+					        		phingoaigio: phingoaigiolonnhat,
+					        		phingoaigiongv: phingoaigiolonnhatNgv
+					        	};
 				        	if(data.length>0){
-					            //Lưu yêu cầu
-					            thanhtoanFactory.luuYeuCauDh(
-				            		$scope.data.ngaybd,
-        						    $scope.data.ngaykt,
-        						    $scope.tinhtien_dh_luudb(),
-        						    data[0].sdt,
-        						    data[0].diachi,
-        						    $scope.data.quan,
-        						    trangthaiyc,
-        						    mangdichvu).then(function(data){
-        						    	for(i=0; i<$scope.data.lichdaihan.length; i++){
-						            		for(j=0; j<$scope.data.lichdaihan[i].dsNgvPhuHop.length; j++){
-					            				if($scope.data.lichdaihan[i].dsNgvPhuHop[j].selected == true){
-						            				var promise = thanhtoanFactory.luuChiTietYeuCauDh(
-						            								  $scope.data.lichdaihan[i].dsNgvPhuHop[j].data.cmnd,
-						            								  $scope.data.lichdaihan[i].ngay,
-						   											  $scope.data.giobd1,
-						   											  $scope.data.giokt1,
-						   											  data._id).then(function(data){
-					   											  			var ngay = new Date(Date.parse(data.giobatdau));
-					   											  			ngay.setHours(0,0);
-					   											  			var ngay_utc = new Date(Date.UTC(ngay.getFullYear(), ngay.getMonth(), ngay.getDate()));
-												            				thanhtoanFactory.luuLichLamViecDh(data.nguoigiupviec,
-												            									ngay_utc,
-												            									$scope.data.giobd1,
-												            									$scope.data.giokt1,
-												            									$scope.khachhang.sdt,
-												            									data._id);
-						   											  });
-						   							$scope.ctycpromises.push(promise);
-						            			}
-						            		}
-							            }
-							            
-    						   			$q.all($scope.ctycpromises).then(function(){
-    						   				$scope.ctycpromises = [];
-    						   				$scope.loading_yeucau = false;
+				        		
+					        	$http.post('/luuyeucau_dh', dulieu_luuyeucau)
+							        .success(function(data) {
+							        	if(data = 'done'){
+							        		$scope.loading_yeucau = false;
     						   				$scope.hoanthanh_thanhtoan_dh = true;
-										})
-        						   })
+						        		}
+							        }).error(function(data) {
+							            console.log('Error: ' + data);
+					        		});
 				        	}else{
 				        		//lưu khách hàng
 					            thanhtoanFactory.luuKhachHang($scope.khachhang);
 
-						        //Lưu yêu cầu
-					            thanhtoanFactory.luuYeuCauDh(
-				            		$scope.data.ngaybd,
-        						    $scope.data.ngaykt,
-        						    $scope.tinhtien_dh_luudb(),
-        						    data[0].sdt,
-        						    data[0].diachi,
-        						    $scope.data.quan,
-        						    trangthaiyc,
-        						    mangdichvu).then(function(data){
-        						    	for(i=0; i<$scope.data.lichdaihan.length; i++){
-						            		for(j=0; j<$scope.data.lichdaihan[i].dsNgvPhuHop.length; j++){
-					            				if($scope.data.lichdaihan[i].dsNgvPhuHop[j].selected == true){
-						            				var promise = thanhtoanFactory.luuChiTietYeuCauDh(
-						            								  $scope.data.lichdaihan[i].dsNgvPhuHop[j].data.cmnd,
-						            								  $scope.data.lichdaihan[i].ngay,
-						   											  $scope.data.giobd1,
-						   											  $scope.data.giokt1,
-						   											  data._id).then(function(data){
-					   											  			var ngay = new Date(Date.parse(data.giobatdau));
-					   											  			ngay.setHours(0,0);
-					   											  			var ngay_utc = new Date(Date.UTC(ngay.getFullYear(), ngay.getMonth(), ngay.getDate()));
-												            				thanhtoanFactory.luuLichLamViecDh(data.nguoigiupviec,
-												            									ngay_utc,
-												            									$scope.data.giobd1,
-												            									$scope.data.giokt1,
-												            									$scope.khachhang.sdt,
-												            									data._id);
-						   											  });
-						   							$scope.ctycpromises.push(promise);
-						            			}
-						            		}
-							            }
-							            
-    						   			$q.all($scope.ctycpromises).then(function(){
-    						   				$scope.ctycpromises = [];
-    						   				$scope.loading_yeucau = false;
+					        	$http.post('/luuyeucau_dh', dulieu_luuyeucau)
+							        .success(function(data) {
+							        	if(data = 'done'){
+							        		$scope.loading_yeucau = false;
     						   				$scope.hoanthanh_thanhtoan_dh = true;
-										})
-        						   })
+						        		}
+							        }).error(function(data) {
+							            console.log('Error: ' + data);
+					        		});
 				        	}
 				        })
 				        .error(function(data) {
@@ -2103,9 +2307,37 @@
 	    		}
 	    	})
 	    }
+	    $scope.luu_yeucau = function(){
+	    	khachhangFactory.xacthucThongTin(
+				$scope.khachhang.sdt, $scope.maxacnhan.nguoidung).then(function(data){
+					if(data == 'true'){
+						luu_yeucau_b2();
+					}else{
+						$mdDialog.show(
+					      $mdDialog.alert()
+					        .parent(angular.element(document.querySelector('body')))
+					        .clickOutsideToClose(true)
+					        .title('Thông báo')
+					        .content('Mã xác nhận chưa đúng!!')
+					        .ok('Đồng ý!')
+					        .targetEvent(null)
+					    );
+					    return;
+					}
+			})
+	    }
 	    //---------------------end-----------------------------------------
-	    $scope.hoanthanh_thanhtoan = function(){
-	    	location.reload();
+	    $scope.hoanthanh_thanhtoan = function(i){
+	    	if(i==1){
+	    		var expireDate = new Date();
+				expireDate.setDate(expireDate.getDate() + 1);
+				$cookies.remove('khachhang');
+				$cookies.put('khachhang', $scope.khachhang.sdt, {'expires': expireDate});
+	    		window.location.href = "/taikhoan?tab=lsdh";
+	    	}
+	    	else{
+	    		window.location.href = "/";
+	    	}
 	    }
 		//--------------end watch-----------------------
 		$scope.numberLoaded = true;
@@ -2122,37 +2354,77 @@
 	});
 	module.controller('loginController', function(khachhangFactory, thanhtoanFactory, $scope, $timeout, $cookies, $location, $cookies){
 		$scope.registed = false;
-		$scope.khachhang = {};
+		$scope.khachhang = {
+			sdt: null,
+			diachi: null,
+			ten: null
+		};
 		$scope.sdtTonTai = false;
 		$scope.sdtKhongTonTai = false;
 		$scope.dangkyThanhCong = false;
 		$scope.loadingDangKy = false;
 		$scope.loadingDangNhap = false;
 		$scope.maxacnhan = {
-	    	nguoidung: null,
-	    	hethong: null
+	    	nguoidung: null
 	    };
 		$scope.solanxacnhan = 0;
 		$scope.thongbaomaxacnhan = '';
-		$scope.daxacnhansdt = false;
-		$scope.thongbaosdt = '';
+		$scope.daxacnhansdt = {
+			dangky: false,
+			dangnhap: false
+		};
+		$scope.thongbaosdt = {
+			dangky: null,
+			dangnhap: null
+		};
 		$scope.tamdungxacnhan = null;
+		$scope.dalayMXNDK = false;
+		$scope.dalayMXNDN = false;
+		$scope.dongySuDung = true;
+		$scope.landau = 0;
 		//check cookies
 		$scope.checkCookies = function(){
-			if($cookies.get('khachhang') != null){
+			if($cookies.get('khachhang') != null && $scope.landau == 0){
+				$scope.registed = true;
 				$scope.khachhang.sdt = $cookies.get('khachhang');
-				$scope.DangNhap();
+				$scope.landau++;
+				DangNhapb2(0);
 			}
 		}
 		//
 		$scope.showDangKy = function(){
+			$('#DangNhapForm').modal('hide');
 			$('#DangKyForm').modal({backdrop: 'static', keyboard: false},'show');
+			$scope.khachhang = {
+				sdt: null,
+				diachi: null,
+				ten: null
+			};
+			$scope.daxacnhansdt = {
+				dangky: false,
+				dangnhap: false
+			};
+			$scope.thongbaosdt = {
+				dangky: null,
+				dangnhap: null
+			};
+			$scope.maxacnhan = {
+		    	nguoidung: null,
+		    	hethong: null
+		    };
+		    $scope.thongbaomaxacnhan = '';
 		}
 		$scope.closeDangKy = function(){
 			$('#DangKyForm').modal('hide');
 		}
 		$scope.kiemtraFormDangKy = function(){
-			if($scope.daxacnhansdt == true)
+			if($scope.daxacnhansdt.dangky == true)
+				return false;
+			else
+				return true;
+		}
+		$scope.kiemtraFormDangNhap = function(){
+			if($scope.daxacnhansdt.dangnhap == true)
 				return false;
 			else
 				return true;
@@ -2160,67 +2432,80 @@
 		$scope.$watch('khachhang.sdt', function(newVal, oldVal){
 			if(newVal == null) return;
 			if(newVal.toString().length < 7) {
-				$scope.thongbaosdt = 'Số điện thoại phải từ 10 số';
-				$scope.daxacnhansdt = false;
+				$scope.thongbaosdt.dangky = 'Số điện thoại phải từ 10 số';
+				$scope.thongbaosdt.dangnhap = 'Số điện thoại phải từ 10 số';
+				$scope.daxacnhansdt.dangky = false;
+				$scope.daxacnhansdt.dangnhap = false;
 			}
 			else {
 				thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(data){
 					if(data.length > 0){
-						thanhtoanFactory.luuKhachHang($scope.khachhang).then(function(data){
-							$scope.thongbaosdt = 'số này đã được đăng ký!!'
-							$scope.daxacnhansdt = false;
-						});
+						$scope.thongbaosdt.dangky = 'số này đã được đăng ký!!';
+						$scope.thongbaosdt.dangnhap = '';
+						$scope.daxacnhansdt.dangky = false;
+						$scope.daxacnhansdt.dangnhap = true;
 					}else{
-						$scope.thongbaosdt = 'Có thế sử dụng số này';
-						$scope.daxacnhansdt = true;
+						$scope.thongbaosdt.dangky = 'Có thế sử dụng số này';
+						$scope.thongbaosdt.dangnhap = 'Số này chưa được đăng ký!!';
+						$scope.daxacnhansdt.dangky = true;
+						$scope.daxacnhansdt.dangnhap = false;
 					}
 				});
 			}
 		});
 		$scope.DangKy = function(){
-			if($scope.maxacnhan.hethong != $scope.maxacnhan.hethong){
-				$scope.thongbaomaxacnhan = 'Mã xác nhận không đúng';
-				return;
-			}
-			$scope.thongbaomaxacnhan = '';
-			$scope.loadingDangKy = true;
-			thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(data){
-				if(!data.length > 0){
-					thanhtoanFactory.luuKhachHang($scope.khachhang).then(function(data){
-						console.log(data);
-						$scope.loadingDangKy = false;
-						$scope.dangkyThanhCong = true;
-						$timeout(function(){
-							$scope.dangkyThanhCong = false;
-						},5000)
-					});
-				}else{
-					$scope.loadingDangKy = false;
-					$scope.sdtTonTai = true;
-					$timeout(function(){
-						$scope.sdtTonTai = false;
-					},5000)
-				}
-			});
+			khachhangFactory.xacthucThongTin(
+				$scope.khachhang.sdt, $scope.maxacnhan.nguoidung).then(function(data){
+					if(data == 'true'){
+						$scope.thongbaomaxacnhan = '';
+						$scope.loadingDangKy = true;
+						thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(data){
+							if(!data.length > 0){
+								thanhtoanFactory.luuKhachHang($scope.khachhang).then(function(data){
+									console.log(data);
+									$scope.loadingDangKy = false;
+									$scope.dangkyThanhCong = true;
+									$timeout(function(){
+										$scope.dangkyThanhCong = false;
+									},5000)
+									DangNhapb2(1);
+								});
+							}else{
+								$scope.loadingDangKy = false;
+								$scope.sdtTonTai = true;
+								$timeout(function(){
+									$scope.sdtTonTai = false;
+								},5000)
+							}
+						});
+					}else{
+						$scope.thongbaomaxacnhan = 'Mã xác nhận không đúng';
+						return;
+					}
+			})
+			
 		}
-		$scope.layMaXacNhan = function(){
-			if($scope.daxacnhansdt == false){
+		$scope.layMaXacNhan = function(i){
+			if($scope.daxacnhansdt.dangky == false && $scope.daxacnhansdt.dangnhap == false){
 				$scope.thongbaomaxacnhan = 'Số điện thoại không phù hợp';
 				return;
 			}
-			var min = 1;
-			var max = 99999;
-			var random = Math.floor(Math.random() * (max - min + 1)) + min;
-
 			if($scope.khachhang.sdt == null)
 				$scope.thongbaomaxacnhan = 'Xin nhập số điện thoại';
 			else{
-				//if($scope.solanxacnhan == 3){
-
-				//}
-				//$scope.solanxacnhan++;
-				$scope.maxacnhan.hethong = random;
-				khachhangFactory.layMaXacNhan(random, $scope.khachhang.sdt);
+				khachhangFactory.layMaXacNhan($scope.khachhang.sdt);
+				if(i=0){
+					$scope.dalayMXNDK = true;
+					$timeout(function(){
+						$scope.dalayMXNDK = false;
+					},180000)
+				}else{
+					$scope.dalayMXNDN = true;
+					$timeout(function(){
+						$scope.dalayMXNDN = false;
+					},180000)
+				}
+				
 			}
 		}
 		$scope.layDiaChi = function(){
@@ -2251,12 +2536,29 @@
 		}
 		$scope.showDangNhap = function(){
 			$('#DangNhapForm').modal({backdrop: 'static', keyboard: false},'show');
+			$scope.khachhang = {
+				sdt: null,
+				diachi: null,
+				ten: null
+			};
+			$scope.daxacnhansdt = {
+				dangky: false,
+				dangnhap: false
+			};
+			$scope.thongbaosdt = {
+				dangky: null,
+				dangnhap: null
+			};
+			$scope.maxacnhan = {
+		    	nguoidung: null,
+		    	hethong: null
+		    };
+		    $scope.thongbaomaxacnhan = '';
 		}
 		$scope.closeDangNhap = function(){
 			$('#DangNhapForm').modal('hide');
 		}
-		$scope.DangNhap = function(){
-			$scope.loadingDangNhap = true;
+		var DangNhapb2 = function(kieudangnhap){
 			thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(data){
 				if(data.length > 0){
 					$('#DangNhapForm').modal('hide');
@@ -2270,6 +2572,7 @@
 					khachhangFactory.setKhachHang($scope.khachhang);
 					$scope.khachhang = khachhangFactory.getKhachHang();
 					$scope.loadingDangNhap = false;
+					if(kieudangnhap == 1) window.location.href = '/taikhoan?tab=tttk';
 
 				}else{
 					$scope.loadingDangNhap = false;
@@ -2280,6 +2583,19 @@
 				}
 			});
 		}
+		$scope.DangNhap = function(kieudangnhap){
+			khachhangFactory.xacthucThongTin(
+				$scope.khachhang.sdt, $scope.maxacnhan.nguoidung).then(function(data){
+					if(data == 'true'){
+						$scope.loadingDangNhap = true;
+						DangNhapb2(kieudangnhap);
+					}else{
+						$scope.thongbaomaxacnhan = 'Mã xác nhận không đúng';
+						return;
+					}
+			})
+			
+		}
 		$scope.DangXuat = function(){
 			khachhangFactory.setKhachHang($scope.khachhang);
 			$cookies.remove('khachhang');
@@ -2288,7 +2604,7 @@
 		}
 	});
 	module.controller('userController', 
-	function(ngvFactory, khachhangFactory, $scope,$http, $log, $location, $mdDialog, $q, $cookies){
+	function(thanhtoanFactory, ngvFactory, khachhangFactory, $scope,$http, $log, $location, $mdDialog, $q, $cookies){
 
 		$scope.Math = window.Math;
 		$scope.loading = false;
@@ -2307,31 +2623,72 @@
 		$scope.ycDangXem = {};
 		$scope.nhanxet = null;
 		$scope.tienno = 0;
+		$scope.isSuaThongTinTK = false;
 		var tab = $location.search().tab;
-
+		$scope.doitien = thanhtoanFactory.doiChuoiTienTe;
 		var tinhTienNo = function(ycnh, ycdh){
 			var tienno = 0;
 			for(i=0; i<ycnh.length; i++){
 				if(ycnh[i].trangthai != 'Hoàn thành')
 					tienno+=ycnh[i].chiphi;
+					tienno+=ycnh[i].chiphingoaigio;
+					tienno+=ycnh[i].phithoathuan;
 			}
 			for(i=0; i<ycdh.length; i++){
 				if(ycdh[i].trangthai != 'Hoàn thành')
 					tienno+=ycdh[i].chiphi;
+					tienno+=ycdh[i].chiphingoaigio;
+					tienno+=ycdh[i].phithoathuan;
 			}
-			return tienno;
+			return thanhtoanFactory.doiChuoiTienTe(tienno);
 		}
 		$scope.showTTTK = function(){
 			$scope.isThongTinTk = true;
 			$scope.isLichSuYc = false;
 			$scope.isChitietYc = false;
+			
+			$scope.loading = true;
+			var promises = [];
+			var promise_ycnganhan = khachhangFactory.getYeuCauNh(Number($cookies.get('khachhang')));
+			var promise_ycdaihan = khachhangFactory.getYeuCauDh(Number($cookies.get('khachhang')));
+			promises.push(promise_ycnganhan);
+			promises.push(promise_ycdaihan);
+			$q.all(promises).then(function(data){
+				$scope.yeucauNh = data[0];
+				$scope.yeucauDh = data[1];
+				$scope.tienno = tinhTienNo($scope.yeucauNh, $scope.yeucauDh);
+				$scope.loading = false;
+			})
 		}
 		$scope.showLSYC = function(){
 			$scope.isThongTinTk = false;
 			$scope.isLichSuYc = true;
 			$scope.isChitietYc = false;
+
+			$scope.loading = true;
+			var promises = [];
+			var promise_ycnganhan = khachhangFactory.getYeuCauNh(Number($cookies.get('khachhang')));
+			var promise_ycdaihan = khachhangFactory.getYeuCauDh(Number($cookies.get('khachhang')));
+			promises.push(promise_ycnganhan);
+			promises.push(promise_ycdaihan);
+			$q.all(promises).then(function(data){
+				$scope.yeucauNh = data[0];
+				$scope.yeucauDh = data[1];
+				$scope.tienno = tinhTienNo($scope.yeucauNh, $scope.yeucauDh);
+				$scope.loading = false;
+			})
 		}
-		
+		$scope.suaThongTinTK = function(i){
+			if(i == 0) $scope.isSuaThongTinTK = true;
+			else{
+				thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(datakh){
+					khachhangFactory.suaThongTinTK(datakh[0]._id, $scope.khachhang.hoten, $scope.khachhang.diachi).then(function(){
+						$scope.isSuaThongTinTK = false;
+					})
+				})
+				
+			}
+		}
 		$scope.initData = function(){
 			$scope.loading = true;
 			$scope.khachhang = khachhangFactory.getKhachHang();
@@ -2370,15 +2727,24 @@
 			})
 		}
 		$scope.layTenNgv = function(cmnd) {
-			for(i=0; i<$scope.dsNgvChiTiet.length; i++){
-				if($scope.dsNgvChiTiet[i].cmnd == cmnd){
-					return $scope.dsNgvChiTiet[i].hoten;
+			if(angular.isDefined( cmnd )){
+				for(i=0; i<$scope.dsNgvChiTiet.length; i++){
+					if(angular.isDefined( $scope.dsNgvChiTiet[i] ) && angular.isDefined( $scope.dsNgvChiTiet[i].cmnd )){
+						if($scope.dsNgvChiTiet[i].cmnd == cmnd){
+							return $scope.dsNgvChiTiet[i].hoten;
+						}
+					}
+					
 				}
+			}else{
+				return '';
 			}
+			
 		}
-		$scope.danhgiaCtyc = function(mucdg){
+		$scope.danhgiaCtyc = function(mucdg, tudong){
+			if($scope.kiemtraNhanXet() && tudong==0) return;
 			if(mucdg == 0){
-				$scope.nhanxet = 'Tệ';
+				$scope.nhanxet = 'Rất kém';
 				$('#star1').addClass('fa-star');
 				$('#star2').removeClass('fa-star');
 				$('#star3').removeClass('fa-star');
@@ -2392,7 +2758,7 @@
 				$('#star5').addClass('fa-star-o');
 			}
 			if(mucdg == 1){
-				$scope.nhanxet = 'Không tốt';
+				$scope.nhanxet = 'Kém';
 				$('#star1').addClass('fa-star');
 				$('#star2').addClass('fa-star');
 				$('#star3').removeClass('fa-star');
@@ -2420,7 +2786,7 @@
 				$('#star5').addClass('fa-star-o');
 			}
 			if(mucdg == 3){
-				$scope.nhanxet = 'Khá';
+				$scope.nhanxet = 'Tốt';
 				$('#star1').addClass('fa-star');
 				$('#star2').addClass('fa-star');
 				$('#star3').addClass('fa-star');
@@ -2434,7 +2800,7 @@
 				$('#star5').addClass('fa-star-o');
 			}
 			if(mucdg == 4){
-				$scope.nhanxet = 'Tốt';
+				$scope.nhanxet = 'Rất tốt';
 				$('#star1').addClass('fa-star');
 				$('#star2').addClass('fa-star');
 				$('#star3').addClass('fa-star');
@@ -2463,84 +2829,88 @@
 			$scope.hudo = false;
 			$scope.matdo = false;
 		}
+		$scope.kiemtraNhanXet = function(){
+			if($scope.ctycDangXem.trangthai == 'Hoàn thành') return true;
+			else return false;
+		}
 		$scope.showDanhgiaCtyc = function(ctyc){
+			if(!angular.isDefined( ctyc )) return; 
 			for(i=0; i<$scope.dsNgvChiTiet.length; i++){
-				if($scope.dsNgvChiTiet[i].cmnd == ctyc.nguoigiupviec){
-					$scope.ngvChiTiet = $scope.dsNgvChiTiet[i];
-					$scope.ctycDangXem = ctyc;
-					$scope.nhanxet = ctyc.nhanxet;
-					
-					resetNhanXetCtyc();
+				if(angular.isDefined( $scope.dsNgvChiTiet[i])){
+					if($scope.dsNgvChiTiet[i].cmnd == ctyc.nguoigiupviec){
+						$scope.ngvChiTiet = $scope.dsNgvChiTiet[i];
+						$scope.ctycDangXem = ctyc;
+						$scope.nhanxet = ctyc.nhanxet;
+						
+						resetNhanXetCtyc();
 
-					if($scope.nhanxet == 'Tệ') $scope.danhgiaCtyc(0);
-					if($scope.nhanxet == 'Không tốt') $scope.danhgiaCtyc(1);
-					if($scope.nhanxet == 'Trung bình') $scope.danhgiaCtyc(2);
-					if($scope.nhanxet == 'Khá') $scope.danhgiaCtyc(3);
-					if($scope.nhanxet == 'Tốt') $scope.danhgiaCtyc(4);
-					if(ctyc.hudo == 'Có') $scope.hudo = true;
-					if(ctyc.matdo == 'Có') $scope.matdo = true;
+						if($scope.nhanxet == 'Rất kém') $scope.danhgiaCtyc(0, 1);
+						if($scope.nhanxet == 'Kém') $scope.danhgiaCtyc(1, 1);
+						if($scope.nhanxet == 'Trung bình') $scope.danhgiaCtyc(2, 1);
+						if($scope.nhanxet == 'Tốt') $scope.danhgiaCtyc(3, 1);
+						if($scope.nhanxet == 'Rất tốt') $scope.danhgiaCtyc(4, 1);
+						if(ctyc.hudo == 'Có') $scope.hudo = true;
+						if(ctyc.matdo == 'Có') $scope.matdo = true;
+					}
 				}
+				
 			}
-			if($scope.ycDangXem.trangthai == 'Hoàn thành')
+			if($scope.ctycDangXem.trangthai == 'Đã giao' || $scope.ctycDangXem.trangthai == 'Chưa liên hệ')
 				$('#nhanxet').modal({backdrop: 'static', keyboard: false},'show');
-			else
+			else if($scope.ctycDangXem.trangthai == 'Hoàn thành'){
+				$('#nhanxet').modal({backdrop: 'static', keyboard: false},'show');
+			}else{
 				$mdDialog.show(
 			      $mdDialog.alert()
 			        .parent(angular.element(document.querySelector('body')))
 			        .clickOutsideToClose(true)
 			        .title('Thông báo')
-			        .content('Yêu cầu này chưa hoàn thành!!')
+			        .content('Yêu cầu này chưa được giao việc!!')
 			        .ok('Đồng ý!')
 			        .targetEvent(null)
 			    );
-		}
+			}
+		var kiemtraYeuCauHoanThanh = function(chitietyeucau){
+			for(i=0;i<chitietyeucau.length;i++){
+				if(chitietyeucau[i].trangthai != 'Hoàn thành')
+					return false;
+			}
+			return true;
+		}	
 		$scope.luuNhanXet = function(){
 			khachhangFactory.luuNhanXet($scope.ctycDangXem, $scope.nhanxet, $scope.hudo, $scope.matdo).then(function(data){				
-				$('#nhanxet').modal('hide');
-				$scope.xemChiTietYc($scope.ycDangXem);
+				khachhangFactory.getChiTietYeuCau($scope.ycDangXem._id).then(function(data){
+					$scope.chitietyeucau = data;
+					if(kiemtraYeuCauHoanThanh($scope.chitietyeucau)){
+						khachhangFactory.hoanthanhYeuCau($scope.ycDangXem._id).then(function(){
+							$('#nhanxet').modal('hide');
+							$scope.xemChiTietYc($scope.ycDangXem);
+						});
+					}else{
+						if($scope.ycDangXem.trangthai == 'Chờ thỏa thuận' || 
+							$scope.ycDangXem.trangthai == 'Chưa tiến hành'){
+							khachhangFactory.tienhanhYeuCau($scope.ycDangXem._id).then(function(){
+								$('#nhanxet').modal('hide');
+								$scope.xemChiTietYc($scope.ycDangXem);
+							});
+						}
+					}
+				})
+				
+				
 			})
 		}
+	}
 	});
-	module.controller('indexController', function(ngvFactory, $scope, $http, $log, $location, $mdDialog){
-
-		
+	module.controller('indexController', function(filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog){
 		$scope.data = {
 			quan: $location.search().quan,
-			dichvu: 'Chọn dịch vụ',
+			dichvu: [],
 		    giobd1: $location.search().giobd1,
 		    giokt1: $location.search().giokt1,
 		    danhsachquan: [
-		    	'Quận 1',
-                'Quận 2',
-                'Quận 3',
-                'Quận 4',
-                'Quận 5',
-                'Quận 6',
-                'Quận 7',
-                'Quận 8',
-                'Quận 9',
-                'Quận 10',
-                'Quận 11',
-                'Quận 12',
-                'Quận Thủ đức',
-                'Quận Gò Vấp',
-                'Quận Bình Thạnh',
-                'Quận Tân Bình',
-                'Quận Tân Phú',
-                'Quận Phú Nhuận',
-                'Quận Bình Tân'
 		    ],
-		    danhsachdichvu: [
-		    	'Chọn dịch vụ',
-		    	'Chăm sóc bé',
-                'Chăm sóc người già',
-                'Chăm sóc sản phụ',
-                'Nuôi bệnh',
-                'Dọn dẹp vệ sinh',
-                'Đưa đón bé đi học',
-                'Nấu ăn',
-                'Vệ sinh văn phòng'
-		    ],
+		    danhsachdichvu: [],
 		    availableOptions: [
 			      {id: 360, name: '6:00 giờ'},
 			      {id: 390, name: '6:30 giờ'},
@@ -2571,7 +2941,7 @@
 			      {id: 1140, name: '19:00 giờ'},
 			      {id: 1170, name: '19:30 giờ'},
 			      {id: 1200, name: '20:00 giờ'}
-			    ],
+		    ],
 	    };
 	    for(i=0; i<$scope.data.availableOptions.length; i++){
 	    	if(Number($scope.data.giobd1) == $scope.data.availableOptions[i].id)
@@ -2579,6 +2949,20 @@
 	    	if(Number($scope.data.giokt1) == $scope.data.availableOptions[i].id)
 	    		$scope.data.giokt1 = $scope.data.availableOptions[i].id;
 	    }
+	    filterFactory.getDSTieuChi().then(function(data){
+			for(i=0; i<data.length; i++){
+				$scope.data.danhsachdichvu.push({
+					ten:data[i].tentieuchi
+				});
+			}
+		});
+		filterFactory.getDSQuan().then(function(data){
+			for(i=0; i<data.length; i++){
+				$scope.data.danhsachquan.push(
+					data[i].tenquan
+				);
+			}
+		})
 	    $('#formTheoNgay').submit(function(ev) {
             ev.preventDefault(); // to stop the form from submitting
             /* Validations go here */
@@ -2666,6 +3050,18 @@
 				        .clickOutsideToClose(true)
 				        .title('Thông báo')
 				        .content('Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.')
+				        .ok('Đồng ý!')
+				        .targetEvent(ev)
+				    );
+                return;
+            }
+            if(((kt1-bd1)%60)!=0 && kt1 && bd1 != 0 && kt1 != 0) {
+            	$mdDialog.show(
+				      $mdDialog.alert()
+				        .parent(angular.element(document.querySelector('body')))
+				        .clickOutsideToClose(true)
+				        .title('Thông báo')
+				        .content('Khoảng cách thời gian phải là 2,3,4,5... tiếng.')
 				        .ok('Đồng ý!')
 				        .targetEvent(ev)
 				    );
@@ -2811,20 +3207,27 @@
 			    );
                 return;
             }
+            if(((kt1-bd1)%60)!=0 && kt1 && bd1 != 0 && kt1 != 0) {
+            	$mdDialog.show(
+				      $mdDialog.alert()
+				        .parent(angular.element(document.querySelector('body')))
+				        .clickOutsideToClose(true)
+				        .title('Thông báo')
+				        .content('Khoảng cách thời gian phải là 2,3,4,5... tiếng.')
+				        .ok('Đồng ý!')
+				        .targetEvent(ev)
+				    );
+                return;
+            }
             this.submit();
         });
-		
-		
-
-		
 	});
-	module.controller('slickController', function(ngvFactory, filterFactory, $scope, $http, $log, $location, $mdDialog){
+	module.controller('slickController', function(ngvFactory, filterFactory, $scope, $http, $log, $location, $mdDialog, $timeout){
 		$scope.dsNgv = [];
 		$scope.loadingSlick = true;
 		$scope.slickconfig = {
-			lazyLoad: 'ondemand',
 			dots: false,
-	        infinite: true,
+	        infinite: false,
 	        speed: 300,
 	        slidesToShow: 4,
 	        slidesToScroll: 4,
@@ -2836,8 +3239,6 @@
 	              settings: {
 	                slidesToShow: 3,
 	                slidesToScroll: 3,
-	                infinite: true,
-	                dots: true
 	              }
 	            },
 	            {
@@ -2861,12 +3262,17 @@
 		ngvFactory.layDanhSachNgvAll().then(function(data){
 			$scope.dsNgv = data;
 			$scope.loadingSlick = false;
-			console.log($scope.dsNgv);
 		})
+		$scope.idngv = '';
 		$scope.tinhTuoiNgv = filterFactory.tinhTuoiNgv;
+		$scope.xemChiTietNgv = function(id){
+			$scope.idngv = id;
+			$timeout(function(){
+				$('#xemchitietngvform').submit();
+			},300);
+		}
 	});
-	
-	module.controller('chitietController', function(khachhangFactory, thanhtoanFactory, filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog, $q){
+	module.controller('chitietController', function(khachhangFactory, thanhtoanFactory, filterFactory, ngvFactory, $scope, $http, $log, $location, $mdDialog, $q, $timeout, $cookies){
 		$scope.ngvDcChon = null;
 		$scope.loading = true;
 		$scope.isThanhToan = false;
@@ -2876,6 +3282,8 @@
 		$scope.tieuchis = [];
 		$scope.mang_tieuchi = [];
 		$scope.hoanthanh_thanhtoan_ct = false;
+		$scope.dalayMXN = false;
+		var idngv = $('#idngv').val();
 		$scope.data = {
 			soluongdv: 0,
 			isReverse: false,
@@ -2918,8 +3326,7 @@
 		    ],
 	    };
 	    $scope.maxacnhan = {
-	    	nguoidung: null,
-	    	hethong: null
+	    	nguoidung: null
 	    };
 		
 	    $scope.khachhang = {
@@ -2927,7 +3334,77 @@
 	    	hoten: null,
 	    	diachi: null,
 	    };
+	    $scope.$watch('khachhang.sdt', function(newVal, oldVal){
+			if(newVal == null) return;
+			if(newVal.toString().length < 7) {
+				return;
+			}
+			else {
+				thanhtoanFactory.timKhachHang($scope.khachhang.sdt).then(function(data){
+					if(data.length > 0){
+						$scope.khachhang.hoten = data[0].hoten;
+						$scope.khachhang.diachi = data[0].diachi
+					}
+				});
+			}
+		});
 		$scope.tinhTuoiNgv = filterFactory.tinhTuoiNgv;
+		$scope.chuyenNgv = function(id){
+			$timeout(function(){
+				$scope.loadingSlick = false;
+				var promise1 = ngvFactory.layNgvTheoId(id).then(function(data){
+					$scope.ngvDcChon = data[0];
+				})
+				var promise2 = ngvFactory.layDanhSachNgvSub(id).then(function(data){
+					if(data.length == 1){
+						$scope.ngv_sub1 = data[0];
+					}
+					if(data.length == 2){
+						$scope.ngv_sub1 = data[0];
+						$scope.ngv_sub2 = data[1];
+					}
+					if(data.length > 2){
+						var min = 0;
+						var max = data.length-1;
+						var random = [];
+						var random1 = Math.floor(Math.random() * (max - min + 1)) + min;
+						var random2; 
+						while(true){
+							random2 = Math.floor(Math.random() * (max - min + 1)) + min;
+							if(random2 != random1) break;
+						}
+						$scope.ngv_sub1 = data[random1];
+						$scope.ngv_sub2 = data[random2];
+					}
+				})
+				var promise3 = filterFactory.getDSTieuChi().then(function(data){
+					$scope.tieuchis = [];
+					for(i=0; i<data.length; i++){
+						$scope.tieuchis.push({
+							ten: data[i].tentieuchi,
+							id: i,
+							data: false,
+							giachuan: data[i].giachuan,
+							phuphi: data[i].phuphi,
+							phingoaigiongv: data[i].phingoaigiongv,
+							phingoaigiokh: data[i].phingoaigiokh,
+						});
+					}
+				});
+				$q.all([promise1, promise2, promise3]).then(function(){
+					$scope.data.quan = $scope.ngvDcChon.diachi.quan;
+					$scope.loading = false;
+					$scope.loadingSlick = true;
+				})
+			},500)
+			
+		}
+		$scope.checkDichVuNgvDcChon = function(dichvu){
+			for(i=0; i<$scope.ngvDcChon.sotruong.length; i++){
+				if(dichvu == $scope.ngvDcChon.sotruong[i]) return false;
+			}
+			return true;
+		}
 		$scope.layDiaChi = function(){
 			if(navigator.geolocation) {
 			    navigator.geolocation.getCurrentPosition(function(position) {
@@ -2950,15 +3427,11 @@
 			        .title('Thông báo')
 			        .content('Trình duyệt không hỗ trợ chức năng này!!')
 			        .ok('Đồng ý!')
-			        .targetEvent(ev)
+			        .targetEvent(null)
 			    );
 			}
 		}
 		$scope.layMaXacNhan = function(){
-			var min = 1;
-			var max = 99999;
-			var random = Math.floor(Math.random() * (max - min + 1)) + min;
-
 			if($scope.khachhang.sdt == null)
 				$mdDialog.show(
 			      $mdDialog.alert()
@@ -2967,25 +3440,24 @@
 			        .title('Thông báo')
 			        .content('Xin nhập số điện thoại')
 			        .ok('Đồng ý!')
-			        .targetEvent(ev)
+			        .targetEvent(null)
 			    );
 			else{
-				//if($scope.solanxacnhan == 3){
-
-				//}
-				//$scope.solanxacnhan++;
-				$scope.maxacnhan.hethong = random;
-				khachhangFactory.layMaXacNhan(random, $scope.khachhang.sdt);
+				$scope.dalayMXN = true;
+				$timeout(function(){
+					$scope.dalayMXN = false;
+				},180000)
+				khachhangFactory.layMaXacNhan($scope.khachhang.sdt);
 			}
 		}
 		$scope.close_thanhtoan = function(){
 			$scope.isThanhToan = false;
 		}
 		$scope.initData = function(){
-			var promise1 = ngvFactory.layNgvTheoId($location.search().id).then(function(data){
+			var promise1 = ngvFactory.layNgvTheoId(idngv).then(function(data){
 				$scope.ngvDcChon = data[0];
 			})
-			var promise2 = ngvFactory.layDanhSachNgvSub($location.search().id).then(function(data){
+			var promise2 = ngvFactory.layDanhSachNgvSub(idngv).then(function(data){
 				if(data.length == 1){
 					$scope.ngv_sub1 = data[0];
 				}
@@ -2997,7 +3469,6 @@
 					var min = 0;
 					var max = data.length-1;
 					var random = [];
-					// and the formula is:
 					var random1 = Math.floor(Math.random() * (max - min + 1)) + min;
 					var random2; 
 					while(true){
@@ -3015,8 +3486,7 @@
 						id: i,
 						data: false,
 						giachuan: data[i].giachuan,
-						phuphi1: data[i].phuphi1,
-						phuphi2: data[i].phuphi2,
+						phuphi: data[i].phuphi,
 						phingoaigiongv: data[i].phingoaigiongv,
 						phingoaigiokh: data[i].phingoaigiokh,
 					});
@@ -3030,8 +3500,17 @@
 		$scope.show_yeucau = function(){
 			$scope.isThanhToan = true;
 		}
-		$scope.hoanthanh_thanhtoan = function(){
-			location.reload();
+		$scope.hoanthanh_thanhtoan = function(i){
+			if(i==1){
+	    		var expireDate = new Date();
+				expireDate.setDate(expireDate.getDate() + 1);
+				$cookies.remove('khachhang');
+				$cookies.put('khachhang', $scope.khachhang.sdt, {'expires': expireDate});
+	    		window.location.href = "/taikhoan?tab=lsdh";
+	    	}
+	    	else{
+	    		window.location.href = "/";
+	    	}
 		}
 		$scope.checkThanhToan = function(){
 			if($scope.data.thongbaongaygio == '' && 
@@ -3049,7 +3528,6 @@
 		}
 		//gia tri preselect la gia tri true/false của dịch vụ trước khi chọn select
 		$scope.them_dichvu = function(preSelect){
-			console.log(preSelect);
 			if(preSelect == false) {
 				$scope.data.soluongdv++;
 			}else {
@@ -3057,49 +3535,78 @@
 			}
 		}
 		//--------------------tinh tien--------------------------
-		var getPhuPhi1LonNhat = function(mangtieuchi){
-			var max = 0;
-			for(i=0; i<mangtieuchi.length; i++){
-	    		if(mangtieuchi[i].data == true){
-	    			if(max < mangtieuchi[i].phuphi1)
-	    				max = mangtieuchi[i].phuphi1;
-	    		}
-	    	}
-	    	return max;
-		}
-		var getTrangThaiYeuCau = function(mangtieuchi){
-	    	for(i=0; i<mangtieuchi.length; i++){
-	    		if(mangtieuchi[i].data == true){
-	    			if(mangtieuchi[i].phuphi2 == 'Có')
-	    				return 'Chờ thỏa thuận';
-	    		}
-	    	}
-	    	return 'Chưa tiến hành';
-	    }
+		
 	    $scope.tinhtien_ct = function(){
 	    	if($scope.loading == true || 
 	    		$scope.data.giokt1 == null || 
 	    		$scope.data.giobd1 == null || 
 	    		$scope.data.ngay == null) return;
 	    	
-	    	var giatien = $scope.tieuchis[0].giachuan*(($scope.data.giokt1-$scope.data.giobd1)/60);
-	    	giatien = giatien + (giatien*getPhuPhi1LonNhat($scope.tieuchis))/100;
-	    	giatien = Math.floor(giatien);
-	    	var giatien_str = '';
-	    	var giatien_arr = giatien.toString().split('');
-	    	var dem = 1;
-	    	for(i=giatien_arr.length-1; i>=0; i--){
-	    		giatien_str += giatien_arr[i];
-	    		if(dem%3==0) giatien_str += '.';
-	    		dem++;
-	    	}
-	    	return giatien_str.split('').reverse().join('');
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    	var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+
+	    	var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+        															   $scope.data.giokt1); 
+
+	    	var phichuan = thanhtoanFactory.tinhGiaChuanCtyc($scope.data.giobd1,
+	        		 									    $scope.data.giokt1, 
+	        		 									    phicobanlonnhat);
+
+	    	var phingoaigio = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+    															phingoaigiolonnhat,
+    															phicobanlonnhat);
+
+	    	return thanhtoanFactory.doiChuoiTienTe(phichuan + phingoaigio);
 	    }
-	    $scope.tinhtien_nh_luudb = function(){
-	    	var giatien = $scope.tieuchis[0].giachuan*(($scope.data.giokt1-$scope.data.giobd1)/60);
-	    	giatien = giatien + (giatien*getPhuPhi1LonNhat($scope.tieuchis))/100;
-	    	giatien = Math.floor(giatien);
-	    	return giatien;
+	    $scope.showTrangThaiYc = function(){
+	    	var tt = thanhtoanFactory.getTrangThaiYeuCau($scope.tieuchis);
+	    	if(tt == 'Chưa tiến hành')
+	    		return 'Không có phụ phí';
+	    	else return 'Có phụ phí';
+	    }
+	    $scope.showPhiNgoaiGio = function(){
+	    	if($scope.loading == true || 
+	    		$scope.data.giokt1 == null || 
+	    		$scope.data.giobd1 == null || 
+	    		$scope.data.ngay == null) return;
+	    	
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    	var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+
+	    	var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+        															   $scope.data.giokt1); 
+
+	    	var phichuan = thanhtoanFactory.tinhGiaChuanCtyc($scope.data.giobd1,
+	        		 									    $scope.data.giokt1, 
+	        		 									    phicobanlonnhat);
+
+	    	var phingoaigio = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+    															phingoaigiolonnhat,
+    															phicobanlonnhat);
+
+	    	return thanhtoanFactory.doiChuoiTienTe(phingoaigio);
+	    }
+	    $scope.showPhiCoBan = function(){
+	    	if($scope.loading == true || 
+	    		$scope.data.giokt1 == null || 
+	    		$scope.data.giobd1 == null || 
+	    		$scope.data.ngay == null) return;
+	    	
+	    	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+	    	var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+
+	    	var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+        															   $scope.data.giokt1); 
+
+	    	var phichuan = thanhtoanFactory.tinhGiaChuanCtyc($scope.data.giobd1,
+	        		 									    $scope.data.giokt1, 
+	        		 									    phicobanlonnhat);
+
+	    	var phingoaigio = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+    															phingoaigiolonnhat,
+    															phicobanlonnhat);
+
+	    	return thanhtoanFactory.doiChuoiTienTe(phichuan);
 	    }
 	    //-------------------------------------------------------
 	    //--------------------luu yeu cau------------------------
@@ -3111,88 +3618,89 @@
 	    	}
 	    	return result;
 	    }
-	    $scope.luu_yeucau = function(){
-	    	if($scope.maxacnhan.nguoidung != $scope.maxacnhan.hethong &&
-	    		$scope.maxacnhan.nguoidung != null){
-	    		$mdDialog.show(
-			      $mdDialog.alert()
-			        .parent(angular.element(document.querySelector('body')))
-			        .clickOutsideToClose(true)
-			        .title('Thông báo')
-			        .content('Mã xác nhận chưa đúng!!')
-			        .ok('Đồng ý!')
-			        .targetEvent(null)
-			    );
-			    return;
-	    	}
+	    var luu_yeucau_b2 = function(){
 	    	$scope.loading_yeucau = true;
-            $http.get('https://serene-stream-9747.herokuapp.com/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
+            $http.get('http://procleaner.vn:4444/api/khachhang?sdt='+$scope.khachhang.sdt, { cache: false})
 		        .success(function(data) {
-		        	var trangthaiyc = getTrangThaiYeuCau($scope.tieuchis);
+		        	var trangthaiyc = thanhtoanFactory.getTrangThaiYeuCau($scope.tieuchis);
 		        	var mangdichvu = layDanhSachDichVu();
+
+		        	var phicobanlonnhat = thanhtoanFactory.getPhiCoBanLonNhat($scope.tieuchis);
+					var phingoaigiolonnhat = thanhtoanFactory.getPhiNgoaiGioLonNhat($scope.tieuchis);
+					var phingoaigiolonnhatNgv = thanhtoanFactory.getPhiNgoaiGioLonNhatNgv($scope.tieuchis);
+
+		        	var sogiongoaigioCtyc = thanhtoanFactory.tinhSoGioNgoaiGioCtyc($scope.data.giobd1,
+				        															 $scope.data.giokt1);
+		        	var chiphingoaigioCtyc = thanhtoanFactory.tinhPhiNgoaiGioCtyc(sogiongoaigioCtyc,
+		        															phingoaigiolonnhat,
+		        															phicobanlonnhat);
+		        	var dulieu_luuyeucau = {
+			        		trangthaiyc: trangthaiyc,
+			        		mangdichvu: mangdichvu,
+			        		ngay: $scope.data.ngay,
+			        		chiphi: thanhtoanFactory.tinhGiaChuanCtyc($scope.data.giobd1,
+			        		 									    $scope.data.giokt1, 
+			        		 									    phicobanlonnhat),
+			        		khachhang: $scope.khachhang,
+			        		quan: $scope.data.quan,
+			        		ngv_dc_chon: $scope.ngvDcChon.cmnd,
+			        		giobd1: $scope.data.giobd1,
+			        		giokt1: $scope.data.giokt1,
+			        		phicobanlonnhat: phicobanlonnhat,
+			        		sogiongoaigioCtyc: sogiongoaigioCtyc,
+			        		chiphingoaigioCtyc: chiphingoaigioCtyc,
+			        		phingoaigio: phingoaigiolonnhat,
+			        		phingoaigiongv: phingoaigiolonnhatNgv
+			        	};
 		        	if(data.length>0){
-			            //Lưu yêu cầu
-			            thanhtoanFactory.luuYeuCau(
-		            		$scope.data.ngay,
-						    $scope.data.ngay,
-						    $scope.tinhtien_nh_luudb(),
-						    $scope.khachhang.sdt,
-						    $scope.khachhang.diachi,
-						    $scope.data.quan,
-						    trangthaiyc,
-						    mangdichvu).then(function(data){
-				   				thanhtoanFactory.luuChiTietYeuCau($scope.ngvDcChon.cmnd,
-				   											  $scope.data.ngay,
-				   											  $scope.data.giobd1,
-				   											  $scope.data.giokt1,
-				   											  data._id).then(function(data){
-				   											  	thanhtoanFactory.luuLichLamViec(data.nguoigiupviec,
-								            									$scope.data.ngay,
-								            									$scope.data.giobd1,
-								            									$scope.data.giokt1,
-								            									$scope.khachhang.sdt,
-								            									data._id).then(function(){
-								            										$scope.hoanthanh_thanhtoan_ct = true;
-								            										$scope.loading_yeucau = false;
-								            									});
-				   											  });
-						   		
-						   });
+		        		
+			        	$http.post('/luuyeucau_tt', dulieu_luuyeucau)
+					        .success(function(data) {
+					        	if(data = 'done'){
+					        		$scope.hoanthanh_thanhtoan_ct = true;
+									$scope.loading_yeucau = false;
+					        	}
+					        }).error(function(data) {
+					            console.log('Error: ' + data);
+			        		});
 		        	}else{
 		        		//lưu khách hàng
 			            thanhtoanFactory.luuKhachHang($scope.khachhang);					            
 			            //Lưu yêu cầu
-			            thanhtoanFactory.luuYeuCau(
-		            		$scope.data.ngay,
-						    $scope.data.ngay,
-						    $scope.tinhtien_nh_luudb(),
-						    $scope.khachhang.sdt,
-						    $scope.khachhang.diachi,
-						    $scope.data.quan,
-						    trangthaiyc,
-						    mangdichvu).then(function(data){
-				   				thanhtoanFactory.luuChiTietYeuCau($scope.ngvDcChon.cmnd,
-				   											  $scope.data.ngay,
-				   											  $scope.data.giobd1,
-				   											  $scope.data.giokt1,
-				   											  data._id).then(function(data){
-				   											  	thanhtoanFactory.luuLichLamViec(data.nguoigiupviec,
-								            									$scope.data.ngay,
-								            									$scope.data.giobd1,
-								            									$scope.data.giokt1,
-								            									$scope.khachhang.sdt,
-								            									data._id).then(function(){
-								            										$scope.hoanthanh_thanhtoan_ct = true;
-								            										$scope.loading_yeucau = false;
-								            									});
-				   											  });
-						   		
-						   });
+			        	$http.post('/luuyeucau_tt', dulieu_luuyeucau)
+					        .success(function(data) {
+					        	if(data = 'done'){
+					        		$scope.hoanthanh_thanhtoan_ct = true;
+									$scope.loading_yeucau = false;
+					        	}
+					        }).error(function(data) {
+					            console.log('Error: ' + data);
+			        		});
 		        	}
 		        })
 		        .error(function(data) {
 		            console.log('Error: ' + data);
     			});
+	    }
+	    $scope.luu_yeucau = function(){
+	    	khachhangFactory.xacthucThongTin(
+				$scope.khachhang.sdt, $scope.maxacnhan.nguoidung).then(function(data){
+					if(data == 'true'){
+						luu_yeucau_b2();
+					}else{
+						$mdDialog.show(
+					      $mdDialog.alert()
+					        .parent(angular.element(document.querySelector('body')))
+					        .clickOutsideToClose(true)
+					        .title('Thông báo')
+					        .content('Mã xác nhận chưa đúng!!')
+					        .ok('Đồng ý!')
+					        .targetEvent(null)
+					    );
+					    return;
+					}
+			})
+	    	
 	    }
 	    //-------------------------------------------------------
 		//--------------------watch------------------------------
@@ -3209,10 +3717,6 @@
 			if($scope.data.ngay == null || 
 			   $scope.data.giobd1 == null || 
 			   $scope.data.giokt1 == null) return;
-			if($scope.data.isReverse == true){
-	    		$scope.data.isReverse = false;
-	    		return;
-    		}
 			var bd1 = Number($scope.data.giobd1);
             var kt1 = Number($scope.data.giokt1);
 	    	var now = new Date();
@@ -3225,34 +3729,46 @@
 
                 	$scope.data.thongbaongaygio = 'Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
                     	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).';
-				    $scope.data.ngay = oldVal;
-				    $scope.data.isReverse = true;
-				    console.log($scope.data.thongbaongaygio);
                     return;
                 }
             }
             if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
             	$scope.data.thongbaongaygio = 'Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.';
-			    $scope.data.ngay = oldVal;
-			    $scope.data.isReverse = true;
+            	
                 return;
             }
+            if(((kt1-bd1)%60)!=0  && bd1 != 0 && kt1 != 0) {
+            	$scope.data.thongbaongaygio = 'Khoảng cách thời gian phải từ 2,3,4,5.. tiếng.';
+                return;
+            }
+            $scope.data.thongbaongaygio = 'Đang kiểm tra lịch làm việc.....';
             ngvFactory.kiemtraLlv($scope.ngvDcChon.cmnd, 
             	filterFactory.doiNgaySearch($scope.data.ngay),
             	$scope.data.giobd1,
             	$scope.data.giokt1).then(function(data){
-            		if(data.length >0) $scope.data.thongbaongaygio = 'Nhân viên đã có lịch làm việc ở khung giờ này!!';
+            		if(data.length >0) {
+            			$scope.data.thongbaongaygio = 'Nhân viên đã có lịch làm việc ở khung giờ này!!';
+            			
+            		}else{
+            			$scope.data.thongbaongaygio = 'Đang kiểm tra lịch nghỉ';
+            			ngvFactory.kiemtraLichBan($scope.ngvDcChon.cmnd, 
+				            	filterFactory.doiNgaySearch($scope.data.ngay),
+				            	$scope.data.giobd1,
+				            	$scope.data.giokt1).then(function(data){
+				            		if(data.length >0) {
+				            			$scope.data.thongbaongaygio = 'Nhân viên đã có lịch nghỉ ở khung giờ này!!';
+				            		}else{
+				            			$scope.data.thongbaongaygio = '';
+				            		}
+				            	})
+            		}
             	})
-            $scope.data.thongbaongaygio = '';
+            
 		});
 		$scope.$watch('data.giobd1', function(newVal, oldVal){
 			if($scope.data.ngay == null || 
 			   $scope.data.giobd1 == null || 
 			   $scope.data.giokt1 == null) return;
-			if($scope.data.isReverse == true){
-	    		$scope.data.isReverse = false;
-	    		return;
-    		}
 			var bd1 = Number($scope.data.giobd1);
             var kt1 = Number($scope.data.giokt1);
 	    	var now = new Date();
@@ -3264,33 +3780,48 @@
                 if(bd1 < sophutht) {
                 	$scope.data.thongbaongaygio = 'Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
                     	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).';
-				    $scope.data.giobd1 = oldVal;
-				    $scope.data.isReverse = true;
+                    
                     return;
                 }
             }
             if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
             	$scope.data.thongbaongaygio = 'Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.';
-			    $scope.data.giobd1 = oldVal;
-			    $scope.data.isReverse = true;
+            	
                 return;
             }
+            if(((kt1-bd1)%60)!=0  && bd1 != 0 && kt1 != 0) {
+            	$scope.data.thongbaongaygio = 'Khoảng cách thời gian phải từ 2,3,4,5.. tiếng.';
+                return;
+            }
+            $scope.data.thongbaongaygio = 'Đang kiểm tra lịch làm việc.....';
             ngvFactory.kiemtraLlv($scope.ngvDcChon.cmnd, 
             	filterFactory.doiNgaySearch($scope.data.ngay),
             	$scope.data.giobd1,
             	$scope.data.giokt1).then(function(data){
-            		if(data.length >0) $scope.data.thongbaongaygio = 'Nhân viên đã có lịch làm việc ở khung giờ này!!';
+            		if(data.length >0) {
+            			$scope.data.thongbaongaygio = 'Nhân viên đã có lịch làm việc ở khung giờ này!!';
+            			
+            		}else{
+            			$scope.data.thongbaongaygio = 'Đang kiểm tra lịch nghỉ';
+            			ngvFactory.kiemtraLichBan($scope.ngvDcChon.cmnd, 
+				            	filterFactory.doiNgaySearch($scope.data.ngay),
+				            	$scope.data.giobd1,
+				            	$scope.data.giokt1).then(function(data){
+				            		if(data.length >0) {
+				            			$scope.data.thongbaongaygio = 'Nhân viên đã có lịch nghỉ ở khung giờ này!!';
+				            		}else{
+				            			$scope.data.thongbaongaygio = '';
+				            		}
+				            	})
+            		}
             	})
-            $scope.data.thongbaongaygio = '';
+           	
+            
 		});
 		$scope.$watch('data.giokt1', function(newVal, oldVal){
 			if($scope.data.ngay == null || 
 			   $scope.data.giobd1 == null || 
 			   $scope.data.giokt1 == null) return;
-			if($scope.data.isReverse == true){
-	    		$scope.data.isReverse = false;
-	    		return;
-    		}
 			var bd1 = Number($scope.data.giobd1);
             var kt1 = Number($scope.data.giokt1);
 	    	var now = new Date();
@@ -3302,24 +3833,42 @@
                 if(bd1 < sophutht) {
                 	$scope.data.thongbaongaygio = 'Giờ bắt đầu phải từ '+ Math.floor(sophutht/60) + 
                     	':' +sophutht%60+ ' (cách giờ hiện tại ít nhất 3 tiếng).';
-				    $scope.data.giokt1 = oldVal;
-				    $scope.data.isReverse = true;
+                   	
                     return;
                 }
             }
             if(bd1+120 > kt1 && bd1 != 0 && kt1 != 0) {
             	$scope.data.thongbaongaygio = 'Giờ bắt đầu phải nhỏ hơn giờ kết thúc ít nhất 2 tiếng.';
-			    $scope.data.giokt1 = oldVal;
-			    $scope.data.isReverse = true;
+            	
                 return;
             }
+            if(((kt1-bd1)%60)!=0  && bd1 != 0 && kt1 != 0) {
+            	$scope.data.thongbaongaygio = 'Khoảng cách thời gian phải từ 2,3,4,5.. tiếng.';
+                return;
+            }
+            $scope.data.thongbaongaygio = 'Đang kiểm tra lịch làm việc.....';
             ngvFactory.kiemtraLlv($scope.ngvDcChon.cmnd, 
             	filterFactory.doiNgaySearch($scope.data.ngay),
             	$scope.data.giobd1,
             	$scope.data.giokt1).then(function(data){
-            		if(data.length >0) $scope.data.thongbaongaygio = 'Nhân viên đã có lịch làm việc ở khung giờ này!!';
+            		if(data.length >0) {
+            			$scope.data.thongbaongaygio = 'Nhân viên đã có lịch làm việc ở khung giờ này!!';
+            			
+            		}else{
+            			$scope.data.thongbaongaygio = 'Đang kiểm tra lịch nghỉ';
+            			ngvFactory.kiemtraLichBan($scope.ngvDcChon.cmnd, 
+				            	filterFactory.doiNgaySearch($scope.data.ngay),
+				            	$scope.data.giobd1,
+				            	$scope.data.giokt1).then(function(data){
+				            		if(data.length >0) {
+				            			$scope.data.thongbaongaygio = 'Nhân viên đã có lịch nghỉ ở khung giờ này!!';
+				            		}else{
+				            			$scope.data.thongbaongaygio = '';
+				            		}
+				            	})
+            		}
             	})
-            $scope.data.thongbaongaygio = '';
+            
 		});
 		//--------------end watch-----------------------
 		$scope.loadingSlick = true;
@@ -3333,5 +3882,108 @@
 	        rows: 1,
 	        arrows: true
 		}
+	});
+	module.controller('contactController', function(doitacFactory, $scope, $http, $mdDialog){
+		$scope.contact = {
+			ten: null,
+			sdt: null,
+			email: null,
+			noidung: null
+		}
+		$scope.doitac = [];
+		var getDoitac = function(){
+			doitacFactory.layDoiTac().then(function(data){
+				$scope.doitac = data;
+
+			})
+		}
+		getDoitac();
+		$scope.loadingSlick = true;
+		$scope.slickconfig = {
+			lazyLoad: 'ondemand',
+			dots: false,
+	        infinite: true,
+	        speed: 300,
+	        slidesToShow: 1,
+	        slidesToScroll: 1,
+	        rows: 1,
+	        arrows: true
+		}
+		$scope.guiEmail = function(){
+			var data = {ten:$scope.contact.ten,
+					    sdt:$scope.contact.sdt,
+					    email:$scope.contact.email,
+					    noidung:$scope.contact.noidung};
+			$http.post('/sendmail',data)
+		        .success(function(data) {
+		        	$mdDialog.show(
+				      $mdDialog.alert()
+				        .parent(angular.element(document.querySelector('body')))
+				        .clickOutsideToClose(true)
+				        .title('Thông báo')
+				        .content('Mail đã được gửi, chúng tôi sẽ trả lời sớm nhất có thể!')
+				        .ok('Đồng ý!')
+				        .targetEvent(null)
+				    );
+		        }).error(function(data) {
+		            console.log('Error: ' + data);
+        		});
+		}
+
+	});
+	module.controller('doitacController', function(doitacFactory, $scope, $http, $mdDialog){
+		
+		$scope.doitac = [];
+		var getDoitac = function(){
+			doitacFactory.layDoiTac().then(function(data){
+				$scope.doitac = data;
+
+			})
+		}
+		getDoitac();
+		$scope.loadingSlick = true;
+		$scope.slickconfig = {
+			centerMode: true,
+			lazyLoad: 'ondemand',
+			dots: false,
+	        infinite: true,
+	        speed: 300,
+	        slidesToShow: 5,
+	        slidesToScroll: 1,
+	        rows: 1,
+	        arrows: true,
+	        responsive: [
+	            {
+	              breakpoint: 1024,
+	              settings: {
+	                slidesToShow: 3,
+	                slidesToScroll: 3,
+	              }
+	            },
+	            {
+	              breakpoint: 600,
+	              settings: {
+	                slidesToShow: 2,
+	                slidesToScroll: 2,
+	                arrows: false
+	              }
+	            },
+	            {
+	              breakpoint: 480,
+	              settings: {
+	                slidesToShow: 1,
+	                slidesToScroll: 1,
+	                arrows: false
+	              }
+	            }
+        	]
+		}
+
+	});
+	module.controller('banggiaController', function(filterFactory, $scope, $http){
+		$scope.tieuchi = [];
+		filterFactory.getDSTieuChi().then(function(data){
+			$scope.tieuchi = data;
+		})
 	});
 })();

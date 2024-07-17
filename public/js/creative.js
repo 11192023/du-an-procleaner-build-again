@@ -7,18 +7,6 @@
 (function($) {
     $(document).ready(function(){
         
-        
-        $('.selectpicker').selectpicker({
-              style: 'btn-info',
-              size: 8
-        });
-        var limitday = new Date();
-        limitday.setDate(limitday.getDate() + 30);
-        $('.dpindex').datepicker({
-            language: 'vi',
-            startDate: new Date(),
-            endDate: limitday
-        });
         $('#btntheongay').click(function(){
             $('#btntheongay').addClass('active');
             $('#theongay').removeClass('hide');
@@ -38,7 +26,17 @@
         $('#mypanel > .panel').on('hide.bs.collapse', function (e) {
             $(this).find('.panel-heading').removeClass("active-panel");
         });
-      
+
+        
+        
+        
+        var limitday = new Date();
+        limitday.setDate(limitday.getDate() + 30);
+        $('.dpindex').datepicker({
+            language: 'vi',
+            startDate: new Date(),
+            endDate: limitday
+        });
     });
     "use strict"; // Start of use strict
     // jQuery for page scrolling feature - requires jQuery Easing plugin
@@ -60,7 +58,18 @@
     $('.navbar-collapse ul li a').click(function() {
         $('.navbar-toggle:visible').click();
     });
-
+    $("#mainSlider").vegas({
+            delay: 10000,
+	    timer: false,
+        cover:true,
+            transitionDuration: 5500,
+            slides: [
+                { src: "/img/slide1.jpg" },
+                //{ src: "/img/slide2.jpg" },
+                { src: "/img/slide3.jpg" },
+                { src: "/img/slide4.jpg" }
+            ]
+        });
     // Fit Text Plugin for Main Header
     $("h1").fitText(
         1.2, {

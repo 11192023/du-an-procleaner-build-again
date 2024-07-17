@@ -1,8 +1,69 @@
-/*!
+﻿/*!
  * Start Bootstrap - Creative Bootstrap Theme (http://startbootstrap.com)
  * Code licensed under the Apache License v2.0.
  * For details, see http://www.apache.org/licenses/LICENSE-2.0.
  */
+ .process{
+    padding-top: 20px;
+ }
+ .process .title{
+    margin-top: 0px;
+    padding-bottom: 10px;
+ }
+ .process .media-icon:after{
+    background: url(../img/arrow.png) no-repeat;
+    content: "";
+    height: 13px;
+    width: 71px;
+    position: absolute;
+    right: -36px;
+    top: 27%;
+    background-position: right;
+ }
+ .process .col-md-3:last-child .media-icon:after{
+    background: none;
+ }
+ .process .media-icon .icon{
+    font-size:60px;
+    width:100px;
+    height: 100px;
+    border-radius: 50%;
+    border:8px solid #84B742;
+    display: block;
+    text-align: center;
+    line-height: 86px;
+    color: #989898;
+    font-weight: bold;
+    margin: auto;
+ }
+  .process .media-title{
+    font-size: 22px
+  }
+.btnlogin>.btn:first-child {
+    height: 32px!important;
+    margin-left: 0!important;
+    border-radius: 3px!important;
+    font-size: small!important; 
+    font-weight: normal!important;
+    font-style: normal!important;
+    text-transform: none!important;
+}
+.vegas-slide, .vegas-slide-inner {
+    background-size:100%!important;
+    background-position:center!important;
+}
+.btn-group>.btn:first-child {
+    height: 50px;
+    margin-left: 0;
+    border-radius: 0;
+    font-size: small;
+    font-weight: normal;
+    font-style: normal;
+    text-transform: none;
+}
+.marleft{
+    margin-left: 10px;
+}
 
 .mystyle{
     position: fixed;
@@ -13,6 +74,9 @@
 #dhlist,
 #nhlist{
     padding-left: 0px!important;
+}
+md-input-container [ng-messages] :not(.md-char-counter){
+  color: rgb(212, 212, 212)!important;
 }
 /* select */
 .form-control{
@@ -152,10 +216,13 @@
     .tt-menu{
         margin-top: 20px!important;
     }
+    .logow{
+        width: 150px!important;
+    }
 }
 @media (max-width: 640px)  {
     header{
-        height: 250%;
+        height: 120%;
     }
     .twitter-typeahead{
         display: block!important;
@@ -163,6 +230,30 @@
     .tt-menu{
         margin-top: 5px!important;
         position: inherit!important;
+    }
+    .logow{
+        width: 130px!important;
+    }
+    .alignmiddle {
+        margin-top: -50px;
+    }
+}
+@media (max-width: 320px)  {
+    header{
+        height: 135%;
+    }
+    .twitter-typeahead{
+        display: block!important;
+    }
+    .tt-menu{
+        margin-top: 5px!important;
+        position: inherit!important;
+    }
+    .logow{
+        width: 100px!important;
+    }
+    .alignmiddle {
+        margin-top: -50px;
     }
 }
 .btn.active{
@@ -239,9 +330,12 @@ select{
     border-radius: 0px!important;
     background-color: #fff!important;
 }
+.modal-no-padding {
+    padding: 0px!important;
+}
 @media
     only screen and (max-width: 1024px),
-    (min-device-width: 1024px) and (max-device-width: 1280px) {
+    (min-device-width: 768px) and (max-device-width: 1024px) {
         .form-group{
             width: 100%!important;
         }
@@ -256,6 +350,7 @@ select{
         }
         .btn{
             width: 100%;
+            margin-bottom: 5px!important;
         }
         .visuallyhidden { 
           display: none!important;
@@ -298,7 +393,7 @@ table.tablebg th {
 }
 @media
     only screen and (max-width: 1024px),
-    (min-device-width: 1024px) and (max-device-width: 1280px)  {
+    (min-device-width: 768px) and (max-device-width: 1024px)  {
         /* Force table to not be like tables anymore */
         table.tablebg {
             display: block;
@@ -355,15 +450,10 @@ table.tablebg th {
         /*
         Label the data
         */
-        table.tablebg td:nth-of-type(1):before { content: "Ngày/tháng";  }
-        table.tablebg td:nth-of-type(2):before { content: "Ngày/tuần"; }
-        table.tablebg td:nth-of-type(3):before { content: "2 giờ/ngày"; }
-        table.tablebg td:nth-of-type(4):before { content: "3 giờ/ngày"; }
-        table.tablebg td:nth-of-type(5):before { content: "4 giờ/ngày"; }
-        table.tablebg td:nth-of-type(6):before { content: "5 giờ/ngày"; }
-        table.tablebg td:nth-of-type(7):before { content: "6 giờ/ngày"; }
-        table.tablebg td:nth-of-type(8):before { content: "7 giờ/ngày"; }
-        table.tablebg td:nth-of-type(9):before { content: "8 giờ/ngày"; }
+        table.tablebg td:nth-of-type(1):before { content: "Dịch vụ"; }
+        table.tablebg td:nth-of-type(2):before { content: "Phí cơ bản(VNĐ/Giờ)"; }
+        table.tablebg td:nth-of-type(3):before { content: "Phụ phí"; }
+        table.tablebg td:nth-of-type(4):before { content: "Phí ngoài giờ"; }
     }
 
     /* Smartphones (portrait and landscape) ----------- */
@@ -414,12 +504,14 @@ table.tablebg th {
   border-radius: 30px;
 }
 body.modal-open {
-    overflow: auto;
+    overflow: auto!important;
 }
 body.modal-open[style] {
     padding-right: 0px !important;
 }
-
+body{
+    padding-right: 0px!important;
+}
 .btn-circle-sm {
   width: 35px;
   height: 35px;
@@ -442,6 +534,8 @@ body.modal-open[style] {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+    padding-top: 0px!important;
+    padding-bottom: 20px!important;
 }
 .btn-circle-lg {
   width: 79px;
@@ -474,8 +568,9 @@ body.modal-open[style] {
     width: 230px;
     height: 230px;
 }
+
 .padtop{
-    padding-top: 10px;
+    padding-top: 150px;
 }
 .padright{
     padding-right: 5px;
@@ -559,7 +654,6 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Open Sans',sans-serif;
     color: #02571C;
 }
 .boldp{
@@ -580,6 +674,18 @@ p {
     background-color: #8CC13D;
 }
 
+#about.bg-primary {
+    background-color: #fff;
+}
+#about.bg-primary .text-faded{
+	color:#02571C;
+}
+#services{
+	background-color:#8CC13D;
+}
+#services .service-box .fa{
+	color:#fff;
+}
 .xanhdam {
     color: #02571C;
 }
@@ -663,11 +769,19 @@ aside {
 .navbar-default .nav>li.active>a:focus:hover {
     background-color: transparent;
 }
-
+.alignmiddle {
+    position: relative;
+    padding-top: ;
+    top: 50%;
+    transform: translateY(13%);
+}
+.alignmiddle li>a {
+    font-size: 14px!important;
+}
 @media(min-width:768px) {
     .navbar-default {
-        border-color: transparent;
-        background-color: transparent;
+        border-color: rgba(126, 178, 51, 0.22);
+        background-color: white;
     }
     .navbar-default .navbar-header .navbar-brand {
         color: #02571C;
@@ -720,7 +834,6 @@ header {
     min-height: auto;
     text-align: center;
     color: #fff;
-    background-image: url(../img/header.jpg);
     background-position: top;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -908,7 +1021,7 @@ input[readonly] {
     -moz-transition: all .35s;
     transition: all .35s;
 }
-
+/*
 .btn-default:hover,
 .btn-default:focus,
 .btn-default.focus,
@@ -919,7 +1032,7 @@ input[readonly] {
     color: #8CC13D;
     background-color: #02571C;
 }
-
+*/
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {

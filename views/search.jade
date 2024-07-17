@@ -1,8 +1,9 @@
-extends layout
+﻿extends layout
 
 block search
   base(href='/')
-  .container.wrapper(ng-controller='searchnhController', ng-init='initData()')
+  .container.wrapper(ng-controller='searchnhController', ng-init='initDataFirstTime()')
+    title ProCleaner - Tìm kiếm ngắn hạn
     .row.content(ng-show='isSearch')
       .col-lg-3.content-left
         md-toolbar.md-whiteframe-2dp
@@ -70,7 +71,7 @@ block search
                 i.fa.fa-warning.pull-right.padright.xanhnhat
                   md-tooltip(md-direction="left")
                     | Thay đổi quận sẽ mất các lựa chọn hiện tại
-            md-radio-group(ng-model='data.quan')
+            md-radio-group(ng-model='data.quan' ng-change='initData()')
               div(ng-repeat='quan in quans')
                 md-radio-button(value='{{quan.ten}}')
                   {{quan.ten}}
@@ -100,7 +101,7 @@ block search
                   .row.selected-classifieds
                     .col-md-3
                       a(href='#' ng-click='chon_ngv(ngv, ngv_selected_arr)')
-                        img.img-responsive(ng-src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
+                        img.img-responsive(ng-src='{{"http://procleaner.vn:3000/public/images/ngv/" + ngv.hinhanh}}', alt='Ảnh đại diện')
                         md-tooltip
                           | Bấm vào hình để chọn người giúp việc.
                       .rating
@@ -116,15 +117,14 @@ block search
                       hr.hrnomargin
                       .rightbody
                         .row.vdivide.paddingrow
-                          .col-md-4
-                            .row
+                          .col-md-6
                               h4.i.fa.fa-paperclip.padright.xanhnhat 
                               | {{ngv.danhgia}}
-                          .col-md-8
+                          .col-md-6
                             .row
                               .itembody.left
                                 h4.i.fa.fa-venus-mars.padright.xanhnhat 
-                                | Nam
+                                | {{ngv.gioitinh}}
                               .itembody.right 
                                 h4.i.fa.fa-birthday-cake.padright.xanhnhat
                                 | {{tinh_tuoi_ngv(ngv.ngaysinh) + ' tuổi'}}
@@ -152,7 +152,7 @@ block search
           .row
             .col-md-4
               a(href='#')
-                img.img-responsive(ng-src='{{"img/ngv/" + ngv.hinhanh}}', alt='')
+                img.img-responsive(ng-src='{{"http://procleaner.vn:3000/public/images/ngv/" + ngv.hinhanh}}', alt='Ảnh đại diện')
               .rating
                 i.fa.fa-2x.fa-star.xanhnhat
                 i.fa.fa-2x.fa-star.xanhnhat
@@ -172,10 +172,10 @@ block search
                       | {{ngv.diachi.quan}}
                     div(flex='50')
                       h3.i.fa.fa-venus-mars.padright.xanhnhat 
-                      | Nam
+                      | {{ngv.gioitinh}}
                     div(flex='20')
                       h3.i.fa.fa-graduation-cap.padright.xanhnhat 
-                      | Đại học
+                      | {{ngv.trinhdohocvan}}
                   .div(layout="row")
                     div(flex='30')
                       h3.i.fa.fa-birthday-cake.padright.xanhnhat 
@@ -185,7 +185,7 @@ block search
                       | {{ngv.sonamkinhnghiem}} năm kinh nghiệm
                     div(flex='20')
                       h3.i.fa.fa-heart.padright.xanhnhat 
-                      | Độc thân
+                      | {{ngv.tinhtranghonnhan}}
               .row.form-inline(style='font-size: 15px;')
                 .col-md-12
                   h3.i.fa.fa-tags.padright.xanhnhat 
@@ -227,7 +227,7 @@ block search
                     md-content.md-padding
                       h1.md-display-2.center Mô tả kinh nghiệm
                       p
-                        | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.
+                        | {{ngv.motakinhnghiem}}
                 md-tab
                   md-tab-label
                     i.fa.fa-exclamation-circle
@@ -236,23 +236,19 @@ block search
                     md-content.md-padding
                       h1.md-display-2.center Thông tin chi tiết 
                       p
-                        | - Cân nặng : xx kg.
+                        | - Cân nặng : {{ngv.cannang}} kg.
                       p
-                        | - Chiều cao : xx m.
+                        | - Chiều cao : {{ngv.chieucao}} cm.
                       p
                         | - Dân tộc : Kinh.
                       p
-                        | - Trình độ học vấn : Đại học.
+                        | - Trình độ học vấn : {{ngv.trinhdohocvan}}.
                       p
-                        | - Tình trạng hôn nhân : Đã có gia đình.
-                      p
-                        | - Con cái : 3 người con.
-                      p.padleft
-                        | • 3 tuổi
-                      p.padleft
-                        | • 5 tuổi
-                      p.padleft
-                        | • 7 tuổi
+                        | - Tình trạng hôn nhân : {{ngv.tinhtranghonnhan}}.
+                      p(ng-show='ngv.tinhtranghonnhan!="Độc thân"')
+                        | - Con cái : {{ngv.thongtincon.length}}
+                      p.padleft(ng-show='ngv.tinhtranghonnhan!="Độc thân"', ng-repeat='con in ngv.thongtincon')
+                        | • Tuổi : {{con.tuoi}}
                 md-tab
                   md-tab-label
                     i.fa.fa-stethoscope
@@ -262,14 +258,14 @@ block search
                       h1.md-display-2.center Giấy khám sức khỏe
                         slick.slicktest(settings='slickconfig', ng-if='numberLoaded')
                           div(ng-repeat='gksk in ngv.giaykhamsuckhoe')
-                            img.center(ng-src='{{"img/ngv/" + gksk}}', alt='')
+                            img.center.img-responsive(ng-src='{{"http://procleaner.vn:3000/public/images/ngv/" + gksk}}', alt='Giấy khám sức khỏe')
           hr.hrmargin
         .col-md-3.col-md-pull-9.content-left
           h4 Nhân viên tương đồng
           .row(ng-if='ngv_sub1!=null')
             .thumbnail.sm-img-left
               a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub1)')
-                img.img-responsive(ng-src='{{"img/ngv/" + ngv_sub1.hinhanh}}', alt='')
+                img.img-responsive(ng-src='{{"http://procleaner.vn:3000/public/images/ngv/" + ngv_sub1.hinhanh}}', alt='Ảnh đại diện')
               .caption.center
                 .row
                   .left.padleft
@@ -287,7 +283,7 @@ block search
           .row(ng-if='ngv_sub2!=null')
             .thumbnail.sm-img-left
               a.center.portfolio-box(href='#' ng-click='show_detail(ngv_sub2)')
-                img.img-responsive(ng-src='{{"img/ngv/" + ngv_sub2.hinhanh}}', alt='')
+                img.img-responsive(ng-src='{{"http://procleaner.vn:3000/public/images/ngv/" + ngv_sub2.hinhanh}}', alt='Ảnh đại diện')
               .caption.center
                 .row
                   .left.padleft
@@ -316,15 +312,6 @@ block search
                 h3 Yêu cầu của quý khách đã được chấp nhận, chúng tôi sẽ liên hệ trong lịch làm việc gần nhất.
               md-content(layout-padding='' ng-if='!(loading_yeucau || hoanthanh_thanhtoan_nh)')
                 div(layout='', layout-sm='column')
-                  md-input-container(flex)
-                    label 
-                      i.fa.fa-user.xanhnhat.padright
-                      | Họ tên
-                    input(md-maxlength="30", required, name="hoten", ng-model='khachhang.hoten' autocomplete='off')
-                    div(ng-messages='formthanhtoan.hoten.$error')
-                      div(ng-message='required') Thông tin bắt buộc.
-                      div(ng-message='md-maxlength') Tên không được quá 30 ký tự.
-                div(layout='', layout-sm='column')
                   md-input-container(style='width:44%')
                     label 
                       i.fa.fa-phone.xanhnhat.padright
@@ -339,10 +326,19 @@ block search
                       a.i.fa.fa-shield.xanhnhat.padright
                       | Mã xác nhận
                     input(autocomplete='off', ng-model='maxacnhan.nguoidung')
-                  md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan()')
+                  md-button.md-fab.md-mini.md-primary.chutrang(ng-click='layMaXacNhan()', ng-disabled='dalayMXN')
                     md-tooltip(md-direction="left")
                       | Lấy mã xác nhận
                     i.fa.fa-shield
+                div(layout='', layout-sm='column')
+                  md-input-container(flex)
+                    label 
+                      i.fa.fa-user.xanhnhat.padright
+                      | Họ tên
+                    input(md-maxlength="30", required, name="hoten", ng-model='khachhang.hoten' autocomplete='off')
+                    div(ng-messages='formthanhtoan.hoten.$error')
+                      div(ng-message='required') Thông tin bắt buộc.
+                      div(ng-message='md-maxlength') Tên không được quá 30 ký tự.
                 div(layout='', layout-sm='column')
                   md-input-container(style='width:87%')
                     label 
@@ -389,20 +385,36 @@ block search
                     | Dịch vụ
                   div(layout="row", layout-wrap='', flex='')
                     div(ng-repeat='tieuchi in tieuchis', flex='50')
-                      md-checkbox.md-primary(ng-model='tieuchi.data' ng-click='them_filter_dichvu(tieuchi.ten, tieuchi.data, data)')
+                      md-checkbox.md-primary(ng-model='tieuchi.data' disabled ng-click='them_filter_dichvu(tieuchi.ten, tieuchi.data, data)')
                         | {{tieuchi.ten}}
                 div(layout='', layout-sm='column')
-                  md-input-container(flex)
+                  md-input-container(style='width:50%')
                     label 
                       a.i.fa.fa-money.xanhnhat.padright
-                      | Giá tiền
+                      | Phí cơ bản
+                    input(disabled, value='{{showPhiCoBan()+"  VNĐ"}}')
+                  md-input-container(style='width:25%')
+                    label 
+                      a.i.fa.fa-money.xanhnhat.padright
+                      | Phí ngoài giờ
+                    input(disabled, value='{{showPhiNgoaiGio()+"  VNĐ"}}')
+                  md-input-container(style='width:25%')
+                    label 
+                      a.i.fa.fa-money.xanhnhat.padright
+                      | Phụ phí
+                    input(disabled, value='{{showTrangThaiYc()}}')
+                div(layout='', layout-sm='column')
+                  md-input-container(style='width:50%')
+                    label 
+                      a.i.fa.fa-money.xanhnhat.padright
+                      | Tổng chi phí
                     input(disabled, value='{{tinhtien_nh()+"  VNĐ"}}')
                 div(layout='row', layout-sm='column')
                   md-list(ng-cloak, style='width:100%')
                     p Danh sách nhân viên đã chọn.
                     md-divider
                     md-list-item(ng-repeat='ngv in ngv_selected_arr')
-                      img.md-avatar(alt='', ng-src='{{"img/ngv/" + ngv.hinhanh}}')
+                      img.md-avatar(alt='Ảnh đại diện', ng-src='{{"http://procleaner.vn:3000/public/images/ngv/" + ngv.hinhanh}}')
                       p {{ngv.hoten}}
             div.modal-footer(ng-if='!loading_yeucau && !hoanthanh_thanhtoan_nh')
               button.marleft.btn.btn-danger.pull-right(type="submit", ng-disabled="formthanhtoan.$invalid", ng-click='luu_yeucau()')
@@ -412,8 +424,11 @@ block search
                 i.fa.fa-remove
                 |  Hủy
             div.modal-footer(ng-if='hoanthanh_thanhtoan_nh')
-              button.marleft.btn.btn-danger.pull-right(type="button" ng-click='hoanthanh_thanhtoan()')
+              button.marleft.btn.btn-danger.pull-right(type="button" ng-click='hoanthanh_thanhtoan(1)')
                 i.fa.fa-check
-                |  Đồng ý
+                |  Xem lịch sử đơn hàng
+              button.marleft.btn.btn-danger.pull-right(type="button" ng-click='hoanthanh_thanhtoan(2)')
+                i.fa.fa-check
+                |  Về trang chủ
       .col-lg-2
       
